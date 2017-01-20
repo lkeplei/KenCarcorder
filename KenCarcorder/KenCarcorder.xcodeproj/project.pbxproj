@@ -7,25 +7,192 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C282D5C35903B91E779BC6B /* libPods-KenCarcorder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9EB43BE141982A17CC39E0C /* libPods-KenCarcorder.a */; };
 		BE7EFCA61E2F086500E1E579 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCA51E2F086500E1E579 /* main.m */; };
-		BE7EFCA91E2F086500E1E579 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCA81E2F086500E1E579 /* AppDelegate.m */; };
-		BE7EFCAC1E2F086500E1E579 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCAB1E2F086500E1E579 /* ViewController.m */; };
-		BE7EFCAF1E2F086500E1E579 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE7EFCAD1E2F086500E1E579 /* Main.storyboard */; };
-		BE7EFCB11E2F086500E1E579 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE7EFCB01E2F086500E1E579 /* Assets.xcassets */; };
-		BE7EFCB41E2F086500E1E579 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE7EFCB21E2F086500E1E579 /* LaunchScreen.storyboard */; };
+		BE7EFD4A1E32098F00E1E579 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCC31E32098F00E1E579 /* AppDelegate.m */; };
+		BE7EFD4C1E32098F00E1E579 /* KenBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCC91E32098F00E1E579 /* KenBaseVC.m */; };
+		BE7EFD4D1E32098F00E1E579 /* KenNavigationC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCCB1E32098F00E1E579 /* KenNavigationC.m */; };
+		BE7EFD4E1E32098F00E1E579 /* KenRootTabC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCCD1E32098F00E1E579 /* KenRootTabC.m */; };
+		BE7EFD4F1E32098F00E1E579 /* KenDataSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCD01E32098F00E1E579 /* KenDataSManager.m */; };
+		BE7EFD501E32098F00E1E579 /* KenGCDTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCD21E32098F00E1E579 /* KenGCDTimerManager.m */; };
+		BE7EFD511E32098F00E1E579 /* KenServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCD41E32098F00E1E579 /* KenServiceManager.m */; };
+		BE7EFD521E32098F00E1E579 /* KenAFHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCD71E32098F00E1E579 /* KenAFHttp.m */; };
+		BE7EFD541E32098F00E1E579 /* KenHttpBaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCDB1E32098F00E1E579 /* KenHttpBaseService.m */; };
+		BE7EFD551E32098F00E1E579 /* KKGestureLockPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCE01E32098F00E1E579 /* KKGestureLockPreviewView.m */; };
+		BE7EFD561E32098F00E1E579 /* KKGestureLockView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCE21E32098F00E1E579 /* KKGestureLockView.m */; };
+		BE7EFD571E32098F00E1E579 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCE51E32098F00E1E579 /* GTMBase64.m */; };
+		BE7EFD581E32098F00E1E579 /* NSArray+KenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCEA1E32098F00E1E579 /* NSArray+KenArray.m */; };
+		BE7EFD591E32098F00E1E579 /* NSDate+KenDate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCEC1E32098F00E1E579 /* NSDate+KenDate.m */; };
+		BE7EFD5A1E32098F00E1E579 /* NSDictionary+KenDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCEE1E32098F00E1E579 /* NSDictionary+KenDictionary.m */; };
+		BE7EFD5B1E32098F00E1E579 /* NSMutableArray+KenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCF01E32098F00E1E579 /* NSMutableArray+KenArray.m */; };
+		BE7EFD5C1E32098F00E1E579 /* NSMutableDictionary+KenDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCF21E32098F00E1E579 /* NSMutableDictionary+KenDictionary.m */; };
+		BE7EFD5D1E32098F00E1E579 /* NSMutableString+KenString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCF41E32098F00E1E579 /* NSMutableString+KenString.m */; };
+		BE7EFD5E1E32098F00E1E579 /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCF61E32098F00E1E579 /* NSObject+Extension.m */; };
+		BE7EFD5F1E32098F00E1E579 /* NSObject+KenObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCF81E32098F00E1E579 /* NSObject+KenObject.m */; };
+		BE7EFD601E32098F00E1E579 /* NSString+KenString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCFA1E32098F00E1E579 /* NSString+KenString.m */; };
+		BE7EFD611E32098F00E1E579 /* UIApplication+KenApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCFC1E32098F00E1E579 /* UIApplication+KenApplication.m */; };
+		BE7EFD621E32098F00E1E579 /* UIBarButtonItem+KenBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCFE1E32098F00E1E579 /* UIBarButtonItem+KenBadge.m */; };
+		BE7EFD631E32098F00E1E579 /* UIButton+KenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD001E32098F00E1E579 /* UIButton+KenButton.m */; };
+		BE7EFD641E32098F00E1E579 /* UIColor+KenColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD021E32098F00E1E579 /* UIColor+KenColor.m */; };
+		BE7EFD651E32098F00E1E579 /* UIDevice+KenDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD041E32098F00E1E579 /* UIDevice+KenDevice.m */; };
+		BE7EFD661E32098F00E1E579 /* UIImage+KenImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD061E32098F00E1E579 /* UIImage+KenImage.m */; };
+		BE7EFD671E32098F00E1E579 /* UILabel+KenLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD081E32098F00E1E579 /* UILabel+KenLabel.m */; };
+		BE7EFD681E32098F00E1E579 /* UIView+KenView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD0A1E32098F00E1E579 /* UIView+KenView.m */; };
+		BE7EFD691E32098F00E1E579 /* UIViewController+KenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD0C1E32098F00E1E579 /* UIViewController+KenVC.m */; };
+		BE7EFD6A1E32098F00E1E579 /* UIWindow+KenWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD0E1E32098F00E1E579 /* UIWindow+KenWindow.m */; };
+		BE7EFD6B1E32098F00E1E579 /* KenFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD131E32098F00E1E579 /* KenFileManager.m */; };
+		BE7EFD6C1E32098F00E1E579 /* KenHtmlLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD151E32098F00E1E579 /* KenHtmlLabel.m */; };
+		BE7EFD6D1E32098F00E1E579 /* KenKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD171E32098F00E1E579 /* KenKeyChainStore.m */; };
+		BE7EFD6E1E32098F00E1E579 /* Async.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD1B1E32098F00E1E579 /* Async.m */; };
+		BE7EFD6F1E32098F00E1E579 /* GCDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD1D1E32098F00E1E579 /* GCDQueue.m */; };
+		BE7EFD701E32098F00E1E579 /* NSObject+KenInvoker.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD201E32098F00E1E579 /* NSObject+KenInvoker.m */; };
+		BE7EFD711E32098F00E1E579 /* NSObject+JsonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD261E32098F00E1E579 /* NSObject+JsonModel.m */; };
+		BE7EFD721E32098F00E1E579 /* XPSuperClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD281E32098F00E1E579 /* XPSuperClassInfo.m */; };
+		BE7EFD731E32098F00E1E579 /* KenKVOInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD2B1E32098F00E1E579 /* KenKVOInfo.m */; };
+		BE7EFD741E32098F00E1E579 /* KenKVOManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD2D1E32098F00E1E579 /* KenKVOManager.m */; };
+		BE7EFD751E32098F00E1E579 /* KenKVOPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD2F1E32098F00E1E579 /* KenKVOPlugin.m */; };
+		BE7EFD761E32098F00E1E579 /* KenDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD321E32098F00E1E579 /* KenDataModel.m */; };
+		BE7EFD771E32098F00E1E579 /* KenUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD341E32098F00E1E579 /* KenUIModel.m */; };
+		BE7EFD781E32098F00E1E579 /* UIViewController+KenKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD361E32098F00E1E579 /* UIViewController+KenKVO.m */; };
+		BE7EFD791E32098F00E1E579 /* XPSuperJson.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD381E32098F00E1E579 /* XPSuperJson.m */; };
+		BE7EFD7A1E32098F00E1E579 /* KenModule.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD3B1E32098F00E1E579 /* KenModule.m */; };
+		BE7EFD7B1E32098F00E1E579 /* KenDeallocMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD3E1E32098F00E1E579 /* KenDeallocMonitor.m */; };
+		BE7EFD7C1E32098F00E1E579 /* KenTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD401E32098F00E1E579 /* KenTabBar.m */; };
+		BE7EFD7D1E32098F00E1E579 /* KenTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD431E32098F00E1E579 /* KenTabBarItem.m */; };
+		BE7EFD7E1E32098F00E1E579 /* UITabBarController+KenTBC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD451E32098F00E1E579 /* UITabBarController+KenTBC.m */; };
+		BE7EFD801E32098F00E1E579 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE7EFD491E32098F00E1E579 /* Assets.xcassets */; };
+		BE7EFD881E320FDC00E1E579 /* KenActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD871E320FDC00E1E579 /* KenActionSheet.m */; };
+		BE7EFD8B1E3211B100E1E579 /* UIFont+Font.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD8A1E3211B100E1E579 /* UIFont+Font.m */; };
+		BE7EFD8E1E32126000E1E579 /* KenAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD8D1E32126000E1E579 /* KenAlertView.m */; };
+		BE7EFD911E3214EF00E1E579 /* KenUserInfoDM.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD901E3214EF00E1E579 /* KenUserInfoDM.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		89BC8A8B76DFCFFCE3CE60FA /* Pods-KenCarcorder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KenCarcorder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KenCarcorder/Pods-KenCarcorder.debug.xcconfig"; sourceTree = "<group>"; };
+		B9796F125DA55B6F06179427 /* Pods-KenCarcorder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KenCarcorder.release.xcconfig"; path = "Pods/Target Support Files/Pods-KenCarcorder/Pods-KenCarcorder.release.xcconfig"; sourceTree = "<group>"; };
+		B9EB43BE141982A17CC39E0C /* libPods-KenCarcorder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KenCarcorder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE7EFCA11E2F086500E1E579 /* KenCarcorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KenCarcorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE7EFCA51E2F086500E1E579 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		BE7EFCA71E2F086500E1E579 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		BE7EFCA81E2F086500E1E579 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		BE7EFCAA1E2F086500E1E579 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BE7EFCAB1E2F086500E1E579 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		BE7EFCAE1E2F086500E1E579 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BE7EFCB01E2F086500E1E579 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BE7EFCB31E2F086500E1E579 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE7EFCB51E2F086500E1E579 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE7EFCC21E32098F00E1E579 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BE7EFCC31E32098F00E1E579 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BE7EFCC81E32098F00E1E579 /* KenBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenBaseVC.h; sourceTree = "<group>"; };
+		BE7EFCC91E32098F00E1E579 /* KenBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenBaseVC.m; sourceTree = "<group>"; };
+		BE7EFCCA1E32098F00E1E579 /* KenNavigationC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenNavigationC.h; sourceTree = "<group>"; };
+		BE7EFCCB1E32098F00E1E579 /* KenNavigationC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenNavigationC.m; sourceTree = "<group>"; };
+		BE7EFCCC1E32098F00E1E579 /* KenRootTabC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenRootTabC.h; sourceTree = "<group>"; };
+		BE7EFCCD1E32098F00E1E579 /* KenRootTabC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenRootTabC.m; sourceTree = "<group>"; };
+		BE7EFCCF1E32098F00E1E579 /* KenDataSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDataSManager.h; sourceTree = "<group>"; };
+		BE7EFCD01E32098F00E1E579 /* KenDataSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDataSManager.m; sourceTree = "<group>"; };
+		BE7EFCD11E32098F00E1E579 /* KenGCDTimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenGCDTimerManager.h; sourceTree = "<group>"; };
+		BE7EFCD21E32098F00E1E579 /* KenGCDTimerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenGCDTimerManager.m; sourceTree = "<group>"; };
+		BE7EFCD31E32098F00E1E579 /* KenServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenServiceManager.h; sourceTree = "<group>"; };
+		BE7EFCD41E32098F00E1E579 /* KenServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenServiceManager.m; sourceTree = "<group>"; };
+		BE7EFCD61E32098F00E1E579 /* KenAFHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAFHttp.h; sourceTree = "<group>"; };
+		BE7EFCD71E32098F00E1E579 /* KenAFHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAFHttp.m; sourceTree = "<group>"; };
+		BE7EFCDA1E32098F00E1E579 /* KenHttpBaseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenHttpBaseService.h; sourceTree = "<group>"; };
+		BE7EFCDB1E32098F00E1E579 /* KenHttpBaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenHttpBaseService.m; sourceTree = "<group>"; };
+		BE7EFCDF1E32098F00E1E579 /* KKGestureLockPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKGestureLockPreviewView.h; sourceTree = "<group>"; };
+		BE7EFCE01E32098F00E1E579 /* KKGestureLockPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKGestureLockPreviewView.m; sourceTree = "<group>"; };
+		BE7EFCE11E32098F00E1E579 /* KKGestureLockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKGestureLockView.h; sourceTree = "<group>"; };
+		BE7EFCE21E32098F00E1E579 /* KKGestureLockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKGestureLockView.m; sourceTree = "<group>"; };
+		BE7EFCE41E32098F00E1E579 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		BE7EFCE51E32098F00E1E579 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		BE7EFCE61E32098F00E1E579 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		BE7EFCE91E32098F00E1E579 /* NSArray+KenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+KenArray.h"; sourceTree = "<group>"; };
+		BE7EFCEA1E32098F00E1E579 /* NSArray+KenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+KenArray.m"; sourceTree = "<group>"; };
+		BE7EFCEB1E32098F00E1E579 /* NSDate+KenDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+KenDate.h"; sourceTree = "<group>"; };
+		BE7EFCEC1E32098F00E1E579 /* NSDate+KenDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+KenDate.m"; sourceTree = "<group>"; };
+		BE7EFCED1E32098F00E1E579 /* NSDictionary+KenDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+KenDictionary.h"; sourceTree = "<group>"; };
+		BE7EFCEE1E32098F00E1E579 /* NSDictionary+KenDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+KenDictionary.m"; sourceTree = "<group>"; };
+		BE7EFCEF1E32098F00E1E579 /* NSMutableArray+KenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+KenArray.h"; sourceTree = "<group>"; };
+		BE7EFCF01E32098F00E1E579 /* NSMutableArray+KenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+KenArray.m"; sourceTree = "<group>"; };
+		BE7EFCF11E32098F00E1E579 /* NSMutableDictionary+KenDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+KenDictionary.h"; sourceTree = "<group>"; };
+		BE7EFCF21E32098F00E1E579 /* NSMutableDictionary+KenDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+KenDictionary.m"; sourceTree = "<group>"; };
+		BE7EFCF31E32098F00E1E579 /* NSMutableString+KenString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+KenString.h"; sourceTree = "<group>"; };
+		BE7EFCF41E32098F00E1E579 /* NSMutableString+KenString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableString+KenString.m"; sourceTree = "<group>"; };
+		BE7EFCF51E32098F00E1E579 /* NSObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extension.h"; sourceTree = "<group>"; };
+		BE7EFCF61E32098F00E1E579 /* NSObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extension.m"; sourceTree = "<group>"; };
+		BE7EFCF71E32098F00E1E579 /* NSObject+KenObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KenObject.h"; sourceTree = "<group>"; };
+		BE7EFCF81E32098F00E1E579 /* NSObject+KenObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KenObject.m"; sourceTree = "<group>"; };
+		BE7EFCF91E32098F00E1E579 /* NSString+KenString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KenString.h"; sourceTree = "<group>"; };
+		BE7EFCFA1E32098F00E1E579 /* NSString+KenString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KenString.m"; sourceTree = "<group>"; };
+		BE7EFCFB1E32098F00E1E579 /* UIApplication+KenApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+KenApplication.h"; sourceTree = "<group>"; };
+		BE7EFCFC1E32098F00E1E579 /* UIApplication+KenApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+KenApplication.m"; sourceTree = "<group>"; };
+		BE7EFCFD1E32098F00E1E579 /* UIBarButtonItem+KenBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+KenBadge.h"; sourceTree = "<group>"; };
+		BE7EFCFE1E32098F00E1E579 /* UIBarButtonItem+KenBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+KenBadge.m"; sourceTree = "<group>"; };
+		BE7EFCFF1E32098F00E1E579 /* UIButton+KenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+KenButton.h"; sourceTree = "<group>"; };
+		BE7EFD001E32098F00E1E579 /* UIButton+KenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+KenButton.m"; sourceTree = "<group>"; };
+		BE7EFD011E32098F00E1E579 /* UIColor+KenColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+KenColor.h"; sourceTree = "<group>"; };
+		BE7EFD021E32098F00E1E579 /* UIColor+KenColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+KenColor.m"; sourceTree = "<group>"; };
+		BE7EFD031E32098F00E1E579 /* UIDevice+KenDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+KenDevice.h"; sourceTree = "<group>"; };
+		BE7EFD041E32098F00E1E579 /* UIDevice+KenDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+KenDevice.m"; sourceTree = "<group>"; };
+		BE7EFD051E32098F00E1E579 /* UIImage+KenImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+KenImage.h"; sourceTree = "<group>"; };
+		BE7EFD061E32098F00E1E579 /* UIImage+KenImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KenImage.m"; sourceTree = "<group>"; };
+		BE7EFD071E32098F00E1E579 /* UILabel+KenLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+KenLabel.h"; sourceTree = "<group>"; };
+		BE7EFD081E32098F00E1E579 /* UILabel+KenLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+KenLabel.m"; sourceTree = "<group>"; };
+		BE7EFD091E32098F00E1E579 /* UIView+KenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KenView.h"; sourceTree = "<group>"; };
+		BE7EFD0A1E32098F00E1E579 /* UIView+KenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KenView.m"; sourceTree = "<group>"; };
+		BE7EFD0B1E32098F00E1E579 /* UIViewController+KenVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KenVC.h"; sourceTree = "<group>"; };
+		BE7EFD0C1E32098F00E1E579 /* UIViewController+KenVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KenVC.m"; sourceTree = "<group>"; };
+		BE7EFD0D1E32098F00E1E579 /* UIWindow+KenWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+KenWindow.h"; sourceTree = "<group>"; };
+		BE7EFD0E1E32098F00E1E579 /* UIWindow+KenWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+KenWindow.m"; sourceTree = "<group>"; };
+		BE7EFD0F1E32098F00E1E579 /* Weakify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weakify.h; sourceTree = "<group>"; };
+		BE7EFD101E32098F00E1E579 /* KenCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenCategory.h; sourceTree = "<group>"; };
+		BE7EFD121E32098F00E1E579 /* KenFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenFileManager.h; sourceTree = "<group>"; };
+		BE7EFD131E32098F00E1E579 /* KenFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenFileManager.m; sourceTree = "<group>"; };
+		BE7EFD141E32098F00E1E579 /* KenHtmlLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenHtmlLabel.h; sourceTree = "<group>"; };
+		BE7EFD151E32098F00E1E579 /* KenHtmlLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenHtmlLabel.m; sourceTree = "<group>"; };
+		BE7EFD161E32098F00E1E579 /* KenKeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenKeyChainStore.h; sourceTree = "<group>"; };
+		BE7EFD171E32098F00E1E579 /* KenKeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenKeyChainStore.m; sourceTree = "<group>"; };
+		BE7EFD1A1E32098F00E1E579 /* Async.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Async.h; sourceTree = "<group>"; };
+		BE7EFD1B1E32098F00E1E579 /* Async.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Async.m; sourceTree = "<group>"; };
+		BE7EFD1C1E32098F00E1E579 /* GCDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDQueue.h; sourceTree = "<group>"; };
+		BE7EFD1D1E32098F00E1E579 /* GCDQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDQueue.m; sourceTree = "<group>"; };
+		BE7EFD1F1E32098F00E1E579 /* NSObject+KenInvoker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KenInvoker.h"; sourceTree = "<group>"; };
+		BE7EFD201E32098F00E1E579 /* NSObject+KenInvoker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KenInvoker.m"; sourceTree = "<group>"; };
+		BE7EFD211E32098F00E1E579 /* KenUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenUtility.h; sourceTree = "<group>"; };
+		BE7EFD241E32098F00E1E579 /* JsonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonModel.h; sourceTree = "<group>"; };
+		BE7EFD251E32098F00E1E579 /* NSObject+JsonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JsonModel.h"; sourceTree = "<group>"; };
+		BE7EFD261E32098F00E1E579 /* NSObject+JsonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JsonModel.m"; sourceTree = "<group>"; };
+		BE7EFD271E32098F00E1E579 /* XPSuperClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPSuperClassInfo.h; sourceTree = "<group>"; };
+		BE7EFD281E32098F00E1E579 /* XPSuperClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPSuperClassInfo.m; sourceTree = "<group>"; };
+		BE7EFD2A1E32098F00E1E579 /* KenKVOInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenKVOInfo.h; sourceTree = "<group>"; };
+		BE7EFD2B1E32098F00E1E579 /* KenKVOInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenKVOInfo.m; sourceTree = "<group>"; };
+		BE7EFD2C1E32098F00E1E579 /* KenKVOManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenKVOManager.h; sourceTree = "<group>"; };
+		BE7EFD2D1E32098F00E1E579 /* KenKVOManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenKVOManager.m; sourceTree = "<group>"; };
+		BE7EFD2E1E32098F00E1E579 /* KenKVOPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenKVOPlugin.h; sourceTree = "<group>"; };
+		BE7EFD2F1E32098F00E1E579 /* KenKVOPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenKVOPlugin.m; sourceTree = "<group>"; };
+		BE7EFD311E32098F00E1E579 /* KenDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDataModel.h; sourceTree = "<group>"; };
+		BE7EFD321E32098F00E1E579 /* KenDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDataModel.m; sourceTree = "<group>"; };
+		BE7EFD331E32098F00E1E579 /* KenUIModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenUIModel.h; sourceTree = "<group>"; };
+		BE7EFD341E32098F00E1E579 /* KenUIModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenUIModel.m; sourceTree = "<group>"; };
+		BE7EFD351E32098F00E1E579 /* UIViewController+KenKVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KenKVO.h"; sourceTree = "<group>"; };
+		BE7EFD361E32098F00E1E579 /* UIViewController+KenKVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KenKVO.m"; sourceTree = "<group>"; };
+		BE7EFD371E32098F00E1E579 /* XPSuperJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPSuperJson.h; sourceTree = "<group>"; };
+		BE7EFD381E32098F00E1E579 /* XPSuperJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPSuperJson.m; sourceTree = "<group>"; };
+		BE7EFD3A1E32098F00E1E579 /* KenModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenModule.h; sourceTree = "<group>"; };
+		BE7EFD3B1E32098F00E1E579 /* KenModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenModule.m; sourceTree = "<group>"; };
+		BE7EFD3D1E32098F00E1E579 /* KenDeallocMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeallocMonitor.h; sourceTree = "<group>"; };
+		BE7EFD3E1E32098F00E1E579 /* KenDeallocMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeallocMonitor.m; sourceTree = "<group>"; };
+		BE7EFD3F1E32098F00E1E579 /* KenTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenTabBar.h; sourceTree = "<group>"; };
+		BE7EFD401E32098F00E1E579 /* KenTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenTabBar.m; sourceTree = "<group>"; };
+		BE7EFD411E32098F00E1E579 /* KenTabBarConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenTabBarConfig.h; sourceTree = "<group>"; };
+		BE7EFD421E32098F00E1E579 /* KenTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenTabBarItem.h; sourceTree = "<group>"; };
+		BE7EFD431E32098F00E1E579 /* KenTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenTabBarItem.m; sourceTree = "<group>"; };
+		BE7EFD441E32098F00E1E579 /* UITabBarController+KenTBC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+KenTBC.h"; sourceTree = "<group>"; };
+		BE7EFD451E32098F00E1E579 /* UITabBarController+KenTBC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+KenTBC.m"; sourceTree = "<group>"; };
+		BE7EFD491E32098F00E1E579 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BE7EFD811E3209DF00E1E579 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		BE7EFD821E320A3800E1E579 /* KenConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KenConfig.h; sourceTree = "<group>"; };
+		BE7EFD861E320FDC00E1E579 /* KenActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenActionSheet.h; sourceTree = "<group>"; };
+		BE7EFD871E320FDC00E1E579 /* KenActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenActionSheet.m; sourceTree = "<group>"; };
+		BE7EFD891E3211B100E1E579 /* UIFont+Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Font.h"; sourceTree = "<group>"; };
+		BE7EFD8A1E3211B100E1E579 /* UIFont+Font.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Font.m"; sourceTree = "<group>"; };
+		BE7EFD8C1E32126000E1E579 /* KenAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAlertView.h; sourceTree = "<group>"; };
+		BE7EFD8D1E32126000E1E579 /* KenAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlertView.m; sourceTree = "<group>"; };
+		BE7EFD8F1E3214EF00E1E579 /* KenUserInfoDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenUserInfoDM.h; sourceTree = "<group>"; };
+		BE7EFD901E3214EF00E1E579 /* KenUserInfoDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenUserInfoDM.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +200,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C282D5C35903B91E779BC6B /* libPods-KenCarcorder.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840CF56C8BB6E804AFEEFC6E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				89BC8A8B76DFCFFCE3CE60FA /* Pods-KenCarcorder.debug.xcconfig */,
+				B9796F125DA55B6F06179427 /* Pods-KenCarcorder.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BE7EFC981E2F086500E1E579 = {
 			isa = PBXGroup;
 			children = (
 				BE7EFCA31E2F086500E1E579 /* KenCarcorder */,
 				BE7EFCA21E2F086500E1E579 /* Products */,
+				840CF56C8BB6E804AFEEFC6E /* Pods */,
+				E3B31996C3B67BC2C9F55F39 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,14 +237,8 @@
 		BE7EFCA31E2F086500E1E579 /* KenCarcorder */ = {
 			isa = PBXGroup;
 			children = (
-				BE7EFCA71E2F086500E1E579 /* AppDelegate.h */,
-				BE7EFCA81E2F086500E1E579 /* AppDelegate.m */,
-				BE7EFCAA1E2F086500E1E579 /* ViewController.h */,
-				BE7EFCAB1E2F086500E1E579 /* ViewController.m */,
-				BE7EFCAD1E2F086500E1E579 /* Main.storyboard */,
-				BE7EFCB01E2F086500E1E579 /* Assets.xcassets */,
-				BE7EFCB21E2F086500E1E579 /* LaunchScreen.storyboard */,
-				BE7EFCB51E2F086500E1E579 /* Info.plist */,
+				BE7EFCC11E32098F00E1E579 /* Classes */,
+				BE7EFD481E32098F00E1E579 /* Resources */,
 				BE7EFCA41E2F086500E1E579 /* Supporting Files */,
 			);
 			path = KenCarcorder;
@@ -74,9 +247,335 @@
 		BE7EFCA41E2F086500E1E579 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BE7EFCB51E2F086500E1E579 /* Info.plist */,
 				BE7EFCA51E2F086500E1E579 /* main.m */,
+				BE7EFD811E3209DF00E1E579 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE7EFCC11E32098F00E1E579 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCC21E32098F00E1E579 /* AppDelegate.h */,
+				BE7EFCC31E32098F00E1E579 /* AppDelegate.m */,
+				BE7EFD821E320A3800E1E579 /* KenConfig.h */,
+				BE7EFCC41E32098F00E1E579 /* Businesses */,
+				BE7EFD831E320FDC00E1E579 /* Custom */,
+				BE7EFCCE1E32098F00E1E579 /* Manager */,
+				BE7EFCDC1E32098F00E1E579 /* Model */,
+				BE7EFCDD1E32098F00E1E579 /* Vendors */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		BE7EFCC41E32098F00E1E579 /* Businesses */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCC51E32098F00E1E579 /* Base */,
+				BE7EFCCC1E32098F00E1E579 /* KenRootTabC.h */,
+				BE7EFCCD1E32098F00E1E579 /* KenRootTabC.m */,
+			);
+			path = Businesses;
+			sourceTree = "<group>";
+		};
+		BE7EFCC51E32098F00E1E579 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCC81E32098F00E1E579 /* KenBaseVC.h */,
+				BE7EFCC91E32098F00E1E579 /* KenBaseVC.m */,
+				BE7EFCCA1E32098F00E1E579 /* KenNavigationC.h */,
+				BE7EFCCB1E32098F00E1E579 /* KenNavigationC.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		BE7EFCCE1E32098F00E1E579 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCCF1E32098F00E1E579 /* KenDataSManager.h */,
+				BE7EFCD01E32098F00E1E579 /* KenDataSManager.m */,
+				BE7EFCD11E32098F00E1E579 /* KenGCDTimerManager.h */,
+				BE7EFCD21E32098F00E1E579 /* KenGCDTimerManager.m */,
+				BE7EFCD31E32098F00E1E579 /* KenServiceManager.h */,
+				BE7EFCD41E32098F00E1E579 /* KenServiceManager.m */,
+				BE7EFCD51E32098F00E1E579 /* Services */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		BE7EFCD51E32098F00E1E579 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCD61E32098F00E1E579 /* KenAFHttp.h */,
+				BE7EFCD71E32098F00E1E579 /* KenAFHttp.m */,
+				BE7EFCDA1E32098F00E1E579 /* KenHttpBaseService.h */,
+				BE7EFCDB1E32098F00E1E579 /* KenHttpBaseService.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		BE7EFCDC1E32098F00E1E579 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD8F1E3214EF00E1E579 /* KenUserInfoDM.h */,
+				BE7EFD901E3214EF00E1E579 /* KenUserInfoDM.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BE7EFCDD1E32098F00E1E579 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCDE1E32098F00E1E579 /* GestureLock */,
+				BE7EFCE31E32098F00E1E579 /* GTMBase64 */,
+				BE7EFCE71E32098F00E1E579 /* KenCategory */,
+				BE7EFD181E32098F00E1E579 /* KenUtility */,
+			);
+			path = Vendors;
+			sourceTree = "<group>";
+		};
+		BE7EFCDE1E32098F00E1E579 /* GestureLock */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCDF1E32098F00E1E579 /* KKGestureLockPreviewView.h */,
+				BE7EFCE01E32098F00E1E579 /* KKGestureLockPreviewView.m */,
+				BE7EFCE11E32098F00E1E579 /* KKGestureLockView.h */,
+				BE7EFCE21E32098F00E1E579 /* KKGestureLockView.m */,
+			);
+			path = GestureLock;
+			sourceTree = "<group>";
+		};
+		BE7EFCE31E32098F00E1E579 /* GTMBase64 */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCE41E32098F00E1E579 /* GTMBase64.h */,
+				BE7EFCE51E32098F00E1E579 /* GTMBase64.m */,
+				BE7EFCE61E32098F00E1E579 /* GTMDefines.h */,
+			);
+			path = GTMBase64;
+			sourceTree = "<group>";
+		};
+		BE7EFCE71E32098F00E1E579 /* KenCategory */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCE81E32098F00E1E579 /* Category */,
+				BE7EFD101E32098F00E1E579 /* KenCategory.h */,
+				BE7EFD111E32098F00E1E579 /* Utility */,
+			);
+			path = KenCategory;
+			sourceTree = "<group>";
+		};
+		BE7EFCE81E32098F00E1E579 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFCE91E32098F00E1E579 /* NSArray+KenArray.h */,
+				BE7EFCEA1E32098F00E1E579 /* NSArray+KenArray.m */,
+				BE7EFCEB1E32098F00E1E579 /* NSDate+KenDate.h */,
+				BE7EFCEC1E32098F00E1E579 /* NSDate+KenDate.m */,
+				BE7EFCED1E32098F00E1E579 /* NSDictionary+KenDictionary.h */,
+				BE7EFCEE1E32098F00E1E579 /* NSDictionary+KenDictionary.m */,
+				BE7EFCEF1E32098F00E1E579 /* NSMutableArray+KenArray.h */,
+				BE7EFCF01E32098F00E1E579 /* NSMutableArray+KenArray.m */,
+				BE7EFCF11E32098F00E1E579 /* NSMutableDictionary+KenDictionary.h */,
+				BE7EFCF21E32098F00E1E579 /* NSMutableDictionary+KenDictionary.m */,
+				BE7EFCF31E32098F00E1E579 /* NSMutableString+KenString.h */,
+				BE7EFCF41E32098F00E1E579 /* NSMutableString+KenString.m */,
+				BE7EFCF51E32098F00E1E579 /* NSObject+Extension.h */,
+				BE7EFCF61E32098F00E1E579 /* NSObject+Extension.m */,
+				BE7EFCF71E32098F00E1E579 /* NSObject+KenObject.h */,
+				BE7EFCF81E32098F00E1E579 /* NSObject+KenObject.m */,
+				BE7EFCF91E32098F00E1E579 /* NSString+KenString.h */,
+				BE7EFCFA1E32098F00E1E579 /* NSString+KenString.m */,
+				BE7EFCFB1E32098F00E1E579 /* UIApplication+KenApplication.h */,
+				BE7EFCFC1E32098F00E1E579 /* UIApplication+KenApplication.m */,
+				BE7EFCFD1E32098F00E1E579 /* UIBarButtonItem+KenBadge.h */,
+				BE7EFCFE1E32098F00E1E579 /* UIBarButtonItem+KenBadge.m */,
+				BE7EFCFF1E32098F00E1E579 /* UIButton+KenButton.h */,
+				BE7EFD001E32098F00E1E579 /* UIButton+KenButton.m */,
+				BE7EFD011E32098F00E1E579 /* UIColor+KenColor.h */,
+				BE7EFD021E32098F00E1E579 /* UIColor+KenColor.m */,
+				BE7EFD031E32098F00E1E579 /* UIDevice+KenDevice.h */,
+				BE7EFD041E32098F00E1E579 /* UIDevice+KenDevice.m */,
+				BE7EFD051E32098F00E1E579 /* UIImage+KenImage.h */,
+				BE7EFD061E32098F00E1E579 /* UIImage+KenImage.m */,
+				BE7EFD071E32098F00E1E579 /* UILabel+KenLabel.h */,
+				BE7EFD081E32098F00E1E579 /* UILabel+KenLabel.m */,
+				BE7EFD091E32098F00E1E579 /* UIView+KenView.h */,
+				BE7EFD0A1E32098F00E1E579 /* UIView+KenView.m */,
+				BE7EFD0B1E32098F00E1E579 /* UIViewController+KenVC.h */,
+				BE7EFD0C1E32098F00E1E579 /* UIViewController+KenVC.m */,
+				BE7EFD0D1E32098F00E1E579 /* UIWindow+KenWindow.h */,
+				BE7EFD0E1E32098F00E1E579 /* UIWindow+KenWindow.m */,
+				BE7EFD0F1E32098F00E1E579 /* Weakify.h */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		BE7EFD111E32098F00E1E579 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD121E32098F00E1E579 /* KenFileManager.h */,
+				BE7EFD131E32098F00E1E579 /* KenFileManager.m */,
+				BE7EFD141E32098F00E1E579 /* KenHtmlLabel.h */,
+				BE7EFD151E32098F00E1E579 /* KenHtmlLabel.m */,
+				BE7EFD161E32098F00E1E579 /* KenKeyChainStore.h */,
+				BE7EFD171E32098F00E1E579 /* KenKeyChainStore.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		BE7EFD181E32098F00E1E579 /* KenUtility */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD191E32098F00E1E579 /* Async */,
+				BE7EFD1E1E32098F00E1E579 /* Invoker */,
+				BE7EFD211E32098F00E1E579 /* KenUtility.h */,
+				BE7EFD221E32098F00E1E579 /* Model */,
+				BE7EFD391E32098F00E1E579 /* Module */,
+				BE7EFD3C1E32098F00E1E579 /* TabBarController */,
+			);
+			path = KenUtility;
+			sourceTree = "<group>";
+		};
+		BE7EFD191E32098F00E1E579 /* Async */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD1A1E32098F00E1E579 /* Async.h */,
+				BE7EFD1B1E32098F00E1E579 /* Async.m */,
+				BE7EFD1C1E32098F00E1E579 /* GCDQueue.h */,
+				BE7EFD1D1E32098F00E1E579 /* GCDQueue.m */,
+			);
+			path = Async;
+			sourceTree = "<group>";
+		};
+		BE7EFD1E1E32098F00E1E579 /* Invoker */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD1F1E32098F00E1E579 /* NSObject+KenInvoker.h */,
+				BE7EFD201E32098F00E1E579 /* NSObject+KenInvoker.m */,
+			);
+			path = Invoker;
+			sourceTree = "<group>";
+		};
+		BE7EFD221E32098F00E1E579 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD231E32098F00E1E579 /* JsonModelKit */,
+				BE7EFD291E32098F00E1E579 /* KVOPlugin */,
+				BE7EFD301E32098F00E1E579 /* Model */,
+				BE7EFD371E32098F00E1E579 /* XPSuperJson.h */,
+				BE7EFD381E32098F00E1E579 /* XPSuperJson.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BE7EFD231E32098F00E1E579 /* JsonModelKit */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD241E32098F00E1E579 /* JsonModel.h */,
+				BE7EFD251E32098F00E1E579 /* NSObject+JsonModel.h */,
+				BE7EFD261E32098F00E1E579 /* NSObject+JsonModel.m */,
+				BE7EFD271E32098F00E1E579 /* XPSuperClassInfo.h */,
+				BE7EFD281E32098F00E1E579 /* XPSuperClassInfo.m */,
+			);
+			path = JsonModelKit;
+			sourceTree = "<group>";
+		};
+		BE7EFD291E32098F00E1E579 /* KVOPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD2A1E32098F00E1E579 /* KenKVOInfo.h */,
+				BE7EFD2B1E32098F00E1E579 /* KenKVOInfo.m */,
+				BE7EFD2C1E32098F00E1E579 /* KenKVOManager.h */,
+				BE7EFD2D1E32098F00E1E579 /* KenKVOManager.m */,
+				BE7EFD2E1E32098F00E1E579 /* KenKVOPlugin.h */,
+				BE7EFD2F1E32098F00E1E579 /* KenKVOPlugin.m */,
+			);
+			path = KVOPlugin;
+			sourceTree = "<group>";
+		};
+		BE7EFD301E32098F00E1E579 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD311E32098F00E1E579 /* KenDataModel.h */,
+				BE7EFD321E32098F00E1E579 /* KenDataModel.m */,
+				BE7EFD331E32098F00E1E579 /* KenUIModel.h */,
+				BE7EFD341E32098F00E1E579 /* KenUIModel.m */,
+				BE7EFD351E32098F00E1E579 /* UIViewController+KenKVO.h */,
+				BE7EFD361E32098F00E1E579 /* UIViewController+KenKVO.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BE7EFD391E32098F00E1E579 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD3A1E32098F00E1E579 /* KenModule.h */,
+				BE7EFD3B1E32098F00E1E579 /* KenModule.m */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		BE7EFD3C1E32098F00E1E579 /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD3D1E32098F00E1E579 /* KenDeallocMonitor.h */,
+				BE7EFD3E1E32098F00E1E579 /* KenDeallocMonitor.m */,
+				BE7EFD3F1E32098F00E1E579 /* KenTabBar.h */,
+				BE7EFD401E32098F00E1E579 /* KenTabBar.m */,
+				BE7EFD411E32098F00E1E579 /* KenTabBarConfig.h */,
+				BE7EFD421E32098F00E1E579 /* KenTabBarItem.h */,
+				BE7EFD431E32098F00E1E579 /* KenTabBarItem.m */,
+				BE7EFD441E32098F00E1E579 /* UITabBarController+KenTBC.h */,
+				BE7EFD451E32098F00E1E579 /* UITabBarController+KenTBC.m */,
+			);
+			path = TabBarController;
+			sourceTree = "<group>";
+		};
+		BE7EFD481E32098F00E1E579 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD491E32098F00E1E579 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BE7EFD831E320FDC00E1E579 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD841E320FDC00E1E579 /* Category */,
+				BE7EFD851E320FDC00E1E579 /* UIControls */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		BE7EFD841E320FDC00E1E579 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD891E3211B100E1E579 /* UIFont+Font.h */,
+				BE7EFD8A1E3211B100E1E579 /* UIFont+Font.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		BE7EFD851E320FDC00E1E579 /* UIControls */ = {
+			isa = PBXGroup;
+			children = (
+				BE7EFD8C1E32126000E1E579 /* KenAlertView.h */,
+				BE7EFD8D1E32126000E1E579 /* KenAlertView.m */,
+				BE7EFD861E320FDC00E1E579 /* KenActionSheet.h */,
+				BE7EFD871E320FDC00E1E579 /* KenActionSheet.m */,
+			);
+			path = UIControls;
+			sourceTree = "<group>";
+		};
+		E3B31996C3B67BC2C9F55F39 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B9EB43BE141982A17CC39E0C /* libPods-KenCarcorder.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +585,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BE7EFCB81E2F086500E1E579 /* Build configuration list for PBXNativeTarget "KenCarcorder" */;
 			buildPhases = (
+				B99D783527BCA53529F19414 /* [CP] Check Pods Manifest.lock */,
 				BE7EFC9D1E2F086500E1E579 /* Sources */,
 				BE7EFC9E1E2F086500E1E579 /* Frameworks */,
 				BE7EFC9F1E2F086500E1E579 /* Resources */,
+				0834559B13F0D960A81ABAD0 /* [CP] Embed Pods Frameworks */,
+				E03534BDECACD706CF80B459 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -138,45 +640,125 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE7EFCB41E2F086500E1E579 /* LaunchScreen.storyboard in Resources */,
-				BE7EFCB11E2F086500E1E579 /* Assets.xcassets in Resources */,
-				BE7EFCAF1E2F086500E1E579 /* Main.storyboard in Resources */,
+				BE7EFD801E32098F00E1E579 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0834559B13F0D960A81ABAD0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KenCarcorder/Pods-KenCarcorder-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B99D783527BCA53529F19414 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E03534BDECACD706CF80B459 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KenCarcorder/Pods-KenCarcorder-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BE7EFC9D1E2F086500E1E579 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE7EFCAC1E2F086500E1E579 /* ViewController.m in Sources */,
-				BE7EFCA91E2F086500E1E579 /* AppDelegate.m in Sources */,
+				BE7EFD611E32098F00E1E579 /* UIApplication+KenApplication.m in Sources */,
+				BE7EFD751E32098F00E1E579 /* KenKVOPlugin.m in Sources */,
+				BE7EFD5B1E32098F00E1E579 /* NSMutableArray+KenArray.m in Sources */,
+				BE7EFD6E1E32098F00E1E579 /* Async.m in Sources */,
+				BE7EFD541E32098F00E1E579 /* KenHttpBaseService.m in Sources */,
+				BE7EFD4D1E32098F00E1E579 /* KenNavigationC.m in Sources */,
+				BE7EFD4A1E32098F00E1E579 /* AppDelegate.m in Sources */,
+				BE7EFD911E3214EF00E1E579 /* KenUserInfoDM.m in Sources */,
+				BE7EFD881E320FDC00E1E579 /* KenActionSheet.m in Sources */,
+				BE7EFD6B1E32098F00E1E579 /* KenFileManager.m in Sources */,
+				BE7EFD711E32098F00E1E579 /* NSObject+JsonModel.m in Sources */,
+				BE7EFD561E32098F00E1E579 /* KKGestureLockView.m in Sources */,
+				BE7EFD5D1E32098F00E1E579 /* NSMutableString+KenString.m in Sources */,
+				BE7EFD501E32098F00E1E579 /* KenGCDTimerManager.m in Sources */,
+				BE7EFD7A1E32098F00E1E579 /* KenModule.m in Sources */,
+				BE7EFD681E32098F00E1E579 /* UIView+KenView.m in Sources */,
+				BE7EFD601E32098F00E1E579 /* NSString+KenString.m in Sources */,
+				BE7EFD5E1E32098F00E1E579 /* NSObject+Extension.m in Sources */,
+				BE7EFD5C1E32098F00E1E579 /* NSMutableDictionary+KenDictionary.m in Sources */,
+				BE7EFD581E32098F00E1E579 /* NSArray+KenArray.m in Sources */,
+				BE7EFD771E32098F00E1E579 /* KenUIModel.m in Sources */,
+				BE7EFD701E32098F00E1E579 /* NSObject+KenInvoker.m in Sources */,
 				BE7EFCA61E2F086500E1E579 /* main.m in Sources */,
+				BE7EFD8B1E3211B100E1E579 /* UIFont+Font.m in Sources */,
+				BE7EFD4E1E32098F00E1E579 /* KenRootTabC.m in Sources */,
+				BE7EFD741E32098F00E1E579 /* KenKVOManager.m in Sources */,
+				BE7EFD571E32098F00E1E579 /* GTMBase64.m in Sources */,
+				BE7EFD6A1E32098F00E1E579 /* UIWindow+KenWindow.m in Sources */,
+				BE7EFD4F1E32098F00E1E579 /* KenDataSManager.m in Sources */,
+				BE7EFD761E32098F00E1E579 /* KenDataModel.m in Sources */,
+				BE7EFD781E32098F00E1E579 /* UIViewController+KenKVO.m in Sources */,
+				BE7EFD5F1E32098F00E1E579 /* NSObject+KenObject.m in Sources */,
+				BE7EFD641E32098F00E1E579 /* UIColor+KenColor.m in Sources */,
+				BE7EFD651E32098F00E1E579 /* UIDevice+KenDevice.m in Sources */,
+				BE7EFD631E32098F00E1E579 /* UIButton+KenButton.m in Sources */,
+				BE7EFD6C1E32098F00E1E579 /* KenHtmlLabel.m in Sources */,
+				BE7EFD4C1E32098F00E1E579 /* KenBaseVC.m in Sources */,
+				BE7EFD691E32098F00E1E579 /* UIViewController+KenVC.m in Sources */,
+				BE7EFD7C1E32098F00E1E579 /* KenTabBar.m in Sources */,
+				BE7EFD791E32098F00E1E579 /* XPSuperJson.m in Sources */,
+				BE7EFD7D1E32098F00E1E579 /* KenTabBarItem.m in Sources */,
+				BE7EFD6D1E32098F00E1E579 /* KenKeyChainStore.m in Sources */,
+				BE7EFD721E32098F00E1E579 /* XPSuperClassInfo.m in Sources */,
+				BE7EFD551E32098F00E1E579 /* KKGestureLockPreviewView.m in Sources */,
+				BE7EFD671E32098F00E1E579 /* UILabel+KenLabel.m in Sources */,
+				BE7EFD8E1E32126000E1E579 /* KenAlertView.m in Sources */,
+				BE7EFD521E32098F00E1E579 /* KenAFHttp.m in Sources */,
+				BE7EFD511E32098F00E1E579 /* KenServiceManager.m in Sources */,
+				BE7EFD591E32098F00E1E579 /* NSDate+KenDate.m in Sources */,
+				BE7EFD5A1E32098F00E1E579 /* NSDictionary+KenDictionary.m in Sources */,
+				BE7EFD661E32098F00E1E579 /* UIImage+KenImage.m in Sources */,
+				BE7EFD6F1E32098F00E1E579 /* GCDQueue.m in Sources */,
+				BE7EFD621E32098F00E1E579 /* UIBarButtonItem+KenBadge.m in Sources */,
+				BE7EFD7B1E32098F00E1E579 /* KenDeallocMonitor.m in Sources */,
+				BE7EFD7E1E32098F00E1E579 /* UITabBarController+KenTBC.m in Sources */,
+				BE7EFD731E32098F00E1E579 /* KenKVOInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		BE7EFCAD1E2F086500E1E579 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BE7EFCAE1E2F086500E1E579 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		BE7EFCB21E2F086500E1E579 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BE7EFCB31E2F086500E1E579 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BE7EFCB61E2F086500E1E579 /* Debug */ = {
@@ -269,9 +851,12 @@
 		};
 		BE7EFCB91E2F086500E1E579 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89BC8A8B76DFCFFCE3CE60FA /* Pods-KenCarcorder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 58CXSP63D6;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/KenCarcorder/PrefixHeader.pch";
 				INFOPLIST_FILE = KenCarcorder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -282,9 +867,12 @@
 		};
 		BE7EFCBA1E2F086500E1E579 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9796F125DA55B6F06179427 /* Pods-KenCarcorder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 58CXSP63D6;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/KenCarcorder/PrefixHeader.pch";
 				INFOPLIST_FILE = KenCarcorder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -312,6 +900,7 @@
 				BE7EFCBA1E2F086500E1E579 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

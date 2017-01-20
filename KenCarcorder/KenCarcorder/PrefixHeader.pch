@@ -1,0 +1,27 @@
+//
+//  PrefixHeader.pch
+//  KenCarcorder
+//
+//  Created by Ken.Liu on 2017/1/20.
+//  Copyright © 2017年 Ken.Liu. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "KenConfig.h"
+
+#import "UIFont+Font.h"
+#import "KenCategory.h"
+#import "KenUtility.h"
+
+#import "KenBaseVC.h"
+
+//内部
+#import "KenDataSManager.h"
+#import "KenServiceManager.h"
+#import "KenGCDTimerManager.h"
+
+#import "AppDelegate.h"
+
+#endif /* PrefixHeader_pch */

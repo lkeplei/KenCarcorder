@@ -1,0 +1,16 @@
+platform :ios, '8.0'            #所有库支持的iOS最低版本
+inhibit_all_warnings!           #抑制所有cocoapods导入的第三方库的警告
+
+target 'KenCarcorder' do
+#基础部分，都需要引入的
+    #https://github.com/AFNetworking/AFNetworking
+    #最新版本3.1.0，增加了很多新特性，修改了底层，使用NSURLSession处理请求，删除了所有NSURLConnection（xcode7已经deprecated）
+    pod 'AFNetworking', '~> 3.0' #使用大于等于2.0但小于3.0的版本，现在AFNetworking最好用3.0以上了
+
+    #https://github.com/SnapKit/Masonry
+    pod 'Masonry'
+
+    #最新版本已到3.1.6，但当前为了稳定性，移植先用老了，后面再升级支持
+    pod 'MJRefresh'
+
+end
