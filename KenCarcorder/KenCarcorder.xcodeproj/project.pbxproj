@@ -65,6 +65,11 @@
 		BE7EFD8B1E3211B100E1E579 /* UIFont+Font.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD8A1E3211B100E1E579 /* UIFont+Font.m */; };
 		BE7EFD8E1E32126000E1E579 /* KenAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD8D1E32126000E1E579 /* KenAlertView.m */; };
 		BE7EFD911E3214EF00E1E579 /* KenUserInfoDM.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD901E3214EF00E1E579 /* KenUserInfoDM.m */; };
+		BEAD74FA1E480CA3009ADD65 /* KenHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74F91E480CA3009ADD65 /* KenHomeVC.m */; };
+		BEAD74FD1E480CBB009ADD65 /* KenLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74FC1E480CBB009ADD65 /* KenLoginVC.m */; };
+		BEAD75001E480CDC009ADD65 /* KenMineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */; };
+		BEAD75041E480E5A009ADD65 /* KenALarmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75031E480E5A009ADD65 /* KenALarmVC.m */; };
+		BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75061E481008009ADD65 /* KenAccountS.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +198,16 @@
 		BE7EFD8D1E32126000E1E579 /* KenAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlertView.m; sourceTree = "<group>"; };
 		BE7EFD8F1E3214EF00E1E579 /* KenUserInfoDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenUserInfoDM.h; sourceTree = "<group>"; };
 		BE7EFD901E3214EF00E1E579 /* KenUserInfoDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenUserInfoDM.m; sourceTree = "<group>"; };
+		BEAD74F81E480CA3009ADD65 /* KenHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenHomeVC.h; sourceTree = "<group>"; };
+		BEAD74F91E480CA3009ADD65 /* KenHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenHomeVC.m; sourceTree = "<group>"; };
+		BEAD74FB1E480CBB009ADD65 /* KenLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenLoginVC.h; sourceTree = "<group>"; };
+		BEAD74FC1E480CBB009ADD65 /* KenLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenLoginVC.m; sourceTree = "<group>"; };
+		BEAD74FE1E480CDC009ADD65 /* KenMineVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenMineVC.h; sourceTree = "<group>"; };
+		BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenMineVC.m; sourceTree = "<group>"; };
+		BEAD75021E480E5A009ADD65 /* KenALarmVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenALarmVC.h; sourceTree = "<group>"; };
+		BEAD75031E480E5A009ADD65 /* KenALarmVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenALarmVC.m; sourceTree = "<group>"; };
+		BEAD75051E481008009ADD65 /* KenAccountS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAccountS.h; sourceTree = "<group>"; };
+		BEAD75061E481008009ADD65 /* KenAccountS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAccountS.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +287,10 @@
 		BE7EFCC41E32098F00E1E579 /* Businesses */ = {
 			isa = PBXGroup;
 			children = (
+				BEAD75011E480E43009ADD65 /* Alarm */,
+				BEAD74F71E480C89009ADD65 /* Mine */,
+				BEAD74F61E480C49009ADD65 /* Home */,
+				BEAD74F51E480C1E009ADD65 /* Login */,
 				BE7EFCC51E32098F00E1E579 /* Base */,
 				BE7EFCCC1E32098F00E1E579 /* KenRootTabC.h */,
 				BE7EFCCD1E32098F00E1E579 /* KenRootTabC.m */,
@@ -311,6 +330,8 @@
 				BE7EFCD71E32098F00E1E579 /* KenAFHttp.m */,
 				BE7EFCDA1E32098F00E1E579 /* KenHttpBaseService.h */,
 				BE7EFCDB1E32098F00E1E579 /* KenHttpBaseService.m */,
+				BEAD75051E481008009ADD65 /* KenAccountS.h */,
+				BEAD75061E481008009ADD65 /* KenAccountS.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -570,6 +591,42 @@
 			path = UIControls;
 			sourceTree = "<group>";
 		};
+		BEAD74F51E480C1E009ADD65 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				BEAD74FB1E480CBB009ADD65 /* KenLoginVC.h */,
+				BEAD74FC1E480CBB009ADD65 /* KenLoginVC.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		BEAD74F61E480C49009ADD65 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				BEAD74F81E480CA3009ADD65 /* KenHomeVC.h */,
+				BEAD74F91E480CA3009ADD65 /* KenHomeVC.m */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		BEAD74F71E480C89009ADD65 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				BEAD74FE1E480CDC009ADD65 /* KenMineVC.h */,
+				BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		BEAD75011E480E43009ADD65 /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				BEAD75021E480E5A009ADD65 /* KenALarmVC.h */,
+				BEAD75031E480E5A009ADD65 /* KenALarmVC.m */,
+			);
+			path = Alarm;
+			sourceTree = "<group>";
+		};
 		E3B31996C3B67BC2C9F55F39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -700,12 +757,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE7EFD611E32098F00E1E579 /* UIApplication+KenApplication.m in Sources */,
+				BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */,
 				BE7EFD751E32098F00E1E579 /* KenKVOPlugin.m in Sources */,
 				BE7EFD5B1E32098F00E1E579 /* NSMutableArray+KenArray.m in Sources */,
 				BE7EFD6E1E32098F00E1E579 /* Async.m in Sources */,
 				BE7EFD541E32098F00E1E579 /* KenHttpBaseService.m in Sources */,
 				BE7EFD4D1E32098F00E1E579 /* KenNavigationC.m in Sources */,
 				BE7EFD4A1E32098F00E1E579 /* AppDelegate.m in Sources */,
+				BEAD75041E480E5A009ADD65 /* KenALarmVC.m in Sources */,
+				BEAD74FD1E480CBB009ADD65 /* KenLoginVC.m in Sources */,
 				BE7EFD911E3214EF00E1E579 /* KenUserInfoDM.m in Sources */,
 				BE7EFD881E320FDC00E1E579 /* KenActionSheet.m in Sources */,
 				BE7EFD6B1E32098F00E1E579 /* KenFileManager.m in Sources */,
@@ -721,6 +781,7 @@
 				BE7EFD581E32098F00E1E579 /* NSArray+KenArray.m in Sources */,
 				BE7EFD771E32098F00E1E579 /* KenUIModel.m in Sources */,
 				BE7EFD701E32098F00E1E579 /* NSObject+KenInvoker.m in Sources */,
+				BEAD74FA1E480CA3009ADD65 /* KenHomeVC.m in Sources */,
 				BE7EFCA61E2F086500E1E579 /* main.m in Sources */,
 				BE7EFD8B1E3211B100E1E579 /* UIFont+Font.m in Sources */,
 				BE7EFD4E1E32098F00E1E579 /* KenRootTabC.m in Sources */,
@@ -733,6 +794,7 @@
 				BE7EFD5F1E32098F00E1E579 /* NSObject+KenObject.m in Sources */,
 				BE7EFD641E32098F00E1E579 /* UIColor+KenColor.m in Sources */,
 				BE7EFD651E32098F00E1E579 /* UIDevice+KenDevice.m in Sources */,
+				BEAD75001E480CDC009ADD65 /* KenMineVC.m in Sources */,
 				BE7EFD631E32098F00E1E579 /* UIButton+KenButton.m in Sources */,
 				BE7EFD6C1E32098F00E1E579 /* KenHtmlLabel.m in Sources */,
 				BE7EFD4C1E32098F00E1E579 /* KenBaseVC.m in Sources */,

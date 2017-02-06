@@ -83,18 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
          successBlock:(nullable ResponsedSuccessBlock)success failedBlock:(nullable RequestFailureBlock)failed
         responseBlock:(ResponsedBlock)response;
 
-/**
- *  返回基本处理，code 是否为100，如果只需要处理10000特殊值可以直接使用，如有其他特殊码不要使用
- *
- *  @param resDic  返回字典
- *  @param success 成功回调
- *  @param failed  失败回调
- *
- *  @return 返回YES则直接做成功处理，返回NO则不需要做任何处理
- */
-- (BOOL)httpResponseCode:(NSDictionary *)resDic successBlock:(nullable ResponsedSuccessBlock)success
-             failedBlock:(nullable RequestFailureBlock)failed;
-
 @end
 
 NS_ASSUME_NONNULL_END

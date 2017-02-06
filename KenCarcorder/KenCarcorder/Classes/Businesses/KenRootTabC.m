@@ -8,6 +8,9 @@
 
 #import "KenRootTabC.h"
 #import "KenNavigationC.h"
+#import "KenHomeVC.h"
+#import "KenMineVC.h"
+#import "KenALarmVC.h"
 
 @interface KenRootTabC ()
 
@@ -19,25 +22,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    KenBaseVC *homeVC = [[KenBaseVC alloc] init];
+    KenHomeVC *homeVC = [[KenHomeVC alloc] init];
     KenNavigationC *naviHome = [[KenNavigationC alloc] initWithRootViewController:homeVC];
-    homeVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页"
+    homeVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"记录仪"
                                                       image:[UIImage imageNamed:@"ken_tab_home_normal"]
                                               selectedImage:[UIImage imageNamed:@"ken_tab_home_hl"]];
 
-    KenBaseVC *teamVC = [[KenBaseVC alloc] init];
-    KenNavigationC *naviTeam = [[KenNavigationC alloc] initWithRootViewController:teamVC];
-    teamVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"团队"
+    KenALarmVC *alarmVC = [[KenALarmVC alloc] init];
+    KenNavigationC *naviAlarm = [[KenNavigationC alloc] initWithRootViewController:alarmVC];
+    alarmVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"报警"
                                                       image:[UIImage imageNamed:@"ken_tab_home_normal"]
                                               selectedImage:[UIImage imageNamed:@"ken_tab_home_hl"]];
     
-    KenBaseVC *mineVC = [[KenBaseVC alloc] init];
+    KenMineVC *mineVC = [[KenMineVC alloc] init];
     KenNavigationC *naviMine = [[KenNavigationC alloc] initWithRootViewController:mineVC];
-    mineVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的"
+    mineVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我"
                                                       image:[UIImage imageNamed:@"ken_tab_home_normal"]
                                               selectedImage:[UIImage imageNamed:@"ken_tab_home_hl"]];
     
-    [self setViewControllers:@[naviHome, naviTeam, naviMine]];
+    [self setViewControllers:@[naviHome, naviAlarm, naviMine]];
     
     //    [self setupCenterItemWithImage:[UIImage imageNamed:@"location_start_normal"]
     //                   highligtedImage:[UIImage imageNamed:@"location_start_sel"] title:@"center"];

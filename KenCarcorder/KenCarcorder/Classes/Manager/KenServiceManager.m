@@ -8,20 +8,22 @@
 
 #import "KenServiceManager.h"
 #import "KenHttpBaseService.h"
+#import "KenAccountS.h"
 
 @implementation KenServiceManager
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
++ (KenServiceManager *)sharedServiceManager {
+    static KenServiceManager *_sharedManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedManager = [[KenServiceManager alloc] init];
+    });
+    return _sharedManager;
 }
 
 #pragma mark - public method
 - (NSArray *)servicesArray {
-    return @[];
+    return @[[[KenAccountS alloc] init]];
 }
 
 - (NSString *)dispathPath {

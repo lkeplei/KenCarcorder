@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface UIDevice (KenDevice)
+//获取当前mac地址
++ (NSString *)getMacAddress;
+
 //当前系统版本
 + (float)iOSVersion;
 

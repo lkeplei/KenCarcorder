@@ -168,9 +168,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showAlert:(NSString *)title content:(NSString *)content;
 - (void)showAlert:(NSString *)title content:(NSString *)content type:(KenToastType)type;
 
-
-- (void)jumpToLogin;
-
 /**
  *  用户数据请求正常逻辑失败处理，是否要清除用户数据跳到登录
  *

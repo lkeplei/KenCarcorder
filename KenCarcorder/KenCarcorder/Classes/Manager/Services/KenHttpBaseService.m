@@ -111,14 +111,15 @@
     [self asyncPost:url postData:requestInfo startBlock:^{
         SafeHandleBlock(start);
     } responsedBlock:^(NSDictionary *responseDic) {
-        if ([self httpResponseCode:responseDic successBlock:success failedBlock:failed]) {
-            NSDictionary *resDic = [responseDic objectForKey:@"data"];
-            if ([UIApplication isEmpty:resDic]) {
-                SafeHandleBlock(response, @{});
-            } else {
-                SafeHandleBlock(response, resDic);
-            }
-        }
+        SafeHandleBlock(response, responseDic);
+//        if ([self httpResponseCode:responseDic successBlock:success failedBlock:failed]) {
+//            NSDictionary *resDic = [responseDic objectForKey:@"data"];
+//            if ([UIApplication isEmpty:resDic]) {
+//                SafeHandleBlock(response, @{});
+//            } else {
+//                SafeHandleBlock(response, resDic);
+//            }
+//        }
     } failedBlock:^(NSInteger status, NSString *errMsg) {
         SafeHandleBlock(failed, status, kHttpFailedErrorMsg);
     }];
@@ -133,9 +134,9 @@
         if ([UIApplication isNotEmpty:errMsg]) {
             if (resCode == 10000 || resCode == 10002) {
                 //10000 账号被挤掉了；10002 账号未登录
-                SafeHandleBlock(success, NO, YES, errMsg, nil);
+                SafeHandleBlock(success, NO, errMsg, nil);
             } else {
-                SafeHandleBlock(success, NO, NO, errMsg, nil);
+                SafeHandleBlock(success, NO, errMsg, nil);
             }
         } else {
             SafeHandleBlock(failed, kHttpFailedErrorCode, kHttpFailedErrorMsg);
