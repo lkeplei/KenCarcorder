@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KenUserInfoDM : KenDataModel
 
+@property (nonatomic, assign) BOOL rememberPwd;
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSString *userPwd;
 @property (nonatomic, strong) NSArray *deviceGroups;

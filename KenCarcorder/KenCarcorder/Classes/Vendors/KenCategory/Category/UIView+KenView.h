@@ -34,6 +34,10 @@ extern NSString * const CSToastPositionBottom;
 - (void)handleActionForLongPressGesture:(UITapGestureRecognizer *)gesture;
 
 #pragma mark - frame相关属性
+- (CGFloat)minX;
+- (CGFloat)maxX;
+- (CGFloat)minY;
+- (CGFloat)maxY;
 - (CGFloat)height;
 - (CGFloat)width;
 - (CGSize)size;

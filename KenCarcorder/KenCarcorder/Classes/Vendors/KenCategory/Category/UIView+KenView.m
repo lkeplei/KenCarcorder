@@ -108,6 +108,22 @@ NSString * const CSToastPositionBottom          = @"bottom";
 }
 
 #pragma mark - frame相关属性
+- (CGFloat)minX {
+    return CGRectGetMinX(self.frame);
+}
+
+- (CGFloat)maxX {
+    return CGRectGetMaxX(self.frame);
+}
+
+- (CGFloat)minY {
+    return CGRectGetMinY(self.frame);
+}
+
+- (CGFloat)maxY {
+    return CGRectGetMaxY(self.frame);
+}
+
 - (CGFloat)height {
     return self.frame.size.height;
 }

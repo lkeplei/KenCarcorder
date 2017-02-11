@@ -55,7 +55,9 @@ text:content];\
 #define MainScreenWidth             [UIScreen mainScreen].bounds.size.width
 #define MainScreenHeight            [UIScreen mainScreen].bounds.size.height
 
-#define kKenOffset                   (15)
+#define kKenOffset                  (10)
+#define kKenOffsetY(y)              (y / 1334.) * MainScreenHeight
+#define kKenOffsetX(x)              (x / 750.) * MainScreenWidth
 
 /*消除方法弃用警告*/
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
