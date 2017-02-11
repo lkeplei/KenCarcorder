@@ -92,7 +92,7 @@
     }
 }
 
-- (void)resetPwd {
+- (void)registUser {
     if ([_phoneTextField.text length] <= 0) {
         [self showAlert:@"" content:@"手机号不能为空"];
         return;
@@ -111,7 +111,7 @@
     }
     if ([_pwdTextField.text isEqualToString:_pwdConfirmTextField.text]) {
         [[KenServiceManager sharedServiceManager] accountRegist:_phoneTextField.text pwd:_pwdTextField.text verCode:_verCodeTextField.text
-        start:^{
+                                                          reset:NO start:^{
             [self showActivity];
         } successBlock:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
             [self hideActivity];
@@ -138,9 +138,7 @@
                                       font:[UIFont appFontSize15] color:[UIColor appWhiteTextColor]];
     [inputBg addSubview:phone];
     
-    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
-    _phoneTextField = [self addTextFiled:NO content:@"请输入您的手机号码"
-                                    text:[NSString isEmpty:userInfo.userName] ? nil : userInfo.userName
+    _phoneTextField = [self addTextFiled:NO content:@"请输入您的手机号码" text:nil
                                     size:(CGSize){inputBg.width - kKenOffsetX(180) * 2, 30}];
     _phoneTextField.centerY = phone.centerY;
     [inputBg addSubview:_phoneTextField];
@@ -187,7 +185,7 @@
     [inputBg addSubview:_pwdConfirmTextField];
     
     //验证码
-    UILabel *confirmLabel = [UILabel labelWithTxt:@"提交" frame:(CGRect){15, inputBg.maxY + kKenOffset, self.contentView.width - 30, 44}
+    UILabel *confirmLabel = [UILabel labelWithTxt:@"注册" frame:(CGRect){15, inputBg.maxY + kKenOffset, self.contentView.width - 30, 44}
                                              font:[UIFont appFontSize17] color:[UIColor colorWithHexString:@"1969DB"]];
     confirmLabel.backgroundColor = [UIColor whiteColor];
     confirmLabel.layer.cornerRadius = 6;
@@ -197,7 +195,7 @@
     @weakify(self)
     [confirmLabel clicked:^(UIView * _Nonnull view) {
         @strongify(self)
-        [self resetPwd];
+        [self registUser];
     }];
 }
 
