@@ -59,6 +59,11 @@ text:content];\
 #define kKenOffsetY(y)              (y / 1334.) * MainScreenHeight
 #define kKenOffsetX(x)              (x / 750.) * MainScreenWidth
 
+
+//配置
+#define kAppCheckCodeWaiteTime          (120)
+
+
 /*消除方法弃用警告*/
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /*消除未声明_Nonnull等警告*/

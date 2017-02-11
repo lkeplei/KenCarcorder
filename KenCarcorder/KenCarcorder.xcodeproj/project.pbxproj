@@ -72,6 +72,8 @@
 		BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75061E481008009ADD65 /* KenAccountS.m */; };
 		E6D4D1A21E4EB29C00792FA8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6D4D1A11E4EB29C00792FA8 /* Default-568h@2x.png */; };
 		E6D4D1A61E4EDC9800792FA8 /* KenLoginDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */; };
+		E6D4D1A91E4EEFFC00792FA8 /* KenForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A81E4EEFFC00792FA8 /* KenForgetPwdVC.m */; };
+		E6D4D1AC1E4EF00B00792FA8 /* KenRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1AB1E4EF00B00792FA8 /* KenRegisterVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -213,6 +215,10 @@
 		E6D4D1A11E4EB29C00792FA8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E6D4D1A41E4EDC9800792FA8 /* KenLoginDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenLoginDM.h; sourceTree = "<group>"; };
 		E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenLoginDM.m; sourceTree = "<group>"; };
+		E6D4D1A71E4EEFFC00792FA8 /* KenForgetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenForgetPwdVC.h; sourceTree = "<group>"; };
+		E6D4D1A81E4EEFFC00792FA8 /* KenForgetPwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenForgetPwdVC.m; sourceTree = "<group>"; };
+		E6D4D1AA1E4EF00B00792FA8 /* KenRegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenRegisterVC.h; sourceTree = "<group>"; };
+		E6D4D1AB1E4EF00B00792FA8 /* KenRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenRegisterVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -603,6 +609,10 @@
 				E6D4D1A31E4EDC8700792FA8 /* Model */,
 				BEAD74FB1E480CBB009ADD65 /* KenLoginVC.h */,
 				BEAD74FC1E480CBB009ADD65 /* KenLoginVC.m */,
+				E6D4D1A71E4EEFFC00792FA8 /* KenForgetPwdVC.h */,
+				E6D4D1A81E4EEFFC00792FA8 /* KenForgetPwdVC.m */,
+				E6D4D1AA1E4EF00B00792FA8 /* KenRegisterVC.h */,
+				E6D4D1AB1E4EF00B00792FA8 /* KenRegisterVC.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -777,6 +787,7 @@
 				BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */,
 				BE7EFD751E32098F00E1E579 /* KenKVOPlugin.m in Sources */,
 				BE7EFD5B1E32098F00E1E579 /* NSMutableArray+KenArray.m in Sources */,
+				E6D4D1A91E4EEFFC00792FA8 /* KenForgetPwdVC.m in Sources */,
 				BE7EFD6E1E32098F00E1E579 /* Async.m in Sources */,
 				BE7EFD541E32098F00E1E579 /* KenHttpBaseService.m in Sources */,
 				BE7EFD4D1E32098F00E1E579 /* KenNavigationC.m in Sources */,
@@ -810,6 +821,7 @@
 				BE7EFD781E32098F00E1E579 /* UIViewController+KenKVO.m in Sources */,
 				BE7EFD5F1E32098F00E1E579 /* NSObject+KenObject.m in Sources */,
 				BE7EFD641E32098F00E1E579 /* UIColor+KenColor.m in Sources */,
+				E6D4D1AC1E4EF00B00792FA8 /* KenRegisterVC.m in Sources */,
 				BE7EFD651E32098F00E1E579 /* UIDevice+KenDevice.m in Sources */,
 				BEAD75001E480CDC009ADD65 /* KenMineVC.m in Sources */,
 				BE7EFD631E32098F00E1E579 /* UIButton+KenButton.m in Sources */,

@@ -71,7 +71,7 @@
     
     _getCheckCodeBtn = [UIButton buttonWithImg:@"获取验证码" zoomIn:NO image:[UIImage imageNamed:@"login_send_code"]
                                       imagesec:[UIImage imageNamed:@"login_send_code_sec"]
-                                        target:self action:@selector(getCodeBtnClicked)];
+                                        target:self action:@selector(getCodeBtnClicked:)];
     [_getCheckCodeBtn.titleLabel setFont:[UIFont appFontSize11]];
     _getCheckCodeBtn.center = CGPointMake(_checkView.width - _getCheckCodeBtn.width / 2 - 10, _checkView.height / 2);
     [_checkView addSubview:_getCheckCodeBtn];
@@ -122,8 +122,46 @@
     }];
 }
 
-- (void)getCodeBtnClicked {
+- (void)getCodeBtnClicked:(UIButton *)button {
+    if ([_accountTextField.text length] <= 0){
+        [self showAlert:@"" content:@"手机号不能为空"];
+        return;
+    }
+    if ([_accountTextField.text length] != 11) {
+        [self showAlert:@"" content:@"请输入正确的手机号"];
+        return;
+    }
     
+    [button setEnabled:NO];
+    _waitingTime = kAppCheckCodeWaiteTime;
+    [_getCheckCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码(%zd)", _waitingTime] forState:UIControlStateNormal];
+    _checkTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(checkCodeTimerOut) userInfo:nil repeats:YES];
+    
+    [[KenServiceManager sharedServiceManager] accountGetVerCode:_accountTextField.text start:^{
+        [self showActivity];
+    } successBlock:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        [self hideActivity];
+        if (successful) {
+            
+        } else {
+            [self showAlert:@"" content:errMsg];
+        }
+    } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+        [self hideActivity];
+    }];
+}
+
+- (void)checkCodeTimerOut {
+    _waitingTime--;
+    if (_waitingTime > 0) {
+        [_getCheckCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码(%zd)", _waitingTime] forState:UIControlStateNormal];
+    } else {
+        [_getCheckCodeBtn setEnabled:YES];
+        [_getCheckCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        
+        [_checkTimer invalidate];
+        _checkTimer = nil;
+    }
 }
 
 #pragma mark - textField
@@ -275,7 +313,8 @@
                                           color:[UIColor whiteColor]];
     [_registV addSubview:registerLabel];
     [registerLabel clicked:^(UIView * _Nonnull view) {
-        
+        @strongify(self)
+        [self pushViewControllerString:@"KenRegisterVC" animated:YES];
     }];
 }
 
@@ -287,8 +326,10 @@
     UILabel *label = [UILabel labelWithTxt:@"忘记密码？" frame:(CGRect){0, 0, forgetBg.size} font:[UIFont appFontSize14]
                                           color:[UIColor whiteColor]];
     [forgetBg addSubview:label];
+    @weakify(self)
     [label clicked:^(UIView * _Nonnull view) {
-        
+        @strongify(self)
+        [self pushViewControllerString:@"KenForgetPwdVC" animated:YES];
     }];
 }
 

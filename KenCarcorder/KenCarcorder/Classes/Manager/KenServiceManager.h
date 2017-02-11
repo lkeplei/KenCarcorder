@@ -29,4 +29,7 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 - (void)accountloginWithName:(NSString *)name pwd:(NSString *)pwd verCode:(NSString *)verCode
                        start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
+- (void)accountGetVerCode:(NSString *)phone start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success
+              failedBlock:(RequestFailureBlock)failed;
+
 @end

@@ -38,4 +38,20 @@
                 SafeHandleBlock(success, YES, nil, [KenLoginDM initWithJsonDictionary:responseData]);
             }];
 }
+
+- (void)accountGetVerCode:(NSString *)phone start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success
+              failedBlock:(RequestFailureBlock)failed {
+    NSDictionary *request =  @{@"mobile":phone};
+
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"user/vericode.json"]
+            requestInfo:request start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                if ([[responseData objectForKey:@"result"] intValue] != 0) {
+                    SafeHandleBlock(success, NO, [responseData objectForKey:@"message"], nil);
+                } else {
+                    SafeHandleBlock(success, YES, nil, nil);
+                }
+            }];
+}
+
+
 @end
