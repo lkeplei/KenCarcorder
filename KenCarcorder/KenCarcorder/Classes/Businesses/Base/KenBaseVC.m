@@ -40,19 +40,16 @@
 	nav.colorMaskView.hidden = YES;
 	
 	//如果当前视图控制器不是根视图，并且不隐藏返回按钮，就显示默认的返回按钮
+    if (!self.hideBackBtn) {
+        if (self.navigationController.viewControllers.count > 1) {
+            [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"]
+                               selector:@selector(popViewController)];
+        }
+    } else {
+        [self setLeftNavItemWithText:@"" selector:@selector(popViewController)];
+        
+    }
 	
-		if (!self.hideBackBtn) {
-			if (self.navigationController.viewControllers.count > 1) {
-				[self setLeftNavItemWithImg:[UIImage imageNamed:@"cw_public_nav_back"]
-								   selector:@selector(popViewController)];
-			}
-		} else {
-			[self setLeftNavItemWithText:@"" selector:@selector(popViewController)];
-			
-		}
-	
-	
-
     //关闭系统自动的下移功能(64)
     self.automaticallyAdjustsScrollViewInsets = NO;
     if (_screenType != kKenViewScreenUnkown) {
@@ -61,7 +58,7 @@
 		
 		//带导航栏的视图，默认显示白色，其他的默认透明
 		if (_screenType == kKenViewScreenNormal) {
-			self.navBarColor = [UIColor whiteColor];
+			self.navBarColor = [UIColor colorWithHexString:@"#0075D9"];
 		} else {
 			self.navBarColor = [UIColor clearColor];
 		}
@@ -347,7 +344,7 @@
 }
 
 - (void)setNavTitle:(NSString *)navTitle {
-    [self setNavTitle:navTitle color:[UIColor appAssistBlackColor]];
+    [self setNavTitle:navTitle color:[UIColor appWhiteTextColor]];
 }
 
 - (void)setNavTitle:(NSString *)navTitle color:(UIColor *)color {
@@ -372,145 +369,6 @@
 #pragma mark - 页面特殊数据加载
 - (void)loadData:(KenBaseVC *)parentVC finish:(void(^)(BOOL push))finishBlock {
     SafeHandleBlock(finishBlock, YES);
-}
-
-- (void)strokBgWithHeight:(CGFloat)height {
-    [self.contentView.layer addSublayer:[self gradientLayerWithHeight:height]];
-}
-
-- (CAGradientLayer *)gradientLayerWithHeight:(CGFloat)height {
-    UIBezierPath *progressline = [UIBezierPath bezierPath];
-    [progressline moveToPoint:CGPointMake(0, height / 2)];
-    [progressline addLineToPoint:CGPointMake(self.contentView.width, height / 2)];
-    [progressline setLineWidth:height];
-    [progressline setLineCapStyle:kCGLineCapSquare];
-    
-    CAShapeLayer *_shapeLayer = [CAShapeLayer layer];
-    _shapeLayer.fillColor = [[UIColor clearColor] CGColor];
-    _shapeLayer.strokeColor = [[UIColor redColor] CGColor];
-    _shapeLayer.lineWidth = height;
-    _shapeLayer.strokeEnd = 1;
-    _shapeLayer.lineCap = kCALineCapSquare;
-    _shapeLayer.path = progressline.CGPath;
-    
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.startPoint = CGPointMake(0.0, 0.9);
-    gradientLayer.endPoint = CGPointMake(1.0, 0.4);
-    gradientLayer.frame = CGRectMake(0, 0, self.contentView.width * 1.4, height * 1.2);
-    NSArray *colors = @[(id)[UIColor colorWithHexString:@"#00AA6E"].CGColor,
-                        (id)[UIColor colorWithHexString:@"#33C752"].CGColor,
-                        (id)[UIColor colorWithHexString:@"#C2EF06"].CGColor];
-    gradientLayer.colors = colors;
-    
-    [gradientLayer setMask:_shapeLayer];
-    
-    return gradientLayer;
-}
-
-#pragma mark - empty view
-- (void)showViewEmpty:(UIView *)view message:(NSString *)message {
-    UIView *emptyV = (UIImageView *)[view viewWithTag:9999];
-    if (emptyV) {
-        [emptyV setHidden:NO];
-    } else {
-        emptyV = [[UIView alloc] initWithFrame:(CGRect){0,0, view.size}];
-        emptyV.tag   = 9999;
-        [view addSubview:emptyV];
-        
-        UIImageView *emptyImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cw_public_empty"]];
-        emptyImgV.center = CGPointMake(emptyV.width / 2, emptyV.height / 2 - emptyImgV.height);
-        [emptyV addSubview:emptyImgV];
-        
-        UILabel *info = [UILabel labelWithTxt:message
-                                        frame:(CGRect){0, CGRectGetMaxY(emptyImgV.frame) + kKenOffset, view.width, 20}
-                                         font:[UIFont appFontSize15] color:[UIColor appGrayTextColor]];
-        [emptyV addSubview:info];
-    }
-}
-- (void)showViewEmpty:(UIView *)view {
-    [self showViewEmpty:view message:@"还没有内容耶，少年快加把劲"];
-}
-
-- (void)hideViewEmpty:(UIView *)view {
-    UIImageView *emptyImgV = (UIImageView *)[view viewWithTag:9999];
-    if (emptyImgV) {
-        [emptyImgV setHidden:YES];
-    }
-}
-
-- (void)showErrorViewForReload:(UIView *)view selector:(SEL)sel {
-    UIView *errView = (UIView *)[view viewWithTag:100009];
-    if (errView == nil) {
-        UIView *errView = [[UIView alloc] initWithFrame:(CGRect){0,0, view.size}];
-        errView.backgroundColor = [UIColor appBackgroundColor];
-        errView.tag = 100009;
-        [view addSubview:errView];
-        
-        UIImageView *errorImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cw_public_load_error"]];
-        errorImgV.center = CGPointMake(errView.width / 2, errView.height / 2 - errorImgV.height);
-        [errView addSubview:errorImgV];
-        
-        UILabel *descLabel = [UILabel labelWithTxt:@"网络出错，请检查网络后重试"
-                                             frame:(CGRect){0, CGRectGetMaxY(errorImgV.frame) + kKenOffset, view.width, 20}
-                                              font:[UIFont systemFontOfSize:16] color:[UIColor appGrayTextColor]];
-        [errView addSubview:descLabel];
-        
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake((errView.width - 100) / 2, CGRectGetMaxY(descLabel.frame) + kKenOffset, 100, 31);
-        button.titleLabel.font = [UIFont appFontSize14];
-        [button setBackgroundColor:[UIColor clearColor]];
-        
-        [button setTitle:@"重新加载" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor appMainColor] forState:UIControlStateNormal];
-        
-        button.layer.borderColor = [UIColor appMainColor].CGColor;
-        button.layer.cornerRadius = 6;
-        button.layer.borderWidth = 1;
-        
-        [button addTarget:self action:sel forControlEvents:UIControlEventTouchUpInside];
-        
-        [errView addSubview:button];
-    }
-}
-
-- (void)hideErrorViewForReload:(UIView *)view {
-    UIView *errView = (UIView *)[view viewWithTag:100009];
-    if (errView) {
-        [errView removeFromSuperview];
-        errView = nil;
-    }
-}
-
-- (void)showLoading:(UIView *)view {
-    UIImageView *animation = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cw_loading_1.png"]];
-    animation.center = CGPointMake(view.width / 2, view.height / 2);
-    animation.animationImages = @[[UIImage imageNamed:@"cw_loading_1.png"],
-                                        [UIImage imageNamed:@"cw_loading_2.png"],
-                                        [UIImage imageNamed:@"cw_loading_3.png"],
-                                        [UIImage imageNamed:@"cw_loading_4.png"],
-                                        [UIImage imageNamed:@"cw_loading_5.png"],
-                                        [UIImage imageNamed:@"cw_loading_6.png"],
-                                        [UIImage imageNamed:@"cw_loading_7.png"],
-                                        [UIImage imageNamed:@"cw_loading_8.png"],
-                                        [UIImage imageNamed:@"cw_loading_9.png"],
-                                        [UIImage imageNamed:@"cw_loading_10.png"],
-                                        [UIImage imageNamed:@"cw_loading_11.png"],
-                                        [UIImage imageNamed:@"cw_loading_12.png"],
-                                        [UIImage imageNamed:@"cw_loading_13.png"]];
-    animation.tag = 110009;
-    animation.animationDuration = 0.6;         // 设定所有的图片在多少秒内播放完毕
-    animation.animationRepeatCount = 0;        // 不重复播放多少遍，0表示无数遍
-    [animation startAnimating];                // 开始播放
-    [view addSubview:animation];
-}
-
-- (void)hideLoading:(UIView *)view {
-    UIImageView *loading = (UIImageView *)[view viewWithTag:110009];
-    if (loading) {
-        [loading stopAnimating];
-        [loading removeFromSuperview];
-        loading = nil;
-    }
 }
 
 - (void)showAlert:(NSString *)title content:(NSString *)content {

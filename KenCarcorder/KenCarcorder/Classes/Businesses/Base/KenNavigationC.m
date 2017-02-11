@@ -22,7 +22,6 @@
 		self.navigationBar.barStyle = UIBarStyleDefault;
 		[self.navigationBar setShadowImage:[UIImage new]];
 		
-		
         __weak typeof (self) weakSelf = self;
         if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
             self.interactivePopGestureRecognizer.delegate = weakSelf;

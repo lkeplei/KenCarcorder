@@ -53,5 +53,27 @@
             }];
 }
 
+- (void)accountRegist:(NSString *)phone pwd:(NSString *)pwd verCode:(NSString *)verCode
+                start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    NSDictionary *request =   @{@"userId":phone,
+                                @"registerCode":[NSString isNotEmpty:verCode] ? verCode : @"",
+                                @"password":pwd,
+                                @"brand":@"Apple",
+                                @"device":[[UIDevice currentDevice] model],
+                                @"model":[[UIDevice currentDevice] name],
+                                @"releaseVersion":[[UIDevice currentDevice] systemVersion],
+                                @"sdkVersion":[[UIDevice currentDevice] systemVersion],
+                                @"mac":[UIDevice getMacAddress],
+                                @"action":@"regusr"};
+    
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"user/register.json"]
+            requestInfo:request start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                if ([[responseData objectForKey:@"result"] intValue] != 0) {
+                    SafeHandleBlock(success, NO, [responseData objectForKey:@"message"], nil);
+                } else {
+                    SafeHandleBlock(success, YES, nil, nil);
+                }
+            }];
+}
 
 @end

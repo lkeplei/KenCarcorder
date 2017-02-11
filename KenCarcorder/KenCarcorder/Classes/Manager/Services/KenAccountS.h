@@ -15,4 +15,8 @@
 
 - (void)accountGetVerCode:(NSString *)phone start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success
               failedBlock:(RequestFailureBlock)failed;
+
+- (void)accountRegist:(NSString *)phone pwd:(NSString *)pwd verCode:(NSString *)verCode
+                start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
+
 @end

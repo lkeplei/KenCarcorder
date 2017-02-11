@@ -321,6 +321,7 @@
 - (void)initForgetPwd {
     UIImageView *forgetBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_forget_bg"]];
     forgetBg.frame = (CGRect){0, self.contentView.height - forgetBg.height, self.contentView.width, forgetBg.height};
+    [forgetBg setUserInteractionEnabled:YES];
     [self.contentView addSubview:forgetBg];
     
     UILabel *label = [UILabel labelWithTxt:@"忘记密码？" frame:(CGRect){0, 0, forgetBg.size} font:[UIFont appFontSize14]
