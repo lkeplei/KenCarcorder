@@ -13,4 +13,6 @@ target 'KenCarcorder' do
     #最新版本已到3.1.6，但当前为了稳定性，移植先用老了，后面再升级支持
     pod 'MJRefresh'
 
+    pod 'SDWebImage'
+
 end

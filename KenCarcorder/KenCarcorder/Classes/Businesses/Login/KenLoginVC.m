@@ -34,6 +34,7 @@
     self = [super init];
     if (self) {
         self.screenType = kKenViewScreenFull;
+        self.hideBackBtn = YES;
         
         KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
         if (userInfo == nil) {
