@@ -77,7 +77,6 @@
 		E61FAA9A1E58185500F67E61 /* KenGroupManagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA991E58185500F67E61 /* KenGroupManagerVC.m */; };
 		E61FAA9D1E58186200F67E61 /* KenDeviceManagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA9C1E58186200F67E61 /* KenDeviceManagerVC.m */; };
 		E61FAAA01E58193C00F67E61 /* KenCarcorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA9F1E58193C00F67E61 /* KenCarcorder.m */; };
-		E6D4D1A21E4EB29C00792FA8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6D4D1A11E4EB29C00792FA8 /* Default-568h@2x.png */; };
 		E6D4D1A61E4EDC9800792FA8 /* KenLoginDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */; };
 		E6D4D1A91E4EEFFC00792FA8 /* KenForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A81E4EEFFC00792FA8 /* KenForgetPwdVC.m */; };
 		E6D4D1AC1E4EF00B00792FA8 /* KenRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1AB1E4EF00B00792FA8 /* KenRegisterVC.m */; };
@@ -233,7 +232,6 @@
 		E61FAA9C1E58186200F67E61 /* KenDeviceManagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeviceManagerVC.m; sourceTree = "<group>"; };
 		E61FAA9E1E58193C00F67E61 /* KenCarcorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenCarcorder.h; sourceTree = "<group>"; };
 		E61FAA9F1E58193C00F67E61 /* KenCarcorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenCarcorder.m; sourceTree = "<group>"; };
-		E6D4D1A11E4EB29C00792FA8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E6D4D1A41E4EDC9800792FA8 /* KenLoginDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenLoginDM.h; sourceTree = "<group>"; };
 		E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenLoginDM.m; sourceTree = "<group>"; };
 		E6D4D1A71E4EEFFC00792FA8 /* KenForgetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenForgetPwdVC.h; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 		BE7EFC981E2F086500E1E579 = {
 			isa = PBXGroup;
 			children = (
-				E6D4D1A11E4EB29C00792FA8 /* Default-568h@2x.png */,
 				BE7EFCA31E2F086500E1E579 /* KenCarcorder */,
 				BE7EFCA21E2F086500E1E579 /* Products */,
 				840CF56C8BB6E804AFEEFC6E /* Pods */,
@@ -654,16 +651,16 @@
 		BEAD74F71E480C89009ADD65 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
-				BEAD74FE1E480CDC009ADD65 /* KenMineVC.h */,
-				BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */,
 				E61FAA921E58180D00F67E61 /* KenAboutUsVC.h */,
-				E61FAA951E58184800F67E61 /* KenModifyPwdVC.h */,
-				E61FAA961E58184800F67E61 /* KenModifyPwdVC.m */,
 				E61FAA931E58180D00F67E61 /* KenAboutUsVC.m */,
-				E61FAA981E58185500F67E61 /* KenGroupManagerVC.h */,
-				E61FAA991E58185500F67E61 /* KenGroupManagerVC.m */,
 				E61FAA9B1E58186200F67E61 /* KenDeviceManagerVC.h */,
 				E61FAA9C1E58186200F67E61 /* KenDeviceManagerVC.m */,
+				E61FAA981E58185500F67E61 /* KenGroupManagerVC.h */,
+				E61FAA991E58185500F67E61 /* KenGroupManagerVC.m */,
+				BEAD74FE1E480CDC009ADD65 /* KenMineVC.h */,
+				BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */,
+				E61FAA951E58184800F67E61 /* KenModifyPwdVC.h */,
+				E61FAA961E58184800F67E61 /* KenModifyPwdVC.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -775,7 +772,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE7EFD801E32098F00E1E579 /* Assets.xcassets in Resources */,
-				E6D4D1A21E4EB29C00792FA8 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1000,7 @@
 			baseConfigurationReference = 89BC8A8B76DFCFFCE3CE60FA /* Pods-KenCarcorder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = YAZ7V8384Y;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/KenCarcorder/PrefixHeader.pch";
 				INFOPLIST_FILE = KenCarcorder/Info.plist;
@@ -1020,6 +1017,7 @@
 			baseConfigurationReference = B9796F125DA55B6F06179427 /* Pods-KenCarcorder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = YAZ7V8384Y;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/KenCarcorder/PrefixHeader.pch";
 				INFOPLIST_FILE = KenCarcorder/Info.plist;
