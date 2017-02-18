@@ -14,6 +14,14 @@
 @end
 
 @implementation KenRecorderVC
+#pragma mark - life cycle
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.screenType = kKenViewScreenFull;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,6 +48,7 @@
     
     [item1 clicked:^(UIView * _Nonnull view) {
         DebugLog("远程连接行车记录仪");
+        [self pushViewControllerString:@"KenSelectVC" animated:YES];
     }];
     
     //直接连接
