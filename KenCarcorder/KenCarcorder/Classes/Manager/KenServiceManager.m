@@ -9,6 +9,7 @@
 #import "KenServiceManager.h"
 #import "KenHttpBaseService.h"
 #import "KenAccountS.h"
+#import "KenDeviceS.h"
 
 @implementation KenServiceManager
 
@@ -23,7 +24,8 @@
 
 #pragma mark - public method
 - (NSArray *)servicesArray {
-    return @[[[KenAccountS alloc] init]];
+    return @[[[KenAccountS alloc] init],
+             [[KenDeviceS alloc] init]];
 }
 
 - (NSString *)dispathPath {

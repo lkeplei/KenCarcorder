@@ -29,6 +29,7 @@
     _informationTable.backgroundColor = [UIColor clearColor];
     _informationTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _informationTable.tableHeaderView = [self getTableHeadView];
+    _informationTable.scrollEnabled = NO;
     [self.contentView addSubview:_informationTable];
 }
 
