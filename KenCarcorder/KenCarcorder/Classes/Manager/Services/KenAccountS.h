@@ -10,7 +10,9 @@
 
 @interface KenAccountS : KenHttpBaseService
 
-- (void)accountloginWithName:(NSString *)name pwd:(NSString *)pwd verCode:(NSString *)verCode
+- (void)accountLogout;
+
+- (void)accountLoginWithName:(NSString *)name pwd:(NSString *)pwd verCode:(NSString *)verCode
                        start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
 - (void)accountGetVerCode:(NSString *)phone start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success

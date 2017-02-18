@@ -23,5 +23,6 @@
 #import "KenGCDTimerManager.h"
 
 #import "AppDelegate.h"
+#import "KenCarcorder.h"
 
 #endif /* PrefixHeader_pch */

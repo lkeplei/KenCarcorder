@@ -107,7 +107,7 @@
         return;
     }
     
-    [[KenServiceManager sharedServiceManager] accountloginWithName:_accountTextField.text pwd:_pwdTextField.text verCode:_checkTextField.text
+    [[KenServiceManager sharedServiceManager] accountLoginWithName:_accountTextField.text pwd:_pwdTextField.text verCode:_checkTextField.text
                                                              start:^{
         [self showActivity];
     } successBlock:^(BOOL successful, NSString * _Nullable errMsg, KenLoginDM *loginDM) {
