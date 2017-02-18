@@ -73,7 +73,6 @@
 		E61FAA8D1E57E83300F67E61 /* KenRecorderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA8C1E57E83300F67E61 /* KenRecorderVC.m */; };
 		E61FAA911E57F6A300F67E61 /* KenPlayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA901E57F6A300F67E61 /* KenPlayVC.m */; };
 		E61FAA941E58180D00F67E61 /* KenAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA931E58180D00F67E61 /* KenAboutUsVC.m */; };
-		E61FAA971E58184800F67E61 /* KenModifyPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA961E58184800F67E61 /* KenModifyPwdVC.m */; };
 		E61FAA9A1E58185500F67E61 /* KenGroupManagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA991E58185500F67E61 /* KenGroupManagerVC.m */; };
 		E61FAA9D1E58186200F67E61 /* KenDeviceManagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA9C1E58186200F67E61 /* KenDeviceManagerVC.m */; };
 		E61FAAA01E58193C00F67E61 /* KenCarcorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA9F1E58193C00F67E61 /* KenCarcorder.m */; };
@@ -226,8 +225,6 @@
 		E61FAA901E57F6A300F67E61 /* KenPlayVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPlayVC.m; sourceTree = "<group>"; };
 		E61FAA921E58180D00F67E61 /* KenAboutUsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAboutUsVC.h; sourceTree = "<group>"; };
 		E61FAA931E58180D00F67E61 /* KenAboutUsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAboutUsVC.m; sourceTree = "<group>"; };
-		E61FAA951E58184800F67E61 /* KenModifyPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenModifyPwdVC.h; sourceTree = "<group>"; };
-		E61FAA961E58184800F67E61 /* KenModifyPwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenModifyPwdVC.m; sourceTree = "<group>"; };
 		E61FAA981E58185500F67E61 /* KenGroupManagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenGroupManagerVC.h; sourceTree = "<group>"; };
 		E61FAA991E58185500F67E61 /* KenGroupManagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenGroupManagerVC.m; sourceTree = "<group>"; };
 		E61FAA9B1E58186200F67E61 /* KenDeviceManagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceManagerVC.h; sourceTree = "<group>"; };
@@ -669,8 +666,6 @@
 				E61FAA991E58185500F67E61 /* KenGroupManagerVC.m */,
 				BEAD74FE1E480CDC009ADD65 /* KenMineVC.h */,
 				BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */,
-				E61FAA951E58184800F67E61 /* KenModifyPwdVC.h */,
-				E61FAA961E58184800F67E61 /* KenModifyPwdVC.m */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -884,7 +879,6 @@
 				BE7EFD641E32098F00E1E579 /* UIColor+KenColor.m in Sources */,
 				E6D4D1AC1E4EF00B00792FA8 /* KenRegisterVC.m in Sources */,
 				BE7EFD651E32098F00E1E579 /* UIDevice+KenDevice.m in Sources */,
-				E61FAA971E58184800F67E61 /* KenModifyPwdVC.m in Sources */,
 				BEAD75001E480CDC009ADD65 /* KenMineVC.m in Sources */,
 				BE7EFD631E32098F00E1E579 /* UIButton+KenButton.m in Sources */,
 				BE7EFD6C1E32098F00E1E579 /* KenHtmlLabel.m in Sources */,

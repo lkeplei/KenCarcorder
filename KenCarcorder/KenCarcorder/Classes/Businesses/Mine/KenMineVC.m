@@ -97,7 +97,7 @@
         [_informationTable reloadData];
     } else {
         if (indexPath.section == 0 && indexPath.row == 1) {
-            [self pushViewControllerString:@"KenModifyPwdVC" animated:YES];
+            [self pushViewControllerString:@"KenForgetPwdVC" animated:YES];
         } else if (indexPath.section == 1 && indexPath.row == 0) {
             [self pushViewControllerString:@"KenGroupManagerVC" animated:YES];
         } else if (indexPath.section == 1 && indexPath.row == 1) {
