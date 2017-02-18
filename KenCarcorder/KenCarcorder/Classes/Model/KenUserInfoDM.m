@@ -26,7 +26,7 @@ static KenUserInfoDM *userInfo = nil;
 + (NSDictionary *)setDefaultValueMap {
     return @{@"userName":@"",
              @"userPwd":@"",
-             @"deviceGroups":@[],
+             @"deviceGroups":@[@"家",@"商店",@"单位",@"其他"],
              @"deviceArray":@[]};
 }
 

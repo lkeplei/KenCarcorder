@@ -34,4 +34,49 @@
             }];
 }
 
+- (void)deviceGetGroups:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"group/load.json"]
+            requestInfo:nil start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                if ([[responseData objectForKey:@"result"] intValue] != 0) {
+                    SafeHandleBlock(success, NO, [responseData objectForKey:@"message"], nil);
+                } else {
+                    NSMutableArray *groups = [NSMutableArray array];
+                    NSArray *array = [responseData objectForKey:@"list"];
+                    
+                    if ([array count] > 0) {
+                        for (int i = 0; i < [array count]; i++) {
+                            [groups addObject:[[array objectAtIndex:i] objectForKey:@"name"]];
+                        }
+                    }
+                    
+                    SafeHandleBlock(success, YES, nil, groups);
+                }
+            }];
+}
+
+- (void)deviceSaveGroups:(NSArray *)groups
+             success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"group/saveAll.json"] requestInfo:@{@"groupNames":[groups toJson]}
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      if ([[responseData objectForKey:@"result"] intValue] != 0) {
+                          SafeHandleBlock(success, NO, [responseData objectForKey:@"message"], nil);
+                      } else {
+                          SafeHandleBlock(success, YES, nil, nil);
+                      }
+                  }];
+}
+
+- (void)deviceSetGroupName:(NSString *)name groupNo:(NSInteger)groupNo
+                 success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    NSDictionary *request = @{@"groupNo":[NSNumber numberWithInteger:groupNo], @"groupName":name};
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"group/save.json"] requestInfo:request
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      if ([[responseData objectForKey:@"result"] intValue] != 0) {
+                          SafeHandleBlock(success, NO, [responseData objectForKey:@"message"], nil);
+                      } else {
+                          SafeHandleBlock(success, YES, nil, nil);
+                      }
+                  }];
+}
+
 @end

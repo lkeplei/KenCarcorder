@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL rememberPwd;
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, strong) NSString *userPwd;
-@property (nonatomic, strong) NSArray *deviceGroups;
+@property (nonatomic, strong) NSArray *deviceGroups;                    //设备的分组
 @property (nonatomic, strong) NSMutableArray *deviceArray;
 
 
