@@ -11,6 +11,8 @@
 #import "KenHomeVC.h"
 #import "KenMineVC.h"
 #import "KenALarmVC.h"
+#import "KenRecorderVC.h"
+#import "KenPlayVC.h"
 
 @interface KenRootTabC ()
 
@@ -22,25 +24,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    KenHomeVC *homeVC = [[KenHomeVC alloc] init];
-    KenNavigationC *naviHome = [[KenNavigationC alloc] initWithRootViewController:homeVC];
-    homeVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"记录仪"
-                                                      image:[UIImage imageNamed:@"ken_tab_home_normal"]
-                                              selectedImage:[UIImage imageNamed:@"ken_tab_home_hl"]];
+//    KenHomeVC *homeVC = [[KenHomeVC alloc] init];
+//    KenNavigationC *naviHome = [[KenNavigationC alloc] initWithRootViewController:homeVC];
+//    homeVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"七彩云"
+//                                                      image:[UIImage imageNamed:@"tab_home_normal"]
+//                                              selectedImage:[UIImage imageNamed:@"tab_home_hl"]];
 
+    KenRecorderVC *recorderVC = [[KenRecorderVC alloc] init];
+    KenNavigationC *naviRecorder = [[KenNavigationC alloc] initWithRootViewController:recorderVC];
+    recorderVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"记录仪"
+                                                          image:[UIImage imageNamed:@"tab_recorder_normal"]
+                                                  selectedImage:[UIImage imageNamed:@"tab_recorder_hl"]];
+    
+//    KenPlayVC *playVC = [[KenPlayVC alloc] init];
+//    KenNavigationC *naviPlay = [[KenNavigationC alloc] initWithRootViewController:playVC];
+//    naviPlay.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"直播"
+//                                                        image:[UIImage imageNamed:@"tab_play_normal"]
+//                                                selectedImage:[UIImage imageNamed:@"tab_play_hl"]];
+    
     KenALarmVC *alarmVC = [[KenALarmVC alloc] init];
     KenNavigationC *naviAlarm = [[KenNavigationC alloc] initWithRootViewController:alarmVC];
     alarmVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"报警"
-                                                      image:[UIImage imageNamed:@"ken_tab_home_normal"]
-                                              selectedImage:[UIImage imageNamed:@"ken_tab_home_hl"]];
+                                                       image:[UIImage imageNamed:@"tab_alarm_normal"]
+                                               selectedImage:[UIImage imageNamed:@"tab_alarm_hl"]];
     
     KenMineVC *mineVC = [[KenMineVC alloc] init];
     KenNavigationC *naviMine = [[KenNavigationC alloc] initWithRootViewController:mineVC];
     mineVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我"
-                                                      image:[UIImage imageNamed:@"ken_tab_home_normal"]
-                                              selectedImage:[UIImage imageNamed:@"ken_tab_home_hl"]];
+                                                      image:[UIImage imageNamed:@"tab_mine_normal"]
+                                              selectedImage:[UIImage imageNamed:@"tab_mine_hl"]];
     
-    [self setViewControllers:@[naviHome, naviAlarm, naviMine]];
+    [self setViewControllers:@[naviRecorder, naviAlarm, naviMine]];
     
     //    [self setupCenterItemWithImage:[UIImage imageNamed:@"location_start_normal"]
     //                   highligtedImage:[UIImage imageNamed:@"location_start_sel"] title:@"center"];
@@ -48,9 +62,9 @@
     //
     //    }];
     
-    [self setTabbarItemTitleColor:[UIColor appGrayTextColor] selColor:[UIColor appMainColor]];
+    [self setTabbarItemTitleColor:[UIColor appWhiteTextColor] selColor:[UIColor colorWithHexString:@"#FFC95B"]];
     
-    [self setTabBarBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor] size:self.tabBar.size]];
+    [self setTabBarBackgroundImage:[UIImage imageNamed:@"tab_bg"]];
     
     self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
     self.tabBar.layer.shadowOffset = CGSizeMake(0, 5);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用

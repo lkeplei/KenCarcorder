@@ -116,7 +116,7 @@
             [self showAlert:@"" content:loginDM.message type:kToastUnkown];
             [self showCheckView:YES];
         } else {
-            [self popViewController];
+            [self popViewControllerAnimated:YES];
         }
     } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
         [self hideActivity];

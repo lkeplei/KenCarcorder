@@ -1,23 +1,23 @@
 //
-//  KenMineVC.m
+//  KenPlayVC.m
 //  KenCarcorder
 //
-//  Created by Ken.Liu on 2017/2/6.
+//  Created by hzyouda on 2017/2/18.
 //  Copyright © 2017年 Ken.Liu. All rights reserved.
 //
 
-#import "KenMineVC.h"
+#import "KenPlayVC.h"
 
-@interface KenMineVC ()
+@interface KenPlayVC ()
 
 @end
 
-@implementation KenMineVC
+@implementation KenPlayVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setNavTitle:@"我"];
+    [self setNavTitle:@"直播"];
 }
 
 @end

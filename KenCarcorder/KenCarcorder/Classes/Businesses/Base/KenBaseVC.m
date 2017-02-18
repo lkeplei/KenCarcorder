@@ -42,12 +42,10 @@
 	//如果当前视图控制器不是根视图，并且不隐藏返回按钮，就显示默认的返回按钮
     if (!self.hideBackBtn) {
         if (self.navigationController.viewControllers.count > 1) {
-            [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"]
-                               selector:@selector(popViewController)];
+            [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"] selector:@selector(popViewController)];
         }
     } else {
         [self setLeftNavItemWithText:@"" selector:@selector(popViewController)];
-        
     }
 	
     //关闭系统自动的下移功能(64)
