@@ -77,7 +77,7 @@
 		E61FAA9D1E58186200F67E61 /* KenDeviceManagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA9C1E58186200F67E61 /* KenDeviceManagerVC.m */; };
 		E61FAAA01E58193C00F67E61 /* KenCarcorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA9F1E58193C00F67E61 /* KenCarcorder.m */; };
 		E61FAAA51E58278E00F67E61 /* KenDeviceS.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAA41E58278E00F67E61 /* KenDeviceS.m */; };
-		E61FAAA81E582AE600F67E61 /* KenMobileListDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAA71E582AE600F67E61 /* KenMobileListDM.m */; };
+		E61FAAAC1E5843EE00F67E61 /* KenMobileListDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAAB1E5843EE00F67E61 /* KenMobileListDM.m */; };
 		E6D4D1A61E4EDC9800792FA8 /* KenLoginDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */; };
 		E6D4D1A91E4EEFFC00792FA8 /* KenForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A81E4EEFFC00792FA8 /* KenForgetPwdVC.m */; };
 		E6D4D1AC1E4EF00B00792FA8 /* KenRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1AB1E4EF00B00792FA8 /* KenRegisterVC.m */; };
@@ -233,8 +233,8 @@
 		E61FAA9F1E58193C00F67E61 /* KenCarcorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenCarcorder.m; sourceTree = "<group>"; };
 		E61FAAA31E58278E00F67E61 /* KenDeviceS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceS.h; sourceTree = "<group>"; };
 		E61FAAA41E58278E00F67E61 /* KenDeviceS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeviceS.m; sourceTree = "<group>"; };
-		E61FAAA61E582AE600F67E61 /* KenMobileListDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenMobileListDM.h; sourceTree = "<group>"; };
-		E61FAAA71E582AE600F67E61 /* KenMobileListDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenMobileListDM.m; sourceTree = "<group>"; };
+		E61FAAAA1E5843EE00F67E61 /* KenMobileListDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenMobileListDM.h; sourceTree = "<group>"; };
+		E61FAAAB1E5843EE00F67E61 /* KenMobileListDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenMobileListDM.m; sourceTree = "<group>"; };
 		E6D4D1A41E4EDC9800792FA8 /* KenLoginDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenLoginDM.h; sourceTree = "<group>"; };
 		E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenLoginDM.m; sourceTree = "<group>"; };
 		E6D4D1A71E4EEFFC00792FA8 /* KenForgetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenForgetPwdVC.h; sourceTree = "<group>"; };
@@ -380,8 +380,6 @@
 			children = (
 				BE7EFD8F1E3214EF00E1E579 /* KenUserInfoDM.h */,
 				BE7EFD901E3214EF00E1E579 /* KenUserInfoDM.m */,
-				E61FAAA61E582AE600F67E61 /* KenMobileListDM.h */,
-				E61FAAA71E582AE600F67E61 /* KenMobileListDM.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -658,6 +656,7 @@
 		BEAD74F71E480C89009ADD65 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				E61FAAA91E5843EE00F67E61 /* Model */,
 				E61FAA921E58180D00F67E61 /* KenAboutUsVC.h */,
 				E61FAA931E58180D00F67E61 /* KenAboutUsVC.m */,
 				E61FAA9B1E58186200F67E61 /* KenDeviceManagerVC.h */,
@@ -703,6 +702,15 @@
 				E61FAA901E57F6A300F67E61 /* KenPlayVC.m */,
 			);
 			path = Play;
+			sourceTree = "<group>";
+		};
+		E61FAAA91E5843EE00F67E61 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E61FAAAA1E5843EE00F67E61 /* KenMobileListDM.h */,
+				E61FAAAB1E5843EE00F67E61 /* KenMobileListDM.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		E6D4D1A31E4EDC8700792FA8 /* Model */ = {
@@ -858,6 +866,7 @@
 				BE7EFD501E32098F00E1E579 /* KenGCDTimerManager.m in Sources */,
 				BE7EFD7A1E32098F00E1E579 /* KenModule.m in Sources */,
 				BE7EFD681E32098F00E1E579 /* UIView+KenView.m in Sources */,
+				E61FAAAC1E5843EE00F67E61 /* KenMobileListDM.m in Sources */,
 				BE7EFD601E32098F00E1E579 /* NSString+KenString.m in Sources */,
 				BE7EFD5E1E32098F00E1E579 /* NSObject+Extension.m in Sources */,
 				BE7EFD5C1E32098F00E1E579 /* NSMutableDictionary+KenDictionary.m in Sources */,
@@ -902,7 +911,6 @@
 				BE7EFD5A1E32098F00E1E579 /* NSDictionary+KenDictionary.m in Sources */,
 				BE7EFD661E32098F00E1E579 /* UIImage+KenImage.m in Sources */,
 				BE7EFD6F1E32098F00E1E579 /* GCDQueue.m in Sources */,
-				E61FAAA81E582AE600F67E61 /* KenMobileListDM.m in Sources */,
 				BE7EFD621E32098F00E1E579 /* UIBarButtonItem+KenBadge.m in Sources */,
 				BE7EFD7B1E32098F00E1E579 /* KenDeallocMonitor.m in Sources */,
 				BE7EFD7E1E32098F00E1E579 /* UITabBarController+KenTBC.m in Sources */,
