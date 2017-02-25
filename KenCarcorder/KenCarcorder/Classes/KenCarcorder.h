@@ -19,5 +19,14 @@
 - (NSString *)getRecorderFolder;
 - (void)deleteCachFolder;
 - (long long)getCachFolderSize;
-    
+
+/**
+ *  @author Ken.Liu
+ *
+ *  @brief  获取当前手机连接wifi（SSID）
+ *
+ *  @return 返回SSID
+ */
++ (NSString *)getCurrentSSID;
+
 @end

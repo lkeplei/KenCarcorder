@@ -8,6 +8,8 @@
 
 #import "KenUtility.h"
 
+#import <SystemConfiguration/CaptiveNetwork.h>
+
 @implementation KenCarcorder
 static KenCarcorder *_sharedUtility = nil;
 
@@ -124,6 +126,19 @@ static KenCarcorder *_sharedUtility = nil;
     size += [KenCarcorder getFolderSize:[self getMarketFolder]];
     size += [KenCarcorder getFolderSize:[self getHomeSnapFolder]];
     return size;
+}
+
++ (NSString *)getCurrentSSID {
+    // Does not work on the simulator.
+    NSString *ssid = nil;
+    NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
+    for (NSString *ifnam in ifs) {
+        NSDictionary *info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
+        if (info[@"SSID"]) {
+            ssid = info[@"SSID"];
+        }
+    }
+    return ssid;
 }
 
 @end
