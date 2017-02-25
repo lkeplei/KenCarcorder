@@ -68,6 +68,7 @@
 		BE8E11CC1E612C3F0034DF54 /* KenFirstStepVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8E11CB1E612C3F0034DF54 /* KenFirstStepVC.m */; };
 		BE8E11CF1E6136C50034DF54 /* KenWifiSetStep2VC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8E11CE1E6136C50034DF54 /* KenWifiSetStep2VC.m */; };
 		BE8E11D21E6150AC0034DF54 /* KenWifiSetStep3VC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8E11D11E6150AC0034DF54 /* KenWifiSetStep3VC.m */; };
+		BE8E11D51E6152270034DF54 /* KenWifiSetStep4VC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8E11D41E6152270034DF54 /* KenWifiSetStep4VC.m */; };
 		BEAD74FA1E480CA3009ADD65 /* KenHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74F91E480CA3009ADD65 /* KenHomeVC.m */; };
 		BEAD74FD1E480CBB009ADD65 /* KenLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74FC1E480CBB009ADD65 /* KenLoginVC.m */; };
 		BEAD75001E480CDC009ADD65 /* KenMineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */; };
@@ -219,6 +220,8 @@
 		BE8E11CE1E6136C50034DF54 /* KenWifiSetStep2VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenWifiSetStep2VC.m; sourceTree = "<group>"; };
 		BE8E11D01E6150AC0034DF54 /* KenWifiSetStep3VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenWifiSetStep3VC.h; sourceTree = "<group>"; };
 		BE8E11D11E6150AC0034DF54 /* KenWifiSetStep3VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenWifiSetStep3VC.m; sourceTree = "<group>"; };
+		BE8E11D31E6152270034DF54 /* KenWifiSetStep4VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenWifiSetStep4VC.h; sourceTree = "<group>"; };
+		BE8E11D41E6152270034DF54 /* KenWifiSetStep4VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenWifiSetStep4VC.m; sourceTree = "<group>"; };
 		BEAD74F81E480CA3009ADD65 /* KenHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenHomeVC.h; sourceTree = "<group>"; };
 		BEAD74F91E480CA3009ADD65 /* KenHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenHomeVC.m; sourceTree = "<group>"; };
 		BEAD74FB1E480CBB009ADD65 /* KenLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenLoginVC.h; sourceTree = "<group>"; };
@@ -651,6 +654,8 @@
 				BE8E11CE1E6136C50034DF54 /* KenWifiSetStep2VC.m */,
 				BE8E11D01E6150AC0034DF54 /* KenWifiSetStep3VC.h */,
 				BE8E11D11E6150AC0034DF54 /* KenWifiSetStep3VC.m */,
+				BE8E11D31E6152270034DF54 /* KenWifiSetStep4VC.h */,
+				BE8E11D41E6152270034DF54 /* KenWifiSetStep4VC.m */,
 			);
 			path = WifiSetting;
 			sourceTree = "<group>";
@@ -928,6 +933,7 @@
 				BE7EFD7C1E32098F00E1E579 /* KenTabBar.m in Sources */,
 				BE7EFD791E32098F00E1E579 /* XPSuperJson.m in Sources */,
 				BE7EFD7D1E32098F00E1E579 /* KenTabBarItem.m in Sources */,
+				BE8E11D51E6152270034DF54 /* KenWifiSetStep4VC.m in Sources */,
 				BE7EFD6D1E32098F00E1E579 /* KenKeyChainStore.m in Sources */,
 				BE7EFD721E32098F00E1E579 /* XPSuperClassInfo.m in Sources */,
 				BE7EFD551E32098F00E1E579 /* KKGestureLockPreviewView.m in Sources */,

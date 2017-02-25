@@ -37,7 +37,7 @@
                                        font:[UIFont appFontSize12] color:[UIColor appLightGrayTextColor]];
     [top addSubview:label];
     
-    UILabel *label1 = [UILabel labelWithTxt:@"请查看行车记录仪" frame:CGRectZero
+    UILabel *label1 = [UILabel labelWithTxt:@"请查看行车记录仪是否" frame:CGRectZero
                                        font:[UIFont appFontSize17] color:[UIColor appWhiteTextColor]];
     [self.contentView addSubview:label1];
     
