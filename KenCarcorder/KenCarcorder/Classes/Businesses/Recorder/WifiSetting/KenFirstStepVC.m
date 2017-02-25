@@ -45,12 +45,12 @@
                                        font:[UIFont appFontSize22] color:[UIColor colorWithHexString:@"#005CAF"]];
     [self.contentView addSubview:label2];
     
-    UIImageView *tou = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"wifi_1_tou"]];
-    [self.contentView addSubview:tou];
+    UIImageView *camera = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"wifi_1_camera"]];
+    [self.contentView addSubview:camera];
     
     UILabel *label3 = [UILabel labelWithTxt:@"蓝灯" frame:CGRectZero
                                           font:[UIFont appFontSize12] color:[UIColor appWhiteTextColor]];
-    [tou addSubview:label3];
+    [camera addSubview:label3];
     
     UILabel *label4 = [UILabel labelWithTxt:@"蓝灯没有闪烁？" frame:CGRectZero
                                        font:[UIFont appFontSize13] color:[UIColor appWhiteTextColor]];
@@ -81,7 +81,7 @@
         make.width.equalTo(self.contentView.mas_width);
     }];
     
-    [tou mas_makeConstraints:^(MASConstraintMaker *make) {
+    [camera mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(label2.mas_bottom).offset(kKenOffsetY(90));
         make.centerX.equalTo(self.contentView.mas_centerX);
     }];
@@ -89,19 +89,19 @@
     [label3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(20);
         make.width.mas_equalTo(50);
-        make.top.equalTo(tou.mas_bottom).offset(kKenOffsetY(-170));
+        make.top.equalTo(camera.mas_bottom).offset(kKenOffsetY(-180));
         make.centerX.equalTo(self.contentView.mas_right).offset(kKenOffsetX(-180));
     }];
     
     [label4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(tou.mas_bottom).offset(kKenOffsetY(-40));
+        make.top.equalTo(camera.mas_bottom).offset(kKenOffsetY(-70));
         make.centerX.equalTo(self.contentView.mas_centerX);
         make.height.mas_equalTo(20);
         make.width.equalTo(self.contentView.mas_width);
     }];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(label4.mas_bottom).offset(kKenOffsetY(70));
+        make.top.equalTo(label4.mas_bottom).offset(kKenOffsetY(100));
         make.centerX.equalTo(self.contentView.mas_centerX);
     }];
 }
