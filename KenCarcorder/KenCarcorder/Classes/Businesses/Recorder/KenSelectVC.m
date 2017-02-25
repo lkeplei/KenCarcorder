@@ -30,9 +30,11 @@
     [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"] selector:@selector(popViewController)];
     
     UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tab_recorder_bg"]];
+    bgV.size = self.contentView.size;
     [self.contentView addSubview:bgV];
     
     UIImageView *topV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"select_top"]];
+    topV.size = CGSizeMake(self.contentView.width, (self.contentView.width / topV.width) * topV.height);
     [self.contentView addSubview:topV];
     
     //
@@ -47,7 +49,7 @@
     [item1 addSubview:label1];
     
     [item1 clicked:^(UIView * _Nonnull view) {
-        [self pushViewControllerString:@"KenSelectVC" animated:YES];
+        [self pushViewControllerString:@"KenFirstStepVC" animated:YES];
     }];
     
     //
@@ -62,7 +64,7 @@
     [item2 addSubview:label2];
     
     [item2 clicked:^(UIView * _Nonnull view) {
-        [self pushViewControllerString:@"KenSelectVC" animated:YES];
+        [self showToastWithMsg:@"功能暂未开放，静请期待！"];
     }];
     
     //
@@ -75,7 +77,9 @@
     [item3 addSubview:label3];
     
     [item3 clicked:^(UIView * _Nonnull view) {
-        [self pushViewControllerString:@"KenSelectVC" animated:YES];
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"http://www.7cyun.cn"]]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.7cyun.cn"]];
+        }
     }];
     
     //autolayout

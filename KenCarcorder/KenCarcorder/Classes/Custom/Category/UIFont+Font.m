@@ -14,6 +14,18 @@
 
 @implementation UIFont (Font)
 
++ (UIFont *)appFontSize28 {
+    return [UIFont systemFontOfSize:(fontIsIPhone4 | fontIsIPhone5) ? 28: 30];
+}
+
++ (UIFont *)appFontSize24 {
+    return [UIFont systemFontOfSize:(fontIsIPhone4 | fontIsIPhone5) ? 24: 26];
+}
+
++ (UIFont *)appFontSize22 {
+    return [UIFont systemFontOfSize:(fontIsIPhone4 | fontIsIPhone5) ? 22: 23];
+}
+
 + (UIFont *)appFontSize17 {
     return [UIFont systemFontOfSize:(fontIsIPhone4 | fontIsIPhone5) ? 17 : 19];
 }

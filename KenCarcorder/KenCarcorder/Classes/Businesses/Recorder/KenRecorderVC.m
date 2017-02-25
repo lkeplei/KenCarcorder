@@ -36,6 +36,7 @@
 #pragma mark - private mthod
 - (void)initView {
     UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tab_recorder_bg"]];
+    bgV.size = self.contentView.size;
     [self.contentView addSubview:bgV];
     
     //远程连接

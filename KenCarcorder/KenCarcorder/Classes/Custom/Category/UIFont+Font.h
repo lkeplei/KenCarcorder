@@ -11,6 +11,9 @@
 @interface UIFont (Font)
 
 #pragma mark - CW 统一字体
++ (UIFont *)appFontSize28;
++ (UIFont *)appFontSize24;
++ (UIFont *)appFontSize22;
 + (UIFont *)appFontSize17;
 + (UIFont *)appFontSize16;
 + (UIFont *)appFontSize15;

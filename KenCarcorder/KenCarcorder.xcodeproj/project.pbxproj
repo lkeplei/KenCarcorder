@@ -65,6 +65,8 @@
 		BE7EFD8B1E3211B100E1E579 /* UIFont+Font.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD8A1E3211B100E1E579 /* UIFont+Font.m */; };
 		BE7EFD8E1E32126000E1E579 /* KenAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD8D1E32126000E1E579 /* KenAlertView.m */; };
 		BE7EFD911E3214EF00E1E579 /* KenUserInfoDM.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFD901E3214EF00E1E579 /* KenUserInfoDM.m */; };
+		BE8E11CC1E612C3F0034DF54 /* KenFirstStepVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8E11CB1E612C3F0034DF54 /* KenFirstStepVC.m */; };
+		BE8E11CF1E6136C50034DF54 /* KenWifiSetStep2VC.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8E11CE1E6136C50034DF54 /* KenWifiSetStep2VC.m */; };
 		BEAD74FA1E480CA3009ADD65 /* KenHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74F91E480CA3009ADD65 /* KenHomeVC.m */; };
 		BEAD74FD1E480CBB009ADD65 /* KenLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74FC1E480CBB009ADD65 /* KenLoginVC.m */; };
 		BEAD75001E480CDC009ADD65 /* KenMineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */; };
@@ -210,6 +212,10 @@
 		BE7EFD8D1E32126000E1E579 /* KenAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlertView.m; sourceTree = "<group>"; };
 		BE7EFD8F1E3214EF00E1E579 /* KenUserInfoDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenUserInfoDM.h; sourceTree = "<group>"; };
 		BE7EFD901E3214EF00E1E579 /* KenUserInfoDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenUserInfoDM.m; sourceTree = "<group>"; };
+		BE8E11CA1E612C3F0034DF54 /* KenFirstStepVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenFirstStepVC.h; sourceTree = "<group>"; };
+		BE8E11CB1E612C3F0034DF54 /* KenFirstStepVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenFirstStepVC.m; sourceTree = "<group>"; };
+		BE8E11CD1E6136C50034DF54 /* KenWifiSetStep2VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenWifiSetStep2VC.h; sourceTree = "<group>"; };
+		BE8E11CE1E6136C50034DF54 /* KenWifiSetStep2VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenWifiSetStep2VC.m; sourceTree = "<group>"; };
 		BEAD74F81E480CA3009ADD65 /* KenHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenHomeVC.h; sourceTree = "<group>"; };
 		BEAD74F91E480CA3009ADD65 /* KenHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenHomeVC.m; sourceTree = "<group>"; };
 		BEAD74FB1E480CBB009ADD65 /* KenLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenLoginVC.h; sourceTree = "<group>"; };
@@ -633,6 +639,17 @@
 			path = UIControls;
 			sourceTree = "<group>";
 		};
+		BE8E11C91E612C230034DF54 /* WifiSetting */ = {
+			isa = PBXGroup;
+			children = (
+				BE8E11CA1E612C3F0034DF54 /* KenFirstStepVC.h */,
+				BE8E11CB1E612C3F0034DF54 /* KenFirstStepVC.m */,
+				BE8E11CD1E6136C50034DF54 /* KenWifiSetStep2VC.h */,
+				BE8E11CE1E6136C50034DF54 /* KenWifiSetStep2VC.m */,
+			);
+			path = WifiSetting;
+			sourceTree = "<group>";
+		};
 		BEAD74F51E480C1E009ADD65 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,6 +709,7 @@
 		E61FAA8A1E57E82200F67E61 /* Recorder */ = {
 			isa = PBXGroup;
 			children = (
+				BE8E11C91E612C230034DF54 /* WifiSetting */,
 				E61FAA8B1E57E83300F67E61 /* KenRecorderVC.h */,
 				E61FAA8C1E57E83300F67E61 /* KenRecorderVC.m */,
 				E61FAAAD1E58450A00F67E61 /* KenSelectVC.h */,
@@ -850,6 +868,7 @@
 			files = (
 				BE7EFD611E32098F00E1E579 /* UIApplication+KenApplication.m in Sources */,
 				BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */,
+				BE8E11CF1E6136C50034DF54 /* KenWifiSetStep2VC.m in Sources */,
 				BE7EFD751E32098F00E1E579 /* KenKVOPlugin.m in Sources */,
 				BE7EFD5B1E32098F00E1E579 /* NSMutableArray+KenArray.m in Sources */,
 				E6D4D1A91E4EEFFC00792FA8 /* KenForgetPwdVC.m in Sources */,
@@ -858,6 +877,7 @@
 				BE7EFD4D1E32098F00E1E579 /* KenNavigationC.m in Sources */,
 				BE7EFD4A1E32098F00E1E579 /* AppDelegate.m in Sources */,
 				E61FAA9D1E58186200F67E61 /* KenDeviceManagerVC.m in Sources */,
+				BE8E11CC1E612C3F0034DF54 /* KenFirstStepVC.m in Sources */,
 				BEAD75041E480E5A009ADD65 /* KenALarmVC.m in Sources */,
 				BEAD74FD1E480CBB009ADD65 /* KenLoginVC.m in Sources */,
 				E61FAAAF1E58450A00F67E61 /* KenSelectVC.m in Sources */,
