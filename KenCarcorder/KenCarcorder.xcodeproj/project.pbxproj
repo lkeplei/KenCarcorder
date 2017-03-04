@@ -86,6 +86,7 @@
 		E61FAAA51E58278E00F67E61 /* KenDeviceS.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAA41E58278E00F67E61 /* KenDeviceS.m */; };
 		E61FAAAC1E5843EE00F67E61 /* KenMobileListDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAAB1E5843EE00F67E61 /* KenMobileListDM.m */; };
 		E61FAAAF1E58450A00F67E61 /* KenSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAAE1E58450A00F67E61 /* KenSelectVC.m */; };
+		E6B990D41E6A5E94009B6593 /* KenRadarV.m in Sources */ = {isa = PBXBuildFile; fileRef = E6B990D31E6A5E94009B6593 /* KenRadarV.m */; };
 		E6D4D1A61E4EDC9800792FA8 /* KenLoginDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */; };
 		E6D4D1A91E4EEFFC00792FA8 /* KenForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A81E4EEFFC00792FA8 /* KenForgetPwdVC.m */; };
 		E6D4D1AC1E4EF00B00792FA8 /* KenRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1AB1E4EF00B00792FA8 /* KenRegisterVC.m */; };
@@ -259,6 +260,8 @@
 		E61FAAAB1E5843EE00F67E61 /* KenMobileListDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenMobileListDM.m; sourceTree = "<group>"; };
 		E61FAAAD1E58450A00F67E61 /* KenSelectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenSelectVC.h; sourceTree = "<group>"; };
 		E61FAAAE1E58450A00F67E61 /* KenSelectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenSelectVC.m; sourceTree = "<group>"; };
+		E6B990D21E6A5E94009B6593 /* KenRadarV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenRadarV.h; sourceTree = "<group>"; };
+		E6B990D31E6A5E94009B6593 /* KenRadarV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenRadarV.m; sourceTree = "<group>"; };
 		E6D4D1A41E4EDC9800792FA8 /* KenLoginDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenLoginDM.h; sourceTree = "<group>"; };
 		E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenLoginDM.m; sourceTree = "<group>"; };
 		E6D4D1A71E4EEFFC00792FA8 /* KenForgetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenForgetPwdVC.h; sourceTree = "<group>"; };
@@ -671,6 +674,8 @@
 				BE8E11DA1E616BAF0034DF54 /* KenWifiSetStep42V.m */,
 				BE8E11DC1E616BB70034DF54 /* KenWifiSetStep43V.h */,
 				BE8E11DD1E616BB70034DF54 /* KenWifiSetStep43V.m */,
+				E6B990D21E6A5E94009B6593 /* KenRadarV.h */,
+				E6B990D31E6A5E94009B6593 /* KenRadarV.m */,
 			);
 			path = WifiSetting;
 			sourceTree = "<group>";
@@ -954,6 +959,7 @@
 				BE7EFD721E32098F00E1E579 /* XPSuperClassInfo.m in Sources */,
 				BE7EFD551E32098F00E1E579 /* KKGestureLockPreviewView.m in Sources */,
 				E61FAAA51E58278E00F67E61 /* KenDeviceS.m in Sources */,
+				E6B990D41E6A5E94009B6593 /* KenRadarV.m in Sources */,
 				BE7EFD671E32098F00E1E579 /* UILabel+KenLabel.m in Sources */,
 				BE8E11DE1E616BB70034DF54 /* KenWifiSetStep43V.m in Sources */,
 				BE7EFD8E1E32126000E1E579 /* KenAlertView.m in Sources */,
