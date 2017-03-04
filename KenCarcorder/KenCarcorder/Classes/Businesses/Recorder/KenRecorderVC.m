@@ -48,7 +48,6 @@
     [item1 addSubview:label1];
     
     [item1 clicked:^(UIView * _Nonnull view) {
-        DebugLog("远程连接行车记录仪");
         [self pushViewControllerString:@"KenSelectVC" animated:YES];
     }];
     
@@ -61,7 +60,7 @@
     [item2 addSubview:label2];
     
     [item2 clicked:^(UIView * _Nonnull view) {
-        DebugLog("直接连接行车记录仪");
+        [self pushViewControllerString:@"KenDirectConnectVC" animated:YES];
     }];
     
     //autolayout
