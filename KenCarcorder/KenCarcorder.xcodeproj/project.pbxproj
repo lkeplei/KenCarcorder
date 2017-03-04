@@ -87,6 +87,8 @@
 		E61FAAAC1E5843EE00F67E61 /* KenMobileListDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAAB1E5843EE00F67E61 /* KenMobileListDM.m */; };
 		E61FAAAF1E58450A00F67E61 /* KenSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAAE1E58450A00F67E61 /* KenSelectVC.m */; };
 		E6B990D41E6A5E94009B6593 /* KenRadarV.m in Sources */ = {isa = PBXBuildFile; fileRef = E6B990D31E6A5E94009B6593 /* KenRadarV.m */; };
+		E6B990DC1E6A8F63009B6593 /* libcvoiceRecognize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B990D61E6A8F63009B6593 /* libcvoiceRecognize.a */; };
+		E6B990DD1E6A8F63009B6593 /* libcvoiceRecognize_simulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B990D71E6A8F63009B6593 /* libcvoiceRecognize_simulator.a */; };
 		E6D4D1A61E4EDC9800792FA8 /* KenLoginDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */; };
 		E6D4D1A91E4EEFFC00792FA8 /* KenForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A81E4EEFFC00792FA8 /* KenForgetPwdVC.m */; };
 		E6D4D1AC1E4EF00B00792FA8 /* KenRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1AB1E4EF00B00792FA8 /* KenRegisterVC.m */; };
@@ -262,6 +264,12 @@
 		E61FAAAE1E58450A00F67E61 /* KenSelectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenSelectVC.m; sourceTree = "<group>"; };
 		E6B990D21E6A5E94009B6593 /* KenRadarV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenRadarV.h; sourceTree = "<group>"; };
 		E6B990D31E6A5E94009B6593 /* KenRadarV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenRadarV.m; sourceTree = "<group>"; };
+		E6B990D61E6A8F63009B6593 /* libcvoiceRecognize.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcvoiceRecognize.a; sourceTree = "<group>"; };
+		E6B990D71E6A8F63009B6593 /* libcvoiceRecognize_simulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcvoiceRecognize_simulator.a; sourceTree = "<group>"; };
+		E6B990D81E6A8F63009B6593 /* voiceDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceDecoder.h; sourceTree = "<group>"; };
+		E6B990D91E6A8F63009B6593 /* voiceEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceEncoder.h; sourceTree = "<group>"; };
+		E6B990DA1E6A8F63009B6593 /* voicePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voicePlay.h; sourceTree = "<group>"; };
+		E6B990DB1E6A8F63009B6593 /* voiceRecog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceRecog.h; sourceTree = "<group>"; };
 		E6D4D1A41E4EDC9800792FA8 /* KenLoginDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenLoginDM.h; sourceTree = "<group>"; };
 		E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenLoginDM.m; sourceTree = "<group>"; };
 		E6D4D1A71E4EEFFC00792FA8 /* KenForgetPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenForgetPwdVC.h; sourceTree = "<group>"; };
@@ -275,7 +283,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6B990DD1E6A8F63009B6593 /* libcvoiceRecognize_simulator.a in Frameworks */,
 				9C282D5C35903B91E779BC6B /* libPods-KenCarcorder.a in Frameworks */,
+				E6B990DC1E6A8F63009B6593 /* libcvoiceRecognize.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +424,7 @@
 		BE7EFCDD1E32098F00E1E579 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				E6B990D51E6A8F63009B6593 /* Voice */,
 				BE7EFCDE1E32098F00E1E579 /* GestureLock */,
 				BE7EFCE31E32098F00E1E579 /* GTMBase64 */,
 				BE7EFCE71E32098F00E1E579 /* KenCategory */,
@@ -766,6 +777,19 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		E6B990D51E6A8F63009B6593 /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+				E6B990D61E6A8F63009B6593 /* libcvoiceRecognize.a */,
+				E6B990D71E6A8F63009B6593 /* libcvoiceRecognize_simulator.a */,
+				E6B990D81E6A8F63009B6593 /* voiceDecoder.h */,
+				E6B990D91E6A8F63009B6593 /* voiceEncoder.h */,
+				E6B990DA1E6A8F63009B6593 /* voicePlay.h */,
+				E6B990DB1E6A8F63009B6593 /* voiceRecog.h */,
+			);
+			path = Voice;
+			sourceTree = "<group>";
+		};
 		E6D4D1A31E4EDC8700792FA8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1082,6 +1106,10 @@
 				INFOPLIST_FILE = KenCarcorder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KenCarcorder/Classes/Vendors/Voice",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.youda.Carcorder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1099,6 +1127,10 @@
 				INFOPLIST_FILE = KenCarcorder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KenCarcorder/Classes/Vendors/Voice",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.youda.Carcorder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

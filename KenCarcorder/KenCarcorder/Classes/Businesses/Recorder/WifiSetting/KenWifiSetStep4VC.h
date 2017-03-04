@@ -13,6 +13,5 @@
 //event
 - (void)inputConfirm:(NSString *)name pwd:(NSString *)pwd;
 - (void)nextStep;
-- (void)sendVoice;
 
 @end

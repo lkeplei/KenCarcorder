@@ -18,6 +18,9 @@
 @property (nonatomic, strong) KenWifiSetStep42V *step2View;
 @property (nonatomic, strong) KenWifiSetStep43V *step3View;
 
+@property (nonatomic, strong) NSString *wifiName;
+@property (nonatomic, strong) NSString *wifiPwd;
+
 @end
 
 @implementation KenWifiSetStep4VC
@@ -58,15 +61,14 @@
 - (void)inputConfirm:(NSString *)name pwd:(NSString *)pwd {
     self.step1View.hidden = YES;
     [self.contentView addSubview:self.step2View];
+    
+    _wifiName = name;
+    _wifiPwd = pwd;
 }
 
 - (void)nextStep {
     self.step2View.hidden = YES;
     [self.contentView addSubview:self.step3View];
-}
-
-- (void)sendVoice {
-    
 }
 
 #pragma mark - getter setter
@@ -86,7 +88,8 @@
 
 - (KenWifiSetStep43V *)step3View {
     if (_step3View == nil) {
-        _step3View = [[KenWifiSetStep43V alloc] initWithParentVC:self frame:(CGRect){0,0,self.contentView.size}];
+        _step3View = [[KenWifiSetStep43V alloc] initWithParentVC:self name:_wifiName pwd:_wifiPwd
+                                                           frame:(CGRect){0,0,self.contentView.size}];
     }
     return _step3View;
 }

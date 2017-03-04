@@ -12,6 +12,9 @@
 
 @interface KenWifiSetStep43V : UIView
 
-- (instancetype)initWithParentVC:(KenWifiSetStep4VC *)parentVC frame:(CGRect)frame;
+- (instancetype)initWithParentVC:(KenWifiSetStep4VC *)parentVC name:(NSString *)name pwd:(NSString *)pwd frame:(CGRect)frame;
+
+- (void)onRecognizerStart;
+- (void)onRecognizerEnd:(int)result data:(char *)data dataLen:(int)dataLen;
 
 @end
