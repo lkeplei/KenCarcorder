@@ -163,27 +163,31 @@
 }
 
 - (void)initTwo {
-    UIImageView *inputBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwd_input_bg"]];
+    UIImageView *inputBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwd_confirm_bg"]];
     [inputBg setUserInteractionEnabled:YES];
     inputBg.width = self.contentView.width;
     inputBg.originY = inputBg.height + kKenOffset;
     [self.contentView addSubview:inputBg];
     
-    UILabel *phone = [UILabel labelWithTxt:@"密码" frame:(CGRect){0, 0, kKenOffsetX(160), inputBg.height / 2}
+    UILabel *phone = [UILabel labelWithTxt:@"密    码" frame:(CGRect){15, 0, kKenOffsetX(160), inputBg.height / 2}
                                       font:[UIFont appFontSize15] color:[UIColor appWhiteTextColor]];
+    phone.textAlignment = NSTextAlignmentLeft;
     [inputBg addSubview:phone];
     
     _pwdTextField = [self addTextFiled:YES content:@"输入密码" text:nil
-                                  size:(CGSize){inputBg.width - kKenOffsetX(180) * 2, 30}];
+                                  size:(CGSize){inputBg.width - kKenOffsetX(210) * 2, 30}];
+    _pwdTextField.originX = kKenOffsetX(210);
     _pwdTextField.centerY = phone.centerY;
     [inputBg addSubview:_pwdTextField];
     
     UILabel *verCode = [UILabel labelWithTxt:@"确认密码" frame:phone.frame font:[UIFont appFontSize15] color:[UIColor appWhiteTextColor]];
     verCode.originY = phone.maxY;
+    verCode.textAlignment = NSTextAlignmentLeft;
     [inputBg addSubview:verCode];
     
-    _pwdConfirmTextField = [self addTextFiled:YES content:@"再次输入密码" text:nil size:(CGSize){inputBg.width - kKenOffsetX(180) * 2, 40}];
+    _pwdConfirmTextField = [self addTextFiled:YES content:@"再次输入密码" text:nil size:(CGSize){inputBg.width - kKenOffsetX(210) * 2, 40}];
     _pwdConfirmTextField.centerY = verCode.centerY;
+    _pwdConfirmTextField.originX = kKenOffsetX(210);
     [inputBg addSubview:_pwdConfirmTextField];
     
     //验证码

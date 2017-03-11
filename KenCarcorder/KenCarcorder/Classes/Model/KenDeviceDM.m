@@ -9,5 +9,13 @@
 #import "KenDeviceDM.h"
 
 @implementation KenDeviceDM
++ (NSDictionary *)setDefaultValueMap {
+    return @{@"usr":@"admin",
+             @"pwd":@"admin",
+             @"uid":@"admin",
+             @"uidpsd":@"admin",
+             @"lanIp":@"",
+             @"devWanIp":@""};
+}
 
 @end

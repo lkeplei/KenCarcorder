@@ -62,6 +62,7 @@ text:content];\
 
 //配置
 #define kAppCheckCodeWaiteTime          (120)
+#define kAppImageHeiWid                 (0.56)
 
 
 /*消除方法弃用警告*/

@@ -8,6 +8,13 @@
 
 #import "KenBaseVC.h"
 
+@class KenDeviceDM;
+
 @interface KenMiniVideoVC : KenBaseVC
+
+@property (nonatomic, strong) KenDeviceDM *device;
+
+//设置视频为直连模式
+- (void)setDirectConnect;
 
 @end

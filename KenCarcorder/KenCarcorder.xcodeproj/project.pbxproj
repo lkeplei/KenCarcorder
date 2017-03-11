@@ -96,6 +96,8 @@
 		E6E4C0711E73BE1700FD0735 /* KenMiniVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C0701E73BE1700FD0735 /* KenMiniVideoVC.m */; };
 		E6E4C0741E73BE2700FD0735 /* KenVideoV.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C0731E73BE2700FD0735 /* KenVideoV.m */; };
 		E6E4C0771E73BFE100FD0735 /* KenDeviceDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C0761E73BFE100FD0735 /* KenDeviceDM.m */; };
+		E6E4C07A1E73D8F500FD0735 /* KenDeviceSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C0791E73D8F500FD0735 /* KenDeviceSettingVC.m */; };
+		E6E4C07D1E73D90600FD0735 /* KenHistoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C07C1E73D90600FD0735 /* KenHistoryVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -288,6 +290,10 @@
 		E6E4C0731E73BE2700FD0735 /* KenVideoV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenVideoV.m; sourceTree = "<group>"; };
 		E6E4C0751E73BFE100FD0735 /* KenDeviceDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceDM.h; sourceTree = "<group>"; };
 		E6E4C0761E73BFE100FD0735 /* KenDeviceDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeviceDM.m; sourceTree = "<group>"; };
+		E6E4C0781E73D8F500FD0735 /* KenDeviceSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceSettingVC.h; sourceTree = "<group>"; };
+		E6E4C0791E73D8F500FD0735 /* KenDeviceSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeviceSettingVC.m; sourceTree = "<group>"; };
+		E6E4C07B1E73D90600FD0735 /* KenHistoryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenHistoryVC.h; sourceTree = "<group>"; };
+		E6E4C07C1E73D90600FD0735 /* KenHistoryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenHistoryVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -831,6 +837,10 @@
 				E6E4C0701E73BE1700FD0735 /* KenMiniVideoVC.m */,
 				E6E4C0721E73BE2700FD0735 /* KenVideoV.h */,
 				E6E4C0731E73BE2700FD0735 /* KenVideoV.m */,
+				E6E4C0781E73D8F500FD0735 /* KenDeviceSettingVC.h */,
+				E6E4C0791E73D8F500FD0735 /* KenDeviceSettingVC.m */,
+				E6E4C07B1E73D90600FD0735 /* KenHistoryVC.h */,
+				E6E4C07C1E73D90600FD0735 /* KenHistoryVC.m */,
 			);
 			path = "视频播放";
 			sourceTree = "<group>";
@@ -1013,6 +1023,7 @@
 				BE7EFD6C1E32098F00E1E579 /* KenHtmlLabel.m in Sources */,
 				E6E4C0771E73BFE100FD0735 /* KenDeviceDM.m in Sources */,
 				BE7EFD4C1E32098F00E1E579 /* KenBaseVC.m in Sources */,
+				E6E4C07D1E73D90600FD0735 /* KenHistoryVC.m in Sources */,
 				BE7EFD691E32098F00E1E579 /* UIViewController+KenVC.m in Sources */,
 				BE7EFD7C1E32098F00E1E579 /* KenTabBar.m in Sources */,
 				BE7EFD791E32098F00E1E579 /* XPSuperJson.m in Sources */,
@@ -1038,6 +1049,7 @@
 				BE7EFD6F1E32098F00E1E579 /* GCDQueue.m in Sources */,
 				BE7EFD621E32098F00E1E579 /* UIBarButtonItem+KenBadge.m in Sources */,
 				BE7EFD7B1E32098F00E1E579 /* KenDeallocMonitor.m in Sources */,
+				E6E4C07A1E73D8F500FD0735 /* KenDeviceSettingVC.m in Sources */,
 				BE8E11DB1E616BAF0034DF54 /* KenWifiSetStep42V.m in Sources */,
 				BE7EFD7E1E32098F00E1E579 /* UITabBarController+KenTBC.m in Sources */,
 				BE7EFD731E32098F00E1E579 /* KenKVOInfo.m in Sources */,

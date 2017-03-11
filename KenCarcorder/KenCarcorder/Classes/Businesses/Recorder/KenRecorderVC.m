@@ -9,6 +9,7 @@
 #import "KenRecorderVC.h"
 #import "Masonry.h"
 #import "KenAlertView.h"
+#import "KenMiniVideoVC.h"
 
 @interface KenRecorderVC ()
 
@@ -66,8 +67,17 @@
         NSString *ssid = [KenCarcorder getCurrentSSID];
         if ([NSString isNotEmpty:ssid]) {
             if ([ssid containsString:@"IPCAM_AP_8"] || [ssid containsString:@"七彩云"]) {
-                [self pushViewControllerString:@"KenMiniVideoVC" animated:YES];
+                KenMiniVideoVC *videoVC = [[KenMiniVideoVC alloc] init];
+                [self pushViewController:videoVC animated:YES];
+                [videoVC setDirectConnect];
             } else {
+                //测试先放开
+                KenMiniVideoVC *videoVC = [[KenMiniVideoVC alloc] init];
+                [self pushViewController:videoVC animated:YES];
+                [videoVC setDirectConnect];
+                
+                return ;
+                
                 [KenAlertView showAlertViewWithTitle:@"" contentView:nil message:@"连接之前需要先设置手机WIFI为行车记录仪网络"
                                         buttonTitles:@[@"取消", @"确定"]
                                   buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
