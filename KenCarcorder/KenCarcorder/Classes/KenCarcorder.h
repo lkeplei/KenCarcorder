@@ -29,4 +29,9 @@
  */
 + (NSString *)getCurrentSSID;
 
+/**
+ * 获取局域网ip
+ */
++ (NSString *)localIPAddress;
+
 @end

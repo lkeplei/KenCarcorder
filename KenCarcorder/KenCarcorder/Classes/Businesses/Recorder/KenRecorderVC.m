@@ -82,7 +82,7 @@
                                         buttonTitles:@[@"取消", @"确定"]
                                   buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
                                       if (index == 1) {
-                                          NSURL*url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                                          NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
                                           if([[UIApplication sharedApplication] canOpenURL:url]) {
                                               [[UIApplication sharedApplication] openURL:url];
                                           }

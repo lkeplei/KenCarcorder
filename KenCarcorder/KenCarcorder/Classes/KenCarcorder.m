@@ -8,6 +8,9 @@
 
 #import "KenUtility.h"
 
+#include <arpa/inet.h>
+#include <netdb.h>
+
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 @implementation KenCarcorder
@@ -141,4 +144,22 @@ static KenCarcorder *_sharedUtility = nil;
     return ssid;
 }
 
++ (NSString *)localIPAddress {
+    char baseHostName[256]; // Thanks, Gunnar Larisch
+    int success = gethostname(baseHostName, 255);
+    if (success != 0) return nil;
+    baseHostName[255] = '/0';
+    
+    NSString *hostName = @"";
+#if TARGET_IPHONE_SIMULATOR
+    hostName = [NSString stringWithFormat:@"%s", baseHostName];
+#else
+    hostName = [NSString stringWithFormat:@"%s.local", baseHostName];
+#endif
+    
+    struct hostent *host = gethostbyname([hostName UTF8String]);
+    if (!host) {herror("resolv"); return nil;}
+    struct in_addr **list = (struct in_addr **)host->h_addr_list;
+    return [NSString stringWithCString:inet_ntoa(*list[0]) encoding:NSUTF8StringEncoding];
+}
 @end

@@ -38,6 +38,7 @@ typedef NS_ENUM(NSUInteger, KenNetworkStatusType) {  //网络连接方式
 @property (nonatomic, strong) NSString *status;
 
 //自身使用部分
+@property (nonatomic, assign) int64_t connectHandle;                //设备连接句柄
 @property (nonatomic, strong) NSString *usr;                        //设备用户名
 @property (nonatomic, strong) NSString *pwd;                        //设备密码
 
@@ -46,5 +47,11 @@ typedef NS_ENUM(NSUInteger, KenNetworkStatusType) {  //网络连接方式
 //@property (assign) BOOL isSubStream;                //是否为主码流，默认为否
 //@property (assign) BOOL deviceLock;                 //设备是否已加密
 
+
+//获取当前ip
+- (NSString *)currentIp;
+    
+//判断当前是不是DDNS环境
+- (BOOL)isDDNS;
 
 @end
