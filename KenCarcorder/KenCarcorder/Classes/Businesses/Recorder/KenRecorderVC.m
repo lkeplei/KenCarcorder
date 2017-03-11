@@ -8,6 +8,7 @@
 
 #import "KenRecorderVC.h"
 #import "Masonry.h"
+#import "KenAlertView.h"
 
 @interface KenRecorderVC ()
 
@@ -59,8 +60,26 @@
                                        font:[UIFont appFontSize17] color:[UIColor colorWithHexString:@"#22C486"]];
     [item2 addSubview:label2];
     
+    @weakify(self)
     [item2 clicked:^(UIView * _Nonnull view) {
-        [self pushViewControllerString:@"KenDirectConnectVC" animated:YES];
+        @strongify(self)
+        NSString *ssid = [KenCarcorder getCurrentSSID];
+        if ([NSString isNotEmpty:ssid]) {
+            if ([ssid containsString:@"IPCAM_AP_8"] || [ssid containsString:@"七彩云"]) {
+                [self pushViewControllerString:@"KenMiniVideoVC" animated:YES];
+            } else {
+                [KenAlertView showAlertViewWithTitle:@"" contentView:nil message:@"连接之前需要先设置手机WIFI为行车记录仪网络"
+                                        buttonTitles:@[@"取消", @"确定"]
+                                  buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
+                                      if (index == 1) {
+                                          NSURL*url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                                          if([[UIApplication sharedApplication] canOpenURL:url]) {
+                                              [[UIApplication sharedApplication] openURL:url];
+                                          }
+                                      }
+                                  }];
+            }
+        }
     }];
     
     //autolayout

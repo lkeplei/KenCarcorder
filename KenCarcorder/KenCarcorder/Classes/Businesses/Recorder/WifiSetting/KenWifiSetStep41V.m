@@ -59,6 +59,8 @@
         return;
     }
     
+    [self hideKeyboard];
+    
     [_parentVC inputConfirm:_wifiName.text pwd:_wifiPwd.text];
 }
 
