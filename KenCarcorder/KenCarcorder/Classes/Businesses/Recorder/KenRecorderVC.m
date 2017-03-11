@@ -54,7 +54,7 @@
     }];
     
     //直接连接
-    UIImageView *item2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tab_recorder_item1"]];
+    UIImageView *item2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tab_recorder_item2"]];
     [self.contentView addSubview:item2];
     
     UILabel *label2 = [UILabel labelWithTxt:@"直接连接行车记录仪" frame:(CGRect){0,0,item2.size}
