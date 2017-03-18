@@ -79,6 +79,15 @@
 		BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75061E481008009ADD65 /* KenAccountS.m */; };
 		E6105B5B1E7CC04500CAE297 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */; };
 		E6105B5D1E7CC20A00CAE297 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */; };
+		E6105B5F1E7CC35400CAE297 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5E1E7CC35400CAE297 /* UserNotifications.framework */; };
+		E6105B611E7CC36000CAE297 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B601E7CC36000CAE297 /* AudioToolbox.framework */; };
+		E6105B631E7CC36F00CAE297 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B621E7CC36F00CAE297 /* OpenAL.framework */; };
+		E6105B651E7CC39800CAE297 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B641E7CC39800CAE297 /* AVFoundation.framework */; };
+		E6105B671E7CC3A600CAE297 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B661E7CC3A600CAE297 /* AssetsLibrary.framework */; };
+		E6105B691E7CC3B600CAE297 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B681E7CC3B600CAE297 /* CoreText.framework */; };
+		E6105B6B1E7CC3C300CAE297 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B6A1E7CC3C300CAE297 /* MediaPlayer.framework */; };
+		E6105B6D1E7CC3CF00CAE297 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B6C1E7CC3CF00CAE297 /* CFNetwork.framework */; };
+		E6105B6F1E7CC3DE00CAE297 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B6E1E7CC3DE00CAE297 /* SystemConfiguration.framework */; };
 		E61FAA8D1E57E83300F67E61 /* KenRecorderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA8C1E57E83300F67E61 /* KenRecorderVC.m */; };
 		E61FAA911E57F6A300F67E61 /* KenPlayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA901E57F6A300F67E61 /* KenPlayVC.m */; };
 		E61FAA941E58180D00F67E61 /* KenAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA931E58180D00F67E61 /* KenAboutUsVC.m */; };
@@ -269,6 +278,15 @@
 		BEAD75061E481008009ADD65 /* KenAccountS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAccountS.m; sourceTree = "<group>"; };
 		E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = usr/lib/libiconv.2.4.0.tbd; sourceTree = SDKROOT; };
 		E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		E6105B5E1E7CC35400CAE297 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		E6105B601E7CC36000CAE297 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E6105B621E7CC36F00CAE297 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		E6105B641E7CC39800CAE297 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E6105B661E7CC3A600CAE297 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		E6105B681E7CC3B600CAE297 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		E6105B6A1E7CC3C300CAE297 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		E6105B6C1E7CC3CF00CAE297 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		E6105B6E1E7CC3DE00CAE297 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E61FAA8B1E57E83300F67E61 /* KenRecorderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenRecorderVC.h; sourceTree = "<group>"; };
 		E61FAA8C1E57E83300F67E61 /* KenRecorderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenRecorderVC.m; sourceTree = "<group>"; };
 		E61FAA8F1E57F6A300F67E61 /* KenPlayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayVC.h; sourceTree = "<group>"; };
@@ -446,6 +464,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6105B6F1E7CC3DE00CAE297 /* SystemConfiguration.framework in Frameworks */,
+				E6105B6D1E7CC3CF00CAE297 /* CFNetwork.framework in Frameworks */,
+				E6105B6B1E7CC3C300CAE297 /* MediaPlayer.framework in Frameworks */,
+				E6105B691E7CC3B600CAE297 /* CoreText.framework in Frameworks */,
+				E6105B671E7CC3A600CAE297 /* AssetsLibrary.framework in Frameworks */,
+				E6105B651E7CC39800CAE297 /* AVFoundation.framework in Frameworks */,
+				E6105B631E7CC36F00CAE297 /* OpenAL.framework in Frameworks */,
+				E6105B611E7CC36000CAE297 /* AudioToolbox.framework in Frameworks */,
+				E6105B5F1E7CC35400CAE297 /* UserNotifications.framework in Frameworks */,
 				E6105B5D1E7CC20A00CAE297 /* libz.1.2.5.tbd in Frameworks */,
 				E6105B5B1E7CC04500CAE297 /* libiconv.2.4.0.tbd in Frameworks */,
 				E6E4C10C1E74069000FD0735 /* libavfilter.a in Frameworks */,
@@ -918,6 +945,15 @@
 		E3B31996C3B67BC2C9F55F39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E6105B6E1E7CC3DE00CAE297 /* SystemConfiguration.framework */,
+				E6105B6C1E7CC3CF00CAE297 /* CFNetwork.framework */,
+				E6105B6A1E7CC3C300CAE297 /* MediaPlayer.framework */,
+				E6105B681E7CC3B600CAE297 /* CoreText.framework */,
+				E6105B661E7CC3A600CAE297 /* AssetsLibrary.framework */,
+				E6105B641E7CC39800CAE297 /* AVFoundation.framework */,
+				E6105B621E7CC36F00CAE297 /* OpenAL.framework */,
+				E6105B601E7CC36000CAE297 /* AudioToolbox.framework */,
+				E6105B5E1E7CC35400CAE297 /* UserNotifications.framework */,
 				E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */,
 				E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */,
 				B9EB43BE141982A17CC39E0C /* libPods-KenCarcorder.a */,
@@ -1545,6 +1581,29 @@
 					"$(PROJECT_DIR)/KenCarcorder/Classes/Vendors/souSdk/lib",
 					"$(PROJECT_DIR)/KenCarcorder/Classes/Vendors/souSdk",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"MJRefresh\"",
+					"-l\"Masonry\"",
+					"-l\"SDWebImage\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-lz",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.youda.Carcorder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1570,6 +1629,29 @@
 					"$(PROJECT_DIR)/KenCarcorder/Classes/Vendors/Voice",
 					"$(PROJECT_DIR)/KenCarcorder/Classes/Vendors/souSdk/lib",
 					"$(PROJECT_DIR)/KenCarcorder/Classes/Vendors/souSdk",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"MJRefresh\"",
+					"-l\"Masonry\"",
+					"-l\"SDWebImage\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.youda.Carcorder;
 				PRODUCT_NAME = "$(TARGET_NAME)";

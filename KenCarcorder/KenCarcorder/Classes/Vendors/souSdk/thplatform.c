@@ -71,31 +71,35 @@ bool GetDiskSpace(char* Path, DWORD* TotalSpace, DWORD* FreeSpace)
 //-----------------------------------------------------------------------------
 char* FileExtName(char* FileName)//'.txt'
 {
-  char* Ext = NULL;
-  int i, m;
-  m = strlen(FileName);
-  for (i=m-1; i>=0; i--)
-  {
-    if (FileName[i] != '.') continue;
-    if (i < m - 1) Ext = &FileName[i];
-    break;
-  }
-  return Ext;
+    char* Ext = NULL;
+    int i;
+    size_t m;
+    m = strlen(FileName);
+    for (i = (int)(m - 1); i >= 0; i--)
+    {
+        if (FileName[i] != '.') continue;
+        if (i < m - 1) Ext = &FileName[i];
+        break;
+    }
+    return Ext;
 }
+
 //-----------------------------------------------------------------------------
 char* ExtractFileName(char* FileName)
 {
-  char* Ext = FileName;
-  int i, m;
-  m = strlen(FileName);
-  for (i=m-1; i>=0; i--)
-  {
-    if ((FileName[i] != '/')&&(FileName[i] != '\\')) continue;
-    if (i < m - 1) Ext = &FileName[i+1];
-    break;
-  }
-  return Ext;
+    char* Ext = FileName;
+    int i;
+    size_t m;
+    m = strlen(FileName);
+    for (i = (int)(m - 1); i >= 0; i--)
+    {
+        if ((FileName[i] != '/')&&(FileName[i] != '\\')) continue;
+        if (i < m - 1) Ext = &FileName[i+1];
+        break;
+    }
+    return Ext;
 }
+
 //-----------------------------------------------------------------------------
 bool DirectoryExists(char* Directory)
 {
@@ -111,6 +115,7 @@ bool DirectoryExists(char* Directory)
   return ((Code != -1) && ((FILE_ATTRIBUTE_DIRECTORY & Code) != 0));
 #endif
 }
+
 //-----------------------------------------------------------------------------
 bool FileExists(char* FileName)
 {
