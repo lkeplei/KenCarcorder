@@ -265,10 +265,6 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 - (void)connectFinish:(int)highW highH:(int)highH highRate:(int)highRate lowW:(int)lowW lowH:(int)lowH lowRate:(int)lowRate {
     self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];
     if (self.video) {
-        [self.video set_record:NO];
-        [self.video set_recordEnd:NO];
-        [self.video set_recordStart:NO];
-        
         self.video.delegate = self;
 //        [self.moviceGLView set_decoder:self.video];
         
