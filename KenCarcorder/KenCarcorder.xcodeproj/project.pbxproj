@@ -77,6 +77,8 @@
 		BEAD75001E480CDC009ADD65 /* KenMineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD74FF1E480CDC009ADD65 /* KenMineVC.m */; };
 		BEAD75041E480E5A009ADD65 /* KenALarmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75031E480E5A009ADD65 /* KenALarmVC.m */; };
 		BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75061E481008009ADD65 /* KenAccountS.m */; };
+		E6105B5B1E7CC04500CAE297 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */; };
+		E6105B5D1E7CC20A00CAE297 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */; };
 		E61FAA8D1E57E83300F67E61 /* KenRecorderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA8C1E57E83300F67E61 /* KenRecorderVC.m */; };
 		E61FAA911E57F6A300F67E61 /* KenPlayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA901E57F6A300F67E61 /* KenPlayVC.m */; };
 		E61FAA941E58180D00F67E61 /* KenAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA931E58180D00F67E61 /* KenAboutUsVC.m */; };
@@ -88,7 +90,6 @@
 		E61FAAAF1E58450A00F67E61 /* KenSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAAE1E58450A00F67E61 /* KenSelectVC.m */; };
 		E6B990D41E6A5E94009B6593 /* KenRadarV.m in Sources */ = {isa = PBXBuildFile; fileRef = E6B990D31E6A5E94009B6593 /* KenRadarV.m */; };
 		E6B990DC1E6A8F63009B6593 /* libcvoiceRecognize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B990D61E6A8F63009B6593 /* libcvoiceRecognize.a */; };
-		E6B990DD1E6A8F63009B6593 /* libcvoiceRecognize_simulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B990D71E6A8F63009B6593 /* libcvoiceRecognize_simulator.a */; };
 		E6B990E11E6A9DD9009B6593 /* KenDirectConnectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6B990E01E6A9DD9009B6593 /* KenDirectConnectVC.m */; };
 		E6D4D1A61E4EDC9800792FA8 /* KenLoginDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A51E4EDC9800792FA8 /* KenLoginDM.m */; };
 		E6D4D1A91E4EEFFC00792FA8 /* KenForgetPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D4D1A81E4EEFFC00792FA8 /* KenForgetPwdVC.m */; };
@@ -266,6 +267,8 @@
 		BEAD75031E480E5A009ADD65 /* KenALarmVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenALarmVC.m; sourceTree = "<group>"; };
 		BEAD75051E481008009ADD65 /* KenAccountS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAccountS.h; sourceTree = "<group>"; };
 		BEAD75061E481008009ADD65 /* KenAccountS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAccountS.m; sourceTree = "<group>"; };
+		E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = usr/lib/libiconv.2.4.0.tbd; sourceTree = SDKROOT; };
+		E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		E61FAA8B1E57E83300F67E61 /* KenRecorderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenRecorderVC.h; sourceTree = "<group>"; };
 		E61FAA8C1E57E83300F67E61 /* KenRecorderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenRecorderVC.m; sourceTree = "<group>"; };
 		E61FAA8F1E57F6A300F67E61 /* KenPlayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayVC.h; sourceTree = "<group>"; };
@@ -287,7 +290,6 @@
 		E6B990D21E6A5E94009B6593 /* KenRadarV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenRadarV.h; sourceTree = "<group>"; };
 		E6B990D31E6A5E94009B6593 /* KenRadarV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenRadarV.m; sourceTree = "<group>"; };
 		E6B990D61E6A8F63009B6593 /* libcvoiceRecognize.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcvoiceRecognize.a; sourceTree = "<group>"; };
-		E6B990D71E6A8F63009B6593 /* libcvoiceRecognize_simulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcvoiceRecognize_simulator.a; sourceTree = "<group>"; };
 		E6B990D81E6A8F63009B6593 /* voiceDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceDecoder.h; sourceTree = "<group>"; };
 		E6B990D91E6A8F63009B6593 /* voiceEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceEncoder.h; sourceTree = "<group>"; };
 		E6B990DA1E6A8F63009B6593 /* voicePlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voicePlay.h; sourceTree = "<group>"; };
@@ -444,11 +446,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6105B5D1E7CC20A00CAE297 /* libz.1.2.5.tbd in Frameworks */,
+				E6105B5B1E7CC04500CAE297 /* libiconv.2.4.0.tbd in Frameworks */,
 				E6E4C10C1E74069000FD0735 /* libavfilter.a in Frameworks */,
 				E6E4C10F1E74069000FD0735 /* libswresample.a in Frameworks */,
 				E6E4C10B1E74069000FD0735 /* libavdevice.a in Frameworks */,
 				E6E4C10D1E74069000FD0735 /* libavformat.a in Frameworks */,
-				E6B990DD1E6A8F63009B6593 /* libcvoiceRecognize_simulator.a in Frameworks */,
 				9C282D5C35903B91E779BC6B /* libPods-KenCarcorder.a in Frameworks */,
 				E6E4C1101E74069000FD0735 /* libswscale.a in Frameworks */,
 				E6E4C1111E74069000FD0735 /* libIOTCAPIs_ALLT.a in Frameworks */,
@@ -915,6 +918,8 @@
 		E3B31996C3B67BC2C9F55F39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */,
+				E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */,
 				B9EB43BE141982A17CC39E0C /* libPods-KenCarcorder.a */,
 			);
 			name = Frameworks;
@@ -955,7 +960,6 @@
 			isa = PBXGroup;
 			children = (
 				E6B990D61E6A8F63009B6593 /* libcvoiceRecognize.a */,
-				E6B990D71E6A8F63009B6593 /* libcvoiceRecognize_simulator.a */,
 				E6B990D81E6A8F63009B6593 /* voiceDecoder.h */,
 				E6B990D91E6A8F63009B6593 /* voiceEncoder.h */,
 				E6B990DA1E6A8F63009B6593 /* voicePlay.h */,
