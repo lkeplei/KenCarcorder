@@ -52,7 +52,7 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
                    success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
 #pragma mark - alarm
-- (void)alarmWithGroupNo:(NSString *)groupNo success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success
-             failedBlock:(RequestFailureBlock)failed;
+- (void)alarmWithCondition:(NSInteger)alarmId sn:(NSString *)sn readed:(NSString *)readed groupNo:(NSInteger)groupNo
+                   success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
 @end

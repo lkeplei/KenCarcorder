@@ -8,7 +8,6 @@
 
 #import "KenAccountS.h"
 #import "KenLoginDM.h"
-#import "KenUserInfoDM.h"
 
 @implementation KenAccountS
 

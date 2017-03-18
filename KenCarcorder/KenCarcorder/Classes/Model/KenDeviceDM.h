@@ -45,7 +45,7 @@ typedef NS_ENUM(NSUInteger, KenNetworkStatusType) {  //网络连接方式
 //@property (assign) NSInteger lanDataPort;
 //@property (assign) NSInteger lanHttpPort;
 //@property (assign) BOOL isSubStream;                //是否为主码流，默认为否
-//@property (assign) BOOL deviceLock;                 //设备是否已加密
+@property (nonatomic, assign) BOOL deviceLock;                      //设备是否已加密
 
 
 //获取当前ip

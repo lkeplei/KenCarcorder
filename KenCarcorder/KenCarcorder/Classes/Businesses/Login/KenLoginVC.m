@@ -7,7 +7,6 @@
 //
 
 #import "KenLoginVC.h"
-#import "KenUserInfoDM.h"
 #import "KenLoginDM.h"
 
 @interface KenLoginVC ()<UITextFieldDelegate, UIGestureRecognizerDelegate>

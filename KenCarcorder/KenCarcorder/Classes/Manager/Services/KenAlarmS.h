@@ -10,7 +10,7 @@
 
 @interface KenAlarmS : KenHttpBaseService
 
-- (void)alarmWithGroupNo:(NSString *)groupNo success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success
-             failedBlock:(RequestFailureBlock)failed;
+- (void)alarmWithCondition:(NSInteger)alarmId sn:(NSString *)sn readed:(NSString *)readed groupNo:(NSInteger)groupNo
+                   success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
 @end

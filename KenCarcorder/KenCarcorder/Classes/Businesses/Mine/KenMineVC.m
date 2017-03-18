@@ -7,7 +7,6 @@
 //
 
 #import "KenMineVC.h"
-#import "KenUserInfoDM.h"
 
 @interface KenMineVC ()<UITableViewDataSource, UITableViewDelegate>
 

@@ -8,7 +8,6 @@
 
 #import "KenAFHttp.h"
 #import "AFNetworking.h"
-#import "KenUserInfoDM.h"
 
 #define kKenHttpTimeoutValue       (10)
 

@@ -7,7 +7,6 @@
 //
 
 #import "KenForgetPwdVC.h"
-#import "KenUserInfoDM.h"
 
 @interface KenForgetPwdVC ()<UITextFieldDelegate, UIGestureRecognizerDelegate>
 

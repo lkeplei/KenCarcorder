@@ -7,7 +7,6 @@
 //
 
 #import "KenGroupManagerVC.h"
-#import "KenUserInfoDM.h"
 
 @interface KenGroupManagerVC ()<UIGestureRecognizerDelegate>
 

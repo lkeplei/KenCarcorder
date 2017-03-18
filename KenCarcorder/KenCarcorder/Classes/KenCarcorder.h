@@ -20,6 +20,13 @@
 - (void)deleteCachFolder;
 - (long long)getCachFolderSize;
 
+#pragma mark - 文件管理相关
++ (unsigned long long)getFileSize:(NSString*)filePath;
++ (unsigned long long)getFolderSize:(NSString*)folderPath;
++ (BOOL)deleteFileWithPath:(NSString*)path;
++ (BOOL)fileExistsAtPath:(NSString*)path;
++ (BOOL)createFolderAtPath:(NSString *)path;
+
 /**
  *  @author Ken.Liu
  *

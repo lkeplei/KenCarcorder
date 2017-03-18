@@ -94,6 +94,8 @@
 		E6105B811E7CEA8500CAE297 /* KenVideoV.m in Sources */ = {isa = PBXBuildFile; fileRef = E6105B7E1E7CEA8500CAE297 /* KenVideoV.m */; };
 		E6105B831E7D162500CAE297 /* libcvoiceRecognize_simulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B821E7D162500CAE297 /* libcvoiceRecognize_simulator.a */; };
 		E6105B861E7D1EBB00CAE297 /* KenAlarmS.m in Sources */ = {isa = PBXBuildFile; fileRef = E6105B851E7D1EBB00CAE297 /* KenAlarmS.m */; };
+		E6105B8D1E7D27B700CAE297 /* KenAlarmDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6105B8C1E7D27B700CAE297 /* KenAlarmDM.m */; };
+		E6105B901E7D2AEB00CAE297 /* KenSelectDeleteV.m in Sources */ = {isa = PBXBuildFile; fileRef = E6105B8F1E7D2AEB00CAE297 /* KenSelectDeleteV.m */; };
 		E61FAA8D1E57E83300F67E61 /* KenRecorderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA8C1E57E83300F67E61 /* KenRecorderVC.m */; };
 		E61FAA911E57F6A300F67E61 /* KenPlayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA901E57F6A300F67E61 /* KenPlayVC.m */; };
 		E61FAA941E58180D00F67E61 /* KenAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA931E58180D00F67E61 /* KenAboutUsVC.m */; };
@@ -302,6 +304,10 @@
 		E6105B821E7D162500CAE297 /* libcvoiceRecognize_simulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcvoiceRecognize_simulator.a; sourceTree = "<group>"; };
 		E6105B841E7D1EBB00CAE297 /* KenAlarmS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAlarmS.h; sourceTree = "<group>"; };
 		E6105B851E7D1EBB00CAE297 /* KenAlarmS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlarmS.m; sourceTree = "<group>"; };
+		E6105B8B1E7D27B700CAE297 /* KenAlarmDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAlarmDM.h; sourceTree = "<group>"; };
+		E6105B8C1E7D27B700CAE297 /* KenAlarmDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlarmDM.m; sourceTree = "<group>"; };
+		E6105B8E1E7D2AEB00CAE297 /* KenSelectDeleteV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenSelectDeleteV.h; sourceTree = "<group>"; };
+		E6105B8F1E7D2AEB00CAE297 /* KenSelectDeleteV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenSelectDeleteV.m; sourceTree = "<group>"; };
 		E61FAA8B1E57E83300F67E61 /* KenRecorderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenRecorderVC.h; sourceTree = "<group>"; };
 		E61FAA8C1E57E83300F67E61 /* KenRecorderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenRecorderVC.m; sourceTree = "<group>"; };
 		E61FAA8F1E57F6A300F67E61 /* KenPlayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayVC.h; sourceTree = "<group>"; };
@@ -953,8 +959,11 @@
 		BEAD75011E480E43009ADD65 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				E6105B8A1E7D27B700CAE297 /* Model */,
 				BEAD75021E480E5A009ADD65 /* KenALarmVC.h */,
 				BEAD75031E480E5A009ADD65 /* KenALarmVC.m */,
+				E6105B8E1E7D2AEB00CAE297 /* KenSelectDeleteV.h */,
+				E6105B8F1E7D2AEB00CAE297 /* KenSelectDeleteV.m */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -990,6 +999,15 @@
 				E6105B7E1E7CEA8500CAE297 /* KenVideoV.m */,
 			);
 			path = "视频核心部分";
+			sourceTree = "<group>";
+		};
+		E6105B8A1E7D27B700CAE297 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E6105B8B1E7D27B700CAE297 /* KenAlarmDM.h */,
+				E6105B8C1E7D27B700CAE297 /* KenAlarmDM.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		E61FAA8A1E57E82200F67E61 /* Recorder */ = {
@@ -1419,6 +1437,7 @@
 				BEAD75041E480E5A009ADD65 /* KenALarmVC.m in Sources */,
 				BEAD74FD1E480CBB009ADD65 /* KenLoginVC.m in Sources */,
 				E61FAAAF1E58450A00F67E61 /* KenSelectVC.m in Sources */,
+				E6105B901E7D2AEB00CAE297 /* KenSelectDeleteV.m in Sources */,
 				BE7EFD911E3214EF00E1E579 /* KenUserInfoDM.m in Sources */,
 				BE7EFD881E320FDC00E1E579 /* KenActionSheet.m in Sources */,
 				E6E4C1151E74069000FD0735 /* skt.c in Sources */,
@@ -1493,6 +1512,7 @@
 				BE7EFD661E32098F00E1E579 /* UIImage+KenImage.m in Sources */,
 				BE7EFD6F1E32098F00E1E579 /* GCDQueue.m in Sources */,
 				E6E4C1091E74069000FD0735 /* common.c in Sources */,
+				E6105B8D1E7D27B700CAE297 /* KenAlarmDM.m in Sources */,
 				BE7EFD621E32098F00E1E579 /* UIBarButtonItem+KenBadge.m in Sources */,
 				BE7EFD7B1E32098F00E1E579 /* KenDeallocMonitor.m in Sources */,
 				E6E4C07A1E73D8F500FD0735 /* KenDeviceSettingVC.m in Sources */,
