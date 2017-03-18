@@ -24,6 +24,7 @@
     [self setNavTitle:@"分组管理"];
     
     UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"group_bg"]];
+    bgV.size = self.contentView.size;
     [self.contentView addSubview:bgV];
     
     float height = 44;

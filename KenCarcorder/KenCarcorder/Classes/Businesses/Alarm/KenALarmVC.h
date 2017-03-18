@@ -10,4 +10,7 @@
 
 @interface KenALarmVC : KenBaseVC
 
+- (void)alarmWithDeivce:(NSString *)sn;
+- (void)setAlarmNum;
+
 @end

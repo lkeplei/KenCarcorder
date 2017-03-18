@@ -10,6 +10,7 @@
 #import "KenHttpBaseService.h"
 #import "KenAccountS.h"
 #import "KenDeviceS.h"
+#import "KenAlarmS.h"
 
 @implementation KenServiceManager
 
@@ -25,7 +26,8 @@
 #pragma mark - public method
 - (NSArray *)servicesArray {
     return @[[[KenAccountS alloc] init],
-             [[KenDeviceS alloc] init]];
+             [[KenDeviceS alloc] init],
+             [[KenAlarmS alloc] init]];
 }
 
 - (NSString *)dispathPath {
