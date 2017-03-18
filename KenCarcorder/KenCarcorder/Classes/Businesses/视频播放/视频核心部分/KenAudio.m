@@ -99,7 +99,7 @@ static void BufferCallback(void *inUserData, AudioQueueRef inAQ, AudioQueueBuffe
 
 #pragma mark - audio
 //音频播放方法的实现
-- (id)initAudio {
+- (instancetype)initAudio {
     if (!(self=[super init])) return nil;
     int i;
     audioset = false;

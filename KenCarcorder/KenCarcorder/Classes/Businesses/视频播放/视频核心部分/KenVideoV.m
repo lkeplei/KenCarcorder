@@ -40,6 +40,7 @@ KenVideoV *retVideoSelf;
     }
     
     _deviceDM = device;
+    _playAudio = YES;
     
     [self startVidthread];
 }
@@ -168,13 +169,12 @@ void avConnectCallBack(TDataFrameInfo* PInfo, char* Buf, int Len, void* UserCust
 #endif
         }
         
-//        if (PInfo->Head.VerifyCode == Head_AudioPkt && [KenUtils isNotEmpty:[baseV audio]]) {
-//            //声音打开
-//            if ([baseV playAudio]) {
-//                [[baseV audio] playAudio:Buf length:Len]; //发送播放音频数据 Audio.h
-//                [[baseV video] manageAudioData:Buf len:Len]; // VideoFrameExtractor.h
-//            }
-//        }
+        if (PInfo->Head.VerifyCode == Head_AudioPkt && baseV.audio) {
+            if (baseV.playAudio) {
+                [[baseV audio] playAudio:Buf length:Len]; //发送播放音频数据 Audio.h
+                [[baseV video] manageAudioData:Buf len:Len]; // VideoFrameExtractor.h
+            }
+        }
         
         [baseV pareFrameData:Len frameId:PInfo->Frame.FrameID];
     } else {
@@ -209,20 +209,14 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 
 #pragma mark - 软解数据显示
 - (void)updateVideoFrame:(VideoFrame *)frame {
-    [self performSelectorOnMainThread:@selector(updateFrame) withObject:nil waitUntilDone:YES];
-
-    if (frame == nil) {
-//        if (_videoConnected) {
-//            [self performSelectorOnMainThread:@selector(updateFrame) withObject:nil waitUntilDone:YES];
-//        } else {
-//            [self showLoadingV];
-//        }
-    } else {
-        if (thNet_IsConnect(_deviceDM.connectHandle)) {
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        if (frame) {
 //            [_moviceGLView render:frame];
         } else {
-//            [self showLoadingV];
+            [self performSelectorOnMainThread:@selector(updateFrame) withObject:nil waitUntilDone:YES];
         }
+    } else {
+//            [self showLoadingV];
     }
 }
 
@@ -268,8 +262,7 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 }
 
 #pragma mark - 自定义部分
-- (void)connectFinish:(int)highW highH:(int)highH highRate:(int)highRate lowW:(int)lowW lowH:(int)lowH lowRate:(int)lowRate //视频清晰度
-{
+- (void)connectFinish:(int)highW highH:(int)highH highRate:(int)highRate lowW:(int)lowW lowH:(int)lowH lowRate:(int)lowRate {
     self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];
     if (self.video) {
         [self.video set_record:NO];
@@ -279,18 +272,17 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
         self.video.delegate = self;
 //        [self.moviceGLView set_decoder:self.video];
         
-//        self.audio = [[KenAudio alloc] initAudio];
-//        UInt32 category = kAudioSessionCategory_PlayAndRecord;
-//        OSStatus error;
-//        
-//        AudioSessionInitialize(NULL, NULL, NULL, NULL);
-//        error = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
-//        
-//        if (error)
-//            DebugLog("couldn't set audio category!");
-//        
+        self.audio = [[KenAudio alloc] initAudio];
+        UInt32 category = kAudioSessionCategory_PlayAndRecord;
+        OSStatus error;
+        
+        AudioSessionInitialize(NULL, NULL, NULL, NULL);
+        error = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
+
+        if (error)
+            DebugLog("couldn't set audio category!");
+        
 //        [self.audio initRecordAudio];
-//        self.playAudio = YES;
     }
 //
 //    _stopPlay = NO;
@@ -303,7 +295,7 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
         }
     }
     
-//    [self.audio pauseRecord];
+    [self.audio pauseRecord];
 }
 
 #pragma mark - event

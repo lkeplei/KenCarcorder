@@ -19,5 +19,37 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "KenCarcorder/Classes/Businesses/&#x89c6;&#x9891;&#x64ad;&#x653e;/&#x89c6;&#x9891;&#x6838;&#x5fc3;&#x90e8;&#x5206;/KenVideoV.m"
+            timestampString = "511504785.338768"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
+            landmarkName = "-connectFinish:highH:highRate:lowW:lowH:lowRate:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "KenCarcorder/Classes/Businesses/&#x89c6;&#x9891;&#x64ad;&#x653e;/&#x89c6;&#x9891;&#x6838;&#x5fc3;&#x90e8;&#x5206;/KenAudio.m"
+            timestampString = "511504865.537249"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "-initRecordAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

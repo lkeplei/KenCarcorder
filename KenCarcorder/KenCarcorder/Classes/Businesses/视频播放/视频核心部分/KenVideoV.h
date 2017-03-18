@@ -15,6 +15,8 @@
 
 @interface KenVideoV : UIView
 
+@property (nonatomic, assign) BOOL playAudio;               //是否开启声音，默认开启
+
 @property (nonatomic, strong) KenVideoFrameExtractor *video;
 @property (nonatomic, strong) KenAudio *audio;
 
