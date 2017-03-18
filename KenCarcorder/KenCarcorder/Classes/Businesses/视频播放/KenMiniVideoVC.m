@@ -138,16 +138,28 @@
 
 #pragma mark - public method
 - (void)setDirectConnect {
-    NSString *ssid = [KenCarcorder getCurrentSSID];
+//    NSString *ssid = [KenCarcorder getCurrentSSID];
+//    
+//    KenDeviceDM *device = [KenDeviceDM initWithJsonDictionary:@{}];
+//    device.netStat = kKenNetworkDdns;
+//    device.ddns = @"192.168.1.168";
+//    device.name = ssid;
+//    
+//    NSInteger value = [[ssid substringFromIndex:[ssid length] - 3] integerValue];
+//    device.dataport = 7000 + value;
+//    device.httpport = 8000 + value;
+//    
+//    self.device = device;
+    
+    
     
     KenDeviceDM *device = [KenDeviceDM initWithJsonDictionary:@{}];
     device.netStat = kKenNetworkDdns;
-    device.ddns = @"192.168.1.168";
-    device.name = ssid;
+    device.ddns = @"80002075.7cyun.net";
+    device.name = @"二楼";
     
-    NSInteger value = [[ssid substringFromIndex:[ssid length] - 3] integerValue];
-    device.dataport = 7000 + value;
-    device.httpport = 8000 + value;
+    device.dataport = 7075;
+    device.httpport = 8075;
     
     self.device = device;
 }
@@ -271,11 +283,13 @@
     _device = device;
     
     [self setNavTitle:_device.name];
+    
+    [self.videoV showVideoWithDevice:_device];
 }
 
 - (KenVideoV *)videoV {
     if (_videoV == nil) {
-        _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0,64,self.contentView.width,ceilf(self.contentView.width * kAppImageHeiWid)}];
+        _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 64, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
     }
     return _videoV;
 }
