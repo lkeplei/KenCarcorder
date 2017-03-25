@@ -29,11 +29,6 @@
     struct SwsContext *img_convert_ctx;
 }
 
-//录像控制
-@property (nonatomic, assign) BOOL record;
-@property (nonatomic, assign) BOOL recordStart;
-@property (nonatomic, assign) BOOL recordEnd;
-
 @property (nonatomic, readonly) double duration;
 
 @property (nonatomic, assign) int outputWidth;
@@ -123,101 +118,29 @@ static int video_outbuf_size;
 }
 
 - (void)videoRecord:(char *)buf len:(int)len {
-    if(_record) {
-        if (_recordStart) {
-            DebugLog("file path is %@", _filename);
-            _recordStart = NO;
-            fmt = av_guess_format(NULL, [_filename cStringUsingEncoding:NSASCIIStringEncoding], NULL);
-            if (!fmt) {
-                fmt = av_guess_format("mpeg", NULL, NULL);
+    @synchronized(self) {
+        if(self.isRecording) {
+            int out_size;
+            AVCodecContext *c;
+            //static struct SwsContext *img_convert_ctx;
+            c = video_st->codec;
+            out_size = avcodec_encode_video(c, video_outbuf, video_outbuf_size, pFrame);
+            
+            if (out_size > 0) {
+                AVPacket pkt;
+                av_init_packet(&pkt);
+                
+                if (c->coded_frame->pts != AV_NOPTS_VALUE)
+                    pkt.pts= av_rescale_q(c->coded_frame->pts, c->time_base, video_st->time_base);
+                if(c->coded_frame->key_frame)
+                    pkt.flags |= AV_PKT_FLAG_KEY;
+                pkt.stream_index = video_st->index;
+                pkt.data = video_outbuf;
+                pkt.size = out_size;
+                
+                av_interleaved_write_frame(self.ocx, &pkt);
             }
-            if (!fmt) {
-                fprintf(stderr, "Could not find suitable output format\n");
-                exit(1);
-            }
-            
-            self.ocx = avformat_alloc_context();
-            if (!self.ocx) {
-                fprintf(stderr, "Memory error\n");
-                exit(1);
-            }
-            self.ocx->oformat = fmt;
-            snprintf(self.ocx->filename, sizeof(self.ocx->filename), "%s", [_filename cStringUsingEncoding:NSASCIIStringEncoding]);
-            
-            self.ocx->oformat->video_codec = CODEC_ID_MPEG4;
-            //            self.ocx->oformat->audio_codec = CODEC_ID_FLAC;
-            
-            fmt = self.ocx->oformat;
-            video_st = NULL;
-            audio_st = NULL;
-            
-            if (fmt->video_codec != CODEC_ID_NONE) {
-                video_st = [self add_video_stream:self.ocx codecId:fmt->video_codec];
-            }
-
-            av_dump_format(self.ocx, 0, [_filename cStringUsingEncoding:NSASCIIStringEncoding], 1);
-            
-            if (video_st) {
-                [self openVideo:video_st];
-            }
-            
-            if (!(fmt->flags & AVFMT_NOFILE)) {
-                if (avio_open(&self.ocx->pb, [_filename cStringUsingEncoding:NSASCIIStringEncoding], AVIO_FLAG_WRITE) < 0) {
-                    fprintf(stderr, "Could not open '%s'\n", [_filename cStringUsingEncoding:NSASCIIStringEncoding]);
-                    return;
-                }
-            }
-            
-            int xx = avformat_write_header(self.ocx,NULL);
-            DebugLog("write header is %d",xx);
-            s_picture->pts = 0;
         }
-        
-        int out_size;
-        AVCodecContext *c;
-        //static struct SwsContext *img_convert_ctx;
-        c = video_st->codec;
-        out_size = avcodec_encode_video(c, video_outbuf, video_outbuf_size, pFrame);
-        
-        if (out_size > 0) {
-            AVPacket pkt;
-            av_init_packet(&pkt);
-            
-            if (c->coded_frame->pts != AV_NOPTS_VALUE)
-                pkt.pts= av_rescale_q(c->coded_frame->pts, c->time_base, video_st->time_base);
-            if(c->coded_frame->key_frame)
-                pkt.flags |= AV_PKT_FLAG_KEY;
-            pkt.stream_index = video_st->index;
-            pkt.data = video_outbuf;
-            pkt.size = out_size;
-            
-            av_interleaved_write_frame(self.ocx, &pkt);
-        }
-    }
-    
-    if(_recordEnd) {
-        _recordEnd = NO;
-        _isRecording = NO;
-        av_write_trailer(self.ocx);
-        
-        if (video_st){
-            [self closeVideo:video_st];
-        }
-        
-        if (audio_st) {
-            [self closeAudio:audio_st];
-        }
-        
-        for(NSUInteger i = 0; i < self.ocx->nb_streams; i++) {
-            av_freep(&self.ocx->streams[i]->codec);
-            av_freep(&self.ocx->streams[i]);
-        }
-        
-        if (!(fmt->flags & AVFMT_NOFILE)) {
-            avio_close(self.ocx->pb);
-            [NSThread detachNewThreadSelector:@selector(saveVideo) toTarget:self withObject:nil];
-        }
-        av_free(self.ocx);
     }
 }
 
@@ -383,7 +306,7 @@ static int video_outbuf_size;
 }
 
 - (void)manageAudioData:(char *)buf len:(int)len {
-    if (_record && !_recordStart) {
+    if (_isRecording) {
         [self writeAudioFrame:audio_st];
     }
 }
@@ -391,9 +314,6 @@ static int video_outbuf_size;
 - (BOOL)resetSetting:(int)width height:(int)height rate:(int)frameRate {
     _isRecording = NO;
     _streamFrameRate = frameRate;
-    _record = NO;
-    _recordEnd = NO;
-    _recordStart = NO;
     
     self.width = width;
     self.height = height;
@@ -429,17 +349,82 @@ static int video_outbuf_size;
 }
 
 - (void)startRecord {
-    _record = YES;
-    _recordStart = YES;
-    
-    _isRecording = YES;
+    @synchronized(self) {
+        self.isRecording = YES;
+        
+        DebugLog("file path is %@", _filename);
+        fmt = av_guess_format(NULL, [_filename cStringUsingEncoding:NSASCIIStringEncoding], NULL);
+        if (!fmt) {
+            fmt = av_guess_format("mpeg", NULL, NULL);
+        }
+        if (!fmt) {
+            fprintf(stderr, "Could not find suitable output format\n");
+            exit(1);
+        }
+        
+        self.ocx = avformat_alloc_context();
+        if (!self.ocx) {
+            fprintf(stderr, "Memory error\n");
+            exit(1);
+        }
+        self.ocx->oformat = fmt;
+        snprintf(self.ocx->filename, sizeof(self.ocx->filename), "%s", [_filename cStringUsingEncoding:NSASCIIStringEncoding]);
+        
+        self.ocx->oformat->video_codec = CODEC_ID_MPEG4;
+        //            self.ocx->oformat->audio_codec = CODEC_ID_FLAC;
+        
+        fmt = self.ocx->oformat;
+        video_st = NULL;
+        audio_st = NULL;
+        
+        if (fmt->video_codec != CODEC_ID_NONE) {
+            video_st = [self add_video_stream:self.ocx codecId:fmt->video_codec];
+        }
+        
+        av_dump_format(self.ocx, 0, [_filename cStringUsingEncoding:NSASCIIStringEncoding], 1);
+        
+        if (video_st) {
+            [self openVideo:video_st];
+        }
+        
+        if (!(fmt->flags & AVFMT_NOFILE)) {
+            if (avio_open(&self.ocx->pb, [_filename cStringUsingEncoding:NSASCIIStringEncoding], AVIO_FLAG_WRITE) < 0) {
+                fprintf(stderr, "Could not open '%s'\n", [_filename cStringUsingEncoding:NSASCIIStringEncoding]);
+                return;
+            }
+        }
+        
+        int xx = avformat_write_header(self.ocx,NULL);
+        DebugLog("write header is %d",xx);
+        s_picture->pts = 0;
+    }
 }
 
 - (void)endRecord {
-    _record = NO;
-    _recordEnd = YES;
-    
-    _isRecording = NO;
+    @synchronized(self) {
+        self.isRecording = NO;
+        
+        av_write_trailer(self.ocx);
+        
+        if (video_st){
+            [self closeVideo:video_st];
+        }
+        
+        if (audio_st) {
+            [self closeAudio:audio_st];
+        }
+        
+        for(NSUInteger i = 0; i < self.ocx->nb_streams; i++) {
+            av_freep(&self.ocx->streams[i]->codec);
+            av_freep(&self.ocx->streams[i]);
+        }
+        
+        if (!(fmt->flags & AVFMT_NOFILE)) {
+            avio_close(self.ocx->pb);
+            [NSThread detachNewThreadSelector:@selector(saveVideo) toTarget:self withObject:nil];
+        }
+        av_free(self.ocx);
+    }
 }
 
 - (void)capturePhoto {
