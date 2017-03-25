@@ -7,12 +7,17 @@
 //
 
 #import "KenLoginDM.h"
+#import "KenDeviceDM.h"
 
 @implementation KenLoginDM
 
 + (NSDictionary *)setDefaultValueMap {
     return @{@"message":@"",
              @"list":@[]};
+}
+
++ (NSDictionary *)setContainerPropertyClassMap {
+    return @{@"list":[KenDeviceDM class]};
 }
 
 @end

@@ -117,7 +117,11 @@
                 [[responseDic objectForKey:kHttpMessage] isEqualToString:@"ok"]) {
                 SafeHandleBlock(response, responseDic);
             } else {
-                SafeHandleBlock(failed, kHttpFailedErrorCode, kHttpFailedErrorMsg);
+                if ([responseDic objectForKey:kHttpMessage]) {
+                    SafeHandleBlock(failed, kHttpFailedErrorCode, [responseDic objectForKey:kHttpMessage]);
+                } else {
+                    SafeHandleBlock(failed, kHttpFailedErrorCode, kHttpFailedErrorMsg);
+                }
             }
         } else {
             SafeHandleBlock(response, responseDic);

@@ -17,7 +17,10 @@
 @property (nonatomic, strong) KenDeviceDM *deviceDM;
 
 @property (nonatomic, strong) UIImageView *screenImageV;
+
 @property (nonatomic, strong) UIView *recorderBgV;          //录像时的背景框
+@property (nonatomic, strong) UILabel *recorderTimeLab;
+@property (nonatomic, assign) NSUInteger timeLength;        //录像时长
 
 @end
 
@@ -86,12 +89,28 @@ KenVideoV *retVideoSelf;
     if(thNet_IsConnect(_deviceDM.connectHandle)) {
         if (_video.isRecording) {
             [_video endRecord];
+            self.recorderBgV.hidden = YES;
+            
+            [[KenGCDTimerManager sharedInstance] cancelTimerWithName:@"videoRecord"];
         } else {
             NSString *filePath = [[[KenCarcorder shareCarcorder] getRecorderFolder] stringByAppendingFormat:@"/1.mp4"];
             [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
             
             _video.filename = filePath;
             [_video startRecord];
+            
+            self.recorderBgV.hidden = NO;
+            _timeLength = 0;
+            
+            @weakify(self)
+            [[KenGCDTimerManager sharedInstance] scheduledTimerWithName:@"videoRecord" timeInterval:1 queue:nil repeats:YES
+                                                           actionOption:kKenGCDTimerAbandon action:^{
+                @strongify(self)
+                [Async main:^{
+                    self.timeLength++;
+                    self.recorderTimeLab.text = [self getTimeString:self.timeLength];
+                }];
+            }];
         }
     }
 }
@@ -278,7 +297,7 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 - (void)updateFrameWithImage:(UIImage *)image {
     if (image) {
         if (_screenImageV == nil) {
-            _screenImageV = [[UIImageView alloc] initWithFrame:(CGRect){0,0,self.size}];
+            _screenImageV = [[UIImageView alloc] initWithFrame:(CGRect){0, 0, self.size}];
             [self addSubview:_screenImageV];
         }
         [_screenImageV setImage:image];
@@ -353,7 +372,9 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
             if (res) {
 //                _stopPlay = YES;
             } else {
-                [self performSelector:@selector(rePlay) withObject:nil afterDelay:2];
+                [Async mainAfter:2 block:^{
+                    [self rePlay];
+                }];
             }
         }
 //    }
@@ -398,4 +419,36 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 //    _averageSpeed = speed / [_dataLengthArray count];
 }
 
+- (NSString *)getTimeString:(NSInteger)length {
+    NSString *time = @"";
+    
+    if (length > 3600) {
+        time = [NSString stringWithFormat:@"%02zd:%02zd:%02zd", length / 3600, length % 3600 / 60, length % 3600 % 60];
+    } else if (length > 60) {
+        time = [NSString stringWithFormat:@"00:%02zd:%02zd", length / 60, length % 60];
+    } else {
+        time = [NSString stringWithFormat:@"00:00:%02zd", length];
+    }
+    
+    return time;
+}
+
+#pragma mark - getter setter 
+- (UIView *)recorderBgV {
+    if (_recorderBgV == nil) {
+        _timeLength = 0;
+        _recorderBgV = [[UIView alloc] initWithFrame:(CGRect){(self.width - 200) / 2, 0, 200, 40}];
+        [self addSubview:_recorderBgV];
+        
+        UIImageView *leftTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_rec_left_top"]]; //录像框
+        leftTop.origin = CGPointMake((_recorderBgV.width - leftTop.width - 80) / 2, 10);
+        [_recorderBgV addSubview:leftTop];
+        
+        _recorderTimeLab = [UILabel labelWithTxt:@"00:00:00"
+                                           frame:(CGRect){CGRectGetMaxX(leftTop.frame) + 10, leftTop.originY, 70, leftTop.height}
+                                            font:[UIFont appFontSize14] color:[UIColor colorWithHexString:@"#FF643B"]]; //录像时间计时器
+        [_recorderBgV addSubview:_recorderTimeLab];
+    }
+    return _recorderBgV;
+}
 @end

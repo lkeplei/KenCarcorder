@@ -89,6 +89,9 @@
     UITapGestureRecognizer *tapTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     tapTouch.delegate = self;
     [self.contentView addGestureRecognizer:tapTouch];
+    
+    //测试先自动登录
+    [self loginRequest];
 }
 
 #pragma mark - event
@@ -119,6 +122,8 @@
         }
     } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
         [self hideActivity];
+        
+        [self showToastWithMsg:errMsg];
     }];
 }
 

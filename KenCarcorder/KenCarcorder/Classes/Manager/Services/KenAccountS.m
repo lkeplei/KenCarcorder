@@ -28,7 +28,7 @@
                                 @"mac":[UIDevice getMacAddress],
                                 @"action":@"regusr"};
     
-    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
+    __block KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
     if (userInfo == nil) {
         userInfo = [[KenUserInfoDM alloc] init];
     }
@@ -38,7 +38,11 @@
     
     [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"user/login.json"]
             requestInfo:request start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
-                SafeHandleBlock(success, YES, nil, [KenLoginDM initWithJsonDictionary:responseData]);
+                KenLoginDM *loginDM = [KenLoginDM initWithJsonDictionary:responseData];
+                
+                [userInfo setDevices:loginDM.list];
+                
+                SafeHandleBlock(success, YES, nil, loginDM);
             }];
 }
 

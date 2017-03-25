@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, CWGCDTimerType)
+typedef NS_ENUM(NSUInteger, KenGCDTimerType)
 {
-    kCWGCDTimerAbandon = 0,           // 废除同一个timer之前的任务
-    kCWGCDTimerMerge,                 // 将同一个timer之前的任务合并到新的任务中
+    kKenGCDTimerAbandon = 0,           // 废除同一个timer之前的任务
+    kKenGCDTimerMerge,                 // 将同一个timer之前的任务合并到新的任务中
 };
 
 @interface KenGCDTimerManager : NSObject
@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, CWGCDTimerType)
                   timeInterval:(double)interval
                          queue:(dispatch_queue_t)queue
                        repeats:(BOOL)repeats
-                  actionOption:(CWGCDTimerType)option
+                  actionOption:(KenGCDTimerType)option
                         action:(dispatch_block_t)action;
 
 /**

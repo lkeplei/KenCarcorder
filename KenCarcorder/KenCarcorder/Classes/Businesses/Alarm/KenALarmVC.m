@@ -502,7 +502,7 @@
         _groupV = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, kKenOffsetY(78)}];
         _groupV.backgroundColor = [UIColor colorWithHexString:@"#084AAB"];
         
-        NSArray *group = [KenUserInfoDM getInstance].deviceGroups;
+        NSArray *group = [KenUserInfoDM sharedInstance].deviceGroups;
         float width = self.contentView.width / [group count];
         for (NSInteger i = 0; i < [group count]; i++) {
             NSString *name = [group objectAtIndex:i];

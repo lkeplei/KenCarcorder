@@ -49,4 +49,10 @@ static KenUserInfoDM *userInfo = nil;
     return nil;
 }
 
+- (void)setDevices:(NSArray *)array {
+    _deviceArray = [NSMutableArray arrayWithArray:array];
+    
+    [self setInstance];
+}
+
 @end

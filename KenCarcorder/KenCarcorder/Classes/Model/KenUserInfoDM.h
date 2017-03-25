@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)emptyAllUserdata;
 
 - (KenDeviceDM *)deviceWithSN:(NSString *)sn;
+- (void)setDevices:(NSArray *)array;
 
 @end
 

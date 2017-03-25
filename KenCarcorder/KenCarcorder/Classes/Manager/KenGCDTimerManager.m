@@ -56,7 +56,7 @@
                           timeInterval:(double)interval
                                  queue:(dispatch_queue_t)queue
                                repeats:(BOOL)repeats
-                          actionOption:(CWGCDTimerType)option
+                          actionOption:(KenGCDTimerType)option
                                 action:(dispatch_block_t)action
 {
     if (nil == timerName)
@@ -78,7 +78,7 @@
     __weak typeof(self) weakSelf = self;
     
     switch (option) {
-        case kCWGCDTimerAbandon: {
+        case kKenGCDTimerAbandon: {
             /* 移除之前的action */
             [weakSelf removeActionCacheForTimer:timerName];
             
@@ -91,7 +91,7 @@
             });
         }
             break;
-        case kCWGCDTimerMerge: {
+        case kKenGCDTimerMerge: {
             /* cache本次的action */
             [self cacheAction:action forTimer:timerName];
             
@@ -153,7 +153,7 @@
 - (void)scheduledGlobalTime:(NSString *)globalTimerName times:(NSUInteger)times queue:(dispatch_queue_t)queue
                      action:(void(^)(NSUInteger value))action {
     [self scheduledTimerWithName:globalTimerName timeInterval:times queue:nil repeats:YES
-                    actionOption:kCWGCDTimerAbandon action:^ {
+                    actionOption:kKenGCDTimerAbandon action:^ {
         NSUInteger index = [[self.globalTimerCache objectForKey:globalTimerName] unsignedIntegerValue];
         index--;
         if (action) {

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "KenCarcorder/Classes/Manager/Services/KenAccountS.m"
-            timestampString = "512103816.154823"
+            timestampString = "512129773.880678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "-accountWanIp:successBlock:failedBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -59,22 +59,6 @@
             continueAfterRunningActions = "No"
             scope = "0"
             stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "KenCarcorder/Classes/Businesses/&#x89c6;&#x9891;&#x64ad;&#x653e;/&#x89c6;&#x9891;&#x6838;&#x5fc3;&#x90e8;&#x5206;/KenVideoV.m"
-            timestampString = "512120946.083001"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-recordVideo"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
