@@ -49,9 +49,7 @@
 
 @property (nonatomic, readonly) int streamFrameRate;
 
-@property (nonatomic, strong) NSString *filename;
-
-@property (nonatomic, assign) AVFormatContext *ocx;
+@property (nonatomic) AVFormatContext *ocx;
 
 @property (nonatomic, assign) int audio_outbuf_size;
 @property (nonatomic, assign) int audio_input_frame_size;

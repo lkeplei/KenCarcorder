@@ -47,6 +47,7 @@
 
 @property (nonatomic, readonly) UIImage *currentImage;      //当前图片
 @property (atomic, assign) BOOL isRecording;                //是否正在录音
+@property (nonatomic, strong) NSString *filename;
 
 @property (nonatomic, assign) id <VideoFrameDelegate>delegate;
 

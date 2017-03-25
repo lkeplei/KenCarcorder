@@ -82,6 +82,20 @@ KenVideoV *retVideoSelf;
     [_video capturePhoto];
 }
 
+- (void)recordVideo {
+    if(thNet_IsConnect(_deviceDM.connectHandle)) {
+        if (_video.isRecording) {
+            [_video endRecord];
+        } else {
+            NSString *filePath = [[[KenCarcorder shareCarcorder] getRecorderFolder] stringByAppendingFormat:@"/1.mp4"];
+            [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
+            
+            _video.filename = filePath;
+            [_video startRecord];
+        }
+    }
+}
+
 #pragma mark - 视频连接与数据回调
 - (void)startVidthread {
     if (!thNet_IsConnect(_deviceDM.connectHandle)) {

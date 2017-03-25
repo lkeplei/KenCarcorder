@@ -30,5 +30,7 @@
 - (void)disconnectVideo;
 //拍照
 - (void)capture;
+//录像
+- (void)recordVideo;
 
 @end

@@ -154,7 +154,7 @@
     if (type == 0) {
         
     } else if (type == 1) {
-        
+        [_videoV recordVideo];
     } else if (type == 2) {
         //拍照
         if(thNet_IsConnect(_device.connectHandle)) {
