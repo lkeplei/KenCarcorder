@@ -7,6 +7,7 @@
 //
 
 #import "KenUserInfoDM.h"
+#import "KenDeviceDM.h"
 
 @implementation KenUserInfoDM
 
@@ -36,6 +37,16 @@ static KenUserInfoDM *userInfo = nil;
         return [self setInstance];
     }
     return NO;
+}
+
+- (KenDeviceDM *)deviceWithSN:(NSString *)sn {
+    for (KenDeviceDM *device in _deviceArray) {
+        if ([device.sn isEqualToString:sn]) {
+            return device;
+        }
+    }
+    
+    return nil;
 }
 
 @end

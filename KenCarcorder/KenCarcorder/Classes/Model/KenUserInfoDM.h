@@ -8,6 +8,8 @@
 
 #import "KenDataModel.h"
 
+@class KenDeviceDM;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KenUserInfoDM : KenDataModel
@@ -23,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)updateUserInfo:(NSDictionary *)dic;
 - (void)emptyAllUserdata;
+
+- (KenDeviceDM *)deviceWithSN:(NSString *)sn;
 
 @end
 

@@ -78,6 +78,7 @@
 		BEAD75041E480E5A009ADD65 /* KenALarmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75031E480E5A009ADD65 /* KenALarmVC.m */; };
 		BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75061E481008009ADD65 /* KenAccountS.m */; };
 		E60A74431E861688006EA92F /* KenAlarmStatDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E60A74421E861688006EA92F /* KenAlarmStatDM.m */; };
+		E60A74461E8632AA006EA92F /* KenAlarmRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E60A74451E8632AA006EA92F /* KenAlarmRecordVC.m */; };
 		E6105B5B1E7CC04500CAE297 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */; };
 		E6105B5D1E7CC20A00CAE297 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */; };
 		E6105B5F1E7CC35400CAE297 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5E1E7CC35400CAE297 /* UserNotifications.framework */; };
@@ -286,6 +287,8 @@
 		BEAD75061E481008009ADD65 /* KenAccountS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAccountS.m; sourceTree = "<group>"; };
 		E60A74411E861688006EA92F /* KenAlarmStatDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAlarmStatDM.h; sourceTree = "<group>"; };
 		E60A74421E861688006EA92F /* KenAlarmStatDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlarmStatDM.m; sourceTree = "<group>"; };
+		E60A74441E8632AA006EA92F /* KenAlarmRecordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAlarmRecordVC.h; sourceTree = "<group>"; };
+		E60A74451E8632AA006EA92F /* KenAlarmRecordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlarmRecordVC.m; sourceTree = "<group>"; };
 		E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = usr/lib/libiconv.2.4.0.tbd; sourceTree = SDKROOT; };
 		E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		E6105B5E1E7CC35400CAE297 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -967,6 +970,8 @@
 				BEAD75031E480E5A009ADD65 /* KenALarmVC.m */,
 				E6105B8E1E7D2AEB00CAE297 /* KenSelectDeleteV.h */,
 				E6105B8F1E7D2AEB00CAE297 /* KenSelectDeleteV.m */,
+				E60A74441E8632AA006EA92F /* KenAlarmRecordVC.h */,
+				E60A74451E8632AA006EA92F /* KenAlarmRecordVC.m */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1504,6 +1509,7 @@
 				BE7EFD671E32098F00E1E579 /* UILabel+KenLabel.m in Sources */,
 				E6105B811E7CEA8500CAE297 /* KenVideoV.m in Sources */,
 				BE8E11DE1E616BB70034DF54 /* KenWifiSetStep43V.m in Sources */,
+				E60A74461E8632AA006EA92F /* KenAlarmRecordVC.m in Sources */,
 				E6E4C0711E73BE1700FD0735 /* KenMiniVideoVC.m in Sources */,
 				E6E4C1171E74069000FD0735 /* thSDKlib.c in Sources */,
 				BE7EFD8E1E32126000E1E579 /* KenAlertView.m in Sources */,

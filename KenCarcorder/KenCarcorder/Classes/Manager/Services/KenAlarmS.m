@@ -62,5 +62,31 @@
                   }];
 }
 
+- (void)alarmDeleteWithType:(NSString *)type
+                  success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"alarm/delete.json"] requestInfo:@{@"batchType":type}
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      SafeHandleBlock(success, YES, nil, nil);
+                  }];
+}
+
+- (void)alarmReadWithId:(NSArray *)alarmIdArr
+                success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    
+    NSMutableString *alarmIds = [NSMutableString string];
+    for (NSString *alarmId in alarmIdArr) {
+        if ([alarmIds length] <= 0) {
+            [alarmIds appendString:alarmId];
+        } else {
+            [alarmIds appendFormat:@",%@", alarmId];
+        }
+    }
+    
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"alarm/readed.json"] requestInfo:@{@"alarmId":alarmIds}
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      SafeHandleBlock(success, YES, nil, nil);
+                  }];
+}
+
 @end
 

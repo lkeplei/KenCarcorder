@@ -13,6 +13,7 @@
 #import "KenSelectDeleteV.h"
 #import "MJRefresh.h"
 #import "KenAlertView.h"
+#import "KenAlarmRecordVC.h"
 
 #define alarmTabBtnHeight           kKenOffsetY(78)
 
@@ -79,8 +80,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self loadAlarmData];
+
     [[KenServiceManager sharedServiceManager] getAarmStat];
 }
 
@@ -125,10 +125,10 @@
         }
 
         if ([_alarmArray count] > 0) {
-            [_bgImgView setHidden:YES];
+            [self.bgImgView setHidden:YES];
             [_alarmTable setHidden:NO];
         } else {
-            [_bgImgView setHidden:NO];
+            [self.bgImgView setHidden:NO];
             [_alarmTable setHidden:YES];
         }
 
@@ -143,13 +143,6 @@
         [self.alarmTable.mj_header endRefreshing];
         [self.alarmTable.mj_footer endRefreshing];
     }];
-}
-
-- (void)setAlarmNum {
-//    if (SysDelegate.alarmNumbers > 0) {
-//        NSString *badge = SysDelegate.alarmNumbers > 99 ? @"99+": [NSString stringWithFormat:@"%d", (int)SysDelegate.alarmNumbers];
-//        self.tabBarItem.badgeValue = badge;
-//    }
 }
 
 #pragma mark - Table
@@ -185,29 +178,31 @@
         
         [_alarmTable reloadData];
     } else {
-//        YDAlarmInfo *info = [_alarmArray objectAtIndex:indexPath.row];
-//        YDDeviceInfo *deviceInfo = [[YDModel shareModel] getDeviceBySn:info.deviceSn];
-//        if ([deviceInfo deviceOnline] && ![deviceInfo deviceLock]) {
-//            YDAlarmInfo *alarm = [_alarmArray objectAtIndex:indexPath.row];
-//            if (![alarm alarmReaded]) {
-//                [[YDController shareController] sendReadedWithAlarmId:@[[NSString stringWithFormat:@"%d", (int)[alarm alarmId]]] success:^() {
-//                    [alarm setAlarmReaded:YES];
-//                    SysDelegate.alarmNumbers--;
-//                    [self setAlarmNum];
-//                } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//                    
-//                }];
-//            }
-//            
-//            YDAlarmRecordVC *recordVc = [[YDAlarmRecordVC alloc] initWithAlarm:indexPath.row alarmArray:_alarmArray];
-//            [self pushViewController:recordVc];
-//        }
+        KenAlarmItemDM *info = [_alarmArray objectAtIndex:indexPath.row];
+        KenDeviceDM *device = [[KenUserInfoDM getInstance] deviceWithSN:info.sn];
+        if (device && device.online && !device.deviceLock) {
+            if (![info readed]) {
+                [[KenServiceManager sharedServiceManager] alarmReadWithId:@[[NSString stringWithFormat:@"%zd", info.alarmId]]
+                                                                  success:^{
+                    
+                } successBlock:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+                    info.readed = YES;
+                    [KenServiceManager sharedServiceManager].alarmNumbers--;
+                    [[KenServiceManager sharedServiceManager] updateAarmStat];
+                } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+                    
+                }];
+            }
+            
+            KenAlarmRecordVC *recordVC = [[KenAlarmRecordVC alloc] initWithDevice:device];
+            [self pushViewController:recordVC animated:YES];
+        }
     }
 }
 
 #pragma mark - event
 - (void)editBtn {
-    UIView *view = [self.contentView viewWithTag:9999];
+    UIView *view = [SysDelegate.window viewWithTag:9999];
     if (view) return;
     
     if ([SysDelegate.rootVC.tabBar isHidden]) {
@@ -222,11 +217,14 @@
 }
 
 - (void)filteBtn {
-    if (![SysDelegate.rootVC.tabBar isHidden]) {
-        [SysDelegate.rootVC.tabBar setHidden:YES];
-        KenSelectDeleteV *selectV = [[KenSelectDeleteV alloc] initWithFrame:(CGRect){0, 0, self.contentView.size}];
+    UIView *view = [SysDelegate.window viewWithTag:9999];
+    if (view) {
+        [view removeFromSuperview];
+    } else {
+        KenSelectDeleteV *selectV = [[KenSelectDeleteV alloc] initWithFrame:(CGRect){0, self.contentView.originY, self.contentView.width,
+                                                                                    self.contentView.height + kAppTabbarHeight}];
         selectV.tag = 9999;
-        [self.contentView addSubview:selectV];
+        [SysDelegate.window addSubview:selectV];
     }
 }
 
@@ -517,6 +515,10 @@
             [_groupV addSubview:button];
             
             [_tabBtnArray addObject:button];
+            
+            if (i == 0) {
+                [self tabClicked:button];
+            }
         }
     }
     return _groupV;
@@ -541,4 +543,16 @@
     return _alarmTable;
 }
 
+- (UIImageView *)bgImgView {
+    if (_bgImgView == nil) {
+        _bgImgView = [[UIImageView alloc] initWithFrame:(CGRect){0,0,self.contentView.size}];
+        _bgImgView.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_bgImgView];
+        
+        UILabel *label = [UILabel labelWithTxt:@"没有报警信息！！" frame:(CGRect){0,0,_bgImgView.size}
+                                          font:[UIFont appFontSize22] color:[UIColor whiteColor]];
+        [_bgImgView addSubview:label];
+    }
+    return _bgImgView;
+}
 @end

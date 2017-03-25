@@ -7,8 +7,9 @@
 //
 
 #import "KenSelectDeleteV.h"
+#import "KenAlertView.h"
 
-@interface KenSelectDeleteV ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface KenSelectDeleteV ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (assign) NSInteger selectedIndex;
 @property (nonatomic, strong) UITableView *selectTable;
@@ -42,11 +43,12 @@
     [self addSubview:_selectTable];
     
     //
-    UIView *deleteView = [[UIView alloc] initWithFrame:(CGRect){0, frame.size.height - 100, MainScreenWidth, 100}];
+    UIView *deleteView = [[UIView alloc] initWithFrame:(CGRect){0, frame.size.height - 90, MainScreenWidth, 90}];
+    deleteView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:deleteView];
     
     UIButton *delete = [UIButton buttonWithImg:@"删除" zoomIn:NO image:nil imagesec:nil target:self action:@selector(deleteConfirm)];
-    delete.frame = (CGRect){0, 14, deleteView.width, 40};
+    delete.frame = (CGRect){0, 0, deleteView.width, 40};
     [delete.titleLabel setFont:[UIFont appFontSize16]];
     [delete setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [delete setBackgroundColor:[UIColor whiteColor]];
@@ -76,7 +78,7 @@
     
     [cell.textLabel setText:[_dataArray objectAtIndex:indexPath.row]];
     cell.accessoryView = [[UIImageView alloc] initWithImage:
-                          [UIImage imageNamed:indexPath.row == _selectedIndex ? @"alarm_select" : @"alarm_unselect"]];
+                          [UIImage imageNamed:indexPath.row == _selectedIndex ? @"alarm_select_green" : @"alarm_select_none"]];
     
     return cell;
 }
@@ -90,46 +92,45 @@
 - (void)deleteConfirm {
     if (_selectedIndex < 0) return;
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"将永久删除这些信息，是否继续？"
-                                                       delegate:self cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"确定", nil];
-    [alertView show];
+    [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"将永久删除这些信息，是否继续？" buttonTitles:@[@"取消", @"确定"]
+                      buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
+                          if (index == 1 && _selectedIndex >= 0) {
+                              //all:所有; onedaybefore:一天前; twodaybefore:两天前; threedaybefore:三天前
+                              NSString *type = @"";
+                              switch (_selectedIndex) {
+                                  case 0:
+                                      type = @"all";
+                                      break;
+                                  case 1:
+                                      type = @"onedaybefore";
+                                      break;
+                                  case 2:
+                                      type = @"twodaybefore";
+                                      break;
+                                  case 3:
+                                      type = @"threedaybefore";
+                                      break;
+                                  default:
+                                      break;
+                              }
+                              
+                              @weakify(self)
+                              [[KenServiceManager sharedServiceManager] alarmDeleteWithType:type success:^{
+                                  
+                              } successBlock:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+                                  @strongify(self)
+                                  [self cancelBtn];
+                                  
+                                  [[KenServiceManager sharedServiceManager] getAarmStat];
+                              } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+                                  
+                              }];
+                          }
+                      }];
 }
 
 - (void)cancelBtn {
-//    [SysDelegate.tabBarVC.tabBar setHidden:NO];
     [self removeFromSuperview];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1 && _selectedIndex >= 0) {
-        //all:所有; onedaybefore:一天前; twodaybefore:两天前; threedaybefore:三天前
-        NSString *type = @"";
-        switch (_selectedIndex) {
-            case 0:
-                type = @"all";
-                break;
-            case 1:
-                type = @"onedaybefore";
-                break;
-            case 2:
-                type = @"twodaybefore";
-                break;
-            case 3:
-                type = @"threedaybefore";
-                break;
-            default:
-                break;
-        }
-        
-//        [[YDController shareController] deleteAlarmWithType:type success:^{
-//            [self cancelBtn];
-//            
-//            [SysDelegate getAlarmStat];
-//        } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//            
-//        }];
-    }
 }
 
 @end
