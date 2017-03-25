@@ -20,6 +20,15 @@
 @property (nonatomic, strong) KenVideoFrameExtractor *video;
 @property (nonatomic, strong) KenAudio *audio;
 
+//开始视频
 - (void)showVideoWithDevice:(KenDeviceDM *)device;
+//结束视频
+- (void)finishVideo;
+//结束录像
+- (void)finishRecorder;
+//断开与镜头的连接
+- (void)disconnectVideo;
+//拍照
+- (void)capture;
 
 @end

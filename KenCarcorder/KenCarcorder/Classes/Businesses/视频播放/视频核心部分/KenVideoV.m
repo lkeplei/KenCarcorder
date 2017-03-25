@@ -17,6 +17,7 @@
 @property (nonatomic, strong) KenDeviceDM *deviceDM;
 
 @property (nonatomic, strong) UIImageView *screenImageV;
+@property (nonatomic, strong) UIView *recorderBgV;          //录像时的背景框
 
 @end
 
@@ -42,7 +43,43 @@ KenVideoV *retVideoSelf;
     _deviceDM = device;
     _playAudio = YES;
     
+    [UIApplication sharedApplication].idleTimerDisabled = YES;        //不自动锁屏
+    
     [self startVidthread];
+}
+
+- (void)finishVideo {
+    [UIApplication sharedApplication].idleTimerDisabled = NO;        //自动锁屏
+
+    [self finishRecorder];
+    
+    [self disconnectVideo];
+    
+    if (self.audio) {
+        [self.audio cleanAudio];
+    }
+}
+
+- (void)finishRecorder {
+    if (thNet_IsConnect(_deviceDM.connectHandle) && _video.isRecording) {
+        [_video endRecord];
+    }
+    
+    _recorderBgV.hidden = YES;
+}
+
+- (void)disconnectVideo {
+    thNet_RemoteFileStop(_deviceDM.connectHandle);
+    thNet_Stop(_deviceDM.connectHandle);
+    
+    thNet_DisConn(_deviceDM.connectHandle);
+    //    thNet_Free(&_videoConnectHandle);
+    
+    _deviceDM.connectHandle = 0;
+}
+
+- (void)capture {
+    [_video capturePhoto];
 }
 
 #pragma mark - 视频连接与数据回调

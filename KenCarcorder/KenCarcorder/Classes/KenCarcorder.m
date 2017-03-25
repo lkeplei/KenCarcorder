@@ -12,6 +12,13 @@
 #include <netdb.h>
 
 #import <SystemConfiguration/CaptiveNetwork.h>
+#import <AVFoundation/AVAudioPlayer.h>
+
+@interface KenCarcorder ()
+
+@property (nonatomic, strong) AVAudioPlayer *avAudioPlayer;
+
+@end
 
 @implementation KenCarcorder
 static KenCarcorder *_sharedUtility = nil;
@@ -161,5 +168,21 @@ static KenCarcorder *_sharedUtility = nil;
     if (!host) {herror("resolv"); return nil;}
     struct in_addr **list = (struct in_addr **)host->h_addr_list;
     return [NSString stringWithCString:inet_ntoa(*list[0]) encoding:NSUTF8StringEncoding];
+}
+
+- (void)playVoiceByType:(KenVoiceType)type {
+    NSString *string = [[NSBundle mainBundle] pathForResource:@"cap_voice" ofType:@"mp3"];
+    if (type == kKenVoiceCapture) {
+        string = [[NSBundle mainBundle] pathForResource:@"cap_voice" ofType:@"mp3"];
+    }
+    //把音频文件转换成url格式
+    NSURL *url = [NSURL fileURLWithPath:string];
+    //初始化音频类 并且添加播放文件
+    _avAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    //设置音乐播放次数  -1为一直循环
+    _avAudioPlayer.numberOfLoops = 0;
+    //预播放
+    [_avAudioPlayer prepareToPlay];
+    [_avAudioPlayer play];
 }
 @end

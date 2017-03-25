@@ -45,7 +45,6 @@
 #pragma mark - KenVideoFrameExtractor
 @interface KenVideoFrameExtractor : NSObject 
 
-@property (nonatomic, assign) BOOL capture;                 //拍照
 @property (nonatomic, readonly) UIImage *currentImage;      //当前图片
 @property (atomic, assign) BOOL isRecording;                //是否正在录音
 
@@ -60,5 +59,6 @@
 
 - (void)startRecord;            //开始录像
 - (void)endRecord;              //结束录像
+- (void)capturePhoto;           //拍照
 
 @end

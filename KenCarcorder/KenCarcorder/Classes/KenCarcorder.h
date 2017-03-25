@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, KenVoiceType) {
+    kKenVoiceCapture = 0,                              //拍照声音
+};
+
 @interface KenCarcorder : NSObject
 
 + (KenCarcorder *)shareCarcorder;
@@ -40,5 +44,8 @@
  * 获取局域网ip
  */
 + (NSString *)localIPAddress;
+
+//播放音频文件
+- (void)playVoiceByType:(KenVoiceType)type;
 
 @end

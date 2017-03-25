@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UITableView *functionTableV;
 @property (nonatomic, strong) NSArray *functionList;
 @property (nonatomic, strong) UIView *functionV;
+@property (nonatomic, strong) UIView *videoNav;
 @property (nonatomic, strong) UIView *speakV;
 
 @end
@@ -41,7 +42,10 @@
     [self.contentView addSubview:bgV];
     
     [self.contentView addSubview:self.videoV];
+    [self.contentView addSubview:self.videoNav];
     [self.contentView addSubview:self.functionTableV];
+    
+    [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"] selector:@selector(back)];
 }
 
 #pragma mark - Table delegate
@@ -80,6 +84,11 @@
 }
 
 #pragma mark - event
+- (void)back {
+    [_videoV finishVideo];
+    [super popViewController];
+}
+
 - (void)speakStart {
 
 }
@@ -134,6 +143,28 @@
 
 - (void)functionLongRight {
     
+}
+
+- (void)speaker:(UIButton *)button {
+    
+}
+
+- (void)navBtnClicked:(UIButton *)button {
+    NSUInteger type = button.tag - 1100;
+    if (type == 0) {
+        
+    } else if (type == 1) {
+        
+    } else if (type == 2) {
+        //拍照
+        if(thNet_IsConnect(_device.connectHandle)) {
+            [_videoV capture];
+            [self showToastWithMsg:@"抓拍成功"];
+            [[KenCarcorder shareCarcorder] playVoiceByType:kKenVoiceCapture];
+        }
+    } else if (type == 3) {
+        
+    }
 }
 
 #pragma mark - public method
@@ -292,6 +323,34 @@
         _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 64, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
     }
     return _videoV;
+}
+
+- (UIView *)videoNav {
+    if (_videoNav == nil) {
+        _videoNav = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY - kKenOffsetY(86),
+                                                            self.contentView.width, kKenOffsetY(86)}];
+        _videoNav.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+        
+        UIButton *speaker = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_speaker"]
+                                           imagesec:nil target:self action:@selector(speaker:)];
+        speaker.frame = (CGRect){0, 0, speaker.width + kKenOffsetX(50), _videoNav.height};
+        [_videoNav addSubview:speaker];
+        
+        NSArray *btnArr = @[@"video_full", @"video_record", @"video_capture", @"video_share"];
+        CGFloat offsetX = _videoV.width;
+        for (NSUInteger i = 0; i < btnArr.count; i++) {
+            UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]
+                                              imagesec:nil target:self action:@selector(navBtnClicked:)];
+            CGFloat width = button.width + kKenOffsetX(50);
+            button.frame = (CGRect){offsetX - width, 0, width, _videoNav.height};
+            offsetX = button.originX;
+            
+            button.tag = 1100 + i;
+            
+            [_videoNav addSubview:button];
+        }
+    }
+    return _videoNav;
 }
 
 - (UIView *)functionV {

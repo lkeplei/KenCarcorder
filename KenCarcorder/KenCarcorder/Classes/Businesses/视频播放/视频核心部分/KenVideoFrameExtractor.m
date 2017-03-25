@@ -221,20 +221,6 @@ static int video_outbuf_size;
         }
         av_free(self.ocx);
     }
-    
-    if (_capture) {
-        _capture = false;
-        UIImage *img  = [self currentImage];
-        UIImageWriteToSavedPhotosAlbum(img, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-        NSDate* date = [NSDate date];
-        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-        
-        [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
-        NSString* str = [formatter stringFromDate:date];
-        Photos *myPhotos_ = [[Photos alloc] init] ;
-//        [myPhotos_ setDelegate:self];
-        [myPhotos_ savePhoto:img  withName:str addToPhotoAlbum:false];
-    }
 }
 
 - (AVStream *)add_video_stream:(AVFormatContext *)oc codecId:(int)codecId {
@@ -410,7 +396,6 @@ static int video_outbuf_size;
     _record = NO;
     _recordEnd = NO;
     _recordStart = NO;
-    _capture = NO;
     
     self.width = width;
     self.height = height;
@@ -448,11 +433,28 @@ static int video_outbuf_size;
 - (void)startRecord {
     _record = YES;
     _recordStart = YES;
+    
+    _isRecording = YES;
 }
 
 - (void)endRecord {
     _record = NO;
     _recordEnd = YES;
+    
+    _isRecording = NO;
+}
+
+- (void)capturePhoto {
+    UIImage *img  = [self currentImage];
+    UIImageWriteToSavedPhotosAlbum(img, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    NSDate* date = [NSDate date];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
+    NSString* str = [formatter stringFromDate:date];
+    Photos *myPhotos_ = [[Photos alloc] init] ;
+//        [myPhotos_ setDelegate:self];
+    [myPhotos_ savePhoto:img  withName:str addToPhotoAlbum:false];
 }
 
 #pragma mark - private method
