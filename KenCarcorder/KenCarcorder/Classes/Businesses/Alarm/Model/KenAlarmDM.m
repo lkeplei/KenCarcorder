@@ -25,21 +25,24 @@
 
 + (NSDictionary *)setDefaultValueMap {
     return @{@"alarmId":@0,
-             @"alarmReaded":@"",
-             @"alarmType":@"",
+             @"readed":@NO,
+             @"almType":@1,
              @"userId":@"",
-             @"deviceSn":@"",
-             @"alarmFile":@"",
-             @"alarmTime":@0,
+             @"sn":@"",
+             @"almFile":@"",
+             @"almTime":@0,
              @"sendTime":@0,
-             @"recorderFile":@"",
+             @"recfilename":@"",
              @"isSelected":@"",};
+}
+
++ (NSDictionary *)setCustomPropertyMap {
+    return @{@"alarmId":@"id"};
 }
 
 - (BOOL)handleCustomTransformFromDictionary:(NSDictionary *)jsonDict {
     
     _deviceInfo = [KenDeviceDM initWithJsonDictionary:@{}];
-    
     
     return [super handleCustomTransformFromDictionary:jsonDict];
 }
@@ -53,7 +56,7 @@
 }
 
 - (NSString *)getAlarmTimeString {
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:_alarmTime];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:_almTime];
     if (date) {
         return [date stringWithFormat:@"MM-dd HH:mm:ss"];
     } else {
@@ -63,18 +66,18 @@
 
 - (NSString *)getAlarmImg {
     if (_deviceInfo) {
-        return [NSString stringWithFormat:@"http://%@:%d%@", [_deviceInfo currentIp], (int)[_deviceInfo httpport], _alarmFile];
+        return [NSString stringWithFormat:@"http://%@:%d%@", [_deviceInfo currentIp], (int)[_deviceInfo httpport], _almFile];
     } else {
         return @"";
     }
 }
 
 - (NSString *)getImageName {
-    if ([NSString isNotEmpty:_alarmFile]) {
-        if ([_alarmFile length] > 13) {
-            return [_alarmFile substringFromIndex:13];
+    if ([NSString isNotEmpty:_almFile]) {
+        if ([_almFile length] > 13) {
+            return [_almFile substringFromIndex:13];
         } else {
-            return _alarmFile;
+            return _almFile;
         }
     } else {
         return nil;
@@ -82,9 +85,9 @@
 }
 
 - (NSString *)getAlarmTypeString {
-    if (_alarmType == kKenAlarmMoving) {
+    if (_almType == kKenAlarmMoving) {
         return @"人体";
-    } else if (_alarmType == kKenAlarmVoice) {
+    } else if (_almType == kKenAlarmVoice) {
         return @"声音";
     } else {
         return @"离线";
@@ -92,9 +95,9 @@
 }
 
 - (UIColor *)getAlarmTextColor {
-    if (_alarmType == kKenAlarmMoving) {
+    if (_almType == kKenAlarmMoving) {
         return [UIColor redColor];
-    } else if (_alarmType == kKenAlarmVoice) {
+    } else if (_almType == kKenAlarmVoice) {
         return [UIColor colorWithHexString:@"#419FFF"];
     } else {
         return [UIColor whiteColor];

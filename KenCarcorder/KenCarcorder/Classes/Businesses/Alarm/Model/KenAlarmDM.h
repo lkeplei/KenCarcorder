@@ -25,15 +25,15 @@ typedef NS_ENUM(NSUInteger, KenAlarmType) {
 @interface KenAlarmItemDM : KenDataModel
 
 @property (nonatomic, assign) NSInteger alarmId;
-@property (nonatomic, assign) BOOL alarmReaded;
-@property (nonatomic, assign) KenAlarmType alarmType;
-@property (nonatomic, assign) NSTimeInterval alarmTime;
+@property (nonatomic, assign) BOOL readed;
+@property (nonatomic, assign) KenAlarmType almType;
+@property (nonatomic, assign) NSTimeInterval almTime;
 @property (nonatomic, assign) NSTimeInterval sendTime;
 
 @property (nonatomic, strong) NSString *userId;
-@property (nonatomic, strong) NSString *deviceSn;
-@property (nonatomic, strong) NSString *alarmFile;
-@property (nonatomic, strong) NSString *recorderFile;
+@property (nonatomic, strong) NSString *sn;
+@property (nonatomic, strong) NSString *almFile;
+@property (nonatomic, strong) NSString *recfilename;
 
 //以下数据只作为中间数据，不保存
 @property (nonatomic, assign) BOOL isSelected;

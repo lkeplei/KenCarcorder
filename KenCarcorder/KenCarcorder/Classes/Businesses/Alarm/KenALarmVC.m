@@ -11,11 +11,11 @@
 #import "KenAlarmDM.h"
 #import "UIImageView+WebCache.h"
 #import "KenSelectDeleteV.h"
-//#import "YDAlarmRecordVC.h"
+#import "MJRefresh.h"
 
 static const int alarmTabBtnHeight = 34;
 
-@interface KenALarmVC ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIScrollViewDelegate>
+@interface KenALarmVC ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, assign) BOOL isLoading;
 @property (nonatomic, assign) BOOL editStatus;
@@ -101,9 +101,12 @@ static const int alarmTabBtnHeight = 34;
 }
 
 - (void)loadAlarmData {
+    @weakify(self)
     [[KenServiceManager sharedServiceManager] alarmWithCondition:_startId sn:_selectSN readed:nil groupNo:_selectNumbers success:^{
+        @strongify(self)
         [self showActivity];
     } successBlock:^(BOOL successful, NSString * _Nullable errMsg, KenAlarmDM *  _Nullable alarmDM) {
+        @strongify(self)
         [self hideActivity];
         
         if (_alarmArray == nil) {
@@ -128,8 +131,16 @@ static const int alarmTabBtnHeight = 34;
             [_alarmTable setHidden:YES];
         }
 
+        //结束刷新
+        [self.alarmTable.mj_header endRefreshing];
+        [self.alarmTable.mj_footer endRefreshing];
     } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
         [self hideActivity];
+        
+        //结束刷新
+        [self.alarmTable.mj_header endRefreshing];
+        [self.alarmTable.mj_footer endRefreshing];
     }];
 }
 
@@ -163,8 +174,6 @@ static const int alarmTabBtnHeight = 34;
     return cell;
 }
 
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //    if (_editStatus) {
 //        YDAlarmInfo *info = [_alarmArray objectAtIndex:indexPath.row];
@@ -193,12 +202,6 @@ static const int alarmTabBtnHeight = 34;
 //            [self pushViewController:recordVc];
 //        }
 //    }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row >= [_alarmArray count] - 1) {
-        [self loadAlarmData];
-    }
 }
 
 #pragma mark - event
@@ -274,6 +277,15 @@ static const int alarmTabBtnHeight = 34;
 //    
 //    [_alarmTable reloadData];
 //    [_selectNumberLab setText:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]];
+}
+
+- (void)loadNewTopic {
+    _startId = 0;
+    [self loadAlarmData];
+}
+
+- (void)loadMoreTopic {
+    [self loadAlarmData];
 }
 
 #pragma mark - other
@@ -378,27 +390,6 @@ static const int alarmTabBtnHeight = 34;
 //    }
 }
 
-#pragma mark - scroll
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    // 假设偏移表格高度的20%进行刷新
-    if (!_isLoading) { // 判断是否处于刷新状态，刷新中就不执行
-        // 取内容的高度：
-        //    如果内容高度大于UITableView高度，就取TableView高度
-        //    如果内容高度小于UITableView高度，就取内容的实际高度
-        float height = scrollView.contentSize.height > _alarmTable.frame.size.height ? _alarmTable.frame.size.height : scrollView.contentSize.height;
-        
-        if ((height - scrollView.contentSize.height + scrollView.contentOffset.y) / height > 0.2) {
-            // 调用上拉刷新方法
-        }
-        
-        if (-scrollView.contentOffset.y / _alarmTable.frame.size.height > 0.2) {
-            // 调用下拉刷新方法
-            _startId = 0;
-            [self loadAlarmData];
-        }
-    }
-}
-
 #pragma mark - private method
 - (void)freshCell:(UITableViewCell *)cell path:(NSIndexPath *)indexPath {
     KenAlarmItemDM *info = [_alarmArray objectAtIndex:indexPath.row];
@@ -430,7 +421,7 @@ static const int alarmTabBtnHeight = 34;
     deviceName.attributedText = attributedString;
     
     /////////////
-    content = [NSString stringWithFormat:@"设备ID号:%@", [info deviceSn]];
+    content = [NSString stringWithFormat:@"设备ID号:%@", [info sn]];
     UILabel *deviceID = [UILabel labelWithTxt:content
                                         frame:(CGRect){originx, CGRectGetMaxY(deviceName.frame), deviceName.width, height}
                                          font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#64E0F2"]];
@@ -454,7 +445,7 @@ static const int alarmTabBtnHeight = 34;
     
     ///////////////
     NSString* name = @"alarm_person";
-    if (info.alarmType == kKenAlarmVoice) {
+    if (info.almType == kKenAlarmVoice) {
         name = @"alarm_voice";
     }
     UIImageView *typeImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
@@ -543,6 +534,11 @@ static const int alarmTabBtnHeight = 34;
         _alarmTable.rowHeight = kKenOffsetY(216);
         _alarmTable.backgroundColor = [UIColor clearColor];
         _alarmTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        //下拉刷新
+        _alarmTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewTopic)];
+        //上拉刷新
+        _alarmTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopic)];
     }
     return _alarmTable;
 }
