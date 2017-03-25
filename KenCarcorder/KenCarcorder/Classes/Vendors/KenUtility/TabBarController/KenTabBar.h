@@ -31,4 +31,6 @@
 
 - (void)setItemTitleColor:(UIColor *)normalColor selColor:(UIColor *)selColor;
 
+- (void)setItemBadge:(NSUInteger)index badge:(NSString *)badge;
+
 @end

@@ -13,6 +13,8 @@ typedef void(^KenEventHandler)(void);
 
 @property (strong, readonly, nonatomic) UIButton *centerItem;
 
+//设置角标
+- (void)setItemBadge:(NSUInteger)index badge:(NSString *)badge;
 
 /**
  *  设置中间特殊item

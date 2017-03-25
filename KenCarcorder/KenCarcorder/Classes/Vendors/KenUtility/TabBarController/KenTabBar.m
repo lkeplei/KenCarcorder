@@ -103,6 +103,21 @@
     }
 }
 
+- (void)setItemBadge:(NSUInteger)index badge:(NSString *)badge {
+    NSArray *subviews = [self subviews];
+    NSUInteger currentIndex = 0;
+    for (NSInteger i = 0; i < subviews.count; i++) {
+        KenTabBarItem *item = [subviews objectAtIndex:i];
+        if (([item isKindOfClass:[KenTabBarItem class]])) {
+            if (currentIndex == index) {
+                [item updateBadgeValue:badge];
+                break;
+            }
+            currentIndex++;
+        }
+    }
+}
+
 #pragma mark - Setter & Getter
 - (void)setTabbarItems:(NSArray *)tabbarItems {
     if (tabbarItems.count > 0) {

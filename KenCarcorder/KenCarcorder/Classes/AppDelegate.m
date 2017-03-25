@@ -25,6 +25,10 @@
     self.window.rootViewController = _rootVC;
     [self.window makeKeyAndVisible];
     
+    
+    //获取警告数
+    [[KenServiceManager sharedServiceManager] getAarmStat];
+    
     return YES;
 }
 
@@ -40,6 +44,11 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    
+    //激活应用后3秒获取一次报警数
+    [Async mainAfter:3 block:^{
+        [[KenServiceManager sharedServiceManager] getAarmStat];
+    }];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

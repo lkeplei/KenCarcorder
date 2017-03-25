@@ -13,6 +13,8 @@
 
 - (void)setItemTitleColor:(UIColor *)normalColor selColor:(UIColor *)selColor;
 
+- (void)updateBadgeValue:(NSString *)value;
+
 @end
 
 

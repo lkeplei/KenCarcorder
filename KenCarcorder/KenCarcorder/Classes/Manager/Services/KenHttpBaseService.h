@@ -11,6 +11,9 @@
 #define kHttpFailedErrorCode            -9999
 #define kHttpFailedErrorMsg             @"服务异常，请稍后重试"
 
+#define kHttpResult         @"result"
+#define kHttpMessage        @"message"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KenHttpBaseService : NSObject

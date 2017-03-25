@@ -111,15 +111,17 @@
     [self asyncPost:url postData:requestInfo startBlock:^{
         SafeHandleBlock(start);
     } responsedBlock:^(NSDictionary *responseDic) {
-        SafeHandleBlock(response, responseDic);
-//        if ([self httpResponseCode:responseDic successBlock:success failedBlock:failed]) {
-//            NSDictionary *resDic = [responseDic objectForKey:@"data"];
-//            if ([UIApplication isEmpty:resDic]) {
-//                SafeHandleBlock(response, @{});
-//            } else {
-//                SafeHandleBlock(response, resDic);
-//            }
-//        }
+        NSArray *allKeys = [responseDic allKeys];
+        if ([allKeys containsObject:kHttpResult] || [allKeys containsObject:kHttpMessage]) {
+            if ([[responseDic objectForKey:kHttpResult] intValue] == 0 ||
+                [[responseDic objectForKey:kHttpMessage] isEqualToString:@"ok"]) {
+                SafeHandleBlock(response, responseDic);
+            } else {
+                SafeHandleBlock(failed, kHttpFailedErrorCode, kHttpFailedErrorMsg);
+            }
+        } else {
+            SafeHandleBlock(response, responseDic);
+        }
     } failedBlock:^(NSInteger status, NSString *errMsg) {
         SafeHandleBlock(failed, status, kHttpFailedErrorMsg);
     }];

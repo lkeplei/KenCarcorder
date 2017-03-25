@@ -10,6 +10,7 @@
 #import "KenTabBar.h"
 #import "KenTabBarConfig.h"
 #import "KenDeallocMonitor.h"
+#import "KenTabBarItem.h"
 
 @interface UITabBarController () <KenTabBarDelegate>
 
@@ -62,6 +63,13 @@
 }
 
 #pragma mark - public method
+- (void)setItemBadge:(NSUInteger)index badge:(NSString *)badge {
+    KenTabBar *tabBar = (KenTabBar *)self.tabBar;
+    if ([tabBar isKindOfClass:[KenTabBar class]]) {
+        [tabBar setItemBadge:index badge:badge];
+    }
+}
+
 - (void)setupCenterItemWithImage:(UIImage *)image highligtedImage:(UIImage *)highlightedImage title:(NSString *)title {
     NSAssert(image, @"image can't be nil!");
     NSParameterAssert(image);

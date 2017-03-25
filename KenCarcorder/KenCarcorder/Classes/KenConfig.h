@@ -55,6 +55,7 @@ text:content];\
 #define MainScreenWidth             [UIScreen mainScreen].bounds.size.width
 #define MainScreenHeight            [UIScreen mainScreen].bounds.size.height
 
+#define kAppTabbarHeight            (49)
 #define kKenOffset                  (10)
 #define kKenOffsetY(y)              (y / 1334.) * MainScreenHeight
 #define kKenOffsetX(x)              (x / 750.) * MainScreenWidth

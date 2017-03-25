@@ -12,10 +12,11 @@
 #import "UIImageView+WebCache.h"
 #import "KenSelectDeleteV.h"
 #import "MJRefresh.h"
+#import "KenAlertView.h"
 
-static const int alarmTabBtnHeight = 34;
+#define alarmTabBtnHeight           kKenOffsetY(78)
 
-@interface KenALarmVC ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface KenALarmVC ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, assign) BOOL isLoading;
 @property (nonatomic, assign) BOOL editStatus;
@@ -80,7 +81,7 @@ static const int alarmTabBtnHeight = 34;
     [super viewWillAppear:animated];
     
     [self loadAlarmData];
-//    [SysDelegate getAlarmStat];
+    [[KenServiceManager sharedServiceManager] getAarmStat];
 }
 
 - (void)resetAlarmData {
@@ -175,15 +176,15 @@ static const int alarmTabBtnHeight = 34;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (_editStatus) {
-//        YDAlarmInfo *info = [_alarmArray objectAtIndex:indexPath.row];
-//        info.isSelected = !info.isSelected;
-//        _selectNumbers = info.isSelected ? ++_selectNumbers : --_selectNumbers;
-//        
-//        [_selectNumberLab setText:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]];
-//        
-//        [_alarmTable reloadData];
-//    } else {
+    if (_editStatus) {
+        KenAlarmItemDM *info = [_alarmArray objectAtIndex:indexPath.row];
+        info.isSelected = !info.isSelected;
+        _selectNumbers = info.isSelected ? ++_selectNumbers : --_selectNumbers;
+        
+        [_selectNumberLab setText:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]];
+        
+        [_alarmTable reloadData];
+    } else {
 //        YDAlarmInfo *info = [_alarmArray objectAtIndex:indexPath.row];
 //        YDDeviceInfo *deviceInfo = [[YDModel shareModel] getDeviceBySn:info.deviceSn];
 //        if ([deviceInfo deviceOnline] && ![deviceInfo deviceLock]) {
@@ -201,33 +202,32 @@ static const int alarmTabBtnHeight = 34;
 //            YDAlarmRecordVC *recordVc = [[YDAlarmRecordVC alloc] initWithAlarm:indexPath.row alarmArray:_alarmArray];
 //            [self pushViewController:recordVc];
 //        }
-//    }
+    }
 }
 
 #pragma mark - event
 - (void)editBtn {
-    UIView *view = [self.view viewWithTag:9999];
+    UIView *view = [self.contentView viewWithTag:9999];
     if (view) return;
     
-//    if ([SysDelegate.tabBarVC.tabBar isHidden]) {
-//        [SysDelegate.tabBarVC.tabBar setHidden:NO];
-//        [self removeDeleteView];
-//        _editStatus = NO;
-//    } else {
-//        [SysDelegate.tabBarVC.tabBar setHidden:YES];
-//        [self addDeleteView];
-//        _editStatus = YES;
-//    }
+    if ([SysDelegate.rootVC.tabBar isHidden]) {
+        [SysDelegate.rootVC.tabBar setHidden:NO];
+        [self removeDeleteView];
+        _editStatus = NO;
+    } else {
+        [SysDelegate.rootVC.tabBar setHidden:YES];
+        [self addDeleteView];
+        _editStatus = YES;
+    }
 }
 
 - (void)filteBtn {
-//    if (![SysDelegate.tabBarVC.tabBar isHidden]) {
-//        [SysDelegate.tabBarVC.tabBar setHidden:YES];
-//        YDSelectDeleteV *selectV = [[YDSelectDeleteV alloc] initWithFrame:(CGRect){0, kAppViewOrginY, self.view.width,
-//            kGSize.height - kAppViewOrginY}];
-//        selectV.tag = 9999;
-//        [self.view addSubview:selectV];
-//    }
+    if (![SysDelegate.rootVC.tabBar isHidden]) {
+        [SysDelegate.rootVC.tabBar setHidden:YES];
+        KenSelectDeleteV *selectV = [[KenSelectDeleteV alloc] initWithFrame:(CGRect){0, 0, self.contentView.size}];
+        selectV.tag = 9999;
+        [self.contentView addSubview:selectV];
+    }
 }
 
 - (void)tabClicked:(UIButton *)button {
@@ -239,7 +239,6 @@ static const int alarmTabBtnHeight = 34;
     
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    
     for (UIButton *btn in _tabBtnArray){
         if (btn != button) {
             [btn setTitleColor:[UIColor colorWithHexString:@"#94C6E8"] forState:UIControlStateNormal];
@@ -247,11 +246,40 @@ static const int alarmTabBtnHeight = 34;
     }
     
     [self loadAlarmData];
-    
 }
 
 - (void)deleteConfirm {
-    [self showConfirmAlert];
+    @weakify(self)
+    [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"将永久删除这些信息，是否继续？"
+                            buttonTitles:@[@"取消", @"确定"]
+                      buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
+                          @strongify(self)
+                            if (index == 1) {
+                                NSMutableArray *idArray = [NSMutableArray array];
+                                for (KenAlarmItemDM *info in _alarmArray) {
+                                    if (info.isSelected) {
+                                        [idArray addObject:[NSString stringWithFormat:@"%zd", info.alarmId]];
+                                    }
+                                }
+                                
+                                if ([idArray count] > 0) {
+                                    [[KenServiceManager sharedServiceManager] alarmDeleteWithId:idArray success:^{
+                                        [self showActivity];
+                                    } successBlock:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+                                        [self hideActivity];
+                                        [self editBtn];
+
+                                        _startId = 0;
+                                        [self loadAlarmData];
+
+                                        [[KenServiceManager sharedServiceManager] getAarmStat];
+                                    } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+                                        [self hideActivity];
+                                    }];
+                                }
+                            }
+                      }];
+    
 }
 
 - (void)cancelBtn {
@@ -259,24 +287,24 @@ static const int alarmTabBtnHeight = 34;
 }
 
 - (void)selectAllBtn:(UIButton *)button {
-//    if ([button isSelected]) {
-//        [button setSelected:NO];
-//        
-//        for (YDAlarmInfo *info in _alarmArray) {
-//            info.isSelected = NO;
-//        }
-//        _selectNumbers = 0;
-//    } else {
-//        [button setSelected:YES];
-//        
-//        for (YDAlarmInfo *info in _alarmArray) {
-//            info.isSelected = YES;
-//        }
-//        _selectNumbers = [_alarmArray count];
-//    }
-//    
-//    [_alarmTable reloadData];
-//    [_selectNumberLab setText:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]];
+    if ([button isSelected]) {
+        [button setSelected:NO];
+        
+        for (KenAlarmItemDM *info in _alarmArray) {
+            info.isSelected = NO;
+        }
+        _selectNumbers = 0;
+    } else {
+        [button setSelected:YES];
+        
+        for (KenAlarmItemDM *info in _alarmArray) {
+            info.isSelected = YES;
+        }
+        _selectNumbers = [_alarmArray count];
+    }
+    
+    [_alarmTable reloadData];
+    [_selectNumberLab setText:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]];
 }
 
 - (void)loadNewTopic {
@@ -290,104 +318,74 @@ static const int alarmTabBtnHeight = 34;
 
 #pragma mark - other
 - (void)addDeleteView {
-//    if (_deleteView) {
-//        [self.view addSubview:_deleteView];
-//        [self.view addSubview:_deleteTopView];
-//        
-//        [_selectNumberLab setText:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]];
-//    } else {
-//        //top
-//        _deleteTopView = [[UIView alloc] initWithFrame:(CGRect){0, kAppViewOrginY + alarmTabBtnHeight, self.view.width, alarmTabBtnHeight}];
-//        [self.view addSubview:_deleteTopView];
-//        
-//        UILabel *lable = [KenUtils labelWithTxt:@"全选" frame:(CGRect){0, 0, 70, alarmTabBtnHeight}
-//                                           font:kKenFontHelvetica(16) color:[UIColor grayColor]];
-//        [_deleteTopView addSubview:lable];
-//        
-//        _selectNumberLab = [KenUtils labelWithTxt:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]
-//                                            frame:(CGRect){0, 0, _deleteTopView.width, alarmTabBtnHeight}
-//                                             font:kKenFontHelvetica(16) color:[UIColor grayColor]];
-//        [_deleteTopView addSubview:_selectNumberLab];
-//        
-//        _selectAllBtn = [KenUtils buttonWithImg:nil off:0 zoomIn:YES image:[UIImage imageNamed:@"select_none"]
-//                                       imagesec:[UIImage imageNamed:@"select_green"] target:self action:@selector(selectAllBtn:)];
-//        _selectAllBtn.frame = CGRectMake(_deleteTopView.width - _deleteTopView.height * 1.5, 0, _deleteTopView.height * 1.5, _deleteTopView.height);
-//        [_deleteTopView addSubview:_selectAllBtn];
-//        
-//        //
-//        _deleteView = [[UIView alloc] initWithFrame:(CGRect){0, self.view.height - 100, self.view.width, 100}];
-//        [self.view addSubview:_deleteView];
-//        
-//        UIButton *delete = [KenUtils buttonWithImg:@"删除" off:0 zoomIn:NO image:nil
-//                                          imagesec:nil target:self action:@selector(deleteConfirm)];
-//        delete.frame = (CGRect){0, 14, _deleteView.width, 40};
-//        [delete.titleLabel setFont:kKenFontHelvetica(18)];
-//        [delete setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-//        [delete setBackgroundColor:[UIColor whiteColor]];
-//        [_deleteView addSubview:delete];
-//        
-//        UIButton *cancel = [KenUtils buttonWithImg:@"取消" off:0 zoomIn:NO image:nil
-//                                          imagesec:nil target:self action:@selector(cancelBtn)];
-//        cancel.frame = (CGRect){0, _deleteView.height - 40, _deleteView.width, 40};
-//        [cancel.titleLabel setFont:kKenFontHelvetica(18)];
-//        [cancel setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//        [cancel setBackgroundColor:[UIColor whiteColor]];
-//        [_deleteView addSubview:cancel];
-//    }
-//    
-//    _alarmTable.frame = CGRectMake(0, kAppViewOrginY + alarmTabBtnHeight * 2, kGSize.width,
-//                                   kGSize.height - kAppViewOrginY - _deleteView.height - alarmTabBtnHeight * 2);
-//    [_alarmTable reloadData];
+    self.contentView.height = MainScreenHeight - 64;
+    
+    if (_deleteView) {
+        [self.contentView addSubview:_deleteView];
+        [self.contentView addSubview:_deleteTopView];
+        
+        [_selectNumberLab setText:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]];
+    } else {
+        //top
+        _deleteTopView = [[UIView alloc] initWithFrame:(CGRect){0, alarmTabBtnHeight, self.contentView.width, alarmTabBtnHeight}];
+        [self.contentView addSubview:_deleteTopView];
+        
+        UILabel *lable = [UILabel labelWithTxt:@"全选" frame:(CGRect){0, 0, 70, alarmTabBtnHeight}
+                                          font:[UIFont appFontSize16] color:[UIColor grayColor]];
+        [_deleteTopView addSubview:lable];
+        
+        _selectNumberLab = [UILabel labelWithTxt:[NSString stringWithFormat:@"已选%zd个信息", _selectNumbers]
+                                           frame:(CGRect){0, 0, _deleteTopView.width, alarmTabBtnHeight}
+                                            font:[UIFont appFontSize16] color:[UIColor grayColor]];
+        [_deleteTopView addSubview:_selectNumberLab];
+        
+        _selectAllBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"alarm_select_none"]
+                                       imagesec:[UIImage imageNamed:@"alarm_select_green"] target:self action:@selector(selectAllBtn:)];
+        _selectAllBtn.frame = CGRectMake(_deleteTopView.width - _deleteTopView.height * 1.5, 0, _deleteTopView.height * 1.5, _deleteTopView.height);
+        [_deleteTopView addSubview:_selectAllBtn];
+        
+        //
+        _deleteView = [[UIView alloc] initWithFrame:(CGRect){0, self.contentView.height - 100, self.contentView.width, 100}];
+        [self.contentView addSubview:_deleteView];
+        
+        UIButton *delete = [UIButton buttonWithImg:@"删除" zoomIn:NO image:nil
+                                          imagesec:nil target:self action:@selector(deleteConfirm)];
+        delete.frame = (CGRect){0, 14, _deleteView.width, 40};
+        [delete.titleLabel setFont:[UIFont appFontSize17]];
+        [delete setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [delete setBackgroundColor:[UIColor whiteColor]];
+        [_deleteView addSubview:delete];
+        
+        UIButton *cancel = [UIButton buttonWithImg:@"取消" zoomIn:NO image:nil
+                                          imagesec:nil target:self action:@selector(cancelBtn)];
+        cancel.frame = (CGRect){0, _deleteView.height - 40, _deleteView.width, 40};
+        [cancel.titleLabel setFont:[UIFont appFontSize17]];
+        [cancel setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [cancel setBackgroundColor:[UIColor whiteColor]];
+        [_deleteView addSubview:cancel];
+    }
+    
+    _alarmTable.frame = CGRectMake(0, alarmTabBtnHeight * 2, self.contentView.width,
+                                   self.contentView.height - _deleteView.height - alarmTabBtnHeight * 2);
+    [_alarmTable reloadData];
 }
 
 - (void)removeDeleteView {
-//    if (_deleteView) {
-//        [_deleteView removeFromSuperview];
-//        [_deleteTopView removeFromSuperview];
-//    }
-//    
-//    for (YDAlarmInfo *info in _alarmArray) {
-//        info.isSelected = NO;
-//    }
-//    
-//    _selectNumbers = 0;
-//    [_selectAllBtn setSelected:NO];
-//    
-//    _alarmTable.frame = CGRectMake(0, kAppViewOrginY + 44, kGSize.width, kGSize.height - kAppViewOrginY - kAppTabbarHeight - 44);
-//    [_alarmTable reloadData];
-}
-
-- (void)showConfirmAlert {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"将永久删除这些信息，是否继续？"
-                                                       delegate:self cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"确定", nil];
-    [alertView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-//    if (buttonIndex == 1) {
-//        NSMutableArray *idArray = [NSMutableArray array];
-//        for (YDAlarmInfo *info in _alarmArray) {
-//            if (info.isSelected) {
-//                [idArray addObject:[NSString stringWithFormat:@"%zd", info.alarmId]];
-//            }
-//        }
-//        
-//        [[YDController shareController] showLoadingV:self.view content:nil picS:NO];
-//        if ([idArray count] > 0) {
-//            [[YDController shareController] deleteAlarmWithAlarmId:idArray success:^{
-//                [[YDController shareController] hideLoadingV:self.view];
-//                [self editBtn];
-//                
-//                _startId = 0;
-//                [self loadAlarmData];
-//                
-//                [SysDelegate getAlarmStat];
-//            } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//                [[YDController shareController] hideLoadingV:self.view];
-//            }];
-//        }
-//    }
+    if (_deleteView) {
+        [_deleteView removeFromSuperview];
+        [_deleteTopView removeFromSuperview];
+    }
+    
+    for (KenAlarmItemDM *info in _alarmArray) {
+        info.isSelected = NO;
+    }
+    
+    _selectNumbers = 0;
+    [_selectAllBtn setSelected:NO];
+    
+    self.contentView.height = MainScreenHeight - 64 - kAppTabbarHeight;
+    _alarmTable.frame = CGRectMake(0, self.groupV.maxY, self.contentView.width, self.contentView.height - self.groupV.height);
+    [_alarmTable reloadData];
 }
 
 #pragma mark - private method
@@ -397,7 +395,7 @@ static const int alarmTabBtnHeight = 34;
     CGFloat cellHeight = kKenOffsetY(216);
     
     if (_editStatus) {
-        cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:info.isSelected ? @"select_green" : @"select_none"]];
+        cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:info.isSelected ? @"alarm_select_green" : @"alarm_select_none"]];
     } else {
         cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alarm_arrow"]];
     }
@@ -507,7 +505,7 @@ static const int alarmTabBtnHeight = 34;
         _groupV.backgroundColor = [UIColor colorWithHexString:@"#084AAB"];
         
         NSArray *group = [KenUserInfoDM getInstance].deviceGroups;
-        float width = self.view.width / [group count];
+        float width = self.contentView.width / [group count];
         for (NSInteger i = 0; i < [group count]; i++) {
             NSString *name = [group objectAtIndex:i];
             UIButton *button = [UIButton buttonWithImg:name zoomIn:NO image:nil imagesec:nil

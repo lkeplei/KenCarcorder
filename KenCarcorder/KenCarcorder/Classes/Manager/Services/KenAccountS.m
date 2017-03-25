@@ -87,4 +87,25 @@
             }];
 }
 
+- (void)accountWanIp:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"user/getWanIP.json"] requestInfo:nil
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                SafeHandleBlock(success, YES, nil, nil);
+                
+//                if ([[responseData objectForKey:@"result"] intValue] != 0) {
+//                    SafeHandleBlock(success, NO, [responseData objectForKey:@"message"], nil);
+//                } else {
+//                    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
+//                    if (userInfo == nil) {
+//                        userInfo = [[KenUserInfoDM alloc] init];
+//                    }
+//                    userInfo.userName = phone;
+//                    userInfo.userPwd = pwd;
+//                    [userInfo setInstance];
+//                    
+//                    SafeHandleBlock(success, YES, nil, nil);
+//                }
+            }];
+}
+
 @end

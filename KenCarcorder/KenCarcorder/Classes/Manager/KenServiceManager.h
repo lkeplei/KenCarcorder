@@ -17,6 +17,9 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 
 @interface KenServiceManager : NSObject
 
+@property (nonatomic, assign) NSUInteger alarmNumbers;              //报警总条数
+@property (nonatomic, assign) NSString *phoneWanIp;
+
 + (KenServiceManager *)sharedServiceManager;
 
 //获取所有服务
@@ -24,6 +27,10 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 
 //获取分发配置路径
 - (NSString *)dispathPath;
+
+- (void)getAarmStat;
+- (void)updateAarmStat;
+- (void)getWanIp;
 
 #pragma mark - account
 - (void)accountLogout;
@@ -36,6 +43,8 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 
 - (void)accountRegist:(NSString *)phone pwd:(NSString *)pwd verCode:(NSString *)verCode reset:(BOOL)reset
                 start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
+
+- (void)accountWanIp:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
 #pragma mark - device
 - (void)deviceLoad:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
@@ -55,4 +64,8 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 - (void)alarmWithCondition:(NSInteger)alarmId sn:(NSString *)sn readed:(NSString *)readed groupNo:(NSInteger)groupNo
                    success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
+- (void)alarmDeleteWithId:(NSArray *)alarmIdArr
+                  success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
+
+- (void)alarmAtat:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 @end

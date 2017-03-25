@@ -8,6 +8,7 @@
 
 #import "KenAlarmS.h"
 #import "KenAlarmDM.h"
+#import "KenAlarmStatDM.h"
 
 @implementation KenAlarmS
 
@@ -36,4 +37,30 @@
             }];
 }
 
+- (void)alarmDeleteWithId:(NSArray *)alarmIdArr
+                   success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    
+    NSMutableString *alarmIds = [NSMutableString string];
+    for (NSString *alarmId in alarmIdArr) {
+        if ([alarmIds length] > 0) {
+            [alarmIds appendFormat:@",%@", alarmId];
+        } else {
+            [alarmIds appendString:alarmId];
+        }
+    }
+    
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"alarm/delete.json"] requestInfo:@{@"alarmId":alarmIds}
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                SafeHandleBlock(success, YES, nil, [KenAlarmStatDM initWithJsonDictionary:responseData]);
+            }];
+}
+
+- (void)alarmAtat:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"alarm/stat.json"] requestInfo:nil
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      SafeHandleBlock(success, YES, nil, [KenAlarmStatDM initWithJsonDictionary:responseData]);
+                  }];
+}
+
 @end
+

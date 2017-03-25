@@ -11,6 +11,7 @@
 #import "KenAccountS.h"
 #import "KenDeviceS.h"
 #import "KenAlarmS.h"
+#import "KenAlarmStatDM.h"
 
 @implementation KenServiceManager
 
@@ -32,6 +33,53 @@
 
 - (NSString *)dispathPath {
     return @"";
+}
+
+- (void)getAarmStat {
+    @weakify(self)
+    [self alarmAtat:^{
+        
+    } successBlock:^(BOOL successful, NSString * _Nullable errMsg, KenAlarmStatDM * _Nullable statDM) {
+        @strongify(self)
+        self.alarmNumbers = 0;
+        for (NSInteger i = 0; i < statDM.list.count; i++) {
+            KenAlarmStatItemDM *stat = [statDM.list objectAtIndex:i];
+            _alarmNumbers += stat.count;
+            
+//            YDDeviceInfo *device = [[YDModel shareModel] getDeviceBySn:stat.deviceSn];
+//            if (device) {
+//                device.haveUnreadAlarm = YES;
+//            }
+        }
+        
+        [self updateAarmStat];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+        
+    }];
+}
+
+- (void)updateAarmStat {
+    NSString *badge = nil;
+    if (_alarmNumbers > 0) {
+        badge = _alarmNumbers > 99 ? @"99+": [NSString stringWithFormat:@"%zd", _alarmNumbers];
+    }
+    
+    [SysDelegate.rootVC setItemBadge:1 badge:badge];
+}
+
+- (void)getWanIp {
+    @weakify(self)
+    [self accountWanIp:^{
+        
+    } successBlock:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
+        if (successful) {
+            self.phoneWanIp = responseData;
+        }
+    } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+        
+    }];
 }
 
 #pragma mark - 消息转发
