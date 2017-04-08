@@ -12,6 +12,9 @@
 
 @interface KenMiniVideoVC ()<UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, assign) BOOL upDownScanning;          //是否正在上下扫描
+@property (nonatomic, assign) BOOL leftRightScanning;       //是否正在左右扫描
+
 @property (nonatomic, strong) KenVideoV *videoV;
 @property (nonatomic, strong) UITableView *functionTableV;
 @property (nonatomic, strong) NSArray *functionList;
@@ -30,6 +33,9 @@
     
         _functionList = @[@{@"title":@"回看", @"img":@"video_history", @"fun":@"KenHistoryVC"},
                           @{@"title":@"设置", @"img":@"video_setting", @"fun":@"KenDeviceSettingVC"}];
+        
+        _upDownScanning = YES;
+        _leftRightScanning = YES;
     }
     return self;
 }
@@ -98,23 +104,83 @@
 }
 
 - (void)scanUpdown {
-    
+    @weakify(self)
+    if (_upDownScanning) {
+        [[KenServiceManager sharedServiceManager] deviceScanStop:self.device start:^{
+        } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+            @strongify(self)
+            if (successful) {
+                self.upDownScanning = NO;
+                self.leftRightScanning = NO;
+            }
+        } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        }];
+    } else {
+        [[KenServiceManager sharedServiceManager] deviceScanUpDown:self.device start:^{
+        } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+            @strongify(self)
+            if (successful) {
+                self.upDownScanning = !self.upDownScanning;
+            }
+        } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        }];
+    }
 }
 
 - (void)scanLeftRight {
-    
+    @weakify(self)
+    if (_leftRightScanning) {
+        [[KenServiceManager sharedServiceManager] deviceScanStop:self.device start:^{
+        } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+            @strongify(self)
+            if (successful) {
+                self.upDownScanning = NO;
+                self.leftRightScanning = NO;
+            }
+        } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        }];
+    } else {
+        [[KenServiceManager sharedServiceManager] deviceScanLeftRight:self.device start:^{
+        } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+            @strongify(self)
+            if (successful) {
+                self.leftRightScanning = !self.leftRightScanning;
+            }
+        } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        }];
+    }
 }
 
 - (void)turnUpDown {
-    
+    @weakify(self)
+    [[KenServiceManager sharedServiceManager] deviceTurnUpDown:self.device flip:self.videoV.isFlip start:^{
+    } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
+        if (successful) {
+            self.videoV.isFlip = !self.videoV.isFlip;
+        }
+    } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+    }];
 }
 
 - (void)turnLeftRight {
-    
+    @weakify(self)
+    [[KenServiceManager sharedServiceManager] deviceTurnLeftRight:self.device mirror:self.videoV.isMirror start:^{
+    } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
+        if (successful) {
+            self.videoV.isMirror = !self.videoV.isMirror;
+        }
+    } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+    }];
 }
 
 - (void)functionUp {
-    
+    if (thNet_PTZControl(_device.connectHandle, 1, 1, 400, 1)) {
+        [Async mainAfter:0.2 block:^{
+            thNet_PTZControl(_device.connectHandle, 2, 1, 400, 1);
+        }];
+    }
 }
 
 - (void)functionLongUp {
@@ -122,7 +188,11 @@
 }
 
 - (void)functionDown {
-    
+    if (thNet_PTZControl(_device.connectHandle, 3, 1, 400, 1)) {
+        [Async mainAfter:0.2 block:^{
+            thNet_PTZControl(_device.connectHandle, 4, 1, 400, 1);
+        }];
+    }
 }
 
 - (void)functionLongDown {
@@ -130,7 +200,11 @@
 }
 
 - (void)functionLeft {
-    
+    if (thNet_PTZControl(_device.connectHandle, 7, 1, 400, 1)) {
+        [Async mainAfter:0.2 block:^{
+            thNet_PTZControl(_device.connectHandle, 8, 1, 400, 1);
+        }];
+    }
 }
 
 - (void)functionLongLeft {
@@ -138,7 +212,11 @@
 }
 
 - (void)functionRight {
-    
+    if (thNet_PTZControl(_device.connectHandle, 5, 1, 400, 1)) {
+        [Async mainAfter:0.2 block:^{
+            thNet_PTZControl(_device.connectHandle, 6, 1, 400, 1);
+        }];
+    }
 }
 
 - (void)functionLongRight {

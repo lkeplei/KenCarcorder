@@ -23,4 +23,18 @@
 - (void)deviceSetGroupName:(NSString *)name groupNo:(NSInteger)groupNo
                    success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
+- (void)deviceScanStop:(KenDeviceDM *)device
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceScanUpDown:(KenDeviceDM *)device
+                   start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceScanLeftRight:(KenDeviceDM *)device
+                      start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceTurnUpDown:(KenDeviceDM *)device flip:(BOOL)flip
+                   start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceTurnLeftRight:(KenDeviceDM *)device mirror:(BOOL)mirror
+                      start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 @end

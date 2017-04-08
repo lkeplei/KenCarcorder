@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-#define kAppServerHost             @"http://www.7cyun.com.cn:80/"
+#define kAppServerHost              @"http://www.7cyun.com.cn:80/"
+#define kConnectP2pHost             @"http://192.168.0.67/"
+
+@class KenDeviceDM;
 
 typedef void (^RequestStartBlock)(void);
 typedef void (^ResponsedBlock)(id _Nullable responseData);
@@ -59,6 +62,21 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 
 - (void)deviceSetGroupName:(NSString *)name groupNo:(NSInteger)groupNo
                    success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
+
+- (void)deviceScanStop:(KenDeviceDM *)device
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceScanUpDown:(KenDeviceDM *)device
+                   start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceScanLeftRight:(KenDeviceDM *)device
+                      start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceTurnUpDown:(KenDeviceDM *)device flip:(BOOL)flip
+                   start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceTurnLeftRight:(KenDeviceDM *)device mirror:(BOOL)mirror
+                      start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 
 #pragma mark - alarm
 - (void)alarmWithCondition:(NSInteger)alarmId sn:(NSString *)sn readed:(NSString *)readed groupNo:(NSInteger)groupNo

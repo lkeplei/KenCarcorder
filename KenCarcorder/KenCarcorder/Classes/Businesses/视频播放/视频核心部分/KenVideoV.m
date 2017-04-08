@@ -184,8 +184,8 @@ KenVideoV *retVideoSelf;
                        &Width0, &Height0, &FrameRate0, &BitRate0,
                        &Width1, &Height1, &FrameRate1, &BitRate1);
     
-    //    _isMirror = IsMirror;
-    //    _isFlip = IsFlip;
+    _isMirror = IsMirror;
+    _isFlip = IsFlip;
     
     if (thNet_IsConnect(_deviceDM.connectHandle)) {
         if ([_deviceDM isDDNS]) {

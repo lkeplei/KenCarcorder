@@ -17,11 +17,7 @@
     SafeHandleBlock(start);
     
     [[KenAFHttp sharedAFHttp] asyncGet:url queryParams:params success:^(id responseData) {
-        if ([responseData isKindOfClass:[NSDictionary class]]) {
-            SafeHandleBlock(responsed, responseData);
-        } else {
-            SafeHandleBlock(failed, kHttpFailedErrorCode, @"返回数据异常");
-        }
+        SafeHandleBlock(responsed, responseData);
     } failure:^(NSInteger status, NSString *errMsg) {
         SafeHandleBlock(failed, status, errMsg);
     }];
