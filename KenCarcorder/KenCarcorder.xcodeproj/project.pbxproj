@@ -78,7 +78,7 @@
 		BEAD75041E480E5A009ADD65 /* KenALarmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75031E480E5A009ADD65 /* KenALarmVC.m */; };
 		BEAD75071E481008009ADD65 /* KenAccountS.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAD75061E481008009ADD65 /* KenAccountS.m */; };
 		E603131B1E864A1B0001CC8A /* cap_voice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E603131A1E864A1B0001CC8A /* cap_voice.mp3 */; };
-		E605BBA21E98EB2C003265A8 /* KenDeviceShareDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E605BBA11E98EB2C003265A8 /* KenDeviceShareDM.m */; };
+		E605BBA61E98EE30003265A8 /* KenDeviceShareDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E605BBA51E98EE30003265A8 /* KenDeviceShareDM.m */; };
 		E60A74431E861688006EA92F /* KenAlarmStatDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E60A74421E861688006EA92F /* KenAlarmStatDM.m */; };
 		E60A74461E8632AA006EA92F /* KenAlarmRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E60A74451E8632AA006EA92F /* KenAlarmRecordVC.m */; };
 		E6105B5B1E7CC04500CAE297 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */; };
@@ -288,8 +288,8 @@
 		BEAD75051E481008009ADD65 /* KenAccountS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAccountS.h; sourceTree = "<group>"; };
 		BEAD75061E481008009ADD65 /* KenAccountS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAccountS.m; sourceTree = "<group>"; };
 		E603131A1E864A1B0001CC8A /* cap_voice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cap_voice.mp3; sourceTree = "<group>"; };
-		E605BBA01E98EB2C003265A8 /* KenDeviceShareDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceShareDM.h; sourceTree = "<group>"; };
-		E605BBA11E98EB2C003265A8 /* KenDeviceShareDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeviceShareDM.m; sourceTree = "<group>"; };
+		E605BBA41E98EE30003265A8 /* KenDeviceShareDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceShareDM.h; sourceTree = "<group>"; };
+		E605BBA51E98EE30003265A8 /* KenDeviceShareDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeviceShareDM.m; sourceTree = "<group>"; };
 		E60A74411E861688006EA92F /* KenAlarmStatDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAlarmStatDM.h; sourceTree = "<group>"; };
 		E60A74421E861688006EA92F /* KenAlarmStatDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlarmStatDM.m; sourceTree = "<group>"; };
 		E60A74441E8632AA006EA92F /* KenAlarmRecordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAlarmRecordVC.h; sourceTree = "<group>"; };
@@ -1002,17 +1002,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E605BBA31E98EE30003265A8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E605BBA41E98EE30003265A8 /* KenDeviceShareDM.h */,
+				E605BBA51E98EE30003265A8 /* KenDeviceShareDM.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E6105B781E7CEA8500CAE297 /* 视频核心部分 */ = {
 			isa = PBXGroup;
 			children = (
+				E605BBA31E98EE30003265A8 /* Model */,
 				E6105B791E7CEA8500CAE297 /* KenAudio.h */,
 				E6105B7A1E7CEA8500CAE297 /* KenAudio.m */,
 				E6105B7B1E7CEA8500CAE297 /* KenVideoFrameExtractor.h */,
 				E6105B7C1E7CEA8500CAE297 /* KenVideoFrameExtractor.m */,
 				E6105B7D1E7CEA8500CAE297 /* KenVideoV.h */,
 				E6105B7E1E7CEA8500CAE297 /* KenVideoV.m */,
-				E605BBA01E98EB2C003265A8 /* KenDeviceShareDM.h */,
-				E605BBA11E98EB2C003265A8 /* KenDeviceShareDM.m */,
 			);
 			path = "视频核心部分";
 			sourceTree = "<group>";
@@ -1527,11 +1535,11 @@
 				E6E4C1121E74069000FD0735 /* list.c in Sources */,
 				E61FAA8D1E57E83300F67E61 /* KenRecorderVC.m in Sources */,
 				BE7EFD511E32098F00E1E579 /* KenServiceManager.m in Sources */,
+				E605BBA61E98EE30003265A8 /* KenDeviceShareDM.m in Sources */,
 				BE7EFD591E32098F00E1E579 /* NSDate+KenDate.m in Sources */,
 				E61FAA941E58180D00F67E61 /* KenAboutUsVC.m in Sources */,
 				BE7EFD5A1E32098F00E1E579 /* NSDictionary+KenDictionary.m in Sources */,
 				BE7EFD661E32098F00E1E579 /* UIImage+KenImage.m in Sources */,
-				E605BBA21E98EB2C003265A8 /* KenDeviceShareDM.m in Sources */,
 				BE7EFD6F1E32098F00E1E579 /* GCDQueue.m in Sources */,
 				E6E4C1091E74069000FD0735 /* common.c in Sources */,
 				E6105B8D1E7D27B700CAE297 /* KenAlarmDM.m in Sources */,
