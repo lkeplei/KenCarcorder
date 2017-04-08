@@ -9,6 +9,7 @@
 #import "KenDeviceS.h"
 #import "KenMobileListDM.h"
 #import "KenDeviceDM.h"
+#import "KenDeviceShareDM.h"
 
 #import "thSDKlib.h"
 
@@ -82,6 +83,18 @@
                   }];
 }
 
+- (void)deviceShareRegister:(KenDeviceDM *)device
+                      start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSDictionary *request = @{@"sn":device.sn, @"name":device.name, @"pwd":device.pwd, @"videoChlMask":@1,@"audioChlMask":@1};
+    
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"plaza/register.json"] requestInfo:request
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      NSMutableArray * respenseListArr = [[NSMutableArray alloc] initWithArray:[responseData objectForKey:@"list"]];
+                      SafeHandleBlock(success, YES, nil, [KenDeviceShareDM initWithJsonDictionary:[respenseListArr firstObject]]);
+                  }];
+}
+
+#pragma mark - device control get
 - (void)deviceScanStop:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
     NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=13&cmd=2&sleep=400", device.usr, device.pwd];

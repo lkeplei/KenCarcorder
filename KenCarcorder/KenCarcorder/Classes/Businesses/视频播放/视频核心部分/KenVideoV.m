@@ -9,6 +9,7 @@
 #import "KenVideoV.h"
 #import "KenAlertView.h"
 #import "KenDeviceDM.h"
+#import "KenDeviceShareDM.h"
 
 //#define kHardDecode                 //是否硬解码
 
@@ -32,6 +33,10 @@
 
 KenVideoV *retVideoSelf;
 
+
+bool hSocketOpen = false; //连接状态
+int hSocketServer; //服务器连接
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -43,20 +48,21 @@ KenVideoV *retVideoSelf;
 
 #pragma mark - public method
 - (void)showVideoWithDevice:(KenDeviceDM *)device {
-    if (device == nil) {
+    if (device == nil && _deviceDM == nil) {
         return;
     }
     
-    _deviceDM = device;
-    _playAudio = YES;
+    if (_deviceDM == nil) {
+        _deviceDM = device;
+        _playAudio = YES;
+        
+        [self makeToastActivity];
+    }
     
     [UIApplication sharedApplication].idleTimerDisabled = YES;        //不自动锁屏
-    
     [Async background:^{
         [self startVidthread];
     }];
-    
-    [self makeToastActivity];
 }
 
 - (void)finishVideo {
@@ -87,6 +93,22 @@ KenVideoV *retVideoSelf;
     //    thNet_Free(&_videoConnectHandle);
     
     _deviceDM.connectHandle = 0;
+}
+
+- (void)stopVideo {
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        thNet_Stop(_deviceDM.connectHandle);
+    }
+}
+
+- (void)rePlay {
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        if (!thNet_Play(_deviceDM.connectHandle, 1, 1, 0)) {
+            [Async mainAfter:1 block:^{
+                [self rePlay];
+            }];
+        }
+    }
 }
 
 - (void)capture {
@@ -273,17 +295,13 @@ void avConnectCallBack(TDataFrameInfo* PInfo, char* Buf, int Len, void* UserCust
         }
         
         [baseV pareFrameData:Len frameId:PInfo->Frame.FrameID];
-    } else {
-//        if ([retVideoSelf isKindOfClass:[YDVedioMiniControlV class]]) {
-//            thNet_DisConn(handle);
-//        }
     }
-//
-//    //****************************// 上传数据包
-//    if (hSocketOpen) {
-//        SendBuf(hSocketServer, (char *)PInfo, sizeof(TDataFrameInfo));
-//        SendBuf(hSocketServer, Buf, Len);
-//    }
+
+    //****************************// 上传数据包
+    if (hSocketOpen) {
+        SendBuf(hSocketServer, (char *)PInfo, sizeof(TDataFrameInfo));
+        SendBuf(hSocketServer, Buf, Len);
+    }
 }
 
 void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom) {
@@ -357,14 +375,93 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
     [self.audio pauseRecord];
 }
 
-#pragma mark - event
-- (void)rePlay {
-    if (thNet_IsConnect(_deviceDM.connectHandle)) {
-        if (!thNet_Play(_deviceDM.connectHandle, 1, 1, 0)) {
-            [Async mainAfter:1 block:^{
-                [self rePlay];
-            }];
+#pragma -- mark 视频分享
+- (void)shareVedio {
+    @weakify(self)
+    [[KenServiceManager sharedServiceManager] deviceShareRegister:_deviceDM start:^{
+    } success:^(BOOL successful, NSString * _Nullable errMsg, KenDeviceShareDM *shareDM) {
+        @strongify(self)
+        if (shareDM) {
+            [self sendCfgUnit:shareDM.serverHost upPort:shareDM.upPort];
         }
+    } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+    }];
+}
+
+//发送配置包
+- (void)sendCfgUnit:(NSString *)IPAddress upPort:(NSInteger)upPort {
+    if ([NSString isEmpty:IPAddress]) {
+        return;
+    }
+    
+    [Async background:^{
+        hSocketServer = FastConnect((char *)[IPAddress UTF8String], upPort, 3000); //服务器链接
+        if (hSocketServer > 0) {
+            // 耗时的操作
+            TNetCmdPkt Pkt;
+            memset(&Pkt, 0, sizeof(Pkt));
+            Pkt.HeadPkt.VerifyCode = Head_CmdPkt;
+            Pkt.HeadPkt.PktSize    = 1452;
+            Pkt.CmdPkt.PktHead     = Head_CmdPkt;  //0xAAAAAAAA
+            Pkt.CmdPkt.MsgID       = Msg_StartUploadFile;  //7
+            Pkt.CmdPkt.Session     = 0;
+            Pkt.CmdPkt.Value       = [_deviceDM.sn intValue];
+            
+            if (SendBuf(hSocketServer, (char*)&Pkt, sizeof(TNetCmdPkt))) {      //发送分享请求 msgID = 7
+                memset(&Pkt, 0, sizeof(Pkt));
+                if (RecvBuf1(hSocketServer, (char*)&Pkt, sizeof(TNetCmdPkt))) {      //接收登录请求包
+                    TPlayParam* Play = (TPlayParam*)_deviceDM.connectHandle;
+                    SendBuf(hSocketServer, (char*)&Play->loginPkt, sizeof(TNetCmdPkt)); //转发登录获取包
+                    if (RecvBuf1(hSocketServer, (char*)&Pkt, sizeof(TNetCmdPkt))) {      //接收配置请求包
+                        THeadPkt head;
+                        head.VerifyCode = Head_CfgPkt;
+                        head.PktSize    = sizeof(TDevCfg);
+                        SendBuf(hSocketServer, (char*)&head, sizeof(THeadPkt)); //发送配置包头
+                        
+                        if (SendBuf(hSocketServer, (char*)&Play->DevCfg, sizeof(TDevCfg))) { //转发配置获取包
+                            if (RecvBuf(hSocketServer, (char*)&Pkt, sizeof(Pkt))) {     //接收播放请求包
+                                hSocketOpen = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }];
+}
+
+bool RecvBuf1(int hSocket, char* Buf, int BufLen) {
+    if (!Buf) return false;
+    if (BufLen == 0) return true;
+    ssize_t Len, RecvLen;
+    DWORD t, t1;
+    RecvLen = 0;
+    //  if not WaitForData(TimeOut) then exit;
+    t = GetTickCount();
+    while (true) {
+#ifdef __cplusplus
+        if (hSocket <=0) return false;
+#endif
+        Len = recv(hSocket, &Buf[RecvLen], BufLen - RecvLen, 0);
+        if (Len != -1) {
+            RecvLen = RecvLen + Len;
+        } else {
+            if (errno == EINTR || errno == EAGAIN) {
+                t1 = GetTickCount();
+                if (t1 - t >= NET_TIMEOUT) {
+                    return false;
+                }
+                errno = 0;
+                usleep(1000*10);
+                continue;
+            } else {
+                if (errno != 0 ) {
+                    errno = 0;
+                }
+                return false;
+            }
+        }
+        if (RecvLen == BufLen) return true;
     }
 }
 

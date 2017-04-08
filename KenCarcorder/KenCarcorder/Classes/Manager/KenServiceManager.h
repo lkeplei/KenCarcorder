@@ -63,6 +63,9 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 - (void)deviceSetGroupName:(NSString *)name groupNo:(NSInteger)groupNo
                    success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
+- (void)deviceShareRegister:(KenDeviceDM *)device
+                      start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
 - (void)deviceScanStop:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 

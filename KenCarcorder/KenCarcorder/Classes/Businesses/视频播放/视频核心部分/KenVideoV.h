@@ -27,13 +27,15 @@
 - (void)showVideoWithDevice:(KenDeviceDM *)device;
 //结束视频
 - (void)finishVideo;
-//结束录像
-- (void)finishRecorder;
-//断开与镜头的连接
-- (void)disconnectVideo;
+//停止视频播放
+- (void)stopVideo;
+//开始视频播放
+- (void)rePlay;
 //拍照
 - (void)capture;
 //录像
 - (void)recordVideo;
+//分享视频
+- (void)shareVedio;
 
 @end

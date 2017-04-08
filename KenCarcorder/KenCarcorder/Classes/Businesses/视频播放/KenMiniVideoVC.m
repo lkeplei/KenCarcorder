@@ -66,6 +66,8 @@
             self.speedLabebl.text = self.videoV.speed;
         }];
     }];
+    
+    [self.videoV rePlay];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -107,6 +109,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [self pushViewControllerString:[[_functionList objectAtIndex:indexPath.row] objectForKey:@"fun"] animated:YES];
+    
+    [self.videoV stopVideo];
 }
 
 #pragma mark - event
@@ -268,7 +272,14 @@
             [[KenCarcorder shareCarcorder] playVoiceByType:kKenVoiceCapture];
         }
     } else if (type == 3) {
-        
+        @weakify(self)
+        [self presentConfirmViewInController:self confirmTitle:@"提示"
+                                     message:@"分享设备将可能会耗费您较多的数据流量，并请保护自己和他人的隐私。请确认是否继续?"
+                          confirmButtonTitle:@"分享" cancelButtonTitle:@"取消" confirmHandler:^{
+                              @strongify(self)
+                              [self.videoV shareVedio];
+                          } cancelHandler:^{
+                          }];
     }
 }
 
@@ -293,6 +304,7 @@
     device.netStat = kKenNetworkDdns;
     device.ddns = @"80002075.7cyun.net";
     device.name = @"二楼";
+    device.sn = @"80002075";
     
     device.dataport = 7075;
     device.httpport = 8075;
