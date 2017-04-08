@@ -14,8 +14,12 @@
 
 @interface KenVideoV ()<VideoFrameDelegate>
 
-@property (nonatomic, strong) KenDeviceDM *deviceDM;
+@property (nonatomic, assign) BOOL isAnimation;             //画面是否在动
+@property (nonatomic, assign) NSUInteger dataLength;        //数据大小
+@property (nonatomic, assign) CGFloat totalLength;          //总大小
 
+@property (nonatomic, strong) KenDeviceDM *deviceDM;
+@property (nonatomic, strong) NSMutableArray *dataLengthArray;
 @property (nonatomic, strong) UIImageView *screenImageV;
 
 @property (nonatomic, strong) UIView *recorderBgV;          //录像时的背景框
@@ -48,7 +52,11 @@ KenVideoV *retVideoSelf;
     
     [UIApplication sharedApplication].idleTimerDisabled = YES;        //不自动锁屏
     
-    [self startVidthread];
+    [Async background:^{
+        [self startVidthread];
+    }];
+    
+    [self makeToastActivity];
 }
 
 - (void)finishVideo {
@@ -113,6 +121,24 @@ KenVideoV *retVideoSelf;
             }];
         }
     }
+}
+
+- (void)speakStart {
+    self.playAudio = NO;
+    [self.audio setNetHandle:_deviceDM.connectHandle];
+    [self.audio reStartRecord];
+    
+    if (self.audio) {
+        self.playAudio = NO;
+    }
+}
+
+- (void)speakEnd {
+    if (self.audio) {
+        self.playAudio = YES;
+    }
+    
+    [self.audio pauseRecord];
 }
 
 #pragma mark - 视频连接与数据回调
@@ -302,32 +328,7 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
         }
         [_screenImageV setImage:image];
         
-//        if ([KenUtils isNotEmpty:_screenVedioV]) {
-//            [_screenVedioV setImage:image];
-//            if (image !=_screenVedioV.image) {
-//                image = nil;
-//            }
-//        } else {
-//            _screenVedioV = [[UIImageView alloc] initWithFrame:(CGRect){_moviceGLView.origin, _moviceGLView.size}];
-//            [_screenVedioV setImage:image];
-//            if (image !=_screenVedioV.image) {
-//                image = nil;
-//            }
-//            
-//            [_zoomScrollView setZoomView:_screenVedioV];
-//            
-//            [self initRecorderV];
-//        }
-//        
-//        if (self.getImageBlock) {
-//            self.getImageBlock(image);
-//        }
-//        
-//        [self hideLodingView];
-//        
-//        if (self.statusChangeBlock) {
-//            self.statusChangeBlock(kYDVedioStatusGetImageData);
-//        }
+        [self hideToastActivity];
     }
 }
 
@@ -348,75 +349,66 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
         if (error)
             DebugLog("couldn't set audio category!");
         
-//        [self.audio initRecordAudio];
+        [self.audio initRecordAudio];
     }
-//
-//    _stopPlay = NO;
-    if (thNet_IsConnect(_deviceDM.connectHandle)) {
-        BOOL res = thNet_Play(_deviceDM.connectHandle, 1, 1, 0);
-        if (res) {
-//            _stopPlay = YES;
-        } else {
-            [self performSelectorOnMainThread:@selector(rePlay) withObject:nil waitUntilDone:YES];
-        }
-    }
+    
+    [self rePlay];
     
     [self.audio pauseRecord];
 }
 
 #pragma mark - event
 - (void)rePlay {
-//    if (!_stopPlay) {
-        if (thNet_IsConnect(_deviceDM.connectHandle)) {
-            BOOL res = thNet_Play(_deviceDM.connectHandle, 1, 1, 0);//
-            if (res) {
-//                _stopPlay = YES;
-            } else {
-                [Async mainAfter:2 block:^{
-                    [self rePlay];
-                }];
-            }
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        if (!thNet_Play(_deviceDM.connectHandle, 1, 1, 0)) {
+            [Async mainAfter:1 block:^{
+                [self rePlay];
+            }];
         }
-//    }
+    }
 }
 
 #pragma mark - private method
 - (void)pareFrameData:(int)length frameId:(int)frameId {
-//    BOOL moving = frameId == 17 ? YES : NO;
-//    _isAnimation = moving;
-//    _dataLength += length;
-//    
-//    if (self.lengthStatusBlock) {
-//        self.lengthStatusBlock(length, moving);
-//    }
+    BOOL moving = frameId == 17 ? YES : NO;
+    _isAnimation = moving;
+    _dataLength += length;
 }
 
 //计算平均速度
 - (void)calculatAverageSpeed {
-//    NSUInteger length = self.dataLength / 1024 + (self.dataLength % 1024 > 512 ? 1 : 0);
-//    NSUInteger speed = length;
-//    if (_dataLengthArray == nil) {
-//        _dataLengthArray = [NSMutableArray array];
-//    }
-//    
-//    if ([_dataLengthArray count] >= 5) {
-//        for (NSInteger i = 0; i < [_dataLengthArray count]; i++) {
-//            if (i == [_dataLengthArray count] - 1) {
-//                [_dataLengthArray replaceObjectAtIndex:i withObject:[NSNumber numberWithInteger:length]];
-//            } else {
-//                [_dataLengthArray replaceObjectAtIndex:i withObject:[_dataLengthArray objectAtIndex:i + 1]];
-//                speed += [[_dataLengthArray objectAtIndex:i + 1] integerValue];
-//            }
-//        }
-//        
-//    } else {
-//        [_dataLengthArray addObject:[NSNumber numberWithInteger:length]];
-//        for (NSInteger i = 0; i < [_dataLengthArray count] - 1; i++) {
-//            speed += [[_dataLengthArray objectAtIndex:i] integerValue];
-//        }
-//    }
-//    
-//    _averageSpeed = speed / [_dataLengthArray count];
+    NSUInteger length = self.dataLength / 1024 + (self.dataLength % 1024 > 512 ? 1 : 0);
+    self.dataLength = 0;
+    NSUInteger speed = length;
+    if (_dataLengthArray == nil) {
+        _dataLengthArray = [NSMutableArray array];
+    }
+    
+    if ([_dataLengthArray count] >= 5) {
+        for (NSInteger i = 0; i < [_dataLengthArray count]; i++) {
+            if (i == [_dataLengthArray count] - 1) {
+                [_dataLengthArray replaceObjectAtIndex:i withObject:[NSNumber numberWithInteger:length]];
+            } else {
+                [_dataLengthArray replaceObjectAtIndex:i withObject:[_dataLengthArray objectAtIndex:i + 1]];
+                speed += [[_dataLengthArray objectAtIndex:i + 1] integerValue];
+            }
+        }
+        
+    } else {
+        [_dataLengthArray addObject:[NSNumber numberWithInteger:length]];
+        for (NSInteger i = 0; i < [_dataLengthArray count] - 1; i++) {
+            speed += [[_dataLengthArray objectAtIndex:i] integerValue];
+        }
+    }
+    
+    NSUInteger averageSpeed = speed / [_dataLengthArray count];
+    _totalLength += length;
+    
+    if (_totalLength > 1024) {
+        _speed = [NSString stringWithFormat:@"%zd KB/S\n%.2f MB", averageSpeed, _totalLength / 1024];
+    } else {
+        _speed = [NSString stringWithFormat:@"%zd KB/S\n%.0f KB", averageSpeed, _totalLength];
+    }
 }
 
 - (NSString *)getTimeString:(NSInteger)length {
@@ -434,6 +426,12 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 }
 
 #pragma mark - getter setter 
+- (NSString *)speed {
+    [self calculatAverageSpeed];
+    
+    return _speed;
+}
+
 - (UIView *)recorderBgV {
     if (_recorderBgV == nil) {
         _timeLength = 0;

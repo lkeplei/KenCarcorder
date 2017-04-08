@@ -22,7 +22,6 @@ typedef struct _circular_buffer {
 }
 
 @property (nonatomic, assign) UInt32 bufferByteSize;
-@property (nonatomic, assign) int64_t NetHandle;                //用于对讲的句柄
 
 //播放
 @property (nonatomic, assign) AudioQueueRef queue;

@@ -17,7 +17,9 @@
 #define MIN_SIZE_PER_FRAME 1024*4 //每侦最小数据长度
 
 
-@interface KenAudio : NSObject 
+@interface KenAudio : NSObject
+
+@property (nonatomic, assign) int64_t NetHandle;                //用于对讲的句柄
 
 - (instancetype)initAudio;
 - (void)playAudio:(char*)Buf length:(int)len;

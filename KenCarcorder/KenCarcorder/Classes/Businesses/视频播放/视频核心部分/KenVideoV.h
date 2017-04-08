@@ -18,6 +18,7 @@
 @property (nonatomic, assign) BOOL playAudio;               //是否开启声音，默认开启
 @property (nonatomic, assign) BOOL isMirror;                //是否为左右翻转状态
 @property (nonatomic, assign) BOOL isFlip;                  //是否为上下翻转状态
+@property (nonatomic, strong) NSString *speed;              //速度描述
 
 @property (nonatomic, strong) KenVideoFrameExtractor *video;
 @property (nonatomic, strong) KenAudio *audio;

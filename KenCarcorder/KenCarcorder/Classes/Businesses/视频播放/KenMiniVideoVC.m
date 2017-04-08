@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UIView *functionV;
 @property (nonatomic, strong) UIView *videoNav;
 @property (nonatomic, strong) UIView *speakV;
+@property (nonatomic, strong) UILabel *speedLabebl;         //速度标签
 
 @end
 
@@ -52,6 +53,25 @@
     [self.contentView addSubview:self.functionTableV];
     
     [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"] selector:@selector(back)];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    @weakify(self)
+    [[KenGCDTimerManager sharedInstance] scheduledTimerWithName:@"miniVideoTime" timeInterval:1 queue:nil repeats:YES
+                                                   actionOption:kKenGCDTimerAbandon action:^{
+        @strongify(self)
+        [Async main:^{
+            self.speedLabebl.text = self.videoV.speed;
+        }];
+    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[KenGCDTimerManager sharedInstance] cancelTimerWithName:@"miniVideoTime"];
 }
 
 #pragma mark - Table delegate
@@ -224,7 +244,14 @@
 }
 
 - (void)speaker:(UIButton *)button {
-    
+    _videoV.playAudio = !_videoV.playAudio;
+    if (_videoV.playAudio) {
+        [button setImage:[UIImage imageNamed:@"video_speaker"] forState:UIControlStateNormal];
+        thNet_Play(_device.connectHandle, 1, 1, 0);
+    } else {
+        [button setImage:[UIImage imageNamed:@"video_speaker_close"] forState:UIControlStateNormal];
+        thNet_Play(_device.connectHandle, 1, 0, 0);
+    }
 }
 
 - (void)navBtnClicked:(UIButton *)button {
@@ -413,6 +440,11 @@
                                            imagesec:nil target:self action:@selector(speaker:)];
         speaker.frame = (CGRect){0, 0, speaker.width + kKenOffsetX(50), _videoNav.height};
         [_videoNav addSubview:speaker];
+        
+        _speedLabebl = [UILabel labelWithTxt:@"" frame:(CGRect){speaker.maxX, 0, 80, _videoNav.height}
+                                        font:[UIFont appFontSize12] color:[UIColor appWhiteTextColor]];
+        _speedLabebl.numberOfLines = 0;
+        [_videoNav addSubview:_speedLabebl];
         
         NSArray *btnArr = @[@"video_full", @"video_record", @"video_capture", @"video_share"];
         CGFloat offsetX = _videoV.width;
