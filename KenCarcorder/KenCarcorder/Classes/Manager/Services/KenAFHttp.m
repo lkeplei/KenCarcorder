@@ -105,8 +105,8 @@
     _httpSessionManager.requestSerializer = _httpRequestSerializer;
     _httpSessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    [_httpSessionManager GET:url parameters:paramsDict success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        SafeHandleBlock(success, [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+    [_httpSessionManager GET:url parameters:paramsDict success:^(NSURLSessionDataTask * _Nonnull task, NSData * _Nonnull responseObject) {
+        SafeHandleBlock(success, responseObject)
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         SafeHandleBlock(failure, error.code, error.localizedDescription);
     }];

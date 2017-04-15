@@ -9,6 +9,8 @@
 #import "KenMiniVideoVC.h"
 #import "KenDeviceDM.h"
 #import "KenVideoV.h"
+#import "KenDeviceSettingVC.h"
+#import "KenHistoryVC.h"
 
 @interface KenMiniVideoVC ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -32,8 +34,8 @@
     if (self) {
         self.screenType = kKenViewScreenFull;
     
-        _functionList = @[@{@"title":@"回看", @"img":@"video_history", @"fun":@"KenHistoryVC"},
-                          @{@"title":@"设置", @"img":@"video_setting", @"fun":@"KenDeviceSettingVC"}];
+        _functionList = @[@{@"title":@"回看", @"img":@"video_history"},
+                          @{@"title":@"设置", @"img":@"video_setting"}];
         
         _upDownScanning = YES;
         _leftRightScanning = YES;
@@ -112,7 +114,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [self pushViewControllerString:[[_functionList objectAtIndex:indexPath.row] objectForKey:@"fun"] animated:YES];
+    if (indexPath.row == 0) {
+        [self pushViewController:[[KenHistoryVC alloc] initWithDevice:self.device] animated:YES];
+    } else if (indexPath.row == 1) {
+        [self pushViewController:[[KenDeviceSettingVC alloc] initWithDevice:self.device] animated:YES];
+    }
     
     [self.videoV stopVideo];
 }
@@ -337,6 +343,7 @@
     device.ddns = @"80002075.7cyun.net";
     device.name = @"二楼";
     device.sn = @"80002075";
+    device.online = YES;
     
     device.dataport = 7075;
     device.httpport = 8075;
@@ -549,10 +556,10 @@
         _functionTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
         _functionTableV.tableFooterView = self.speakV;
         
-        UIView *footV = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.functionV.width, self.functionV.height + kKenOffsetY(26)}];
-        footV.backgroundColor = [UIColor clearColor];
-        [footV addSubview:_functionV];
-        _functionTableV.tableHeaderView = footV;
+        UIView *headV = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.functionV.width, self.functionV.height + kKenOffsetY(26)}];
+        headV.backgroundColor = [UIColor clearColor];
+        [headV addSubview:_functionV];
+        _functionTableV.tableHeaderView = headV;
     }
     return _functionTableV;
 }

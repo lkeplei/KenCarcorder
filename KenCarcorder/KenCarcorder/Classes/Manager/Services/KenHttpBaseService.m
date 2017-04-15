@@ -16,8 +16,18 @@
 {
     SafeHandleBlock(start);
     
-    [[KenAFHttp sharedAFHttp] asyncGet:url queryParams:params success:^(id responseData) {
-        SafeHandleBlock(responsed, responseData);
+    [[KenAFHttp sharedAFHttp] asyncGet:url queryParams:params success:^(NSData * responseData) {
+        if (responseData.length > 0) {
+            NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+            NSString *resultString = [[NSString alloc] initWithData:responseData encoding:enc];
+            if ([NSString isNotEmpty:resultString]) {
+                SafeHandleBlock(responsed, resultString);
+            } else {
+                SafeHandleBlock(failed, kHttpFailedErrorCode, @"返回数据异常");
+            }
+        } else {
+            SafeHandleBlock(failed, kHttpFailedErrorCode, @"返回数据异常");
+        }
     } failure:^(NSInteger status, NSString *errMsg) {
         SafeHandleBlock(failed, status, errMsg);
     }];
@@ -110,7 +120,7 @@
         NSArray *allKeys = [responseDic allKeys];
         if ([allKeys containsObject:kHttpResult] || [allKeys containsObject:kHttpMessage]) {
             if ([[responseDic objectForKey:kHttpResult] intValue] == 0 || [[responseDic objectForKey:kHttpResult] intValue] == 2 ||
-                [[responseDic objectForKey:kHttpMessage] isEqualToString:@"ok"]) {
+                [[responseDic objectForKey:kHttpMessage] equalsIgnoreCase:@"ok"]) {
                 SafeHandleBlock(response, responseDic);
             } else {
                 if ([responseDic objectForKey:kHttpMessage]) {

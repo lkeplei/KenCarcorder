@@ -94,6 +94,81 @@
                   }];
 }
 
+- (void)deviceRemoveBySn:(NSString *)sn
+                   start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"camera/removeInfo.json"] requestInfo:@{@"sn":sn}
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      SafeHandleBlock(success, YES, nil, nil);
+                  }];
+}
+
+#pragma mark - setting
+- (void)deviceLoadInfo:(KenDeviceDM *)device
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=28", device.usr, device.pwd];
+    [self deviceSettingWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetLed:(KenDeviceDM *)device isOn:(BOOL)isOn
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=87&INFO_Led_Onoff=%d", device.usr, device.pwd, isOn];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetIrcut:(KenDeviceDM *)device isOn:(BOOL)isOn
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=89&INFO_IRCut_Onoff=%d", device.usr, device.pwd, isOn ? 40 : 1];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetAlarm:(KenDeviceDM *)device isOn:(BOOL)isOn
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=88&INFO_Alarm_Sound_Onoff=%d", device.usr, device.pwd, isOn];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetMove:(KenDeviceDM *)device isOn:(BOOL)isOn sensitive:(NSInteger)sensitive
+                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=46&MD_Active=%d&MD_Sensitive=%zd", device.usr, device.pwd, isOn, sensitive];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetAudio:(KenDeviceDM *)device isOn:(BOOL)isOn sensitive:(NSInteger)sensitive
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=42&AUDIO_SoundTriggerActive=%d&AUDIO_SoundTriggerSensitive=%zd", device.usr, device.pwd, isOn, sensitive];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetRecordType:(KenDeviceDM *)device type:(NSInteger)type
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=56&Rec_RecStyle=%zd", device.usr, device.pwd, type];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetAlarmTime:(KenDeviceDM *)device startH:(NSString *)startH startM:(NSString *)startM endH:(NSString *)endH endM:(NSString *)endM
+                     start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=90&start_time_hour=%@&start_time_min=%@&end_time_hour=%@&end_time_min=%@", device.usr, device.pwd, startH, startM, endH, endM];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceClearSDCard:(KenDeviceDM *)device
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=77", device.usr, device.pwd];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetTime:(KenDeviceDM *)device
+                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=17&time=%@", device.usr, device.pwd, [[NSDate date] stringWithFormat:@"yyyyMMddHHmmss"]];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceReboot:(KenDeviceDM *)device
+               start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=18", device.usr, device.pwd];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
 #pragma mark - device control get
 - (void)deviceScanStop:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
@@ -133,7 +208,7 @@
         
         [self asyncGet:[host stringByAppendingString:param] queryParams:nil startBlock:^{
         } responsedBlock:^(NSString *responseData) {
-            if ([responseData isEqualToString:@"OK"]) {
+            if ([responseData equalsIgnoreCase:@"OK"] || [responseData equalsIgnoreCase:@"YES"]) {
                 SafeHandleBlock(success, YES, nil, nil);
             } else {
                 SafeHandleBlock(success, NO, nil, nil);
@@ -146,6 +221,24 @@
             SafeHandleBlock(success, YES, nil, nil);
         } else {
             SafeHandleBlock(success, NO, nil, nil);
+        }
+    }
+}
+
+- (void)deviceSettingWithParam:(NSString *)param device:(KenDeviceDM *)device
+                         start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    if (device.isDDNS) {
+        NSString *host = [NSString stringWithFormat:@"http://%@:%zd/cfg.cgi", device.currentIp, [device httpport]];
+        
+        [self asyncGet:[host stringByAppendingString:param] queryParams:nil startBlock:^{
+        } responsedBlock:^(NSString *responseData) {
+            SafeHandleBlock(success, YES, nil, responseData);
+        } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+        }];
+    } else {
+        NSString *responseData = [self p2pMessageSend:param device:device];
+        if ([responseData isKindOfClass:[NSString class]]) {
+            SafeHandleBlock(success, YES, nil, responseData);
         }
     }
 }
@@ -169,4 +262,5 @@
     
     return [NSString stringWithFormat:@"%s" , Buf];
 }
+
 @end

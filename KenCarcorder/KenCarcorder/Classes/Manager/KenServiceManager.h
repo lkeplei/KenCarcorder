@@ -66,6 +66,44 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 - (void)deviceShareRegister:(KenDeviceDM *)device
                       start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 
+- (void)deviceRemoveBySn:(NSString *)sn
+                   start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+#pragma mark - device setting
+- (void)deviceLoadInfo:(KenDeviceDM *)device
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetLed:(KenDeviceDM *)device isOn:(BOOL)isOn
+               start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetIrcut:(KenDeviceDM *)device isOn:(BOOL)isOn
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetAlarm:(KenDeviceDM *)device isOn:(BOOL)isOn
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetMove:(KenDeviceDM *)device isOn:(BOOL)isOn sensitive:(NSInteger)sensitive
+                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetAudio:(KenDeviceDM *)device isOn:(BOOL)isOn sensitive:(NSInteger)sensitive
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetRecordType:(KenDeviceDM *)device type:(NSInteger)type
+                      start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetAlarmTime:(KenDeviceDM *)device startH:(NSString *)startH startM:(NSString *)startM endH:(NSString *)endH endM:(NSString *)endM
+                     start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceClearSDCard:(KenDeviceDM *)device
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetTime:(KenDeviceDM *)device 
+                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceReboot:(KenDeviceDM *)device
+               start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+#pragma mark - device control get
 - (void)deviceScanStop:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 

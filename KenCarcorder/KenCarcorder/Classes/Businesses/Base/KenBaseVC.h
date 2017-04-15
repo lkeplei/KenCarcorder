@@ -130,7 +130,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadData:(KenBaseVC *)parentVC finish:(void(^)(BOOL push))finishBlock;
 
 //弹框强提示
-- (void)showAlert:(NSString *)title content:(NSString *)content;
+- (void)showAlert:(nullable NSString *)title content:(NSString *)content;
 - (void)showAlert:(NSString *)title content:(NSString *)content type:(KenToastType)type;
 
 /**

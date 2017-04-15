@@ -151,6 +151,12 @@ static KenCarcorder *_sharedUtility = nil;
     return ssid;
 }
 
++ (BOOL)validateIPCAM:(NSString *)ssid {
+    NSString *regex = @"^IPCAM_AP_8[0-9][0-9][0-9][0-9][0-9][0-9][0-9]$";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [test evaluateWithObject:ssid];
+}
+
 + (NSString *)localIPAddress {
     char baseHostName[256]; // Thanks, Gunnar Larisch
     int success = gethostname(baseHostName, 255);

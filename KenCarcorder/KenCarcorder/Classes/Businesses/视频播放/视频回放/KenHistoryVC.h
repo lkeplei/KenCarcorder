@@ -10,4 +10,6 @@
 
 @interface KenHistoryVC : KenBaseVC
 
+- (instancetype)initWithDevice:(KenDeviceDM *)device;
+
 @end

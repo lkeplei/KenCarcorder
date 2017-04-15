@@ -55,4 +55,18 @@ static KenUserInfoDM *userInfo = nil;
     [self setInstance];
 }
 
+- (void)removeDevice:(KenDeviceDM *)device {
+    for (KenDeviceDM *device in _deviceArray) {
+        if ([device.sn isEqualToString:device.sn]) {
+            [_deviceArray removeObject:device];
+            
+            [self setInstance];
+            
+            [[KenServiceManager sharedServiceManager] getAarmStat];
+            
+            return;
+        }
+    }
+}
+
 @end

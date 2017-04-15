@@ -41,6 +41,15 @@ typedef NS_ENUM(NSUInteger, KenVoiceType) {
 + (NSString *)getCurrentSSID;
 
 /**
+ *  @author Ken.Liu
+ *
+ *  @brief  判断是否为合法的镜头wifi
+ *
+ *  @return YES为合法，NO为不合法
+ */
++ (BOOL)validateIPCAM:(NSString *)ssid;
+
+/**
  * 获取局域网ip
  */
 + (NSString *)localIPAddress;
