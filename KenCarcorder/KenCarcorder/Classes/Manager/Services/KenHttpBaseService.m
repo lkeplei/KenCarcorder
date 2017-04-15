@@ -109,7 +109,7 @@
     } responsedBlock:^(NSDictionary *responseDic) {
         NSArray *allKeys = [responseDic allKeys];
         if ([allKeys containsObject:kHttpResult] || [allKeys containsObject:kHttpMessage]) {
-            if ([[responseDic objectForKey:kHttpResult] intValue] == 0 ||
+            if ([[responseDic objectForKey:kHttpResult] intValue] == 0 || [[responseDic objectForKey:kHttpResult] intValue] == 2 ||
                 [[responseDic objectForKey:kHttpMessage] isEqualToString:@"ok"]) {
                 SafeHandleBlock(response, responseDic);
             } else {

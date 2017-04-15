@@ -68,12 +68,16 @@
     }];
     
     [self.videoV rePlay];
+    
+    SysDelegate.allowRotation = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[KenGCDTimerManager sharedInstance] cancelTimerWithName:@"miniVideoTime"];
+    
+    SysDelegate.allowRotation = NO;
 }
 
 #pragma mark - Table delegate
@@ -111,6 +115,33 @@
     [self pushViewControllerString:[[_functionList objectAtIndex:indexPath.row] objectForKey:@"fun"] animated:YES];
     
     [self.videoV stopVideo];
+}
+
+#pragma mark - rotate
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
+        [self exitFullscreen];
+    } else {
+        if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
+            [self enterFullscreen];
+        }
+    }
+}
+
+- (void)enterFullscreen {
+    [self.videoV removeFromSuperview];
+    [self.videoNav removeFromSuperview];
+    
+    self.videoV.frame = (CGRect){CGPointZero, SysDelegate.window.height, SysDelegate.window.width};
+    [SysDelegate.window addSubview:self.videoV];
+}
+
+- (void)exitFullscreen {
+    [self.videoV removeFromSuperview];
+    
+    self.videoV.frame = (CGRect){0, 64, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
+    [self.contentView addSubview:self.videoV];
+    [self.contentView addSubview:self.videoNav];
 }
 
 #pragma mark - event

@@ -11,6 +11,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
+@property (nonatomic, assign) BOOL allowRotation;
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) KenRootTabC *rootVC;
 

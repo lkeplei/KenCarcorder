@@ -546,4 +546,11 @@ bool RecvBuf1(int hSocket, char* Buf, int BufLen) {
     }
     return _recorderBgV;
 }
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    
+    _screenImageV.frame = (CGRect){0, 0, frame.size};
+}
+
 @end

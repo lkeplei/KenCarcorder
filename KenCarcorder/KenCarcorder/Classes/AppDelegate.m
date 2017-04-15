@@ -25,11 +25,20 @@
     self.window.rootViewController = _rootVC;
     [self.window makeKeyAndVisible];
     
-    
+    _allowRotation = NO;
     //获取警告数
-    [[KenServiceManager sharedServiceManager] getAarmStat];
+//    [[KenServiceManager sharedServiceManager] getAarmStat];
     
     return YES;
+}
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    if (self.allowRotation) {
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+    }
+    
+    return UIInterfaceOrientationMaskPortrait;
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
