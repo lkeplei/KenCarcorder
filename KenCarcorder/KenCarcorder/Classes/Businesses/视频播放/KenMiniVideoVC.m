@@ -292,7 +292,8 @@
 - (void)navBtnClicked:(UIButton *)button {
     NSUInteger type = button.tag - 1100;
     if (type == 0) {
-        
+        //全屏
+        [KenCarcorder setOrientation:UIInterfaceOrientationPortrait];
     } else if (type == 1) {
         [_videoV recordVideo];
     } else if (type == 2) {

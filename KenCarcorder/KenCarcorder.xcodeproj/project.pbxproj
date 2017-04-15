@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7ABBA9A51EA1D75B000F3FFD /* KenZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */; };
 		9C282D5C35903B91E779BC6B /* libPods-KenCarcorder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9EB43BE141982A17CC39E0C /* libPods-KenCarcorder.a */; };
 		BE7EFCA61E2F086500E1E579 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCA51E2F086500E1E579 /* main.m */; };
 		BE7EFD4A1E32098F00E1E579 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7EFCC31E32098F00E1E579 /* AppDelegate.m */; };
@@ -83,7 +84,7 @@
 		E60A74461E8632AA006EA92F /* KenAlarmRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E60A74451E8632AA006EA92F /* KenAlarmRecordVC.m */; };
 		E6105B5B1E7CC04500CAE297 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5A1E7CC04500CAE297 /* libiconv.2.4.0.tbd */; };
 		E6105B5D1E7CC20A00CAE297 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5C1E7CC20A00CAE297 /* libz.1.2.5.tbd */; };
-		E6105B5F1E7CC35400CAE297 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5E1E7CC35400CAE297 /* UserNotifications.framework */; };
+		E6105B5F1E7CC35400CAE297 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B5E1E7CC35400CAE297 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E6105B611E7CC36000CAE297 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B601E7CC36000CAE297 /* AudioToolbox.framework */; };
 		E6105B631E7CC36F00CAE297 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B621E7CC36F00CAE297 /* OpenAL.framework */; };
 		E6105B651E7CC39800CAE297 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B641E7CC39800CAE297 /* AVFoundation.framework */; };
@@ -138,6 +139,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7ABBA9A31EA1D75B000F3FFD /* KenZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenZoomScrollView.h; sourceTree = "<group>"; };
+		7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenZoomScrollView.m; sourceTree = "<group>"; };
 		89BC8A8B76DFCFFCE3CE60FA /* Pods-KenCarcorder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KenCarcorder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KenCarcorder/Pods-KenCarcorder.debug.xcconfig"; sourceTree = "<group>"; };
 		B9796F125DA55B6F06179427 /* Pods-KenCarcorder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KenCarcorder.release.xcconfig"; path = "Pods/Target Support Files/Pods-KenCarcorder/Pods-KenCarcorder.release.xcconfig"; sourceTree = "<group>"; };
 		B9EB43BE141982A17CC39E0C /* libPods-KenCarcorder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KenCarcorder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -898,6 +901,8 @@
 		BE7EFD851E320FDC00E1E579 /* UIControls */ = {
 			isa = PBXGroup;
 			children = (
+				7ABBA9A31EA1D75B000F3FFD /* KenZoomScrollView.h */,
+				7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */,
 				BE7EFD8C1E32126000E1E579 /* KenAlertView.h */,
 				BE7EFD8D1E32126000E1E579 /* KenAlertView.m */,
 				BE7EFD861E320FDC00E1E579 /* KenActionSheet.h */,
@@ -1491,6 +1496,7 @@
 				BE7EFD4E1E32098F00E1E579 /* KenRootTabC.m in Sources */,
 				BE7EFD741E32098F00E1E579 /* KenKVOManager.m in Sources */,
 				E61FAAA01E58193C00F67E61 /* KenCarcorder.m in Sources */,
+				7ABBA9A51EA1D75B000F3FFD /* KenZoomScrollView.m in Sources */,
 				BE7EFD571E32098F00E1E579 /* GTMBase64.m in Sources */,
 				E60A74431E861688006EA92F /* KenAlarmStatDM.m in Sources */,
 				BE7EFD6A1E32098F00E1E579 /* UIWindow+KenWindow.m in Sources */,

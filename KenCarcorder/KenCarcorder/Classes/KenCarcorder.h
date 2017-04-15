@@ -45,6 +45,14 @@ typedef NS_ENUM(NSUInteger, KenVoiceType) {
  */
 + (NSString *)localIPAddress;
 
+
+/**
+ 设置屏幕orientation
+
+ @param orientation 
+ */
++ (void)setOrientation:(UIInterfaceOrientation)orientation;
+
 //播放音频文件
 - (void)playVoiceByType:(KenVoiceType)type;
 

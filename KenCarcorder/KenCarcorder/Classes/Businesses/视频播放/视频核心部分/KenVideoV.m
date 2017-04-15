@@ -10,6 +10,7 @@
 #import "KenAlertView.h"
 #import "KenDeviceDM.h"
 #import "KenDeviceShareDM.h"
+#import "KenZoomScrollView.h"
 
 //#define kHardDecode                 //是否硬解码
 
@@ -22,6 +23,7 @@
 @property (nonatomic, strong) KenDeviceDM *deviceDM;
 @property (nonatomic, strong) NSMutableArray *dataLengthArray;
 @property (nonatomic, strong) UIImageView *screenImageV;
+@property (nonatomic, strong) KenZoomScrollView *zoomScrollView;
 
 @property (nonatomic, strong) UIView *recorderBgV;          //录像时的背景框
 @property (nonatomic, strong) UILabel *recorderTimeLab;
@@ -341,8 +343,15 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 - (void)updateFrameWithImage:(UIImage *)image {
     if (image) {
         if (_screenImageV == nil) {
+            //初始图像层
             _screenImageV = [[UIImageView alloc] initWithFrame:(CGRect){0, 0, self.size}];
-            [self addSubview:_screenImageV];
+            
+            _zoomScrollView = [[KenZoomScrollView alloc] initWithBlock:(CGRect){0, 0, self.size}
+                                                                 block:^(CGRect rect) {
+                                                                     _screenImageV.frame = rect;
+                                                                 }];
+            [_zoomScrollView setZoomView:_screenImageV];
+            [self addSubview:_zoomScrollView];
         }
         [_screenImageV setImage:image];
         
@@ -550,7 +559,7 @@ bool RecvBuf1(int hSocket, char* Buf, int BufLen) {
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     
-    _screenImageV.frame = (CGRect){0, 0, frame.size};
+    [_zoomScrollView resetFrame:(CGRect){0, 0, frame.size}];
 }
 
 @end
