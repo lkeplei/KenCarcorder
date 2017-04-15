@@ -102,6 +102,15 @@
                   }];
 }
 
+- (void)deviceChangeGroup:(NSString *)sn group:(NSInteger)groupNo
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"camera/move.json"]
+            requestInfo:@{@"sn":sn, @"groupNo":[NSNumber numberWithInteger:groupNo]}
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      SafeHandleBlock(success, YES, nil, nil);
+                  }];
+}
+
 #pragma mark - setting
 - (void)deviceLoadInfo:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {

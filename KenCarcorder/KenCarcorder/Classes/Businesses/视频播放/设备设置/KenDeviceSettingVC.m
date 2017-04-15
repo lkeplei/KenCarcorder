@@ -10,6 +10,12 @@
 #import "KenDeviceDM.h"
 #import "KenAlertView.h"
 #import "KenUserInfoDM.h"
+#import "KenDeviceChangePwdVC.h"
+#import "KenDeviceChangeNameVC.h"
+#import "KenDeviceInfoVC.h"
+#import "KenDeviceWifiSetVC.h"
+#import "KenDeviceChangeGroupVC.h"
+#import "KenCorrectDevicePwdVC.h"
 
 @interface KenDeviceSettingVC ()<UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate>
 
@@ -101,14 +107,18 @@
 
 - (void)getCurrentDeviceInfo {
     if (_deviceInfo.online) {
+        @weakify(self)
         [[KenServiceManager sharedServiceManager] deviceLoadInfo:_deviceInfo start:^{
+            @strongify(self)
             [self showActivity];
         } success:^(BOOL successful, NSString * _Nullable errMsg, id _Nullable info) {
+            @strongify(self)
             [self hideActivity];
             if (successful) {
                 [self loadData:info];
             }
         } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+            @strongify(self)
             [self hideActivity];
         }];
     }
@@ -355,41 +365,43 @@
     switch (indexPath.section) {
         case 0: {
             if (!_disableTopSection) {
-//                YDBaseViewController *vc;
-//                if (indexPath.row == 0) {
-//                    vc = [[YDChangeDeviceNameVC alloc] initWithDevice:_deviceInfo];
-//                } else if (indexPath.row == 1) {
-//                    vc = [[YDChangeDevicePwdVC alloc] initWithDevice:_deviceInfo];
-//                } else if (indexPath.row == 2) {
-//                    vc = [[YDCorrectDevicePwdVC alloc] initWithDevice:_deviceInfo];
-//                } else {
-//                    vc = [[YDChangeDeviceGroupVC alloc] initWithDevice:_deviceInfo];
-//                }
-//                
-//                [self pushViewController:vc];
+                KenBaseVC *vc;
+                if (indexPath.row == 0) {
+                    vc = [[KenDeviceChangeNameVC alloc] initWithDevice:_deviceInfo];
+                } else if (indexPath.row == 1) {
+                    vc = [[KenDeviceChangePwdVC alloc] initWithDevice:_deviceInfo];
+                } else if (indexPath.row == 2) {
+                    vc = [[KenCorrectDevicePwdVC alloc] initWithDevice:_deviceInfo];
+                } else {
+                    vc = [[KenDeviceChangeGroupVC alloc] initWithDevice:_deviceInfo];
+                }
+                
+                [self pushViewController:vc animated:YES];
             }
         }
             break;
         case 1: {
-//            YDDeviceInfoVC *infoVC = [[YDDeviceInfoVC alloc] initWithDevice:_deviceInfo];
-//            [infoVC setDeviceStatusInfo:_deviceStatusInfo];
-//            [self pushViewController:infoVC];
+            KenDeviceInfoVC *infoVC = [[KenDeviceInfoVC alloc] initWithDevice:_deviceInfo];
+            [infoVC setDeviceInfo:_deviceStatusInfo];
+            [self pushViewController:infoVC animated:YES];
         }
             break;
         case 2: {
             if (indexPath.row == 0) {
                 if (_existWifi) {
-//                    YDWifiSettingVC *wifiVC = [[YDWifiSettingVC alloc] initWithDevice:_deviceInfo];
-//                    [self pushViewController:wifiVC];
+                    [self pushViewController:[[KenDeviceWifiSetVC alloc] initWithDevice:_deviceInfo] animated:YES];
                 } else {
                     [self showAlert:nil content:@"当前设备没有WIFI模组!"];
                 }
             } else if (indexPath.row == 1) {
+                @weakify(self)
                 [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"是否确认清空所有数据？" buttonTitles:@[@"取消", @"确定"] buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
                     if (index == 1) {
                         [[KenServiceManager sharedServiceManager] deviceClearSDCard:self.deviceInfo start:^{
+                            @strongify(self)
                             [self showActivity];
                         } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+                            @strongify(self)
                             [self hideActivity];
                             if (successful) {
                                 [self showToastWithMsg:@"格式化成功"];
@@ -397,6 +409,7 @@
                                 [self showToastWithMsg:@"格式化失败"];
                             }
                         } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+                            @strongify(self)
                             [self hideActivity];
                         }];
                     }
@@ -421,8 +434,10 @@
 
 #pragma mark - switch
 - (void)switchLed:(UISwitch *)switchObject {
+    @weakify(self)
     [[KenServiceManager sharedServiceManager] deviceSetLed:self.deviceInfo isOn:[switchObject isOn] start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
         if (successful) {
             [self showToastWithMsg:@"设置成功"];
         } else {
@@ -430,14 +445,17 @@
             [switchObject setOn:![switchObject isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
         [self showToastWithMsg:@"设置失败"];
         [switchObject setOn:![switchObject isOn]];
     }];
 }
 
 - (void)switchIrcut:(UISwitch *)switchObject {
+    @weakify(self)
     [[KenServiceManager sharedServiceManager] deviceSetIrcut:self.deviceInfo isOn:[switchObject isOn] start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
         if (successful) {
             [self showToastWithMsg:@"设置成功"];
         } else {
@@ -445,14 +463,17 @@
             [switchObject setOn:![switchObject isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
         [self showToastWithMsg:@"设置失败"];
         [switchObject setOn:![switchObject isOn]];
     }];
 }
 
 - (void)switchAlram:(UISwitch *)switchObject {
+    @weakify(self)
     [[KenServiceManager sharedServiceManager] deviceSetAlarm:self.deviceInfo isOn:[switchObject isOn] start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
         if (successful) {
             [self showToastWithMsg:@"设置成功"];
         } else {
@@ -460,6 +481,7 @@
             [switchObject setOn:![switchObject isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
         [self showToastWithMsg:@"设置失败"];
         [switchObject setOn:![switchObject isOn]];
     }];
@@ -467,8 +489,10 @@
 
 - (void)switchMove:(UISwitch *)switchMov {
     if ([switchMov isOn]) {
+        @weakify(self)
         [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"请选择您所需要的灵敏度" buttonTitles:@[@"低", @"高"]
                           buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
+                              @strongify(self)
             [self setDeviceMove:switchMov sensitive:index == 0 ? 35 : 5];
         }];
     } else {
@@ -477,8 +501,10 @@
 }
 
 - (void)setDeviceMove:(UISwitch *)switchMove sensitive:(NSInteger)sensitive {
+    @weakify(self)
     [[KenServiceManager sharedServiceManager] deviceSetMove:self.deviceInfo isOn:[switchMove isOn] sensitive:sensitive start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
         if (successful) {
             [self showToastWithMsg:@"设置成功"];
         } else {
@@ -486,6 +512,7 @@
             [switchMove setOn:![switchMove isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
         [self showToastWithMsg:@"设置失败"];
         [switchMove setOn:![switchMove isOn]];
     }];
@@ -493,8 +520,10 @@
 
 - (void)switchAudio:(UISwitch *)switchAud {
     if ([switchAud isOn]) {
+        @weakify(self)
         [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"请选择您所需要的灵敏度" buttonTitles:@[@"低", @"高"]
                           buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
+                              @strongify(self)
                               [self setDeviceAudio:switchAud sensitive:index == 0 ? 50 : 20];
                           }];
     } else {
@@ -503,8 +532,10 @@
 }
 
 - (void)setDeviceAudio:(UISwitch *)switchAudio sensitive:(NSInteger)sensitive {
+    @weakify(self)
     [[KenServiceManager sharedServiceManager] deviceSetAudio:self.deviceInfo isOn:[switchAudio isOn] sensitive:sensitive start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
         if (successful) {
             [self showToastWithMsg:@"设置成功"];
         } else {
@@ -512,6 +543,7 @@
             [switchAudio setOn:![switchAudio isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
         [self showToastWithMsg:@"设置失败"];
         [switchAudio setOn:![switchAudio isOn]];
     }];
@@ -561,8 +593,10 @@
 
 #pragma mark - button
 - (void)rebootDevice {
+    @weakify(self)
     [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"确认重新启动这台设备吗？" buttonTitles:@[@"取消", @"确定"]
                       buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
+                          @strongify(self)
                           if (index == 1) {
                               [[KenServiceManager sharedServiceManager] deviceReboot:self.deviceInfo start:^{
                               } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
@@ -573,11 +607,13 @@
 }
 
 - (void)deleteDevice {
+    @weakify(self)
     [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"确认永久删除这台设备吗？" buttonTitles:@[@"取消", @"确定"]
                       buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
                           if (index == 1) {
                               [[KenServiceManager sharedServiceManager] deviceRemoveBySn:self.deviceInfo.sn start:^{
                               } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+                                  @strongify(self)
                                   if (successful) {
                                       [self showToastWithMsg:@"设备删除成功"];
                                       
@@ -595,8 +631,11 @@
 - (void)setTime {
     NSString *time = [[NSDate date] stringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *message = [NSString stringWithFormat:@"确定要将设备时间设置为（%@）吗？", time];
+    
+    @weakify(self)
     [KenAlertView showAlertViewWithTitle:nil contentView:nil message:message buttonTitles:@[@"取消", @"确定"]
                       buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
+                          @strongify(self)
                           if (index == 1) {
                               [[KenServiceManager sharedServiceManager] deviceSetTime:self.deviceInfo start:^{
                               } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
@@ -611,8 +650,10 @@
 
 - (void)dayRecordBtn {
     if (_recordType != 1) {
+        @weakify(self)
         [[KenServiceManager sharedServiceManager] deviceSetRecordType:self.deviceInfo type:1 start:^{
         } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+            @strongify(self)
             if (successful) {
                 [self resetRecodStatus:1];
                 [self showToastWithMsg:@"设置成功"];
@@ -635,8 +676,10 @@
 
 - (void)alarmRecordBtn {
     if (_recordType != 3) {
+        @weakify(self)
         [[KenServiceManager sharedServiceManager] deviceSetRecordType:self.deviceInfo type:3 start:^{
         } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+            @strongify(self)
             if (successful) {
                 [self resetRecodStatus:3];
                 [self showToastWithMsg:@"设置成功"];
@@ -755,8 +798,10 @@
     _timeString = [NSString stringWithFormat:@"%02d:%02d - %02d:%02d", [_startHour intValue],
                    [_startMinute intValue], [_endHour intValue], [_endMinute intValue]];
     
+    @weakify(self)
     [[KenServiceManager sharedServiceManager] deviceSetAlarmTime:self.deviceInfo startH:_startHour startM:_startMinute endH:_endHour endM:_endMinute start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        @strongify(self)
         if (successful) {
             [self.settingTable reloadData];
             [self showToastWithMsg:@"设置成功"];
@@ -764,6 +809,7 @@
             [self showToastWithMsg:@"设置失败"];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
         [self showToastWithMsg:@"设置失败"];
     }];
 }
@@ -780,4 +826,5 @@
     }
     return _settingTable;
 }
+
 @end

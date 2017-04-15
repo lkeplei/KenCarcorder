@@ -29,6 +29,9 @@
 - (void)deviceRemoveBySn:(NSString *)sn
                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 
+- (void)deviceChangeGroup:(NSString *)sn group:(NSInteger)groupNo
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
 #pragma mark - setting
 - (void)deviceLoadInfo:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
