@@ -31,6 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeDevice:(KenDeviceDM *)device;
 
+
+/**
+设置设备密码
+ */
+- (void)saveDevicePwd:(NSString *)password device:(KenDeviceDM *)device;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -72,6 +72,11 @@
 - (void)deviceRename:(KenDeviceDM *)device name:(NSString *)name
                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 
+- (void)deviceRepwd:(KenDeviceDM *)device pwd:(NSString *)pwd
+              start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceValidatePwd:(KenDeviceDM *)device finish:(void(^)(BOOL))finish;
+
 #pragma mark - wifi setting
 - (void)deviceGetWifiInfo:(KenDeviceDM *)device
                     start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;

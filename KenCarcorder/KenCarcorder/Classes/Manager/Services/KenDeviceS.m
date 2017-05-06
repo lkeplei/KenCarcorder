@@ -193,6 +193,36 @@
     [self deviceControlWithParam:param device:device start:start success:success failed:failed];
 }
 
+- (void)deviceRepwd:(KenDeviceDM *)device pwd:(NSString *)pwd
+              start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=33&User_UserName0=admin&User_Password0=%@&P2P_Psd=%@", device.usr, device.pwd, pwd, pwd];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceValidatePwd:(KenDeviceDM *)device finish:(void(^)(BOOL))finish {
+    NSString *param = [NSString stringWithFormat:@"cfg.cgi?User=%@&Psd=%@&MsgID=72", device.usr, device.pwd];
+    if (device.isDDNS) {
+        NSString *host = [NSString stringWithFormat:@"http://%@:%zd/cfg.cgi", device.currentIp, [device httpport]];
+        
+        [self asyncGet:[host stringByAppendingString:param] queryParams:nil startBlock:^{
+        } responsedBlock:^(NSString *responseData) {
+            if ([responseData isKindOfClass:[NSString class]] && [responseData isEqualToString:@"-1"]) {
+                SafeHandleBlock(finish, YES);
+            } else {
+                SafeHandleBlock(finish, NO);
+            }
+        } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+        }];
+    } else {
+        NSString *responseData = [self p2pMessageSend:param device:device];
+        if ([responseData isKindOfClass:[NSString class]] && [responseData isEqualToString:@"-1"]) {
+            SafeHandleBlock(finish, YES);
+        } else {
+            SafeHandleBlock(finish, NO);
+        }
+    }
+}
+
 #pragma mark - wifi setting
 - (void)deviceGetWifiInfo:(KenDeviceDM *)device
                     start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
