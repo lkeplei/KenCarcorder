@@ -12,6 +12,7 @@
 		7A55E7AE1EBDA60100155A6D /* KenMyDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A55E7AD1EBDA60100155A6D /* KenMyDeviceVC.m */; };
 		7A55E7B21EBDA94E00155A6D /* KenAddDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A55E7B11EBDA94E00155A6D /* KenAddDeviceVC.m */; };
 		7A55E7B51EBDAF1000155A6D /* KenSegmentV.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A55E7B41EBDAF1000155A6D /* KenSegmentV.m */; };
+		7A55E7B81EBDD55600155A6D /* KenDeviceCellV.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A55E7B71EBDD55600155A6D /* KenDeviceCellV.m */; };
 		7ABBA9A51EA1D75B000F3FFD /* KenZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */; };
 		7ABBA9B01EA1E33D000F3FFD /* KenDeviceSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9AC1EA1E33D000F3FFD /* KenDeviceSettingVC.m */; };
 		7ABBA9B11EA1E33D000F3FFD /* KenHistoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9AF1EA1E33D000F3FFD /* KenHistoryVC.m */; };
@@ -159,6 +160,8 @@
 		7A55E7B11EBDA94E00155A6D /* KenAddDeviceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAddDeviceVC.m; sourceTree = "<group>"; };
 		7A55E7B31EBDAF1000155A6D /* KenSegmentV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenSegmentV.h; sourceTree = "<group>"; };
 		7A55E7B41EBDAF1000155A6D /* KenSegmentV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenSegmentV.m; sourceTree = "<group>"; };
+		7A55E7B61EBDD55600155A6D /* KenDeviceCellV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceCellV.h; sourceTree = "<group>"; };
+		7A55E7B71EBDD55600155A6D /* KenDeviceCellV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeviceCellV.m; sourceTree = "<group>"; };
 		7ABBA9A31EA1D75B000F3FFD /* KenZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenZoomScrollView.h; sourceTree = "<group>"; };
 		7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenZoomScrollView.m; sourceTree = "<group>"; };
 		7ABBA9AB1EA1E33D000F3FFD /* KenDeviceSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceSettingVC.h; sourceTree = "<group>"; };
@@ -572,6 +575,8 @@
 			children = (
 				7A55E7AC1EBDA60100155A6D /* KenMyDeviceVC.h */,
 				7A55E7AD1EBDA60100155A6D /* KenMyDeviceVC.m */,
+				7A55E7B61EBDD55600155A6D /* KenDeviceCellV.h */,
+				7A55E7B71EBDD55600155A6D /* KenDeviceCellV.m */,
 			);
 			path = MyDevice;
 			sourceTree = "<group>";
@@ -1613,6 +1618,7 @@
 				7ABBA9B71EA21621000F3FFD /* KenDeviceChangePwdVC.m in Sources */,
 				BE7EFD6C1E32098F00E1E579 /* KenHtmlLabel.m in Sources */,
 				E6E4C0771E73BFE100FD0735 /* KenDeviceDM.m in Sources */,
+				7A55E7B81EBDD55600155A6D /* KenDeviceCellV.m in Sources */,
 				BE7EFD4C1E32098F00E1E579 /* KenBaseVC.m in Sources */,
 				E6E4C1131E74069000FD0735 /* Photos.m in Sources */,
 				BE7EFD691E32098F00E1E579 /* UIViewController+KenVC.m in Sources */,

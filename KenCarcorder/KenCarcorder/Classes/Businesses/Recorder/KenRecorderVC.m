@@ -62,13 +62,6 @@
     @weakify(self)
     [item2 clicked:^(UIView * _Nonnull view) {
         @strongify(self)
-        //测试先放开
-        KenMiniVideoVC *videoVC = [[KenMiniVideoVC alloc] init];
-        [self pushViewController:videoVC animated:YES];
-        [videoVC setDirectConnect];
-        
-        return ;
-        
         NSString *ssid = [KenCarcorder getCurrentSSID];
         if ([NSString isNotEmpty:ssid]) {
             if ([ssid containsString:@"IPCAM_AP_8"] || [ssid containsString:@"七彩云"]) {

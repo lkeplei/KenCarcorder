@@ -9,6 +9,8 @@
 #import "KenMyDeviceVC.h"
 #import "KenSegmentV.h"
 #import "KenDeviceDM.h"
+#import "KenDeviceCellV.h"
+#import "KenMiniVideoVC.h"
 
 @interface KenMyDeviceVC ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -38,66 +40,38 @@
 }
 
 #pragma mark - delegate
-//#pragma mark -- UICollectionViewDataSource
-///** 每组cell的个数*/
-//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    return 15;
-//}
-//
-///** cell的内容*/
-//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    WWCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-//    cell.backgroundColor = [UIColor yellowColor];
-//    cell.topImageView.image = [UIImage imageNamed:@"1"];
-//    cell.bottomLabel.text = [NSString stringWithFormat:@"%zd.png",indexPath.row];
-//}
-//
-///** 总共多少组*/
-//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-//    return 6;
-//}
-//
-///** 头部/底部*/
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-//    
-//    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-//        // 头部
-//        WWCollectionReusableView *view =  [collectionView dequeueReusableSupplementaryViewOfKind :kind   withReuseIdentifier:@"header"   forIndexPath:indexPath];
-//        view.headerLabel.text = [NSString stringWithFormat:@"头部 - %zd",indexPath.section];
-//        return view;
-//        
-//    }else {
-//        // 底部
-//        WWCollectionFooterReusableView *view =  [collectionView dequeueReusableSupplementaryViewOfKind :kind   withReuseIdentifier:@"footer"   forIndexPath:indexPath];
-//        view.footerLabel.text = [NSString stringWithFormat:@"底部 - %zd",indexPath.section];
-//        return view;
-//    }
-//}
-//
-//#pragma mark -- UICollectionViewDelegateFlowLayout
-///** 每个cell的尺寸*/
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    return CGSizeMake(60, 60);
-//}
-//
-///** 头部的尺寸*/
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-//    return CGSizeMake(self.view.bounds.size.width, 40);
-//}
-//
-///** 顶部的尺寸*/
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-//    return CGSizeMake(self.view.bounds.size.width, 40);
-//}
-//
-///** section的margin*/
-//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-//    return UIEdgeInsetsMake(5, 5, 5, 5);
-//}
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return _tempArray.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    KenDeviceCellV *cell = (KenDeviceCellV *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor redColor];
+    
+    [cell updateWithDevice:_tempArray[indexPath.row]];
+    
+    return cell;
+}
+
+#pragma mark -- UICollectionViewDelegateFlowLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat width = (self.contentView.width - 60) / 2;
+    return CGSizeMake(width, width * kAppImageHeiWid + 30);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(15, 20, 15, 20);
+}
 
 #pragma mark -- UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"点击了第 %zd组 第%zd个",indexPath.section, indexPath.row);
+    KenMiniVideoVC *videoVC = [[KenMiniVideoVC alloc] init];
+    [self pushViewController:videoVC animated:YES];
+    videoVC.device = [_tempArray objectAtIndex:indexPath.row];
 }
 
 #pragma mark - privae method
@@ -115,7 +89,7 @@
     }
     
     if ([self.tempArray count] > 0) {
-        [self showToastWithMsg:@"拿到了设备 列表"];
+        [self.collectV reloadData];
     } else {
         [self showToastWithMsg:@"拿不到到设备 列表，怎么搞！！！！！！"];
     }
@@ -139,13 +113,18 @@
     if (_collectV == nil) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         // 设置collectionView的滚动方向，需要注意的是如果使用了collectionview的headerview或者footerview的话， 如果设置了水平滚动方向的话，那么就只有宽度起作用了了
-        [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
-        // layout.minimumInteritemSpacing = 10;// 垂直方向的间距
-        // layout.minimumLineSpacing = 10; // 水平方向的间距
-        _collectV = [[UICollectionView alloc] initWithFrame:(CGRect){0, self.segmentView.maxY, self.contentView.width, self.contentView.height - self.segmentView.maxY} collectionViewLayout:layout];
+//        [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+//        layout.itemSize = CGSizeMake((self.contentView.width - 50) / 2, 36);
+//        layout.minimumInteritemSpacing = 15;// 垂直方向的间距
+//        layout.minimumLineSpacing = 25; // 水平方向的间距
+//        layout.sectionInset = UIEdgeInsetsMake(0.f, 0, 9.f, 0);
+        
+        _collectV = [[UICollectionView alloc] initWithFrame:(CGRect){0, self.segmentView.maxY + 10, self.contentView.width, self.contentView.height - self.segmentView.maxY} collectionViewLayout:layout];
         _collectV.backgroundColor = [UIColor whiteColor];
         _collectV.dataSource = self;
         _collectV.delegate = self;
+        
+        [_collectV registerClass:[KenDeviceCellV class] forCellWithReuseIdentifier:@"collectCell"];
     }
     return _collectV;
 }
