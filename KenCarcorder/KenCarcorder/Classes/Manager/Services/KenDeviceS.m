@@ -111,6 +111,15 @@
                   }];
 }
 
+- (void)deviceRenameToServer:(KenDeviceDM *)device name:(NSString *)name
+                       start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"camera/saveName.json"]
+            requestInfo:@{@"sn":device.sn, @"name":name}
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      SafeHandleBlock(success, YES, nil, nil);
+                  }];
+}
+
 #pragma mark - setting
 - (void)deviceLoadInfo:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
@@ -175,6 +184,12 @@
 - (void)deviceReboot:(KenDeviceDM *)device
                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
     NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=18", device.usr, device.pwd];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceRename:(KenDeviceDM *)device name:(NSString *)name
+               start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=31&INFO_DevName=%@", device.usr, device.pwd, name];
     [self deviceControlWithParam:param device:device start:start success:success failed:failed];
 }
 
@@ -253,7 +268,7 @@
         [self asyncGet:[host stringByAppendingString:param] queryParams:nil startBlock:^{
         } responsedBlock:^(NSString *responseData) {
             if ([responseData equalsIgnoreCase:@"OK"] || [responseData equalsIgnoreCase:@"YES"]) {
-                SafeHandleBlock(success, YES, nil, nil);
+                SafeHandleBlock(success, YES, nil, responseData);
             } else {
                 SafeHandleBlock(success, NO, nil, responseData);
             }
@@ -262,7 +277,7 @@
     } else {
         NSString *responseData = [self p2pMessageSend:param device:device];
         if ([responseData isKindOfClass:[NSString class]] && [responseData isEqualToString:@"OK"]) {
-            SafeHandleBlock(success, YES, nil, nil);
+            SafeHandleBlock(success, YES, nil, responseData);
         } else {
             SafeHandleBlock(success, NO, nil, responseData);
         }

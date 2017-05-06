@@ -62,6 +62,8 @@ typedef NS_ENUM(NSUInteger, KenVoiceType) {
  */
 + (void)setOrientation:(UIInterfaceOrientation)orientation;
 
++ (NSString *)EncodeGB2312Str:(NSString *)encodeStr;
+
 //播放音频文件
 - (void)playVoiceByType:(KenVoiceType)type;
 

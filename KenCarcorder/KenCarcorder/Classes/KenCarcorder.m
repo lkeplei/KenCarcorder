@@ -188,6 +188,14 @@ static KenCarcorder *_sharedUtility = nil;
     }
 }
 
+//uft8-----gb2312
++ (NSString *)EncodeGB2312Str:(NSString *)encodeStr {
+    CFStringRef nonAlphaNumValidChars = CFSTR("![        DISCUZ_CODE_1        ]’()*+,-./:;=?@_~");
+    NSString *preprocessedString = (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault, (CFStringRef)encodeStr, CFSTR(""), kCFStringEncodingGB_18030_2000));
+    NSString *newStr = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)preprocessedString,NULL,nonAlphaNumValidChars,kCFStringEncodingGB_18030_2000));
+    return newStr;
+}
+
 - (void)playVoiceByType:(KenVoiceType)type {
     NSString *string = [[NSBundle mainBundle] pathForResource:@"cap_voice" ofType:@"mp3"];
     if (type == kKenVoiceCapture) {

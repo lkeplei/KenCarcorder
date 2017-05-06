@@ -72,6 +72,9 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 - (void)deviceChangeGroup:(NSString *)sn group:(NSInteger)groupNo
                     start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 
+- (void)deviceRenameToServer:(KenDeviceDM *)device name:(NSString *)name
+                       start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
 #pragma mark - device setting
 - (void)deviceLoadInfo:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
@@ -104,6 +107,9 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 
 - (void)deviceReboot:(KenDeviceDM *)device
+               start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceRename:(KenDeviceDM *)device name:(NSString *)name
                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 
 #pragma mark - wifi setting
