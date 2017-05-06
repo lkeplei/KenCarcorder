@@ -80,7 +80,7 @@
 }
 
 + (UIColor *)appBackgroundColor {
-    return [UIColor colorWithHexString:@"#F6F6F6"];
+    return [UIColor colorWithHexString:@"#F1F1F1"];
 }
 
 + (UIColor *)appSepLineColor {
@@ -88,7 +88,7 @@
 }
 
 + (UIColor *)appMainColor {
-    return [UIColor colorWithHexString:@"#4CD645"];
+    return [UIColor colorWithHexString:@"#00DEC9"];
 }
 
 + (UIColor *)appStressRedColor {

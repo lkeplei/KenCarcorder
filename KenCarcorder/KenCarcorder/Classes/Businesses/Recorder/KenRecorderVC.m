@@ -30,8 +30,6 @@
     // Do any additional setup after loading the view.
     [self setNavTitle:@"记录仪"];
     
-    [self pushViewControllerString:@"KenLoginVC" animated:NO];
-    
     [self initView];
 }
 

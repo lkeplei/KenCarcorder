@@ -64,7 +64,7 @@
     [item2 addSubview:label2];
     
     [item2 clicked:^(UIView * _Nonnull view) {
-        [self showToastWithMsg:@"功能暂未开放，静请期待！"];
+        [self pushViewControllerString:@"KenMyDeviceVC" animated:YES];
     }];
     
     //

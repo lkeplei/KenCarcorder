@@ -196,6 +196,12 @@ static KenCarcorder *_sharedUtility = nil;
     return newStr;
 }
 
++ (BOOL)valideteYDDate:(NSString *)date {
+    NSString *regex = @"^20[0-9][0-9][0-1][0-9][0-3][0-9]$";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [test evaluateWithObject:date];
+}
+
 - (void)playVoiceByType:(KenVoiceType)type {
     NSString *string = [[NSBundle mainBundle] pathForResource:@"cap_voice" ofType:@"mp3"];
     if (type == kKenVoiceCapture) {

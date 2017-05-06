@@ -64,6 +64,8 @@ typedef NS_ENUM(NSUInteger, KenVoiceType) {
 
 + (NSString *)EncodeGB2312Str:(NSString *)encodeStr;
 
++ (BOOL)valideteYDDate:(NSString *)date;
+
 //播放音频文件
 - (void)playVoiceByType:(KenVoiceType)type;
 
