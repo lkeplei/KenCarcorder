@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setNavTitle:@"七彩云"];
+    [self setNavTitle:@"首页"];
     
     [self pushViewControllerString:@"KenLoginVC" animated:NO];
 }

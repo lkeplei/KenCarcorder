@@ -65,7 +65,7 @@
         badge = _alarmNumbers > 99 ? @"99+": [NSString stringWithFormat:@"%zd", _alarmNumbers];
     }
     
-    [SysDelegate.rootVC setItemBadge:1 badge:badge];
+    [SysDelegate.rootVC setItemBadge:3 badge:badge];
 }
 
 - (void)getWanIp {

@@ -37,7 +37,7 @@
         
         KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
         if (userInfo == nil) {
-            userInfo = [[KenUserInfoDM alloc] init];
+            userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
             userInfo.rememberPwd = YES;
             [userInfo setInstance];
         }

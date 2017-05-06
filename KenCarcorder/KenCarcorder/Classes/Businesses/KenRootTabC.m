@@ -24,11 +24,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    KenHomeVC *homeVC = [[KenHomeVC alloc] init];
-//    KenNavigationC *naviHome = [[KenNavigationC alloc] initWithRootViewController:homeVC];
-//    homeVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"七彩云"
-//                                                      image:[UIImage imageNamed:@"tab_home_normal"]
-//                                              selectedImage:[UIImage imageNamed:@"tab_home_hl"]];
+    KenHomeVC *homeVC = [[KenHomeVC alloc] init];
+    KenNavigationC *naviHome = [[KenNavigationC alloc] initWithRootViewController:homeVC];
+    homeVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页"
+                                                      image:[UIImage imageNamed:@"tab_home_normal"]
+                                              selectedImage:[UIImage imageNamed:@"tab_home_hl"]];
 
     KenRecorderVC *recorderVC = [[KenRecorderVC alloc] init];
     KenNavigationC *naviRecorder = [[KenNavigationC alloc] initWithRootViewController:recorderVC];
@@ -36,11 +36,11 @@
                                                           image:[UIImage imageNamed:@"tab_recorder_normal"]
                                                   selectedImage:[UIImage imageNamed:@"tab_recorder_hl"]];
     
-//    KenPlayVC *playVC = [[KenPlayVC alloc] init];
-//    KenNavigationC *naviPlay = [[KenNavigationC alloc] initWithRootViewController:playVC];
-//    naviPlay.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"直播"
-//                                                        image:[UIImage imageNamed:@"tab_play_normal"]
-//                                                selectedImage:[UIImage imageNamed:@"tab_play_hl"]];
+    KenPlayVC *playVC = [[KenPlayVC alloc] init];
+    KenNavigationC *naviPlay = [[KenNavigationC alloc] initWithRootViewController:playVC];
+    naviPlay.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"直播"
+                                                        image:[UIImage imageNamed:@"tab_play_normal"]
+                                                selectedImage:[UIImage imageNamed:@"tab_play_hl"]];
     
     KenALarmVC *alarmVC = [[KenALarmVC alloc] init];
     KenNavigationC *naviAlarm = [[KenNavigationC alloc] initWithRootViewController:alarmVC];
@@ -54,7 +54,7 @@
                                                       image:[UIImage imageNamed:@"tab_mine_normal"]
                                               selectedImage:[UIImage imageNamed:@"tab_mine_hl"]];
     
-    [self setViewControllers:@[naviRecorder, naviAlarm, naviMine]];
+    [self setViewControllers:@[naviHome, naviRecorder, naviPlay, naviAlarm, naviMine]];
     
     //    [self setupCenterItemWithImage:[UIImage imageNamed:@"location_start_normal"]
     //                   highligtedImage:[UIImage imageNamed:@"location_start_sel"] title:@"center"];

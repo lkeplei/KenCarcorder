@@ -30,7 +30,7 @@
     
     __block KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
     if (userInfo == nil) {
-        userInfo = [[KenUserInfoDM alloc] init];
+        userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
     }
     userInfo.userName = name;
     userInfo.userPwd = pwd;
@@ -80,7 +80,7 @@
                 } else {
                     KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
                     if (userInfo == nil) {
-                        userInfo = [[KenUserInfoDM alloc] init];
+                        userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
                     }
                     userInfo.userName = phone;
                     userInfo.userPwd = pwd;
@@ -101,7 +101,7 @@
 //                } else {
 //                    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
 //                    if (userInfo == nil) {
-//                        userInfo = [[KenUserInfoDM alloc] init];
+//                        userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
 //                    }
 //                    userInfo.userName = phone;
 //                    userInfo.userPwd = pwd;

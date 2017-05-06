@@ -82,6 +82,12 @@
     [super viewWillAppear:animated];
 
     [[KenServiceManager sharedServiceManager] getAarmStat];
+    
+    //重新设置分组标题
+    NSArray *group = [KenUserInfoDM getInstance].deviceGroups;
+    for (NSInteger i = 0; i < [_tabBtnArray count]; i++) {
+        [_tabBtnArray[i] setTitle:[group objectAtIndex:i] forState:UIControlStateNormal];
+    }
 }
 
 - (void)resetAlarmData {
