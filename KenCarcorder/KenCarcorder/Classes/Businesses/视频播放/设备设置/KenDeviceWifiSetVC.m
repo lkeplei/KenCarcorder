@@ -9,6 +9,7 @@
 #import "KenDeviceWifiSetVC.h"
 #import "KenDeviceDM.h"
 #import "KenAlertView.h"
+#import "KenWifiPwdInputVC.h"
 
 @interface KenDeviceWifiSetVC ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -50,39 +51,19 @@
 
 - (void)getWifiInfo {
     _isGetWifiNode = NO;
-//    [[YDController shareController] showLoadingV:self.view content:@"加载中。。。" picS:NO];
-//    if ([[YDModel shareModel] isDdns:_deviceInfo]) {
-//        [[YDController shareController] getWifiInfo:_deviceInfo success:^(id info) {
-//            [self reloadtable:info];
-//        } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//            [[YDController shareController] hideLoadingV:self.view];
-//        }];
-//    } else {
-//        NSString *url = [[NSString alloc] initWithFormat:@"%@cfg.cgi?User=%@&Psd=%@&MsgID=37",
-//                         kConnectP2pHost, [_deviceInfo getDeviceUsr], [_deviceInfo getDevicePwd]];
-//        [NSThread detachNewThreadSelector:@selector(loadWifiSettingurl:) toTarget:self withObject:url];
-//    }
-}
-
-- (void)loadWifiSettingurl:(NSString *)url {
-//    bool ret;
-//    char Buf[65536];
-//    int BufLen;
-//    int64_t handle = 0;
-//    if(!thNet_IsConnect(_deviceInfo.connectHandle)) {
-//        thNet_Init(&handle, 11);
-//        [_deviceInfo setDeviceConnectHandle:handle];
-//        ret = thNet_Connect_P2P(_deviceInfo.connectHandle, 0, (char *)[[_deviceInfo getDeviceUid] UTF8String],
-//                                (char *)[[_deviceInfo getDeviceUidpsd] UTF8String], 10000, true);
-//        if (!ret) return;
-//    }
-//    
-//    thNet_HttpGet(_deviceInfo.connectHandle, (char *)[url UTF8String], Buf, &BufLen);
-//    
-//    NSString* data = [NSString stringWithFormat:@"%s" , Buf];
-//    [self performSelectorOnMainThread:@selector(reloadtable:) withObject:data waitUntilDone:YES];
-//    
-//    [[YDController shareController] hideLoadingV:self.view];
+    @weakify(self)
+    [[KenServiceManager sharedServiceManager] deviceGetWifiInfo:_deviceInfo start:^{
+        @strongify(self)
+        [self showActivity];
+    } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable info) {
+        @strongify(self)
+        [self hideActivity];
+        
+        [self reloadtable:info];
+    } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
+        [self hideActivity];
+    }];
 }
 
 - (void)reloadtable:(NSString *)info {
@@ -213,20 +194,13 @@
 }
 
 - (void)closeDeviceWifi {
-//    if ([[YDModel shareModel] isDdns:_deviceInfo]) {
-//        NSString *host = [NSString stringWithFormat:@"http://%@:%d", [[YDModel shareModel] getCurrentIp:_deviceInfo], (int)[_deviceInfo httpport]];
-//        NSString *url = [NSString stringWithFormat:@"cfg.cgi?User=%@&Psd=%@&MsgID=38&wifi_IsAPMode=1",
-//                         [_deviceInfo getDeviceUsr],[_deviceInfo getDevicePwd]];
-//        [[YDController shareController] controlSendCmd:host url:url
-//                                               success:^(id info) {
-//                                                   DebugLog("info = %@", info);
-//                                               } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//                                               }];
-//    } else {
-//        NSString* request = [[NSString alloc] initWithFormat:@"%@cfg.cgi?User=%@&Psd=%@&MsgID=38&wifi_IsAPMode=1",
-//                             kConnectP2pHost, [_deviceInfo getDeviceUsr], [_deviceInfo getDevicePwd]];
-//        [NSThread detachNewThreadSelector:@selector(loadWifiSettingurl:) toTarget:self withObject:request];
-//    }
+    [[KenServiceManager sharedServiceManager] deviceCloseWifi:_deviceInfo start:^{
+        
+    } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
+        DebugLog("info = %@", responseData);
+    } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        
+    }];
 }
 
 - (void)switchWifi:(UISwitch *)wifi {
@@ -318,40 +292,33 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if ([indexPath section] == 1) {
-//        YDWifiPwdInputVC *inputVC = [[YDWifiPwdInputVC alloc] initWithDevice:_deviceInfo
-//                                                                    wifiNode:[_wifiListNode objectAtIndex:indexPath.row]];
-//        [self pushViewController:inputVC];
+        KenWifiPwdInputVC *inputVC = [[KenWifiPwdInputVC alloc] initWithDevice:_deviceInfo wifiNode:[_wifiListNode objectAtIndex:indexPath.row]];
+        [self pushViewController:inputVC animated:YES];
     }
 }
 
 - (void)getWifiNode {
     _isGetWifiNode = YES;
-//    [[YDController shareController] showLoadingV:self.view content:nil picS:NO];
-//    if ([[YDModel shareModel] isDdns:_deviceInfo]) {
-//        NSString *host = [NSString stringWithFormat:@"http://%@:%d", [[YDModel shareModel] getCurrentIp:_deviceInfo], (int)[_deviceInfo httpport]];
-//        NSString *url = [NSString stringWithFormat:@"cfg.cgi?User=%@&Psd=%@&MsgID=36", [_deviceInfo getDeviceUsr],[_deviceInfo getDevicePwd]];
-//        [[YDController shareController] controlSendCmd:host url:url success:^(id info) {
-//            DebugLog("info = %@", info);
-//            [self reloadtable:info];
-//            [[YDController shareController] hideLoadingV:self.view];
-//        } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//            [[YDController shareController] hideLoadingV:self.view];
-//            
-//            KenCustomAlert *alert = [[KenCustomAlert shareAlert] initWithTitle:@"提示"
-//                                                                       message:@"网络获取失败，是否重新获取？"
-//                                                             cancelButtonTitle:@"取消"
-//                                                            confirmButtonTitle:@"确定"];
-//            alert.alertBlock = ^(NSInteger index) {
-//                if (index == 1) {
-//                    [self getWifiNode];
-//                }
-//            };
-//        }];
-//    } else {
-//        NSString *url = [[NSString alloc] initWithFormat:@"%@cfg.cgi?User=%@&Psd=%@&MsgID=36",
-//                         kConnectP2pHost, [_deviceInfo getDeviceUsr], [_deviceInfo getDevicePwd]];
-//        [NSThread detachNewThreadSelector:@selector(loadWifiSettingurl:) toTarget:self withObject:url];
-//    }
+    
+    @weakify(self)
+    [[KenServiceManager sharedServiceManager] deviceGetWifiNode:_deviceInfo start:^{
+        @strongify(self)
+        [self showActivity];
+    } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable info) {
+        @strongify(self)
+        [self hideActivity];
+        
+        [self reloadtable:info];
+    } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
+        [self hideActivity];
+        
+        [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"网络获取失败，是否重新获取？" buttonTitles:@[@"取消", @"确定"] buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
+            if (index == 1) {
+                [self getWifiNode];
+            }
+        }];
+    }];
 }
 
 #pragma mark - getter setter

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A55E7A31EBD746900155A6D /* KenWifiPwdInputVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A55E7A21EBD746900155A6D /* KenWifiPwdInputVC.m */; };
 		7ABBA9A51EA1D75B000F3FFD /* KenZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */; };
 		7ABBA9B01EA1E33D000F3FFD /* KenDeviceSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9AC1EA1E33D000F3FFD /* KenDeviceSettingVC.m */; };
 		7ABBA9B11EA1E33D000F3FFD /* KenHistoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9AF1EA1E33D000F3FFD /* KenHistoryVC.m */; };
@@ -145,6 +146,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A55E7A11EBD746900155A6D /* KenWifiPwdInputVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenWifiPwdInputVC.h; sourceTree = "<group>"; };
+		7A55E7A21EBD746900155A6D /* KenWifiPwdInputVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenWifiPwdInputVC.m; sourceTree = "<group>"; };
 		7ABBA9A31EA1D75B000F3FFD /* KenZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenZoomScrollView.h; sourceTree = "<group>"; };
 		7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenZoomScrollView.m; sourceTree = "<group>"; };
 		7ABBA9AB1EA1E33D000F3FFD /* KenDeviceSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceSettingVC.h; sourceTree = "<group>"; };
@@ -561,6 +564,8 @@
 				7ABBA9BF1EA2166A000F3FFD /* KenDeviceInfoVC.m */,
 				7ABBA9C11EA2167D000F3FFD /* KenDeviceWifiSetVC.h */,
 				7ABBA9C21EA2167D000F3FFD /* KenDeviceWifiSetVC.m */,
+				7A55E7A11EBD746900155A6D /* KenWifiPwdInputVC.h */,
+				7A55E7A21EBD746900155A6D /* KenWifiPwdInputVC.m */,
 			);
 			path = "设备设置";
 			sourceTree = "<group>";
@@ -1548,6 +1553,7 @@
 				BE7EFD571E32098F00E1E579 /* GTMBase64.m in Sources */,
 				E60A74431E861688006EA92F /* KenAlarmStatDM.m in Sources */,
 				BE7EFD6A1E32098F00E1E579 /* UIWindow+KenWindow.m in Sources */,
+				7A55E7A31EBD746900155A6D /* KenWifiPwdInputVC.m in Sources */,
 				7ABBA9BD1EA2165A000F3FFD /* KenDeviceChangeGroupVC.m in Sources */,
 				BE7EFD4F1E32098F00E1E579 /* KenDataSManager.m in Sources */,
 				BE7EFD761E32098F00E1E579 /* KenDataModel.m in Sources */,

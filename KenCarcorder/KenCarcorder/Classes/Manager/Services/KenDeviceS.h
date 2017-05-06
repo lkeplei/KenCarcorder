@@ -66,6 +66,19 @@
 - (void)deviceReboot:(KenDeviceDM *)device
                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
 
+#pragma mark - wifi setting
+- (void)deviceGetWifiInfo:(KenDeviceDM *)device
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceGetWifiNode:(KenDeviceDM *)device
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceCloseWifi:(KenDeviceDM *)device
+                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
+- (void)deviceSetWifi:(KenDeviceDM *)device name:(NSString *)name pwd:(NSString *)pwd
+                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
 #pragma mark - device control get
 - (void)deviceScanStop:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;

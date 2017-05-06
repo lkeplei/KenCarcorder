@@ -178,6 +178,41 @@
     [self deviceControlWithParam:param device:device start:start success:success failed:failed];
 }
 
+#pragma mark - wifi setting
+- (void)deviceGetWifiInfo:(KenDeviceDM *)device
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=37", device.usr, device.pwd];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceGetWifiNode:(KenDeviceDM *)device
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=36", device.usr, device.pwd];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceCloseWifi:(KenDeviceDM *)device
+                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=38&wifi_IsAPMode=1", device.usr, device.pwd];
+    [self deviceControlWithParam:param device:device start:start success:success failed:failed];
+}
+
+- (void)deviceSetWifi:(KenDeviceDM *)device name:(NSString *)name pwd:(NSString *)pwd
+                start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    NSString *param = [NSString stringWithFormat:@"?User=%@&Psd=%@&MsgID=38&wifi_IsAPMode=0&wifi_SSID_STA=%@&wifi_Password_STA=%@", device.usr, device.pwd, name, pwd];
+    NSString *host = [NSString stringWithFormat:@"http://%@:%zd/cfg.cgi", device.currentIp, [device httpport]];
+    
+    [self asyncGet:[host stringByAppendingString:param] queryParams:nil startBlock:^{
+    } responsedBlock:^(NSString *responseData) {
+        if ([responseData equalsIgnoreCase:@"OK"] || [responseData equalsIgnoreCase:@"YES"]) {
+            SafeHandleBlock(success, YES, nil, responseData);
+        } else {
+            SafeHandleBlock(success, NO, nil, responseData);
+        }
+    } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+    }];
+}
+
 #pragma mark - device control get
 - (void)deviceScanStop:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
@@ -220,7 +255,7 @@
             if ([responseData equalsIgnoreCase:@"OK"] || [responseData equalsIgnoreCase:@"YES"]) {
                 SafeHandleBlock(success, YES, nil, nil);
             } else {
-                SafeHandleBlock(success, NO, nil, nil);
+                SafeHandleBlock(success, NO, nil, responseData);
             }
         } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
         }];
@@ -229,7 +264,7 @@
         if ([responseData isKindOfClass:[NSString class]] && [responseData isEqualToString:@"OK"]) {
             SafeHandleBlock(success, YES, nil, nil);
         } else {
-            SafeHandleBlock(success, NO, nil, nil);
+            SafeHandleBlock(success, NO, nil, responseData);
         }
     }
 }
