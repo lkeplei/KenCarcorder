@@ -120,6 +120,20 @@
                   }];
 }
 
+- (void)deviceSaveInfo:(NSDictionary *)params
+                 start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"camera/saveInfo.json"]
+            requestInfo:params
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                        NSArray *list = [responseData objectForKey:@"list"];
+                        if (list && [list firstObject]) {
+                            SafeHandleBlock(success, YES, nil, [KenDeviceDM initWithJsonDictionary:[list firstObject]]);
+                        } else {
+                            SafeHandleBlock(success, YES, nil, nil);
+                        }
+                  }];
+}
+
 #pragma mark - setting
 - (void)deviceLoadInfo:(KenDeviceDM *)device
                  start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {

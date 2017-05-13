@@ -14,6 +14,7 @@
 
 @interface KenMyDeviceVC ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
+@property (nonatomic, assign) NSUInteger currentGroup;
 @property (nonatomic, strong) KenSegmentV *segmentView;
 @property (nonatomic, strong) UICollectionView *collectV;
 @property (nonatomic, strong) NSMutableArray *tempArray;
@@ -31,7 +32,13 @@
     
     [self.contentView addSubview:self.segmentView];
     [self.contentView addSubview:self.collectV];
-    [self changeToGroup:0];
+    self.currentGroup = 0;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.currentGroup = _currentGroup;
 }
 
 #pragma mark - event
@@ -96,6 +103,11 @@
 }
 
 #pragma mark - getter setter
+- (void)setCurrentGroup:(NSUInteger)currentGroup {
+    _currentGroup = currentGroup;
+    [self changeToGroup:_currentGroup];
+}
+
 - (KenSegmentV *)segmentView {
     if (_segmentView == nil) {
         _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM getInstance] deviceGroups] frame:(CGRect){0, 0, self.contentView.width, 35}];
@@ -103,7 +115,7 @@
         @weakify(self)
         _segmentView.segmentSelectChanged = ^(NSInteger index) {
             @strongify(self)
-            [self changeToGroup:index];
+            self.currentGroup = index;
         };
     }
     return _segmentView;

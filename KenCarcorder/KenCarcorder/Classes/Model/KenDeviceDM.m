@@ -35,6 +35,13 @@
     return _netStat != kKenNetworkP2p;
 }
 
+- (NSString *)name {
+    if ([NSString isEmpty:_name]) {
+        return _sn;
+    }
+    return _name;
+}
+
 #pragma mark - private method
 - (BOOL)isLocal {
     BOOL res = NO;

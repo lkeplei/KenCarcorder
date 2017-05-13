@@ -8,6 +8,8 @@
 
 #import "KenBaseVC.h"
 
-@interface KenDeviceSearchVC : KenBaseVC
+@interface KenDeviceSearchVC : KenBaseVC<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, copy) void (^deviceSelcetBlock)(KenDeviceDM *device);
 
 @end

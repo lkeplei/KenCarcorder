@@ -90,15 +90,17 @@
     KenDeviceSearchVC *searchVC = [[KenDeviceSearchVC alloc] init];
     [self pushViewController:searchVC animated:YES];
     
-    //    searchVC.deviceSelcetBlock = ^(YDDeviceInfo *device) {
-    //        [_sequenceNumberTextField setText:[device sn]];
-    //        [_deviceAccountTextField setText:[device getDeviceUsr]];
-    //        [_devicePwdTextField setText:[device getDevicePwd]];
-    //        [_uidTextField setPlaceholder:[device getDeviceUid]];
-    //
-    //        _deviceInfo = device;
-    //        [_sequenceNumberTextField setEnabled:NO];
-    //    };
+    @weakify(self)
+    searchVC.deviceSelcetBlock = ^(KenDeviceDM *device) {
+        @strongify(self)
+        [self.sequenceNumberTextField setText:device.sn];
+        [self.deviceAccountTextField setText:device.usr];
+        [self.devicePwdTextField setText:device.pwd];
+        [self.uidTextField setPlaceholder:device.uid];
+
+        self.deviceInfo = device;
+        [self.sequenceNumberTextField setEnabled:NO];
+    };
 }
 
 - (void)qrcodeClicked {
@@ -162,25 +164,31 @@
 
 - (void)addDevice {
     if (_deviceInfo) {
-//        [[YDController shareController] showLoadingV:self.view content:nil picS:NO];
-//        [[YDController shareController] saveDeviceInfo:@{@"groupNo":[NSNumber numberWithInt:_groupId],
-//                                                         @"sn":[_deviceInfo sn],
-//                                                         @"name" : [_deviceInfo getDeviceName],
-//                                                         @"uid" : [_deviceInfo getDeviceUid],
-//                                                         @"uidpsd" : [_deviceInfo getDeviceUidpsd],
-//                                                         @"usr" : [_deviceInfo getDeviceUsr],
-//                                                         @"pwd" : [_deviceInfo getDevicePwd],
-//                                                         @"lanIp" : [_deviceInfo lanIp],
-//                                                         @"ddns" : [_deviceInfo ddns],
-//                                                         @"dataport" : [NSNumber numberWithInteger:[_deviceInfo dataport]],
-//                                                         @"httpport" : [NSNumber numberWithInteger:[_deviceInfo httpport]]}
-//                                               success:^(BOOL result, id message) {
-//                                                   if (result) {
-//                                                       [self addSuccess];
-//                                                   }
-//                                               } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//                                                   kKenAlert(@"设备添加失败");
-//                                               }];
+        NSDictionary *params = @{@"groupNo":[NSNumber numberWithUnsignedInteger:_groupId],
+                                 @"sn":[_deviceInfo sn],
+                                 @"name" : _deviceInfo.name,
+                                 @"uid" : _deviceInfo.uid,
+                                 @"uidpsd" : _deviceInfo.uidpsd,
+                                 @"usr" : _deviceInfo.usr,
+                                 @"pwd" : _deviceInfo.pwd,
+                                 @"lanIp" : _deviceInfo.lanIp,
+                                 @"ddns" : _deviceInfo.ddns,
+                                 @"dataport" : [NSNumber numberWithInteger:[_deviceInfo dataport]],
+                                 @"httpport" : [NSNumber numberWithInteger:[_deviceInfo httpport]]};
+        [[KenServiceManager sharedServiceManager] deviceSaveInfo:params start:^{
+            [self showActivity];
+        } success:^(BOOL successful, NSString * _Nullable errMsg, KenDeviceDM *device) {
+            [self hideActivity];
+            if (successful) {
+                if (device) {
+                    _deviceInfo = device;
+                }
+                [self addSuccess];
+            }
+        } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+            [self hideActivity];
+            [self showToastWithMsg:@"设备添加失败"];
+        }];
     } else {
         if ([[_sequenceNumberTextField text] length] > 0 && [[_devicePwdTextField text] length] > 0) {
             [self addInputDevice];
@@ -195,36 +203,42 @@
 
     int value = [[sn substringFromIndex:[sn length] - 3] intValue];
     
-//    [[YDController shareController] showLoadingV:self.view content:nil picS:NO];
-//    [[YDController shareController] saveDeviceInfo:@{@"groupNo":[NSNumber numberWithInt:_groupId],
-//                                                     @"sn":sn,
-//                                                     @"name":@"",
-//                                                     @"uid":[KenUtils isEmpty:[_uidTextField placeholder]] ? @"" : [_uidTextField placeholder],
-//                                                     @"uidpsd":@"admin",
-//                                                     @"usr":@"admin",
-//                                                     @"pwd":[KenUtils isEmpty:[_devicePwdTextField text]] ? @"admin" : [_devicePwdTextField text],
-//                                                     @"lanIp":@"",
-//                                                     @"ddns":[sn stringByAppendingString:@".7cyun.net"],
-//                                                     @"dataport":[NSNumber numberWithInteger:value + 7000],
-//                                                     @"httpport":[NSNumber numberWithInteger:value + 8000]}
-//                                           success:^(BOOL result, id message) {
-//                                               if (result) {
-//                                                   [self addSuccess];
-//                                               }
-//                                           } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//                                               kKenAlert(@"设备添加失败");
-//                                           }];
+    NSDictionary *params = @{@"groupNo":[NSNumber numberWithUnsignedInteger:_groupId],
+                             @"sn":sn,
+                             @"name":@"",
+                             @"uid":[NSString isEmpty:[_uidTextField placeholder]] ? @"" : [_uidTextField placeholder],
+                             @"uidpsd":@"admin",
+                             @"usr":@"admin",
+                             @"pwd":[NSString isEmpty:[_devicePwdTextField text]] ? @"admin" : [_devicePwdTextField text],
+                             @"lanIp":@"",
+                             @"ddns":[sn stringByAppendingString:@".7cyun.net"],
+                             @"dataport":[NSNumber numberWithInteger:value + 7000],
+                             @"httpport":[NSNumber numberWithInteger:value + 8000]};
+    
+    _deviceInfo = [KenDeviceDM initWithJsonDictionary:params];
+    
+    [[KenServiceManager sharedServiceManager] deviceSaveInfo:params start:^{
+        [self showActivity];
+    } success:^(BOOL successful, NSString * _Nullable errMsg, KenDeviceDM *device) {
+        [self hideActivity];
+        if (successful) {
+            if (device) {
+                _deviceInfo = device;
+            }
+            [self addSuccess];
+        }
+    } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        [self hideActivity];
+        [self showToastWithMsg:@"设备添加失败"];
+    }];
 }
 
 - (void)addSuccess {
-//    [[YDController shareController] hideLoadingV:self.view];
-//    
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLoadUserDevice object:nil];
-//    if (_deviceInfo) {
-//        [[YDModel shareModel] addDevice:_deviceInfo];
-//    }
-//    
-//    [[YDController shareController] showRemindMessage:@"设备添加成功"];
+    if (_deviceInfo) {
+        [[KenUserInfoDM getInstance] addDevice:_deviceInfo];
+    }
+    
+    [self showToastWithMsg:@"设备添加成功"];
     
     _deviceInfo = nil;
     [_uidTextField setPlaceholder:@"设备UID号"];

@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setDevices:(NSArray *)array;
 
 - (void)removeDevice:(KenDeviceDM *)device;
-
+- (BOOL)addDevice:(KenDeviceDM *)device;
 
 /**
 设置设备密码

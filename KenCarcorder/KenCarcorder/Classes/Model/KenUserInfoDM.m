@@ -69,6 +69,20 @@ static KenUserInfoDM *userInfo = nil;
     }
 }
 
+- (BOOL)addDevice:(KenDeviceDM *)device {
+    for (KenDeviceDM *info in _deviceArray) {
+        if ([[info sn] isEqualToString:[device sn]]) {
+            return NO;
+        }
+    }
+    
+    [_deviceArray addObject:device];
+    
+    [self setInstance]
+    ;
+    return YES;
+}
+
 - (void)saveDevicePwd:(NSString *)password device:(KenDeviceDM *)device {
     if (![[device pwd] isEqualToString:password]) {
         KenDeviceDM *selDevice = nil;
