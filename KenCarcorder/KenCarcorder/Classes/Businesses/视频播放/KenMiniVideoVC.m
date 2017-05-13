@@ -323,30 +323,17 @@
 
 #pragma mark - public method
 - (void)setDirectConnect {
-//    NSString *ssid = [KenCarcorder getCurrentSSID];
-//    
-//    KenDeviceDM *device = [KenDeviceDM initWithJsonDictionary:@{}];
-//    device.netStat = kKenNetworkDdns;
-//    device.ddns = @"192.168.1.168";
-//    device.name = ssid;
-//    
-//    NSInteger value = [[ssid substringFromIndex:[ssid length] - 3] integerValue];
-//    device.dataport = 7000 + value;
-//    device.httpport = 8000 + value;
-//    
-//    self.device = device;
-    
-    
+    NSString *ssid = [KenCarcorder getCurrentSSID];
     
     KenDeviceDM *device = [KenDeviceDM initWithJsonDictionary:@{}];
     device.netStat = kKenNetworkDdns;
-    device.ddns = @"80002075.7cyun.net";
-    device.name = @"二楼";
-    device.sn = @"80002075";
+    device.ddns = @"192.168.1.168";
+    device.name = ssid;
     device.online = YES;
     
-    device.dataport = 7075;
-    device.httpport = 8075;
+    NSInteger value = [[ssid substringFromIndex:[ssid length] - 3] integerValue];
+    device.dataport = 7000 + value;
+    device.httpport = 8000 + value;
     
     self.device = device;
 }

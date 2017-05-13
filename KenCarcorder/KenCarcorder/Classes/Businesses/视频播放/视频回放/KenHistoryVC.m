@@ -7,27 +7,26 @@
 //
 
 #import "KenHistoryVC.h"
+#import "KenDeviceDM.h"
+#import "KenVideoV.h"
 
-//#import "YDRecorderFullV.h"
-//#import "YDRecorderV.h"
-//
-//#import "thSDKlib.h"
+#import "thSDKlib.h"
 
 @interface KenHistoryVC ()<UIPickerViewDelegate, UIPickerViewDataSource>
-
-@property (nonatomic, strong) KenDeviceDM *deviceInfo;
 
 @property (nonatomic, assign) BOOL isFinished;
 
 @property (nonatomic, assign) NSInteger dateSelectedIndex;
 @property (nonatomic, assign) NSInteger hourSelectedIndex;
 @property (nonatomic, assign) NSInteger minuteSelectedIndex;
-//@property (nonatomic, strong) YDRecorderV *recorderView;
-//@property (nonatomic, strong) YDRecorderFullV *fullScreenV;
-@property (nonatomic, strong) UIPickerView *filePickerView;
 @property (nonatomic, strong) NSMutableArray *recorderList;
 @property (nonatomic, strong) NSMutableArray *dateArray;
 @property (nonatomic, strong) NSArray *dayArray;
+
+@property (nonatomic, strong) KenVideoV *videoV;
+@property (nonatomic, strong) KenDeviceDM *deviceInfo;
+@property (nonatomic, strong) UIPickerView *filePickerView;
+@property (nonatomic, strong) UIView *downloadListV;
 
 @end
 
@@ -48,182 +47,42 @@
     // Do any additional setup after loading the view.
     [self setNavTitle:@"历史回看"];
     
-    [self initRecorderView];
-    [self initFilePicker];
-    [self initFullScreenV];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-//    [[YDModel shareModel] setFilePlay:YES];
+    [self.contentView addSubview:self.videoV];
+    [self.contentView addSubview:self.downloadListV];
+    [self.contentView addSubview:self.filePickerView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self loadHistoryData];
+    
+    SysDelegate.allowRotation = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     _isFinished = YES;
+    SysDelegate.allowRotation = NO;
 //    thNet_RemoteFileStop(_recorderView.deviceInfo.connectHandle);
-//    
-//    [[YDModel shareModel] setFilePlay:NO];
-//    
-//    [[YDController shareController] hideLoadingV:self.view];
-}
-
-- (void)initRecorderView {
-//    if (_recorderView == nil) {
-//        _recorderView = [[YDRecorderV alloc] initWithDevice:_deviceInfo
-//                                                      frame:(CGRect){0, kAppViewOrginY, kGSize.width, ceilf(kGSize.width * kAppImageHeiWid) + 40}
-//                                                 showBanner:YES];
-//        [self.view addSubview:_recorderView];
-//        
-//        _recorderView.controlBlock = ^(YDControlType type) {
-//            if (type == kYDControlFullScreen) {
-//                [KenUtils setOrientation:UIInterfaceOrientationLandscapeLeft];
-//            } else if (type == kYDControlMiniScreen) {
-//                [KenUtils setOrientation:UIInterfaceOrientationPortrait];
-//            }
-//        };
-//        
-//        __weak YDVedioHistoryVC *weakSelf = self;
-//        _recorderView.getImageBlock = ^(UIImage *image) {
-//            if (weakSelf.fullScreenV) {
-//                [weakSelf.fullScreenV setBgImage:image];
-//            }
-//        };
-//        
-//        _recorderView.getImageBufferBlock = ^(CVImageBufferRef imageBuffer) {
-//            if (weakSelf.fullScreenV) {
-//                [weakSelf.fullScreenV setBgImageBuffer:imageBuffer];
-//            }
-//        };
-//        
-//        _recorderView.lengthBlock = ^(NSInteger length, CGFloat totalLength) {
-//            [weakSelf.fullScreenV setFlovValue:length totalLength:totalLength];
-//        };
-//        
-//        _recorderView.speedBlock = ^(NSString *speed) {
-//            [weakSelf.fullScreenV setSpeedText:speed];
-//        };
-//        
-//        _recorderView.statusChangeBlock = ^(YDVedioStatusType status) {
-//            switch (status) {
-//                case kYDVedioStatusRecPlayStop: {
-//                    //                    [weakSelf playNextRecorder];
-//                }
-//                    break;
-//                default:
-//                    break;
-//            }
-//        };
-//    }
-}
-
-- (void)initFilePicker {
-    [self initRecorderView];
-    
-    _dateSelectedIndex = 0;
-    _hourSelectedIndex = 0;
-    _minuteSelectedIndex = 0;
-    
-//    _filePickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_recorderView.frame), self.view.width, 220)];
-    _filePickerView.delegate = self;
-    _filePickerView.dataSource = self;
-    [_filePickerView setBackgroundColor:[UIColor appSepLineColor]];
-    
-    [_filePickerView reloadAllComponents];
-    
-    [self.view addSubview:_filePickerView];
-}
-
-- (void)initFullScreenV {
-//    _fullScreenV = [[YDRecorderFullV alloc] initWithFrame:(CGRect){CGPointZero, kGSize.height, kGSize.width}];
-//    [_fullScreenV setHidden:YES];
-//    [self.view addSubview:_fullScreenV];
-//    
-//    __weak YDVedioHistoryVC *weakSelf = self;
-//    _fullScreenV.controlBlock = ^(YDControlType type) {
-//        if (type == kYDControlRecorder) {
-//            [weakSelf.recorderView vedioBtnClicked:nil];
-//        } else if (type == kYDControlCapture) {
-//            [weakSelf.recorderView captureBtnClicked];
-//        } else if (type == kYDControlMiniScreen) {
-//            [KenUtils setOrientation:UIInterfaceOrientationLandscapeLeft];
-//        } else if (type == kYDControlResume) {
-//            [weakSelf.recorderView resumeBtnClicked:nil];
-//        }
-//    };
-}
-
-- (void)playNextRecorder {
-    _minuteSelectedIndex++;
-    NSDictionary *hourDic = [_dayArray objectAtIndex:_hourSelectedIndex];
-    if (_minuteSelectedIndex >= [[hourDic objectForKey:@"minute"] count]) {
-        _minuteSelectedIndex = 0;
-        _hourSelectedIndex++;
-        if (_hourSelectedIndex >= [_dayArray count]) {
-            _hourSelectedIndex = 0;
-            _dateSelectedIndex++;
-            if (_hourSelectedIndex >= [_dayArray count]) {
-                [self showToastWithMsg:@"所有回看记录已播放完毕"];
-                return;
-            }
-        }
-    }
-    
-    [self setRecorderFileName];
 }
 
 #pragma mark - data
 - (void)loadHistoryData {
-//    if (![_deviceInfo deviceLock]) {
-//        [[YDController shareController] showLoadingV:self.view content:@"加载中..." picS:NO];
-//        _shouldAutorotate = NO;
-//        
-//        if ([[YDModel shareModel] isDdns:_deviceInfo]) {
-//            NSString *host = [NSString stringWithFormat:@"http://%@:%zd", [[YDModel shareModel] getCurrentIp:_deviceInfo],
-//                              [_deviceInfo httpport]];
-//            //        NSString *url = [NSString stringWithFormat:@"cfg.cgi?User=%@&Psd=%@&MsgID=83&path=/sd/&name=subdir.txt", [_deviceInfo getDeviceUsr], [_deviceInfo getDevicePwd]];
-//            NSString *url = @"sd/subdir.txt";
-//            [[YDController shareController] controlSendCmd:host url:url success:^(id info) {
-//                [self pareDateData:info];
-//            } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//                kKenAlert(@"当前服务器繁忙，请稍后重试");
-//                [[YDController shareController] hideLoadingV:self.view];
-//                _shouldAutorotate = YES;
-//            }];
-//        } else {
-//            NSString *url = [[NSString alloc] initWithFormat:@"%@cfg.cgi?User=%@&Psd=%@&MsgID=83&path=/sd/&name=subdir.txt",
-//                             kConnectP2pHost, [_deviceInfo getDeviceUsr], [_deviceInfo getDevicePwd]];
-//            [NSThread detachNewThreadSelector:@selector(loadHistoryDateUrl:) toTarget:self withObject:url];
-//        }
-//    }
-}
-
-- (void)loadHistoryDateUrl:(NSString *)url {
-//    bool ret;
-//    char Buf[65536];
-//    memset(Buf, 0, 65536);
-//    int BufLen;
-//    
-//    if(!thNet_IsConnect(_recorderView.deviceInfo.connectHandle)) {
-//        int64_t handle;
-//        thNet_Init(&handle, 11);
-//        ret = thNet_Connect_P2P(handle, 0, (char *)[[_deviceInfo getDeviceUid] UTF8String],
-//                                (char *)[[_deviceInfo getDeviceUidpsd] UTF8String], 10000, true);
-//        [_recorderView.deviceInfo setDeviceConnectHandle:handle];
-//        if (!ret) return;
-//    }
-//    
-//    thNet_HttpGet([_recorderView.deviceInfo connectHandle], (char *)[url UTF8String], Buf, &BufLen);
-//    
-//    [self performSelectorOnMainThread:@selector(pareDateData:) withObject:[NSString stringWithFormat:@"%s" , Buf] waitUntilDone:YES];
+    if (!_deviceInfo.deviceLock) {
+        [[KenServiceManager sharedServiceManager] deviceLoadHistory:self.deviceInfo url:@"sd/subdir.txt" start:^{
+            [self showActivity];
+        } success:^(BOOL successful, NSString * _Nullable errMsg, id _Nullable info) {
+            [self hideActivity];
+            if (successful) {
+                [self pareDateData:info];
+            }
+        } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+            [self hideActivity];
+            [self showToastWithMsg:@"当前服务器繁忙，请稍后重试"];
+        }];
+    }
 }
 
 - (void)pareDateData:(NSString *)info {
@@ -301,52 +160,24 @@
 }
 
 - (void)loadDayData:(NSString *)day {
-//    if (![_deviceInfo deviceLock]) {
-//        day = [day stringByReplacingOccurrencesOfString:@"." withString:@""];
-//        _shouldAutorotate = NO;
-//        
-//        if ([[YDModel shareModel] isDdns:_deviceInfo]) {
-//            NSString *host = [NSString stringWithFormat:@"http://%@:%d", [[YDModel shareModel] getCurrentIp:_deviceInfo],
-//                              (int)[_deviceInfo httpport]];
-//            NSString *url = [NSString stringWithFormat:@"sd/%@/subdir.txt", [day stringByReplacingOccurrencesOfString:@" " withString:@""]];
-//            [[YDController shareController] showLoadingV:self.view content:@"加载中..." picS:NO];
-//            [[YDController shareController] controlSendCmd:host url:url
-//                                                   success:^(id info) {
-//                                                       [self pareDayData:info];
-//                                                   } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//                                                       kKenAlert(@"当前服务器繁忙，请稍后重试");
-//                                                       [[YDController shareController] hideLoadingV:self.view];
-//                                                       _shouldAutorotate = YES;
-//                                                   }];
-//        } else {
-//            NSString* url = [[NSString alloc] initWithFormat:@"%@cfg.cgi?User=%@&Psd=%@&MsgID=83&path=/sd/%@/&name=subdir.txt",
-//                             kConnectP2pHost, [_deviceInfo getDeviceUsr], [_deviceInfo getDevicePwd],
-//                             [day stringByReplacingOccurrencesOfString:@" " withString:@""]];
-//            [NSThread detachNewThreadSelector:@selector(loadHistoryDayUrl:) toTarget:self withObject:url];
-//        }
-//    }
+    if (!_deviceInfo.deviceLock) {
+        day = [day stringByReplacingOccurrencesOfString:@"." withString:@""];
+        
+        [[KenServiceManager sharedServiceManager] deviceLoadHistory:self.deviceInfo
+                                                                url:[NSString stringWithFormat:@"sd/%@/subdir.txt", [day stringByReplacingOccurrencesOfString:@" " withString:@""]]
+                                                              start:^{
+            [self showActivity];
+        } success:^(BOOL successful, NSString * _Nullable errMsg, id _Nullable info) {
+            [self hideActivity];
+            if (successful) {
+                [self pareDayData:info];
+            }
+        } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+            [self hideActivity];
+            [self showToastWithMsg:@"当前服务器繁忙，请稍后重试"];
+        }];
+    }
 }
-
-//- (void)loadHistoryDayUrl:(NSString *)url {
-//    bool ret;
-//    char Buf[65536];
-//    memset(Buf, 0, 65536);
-//    int BufLen;
-//    
-//    if(!thNet_IsConnect(_recorderView.deviceInfo.connectHandle)) {
-//        int64_t handle;
-//        thNet_Init(&handle, 11);
-//        ret = thNet_Connect_P2P(handle, 0, (char *)[[_deviceInfo getDeviceUid] UTF8String],
-//                                (char *)[[_deviceInfo getDeviceUidpsd] UTF8String], 10000, true);
-//        [_recorderView.deviceInfo setDeviceConnectHandle:handle];
-//        if (!ret) return;
-//    }
-//    
-//    thNet_HttpGet([_recorderView.deviceInfo connectHandle], (char *)[url UTF8String], Buf, &BufLen);
-//    
-//    [self performSelectorOnMainThread:@selector(pareDayData:) withObject:[NSString stringWithFormat:@"%s" , Buf] waitUntilDone:YES];
-//    //    [self pareDayData:[NSString stringWithFormat:@"%s" , Buf]];
-//}
 
 - (void)pareDayData:(NSString *)info {
     if ([info isKindOfClass:[NSString class]] && [info hasPrefix:@"-2"]) {
@@ -376,7 +207,7 @@
         UILabel *label = [UILabel labelWithTxt:@" : " frame:(CGRect){0,0,30,40}
                                            font:[UIFont systemFontOfSize:24] color:[UIColor blackColor]];
         label.center = CGPointMake(_filePickerView.centerX + 54, _filePickerView.centerY);
-        [self.view addSubview:label];
+        [self.contentView addSubview:label];
     }
     
     [self hideActivity];
@@ -389,24 +220,10 @@
         NSString *minute = [[[timeDic objectForKey:@"minute"] objectAtIndex:_minuteSelectedIndex]
                             stringByReplacingOccurrencesOfString:@": " withString:@""];
         NSString *fileName = [NSString stringWithFormat:@"/sd/%@/%@_%@%@_0.av", day, day, [timeDic objectForKey:@"hour"], minute];
-//        [_recorderView playRecorder:[fileName stringByReplacingOccurrencesOfString:@" " withString:@""] play:NO];
+        [_videoV playRecorder:[fileName stringByReplacingOccurrencesOfString:@" " withString:@""]];
     }
 }
 
-- (void)loadVedioHeightWidth {
-//    NSString *host = [NSString stringWithFormat:@"http://%@:%d", [[YDModel shareModel] getCurrentIp:_deviceInfo],
-//                      (int)[_deviceInfo httpport]];
-//    [[YDController shareController] controlSendCmd:host url:[NSString stringWithFormat:@"cfg.cgi?User=%@&Psd=%@&MsgID=5",
-//                                                             [_deviceInfo getDeviceUsr], [_deviceInfo getDevicePwd]]
-//                                           success:^(id info) {
-//                                               if ([info length] > 10) {
-//                                                   
-//                                               }
-//                                           } failure:^(HttpServiceStatus serviceCode, AFHTTPRequestOperation *requestOP, NSError *error) {
-//                                               kKenAlert(@"当前服务器繁忙，请稍后重试");
-//                                               [[YDController shareController] hideLoadingV:self.view];
-//                                           }];
-}
 #pragma mark Picker Date Source Methods
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 3;
@@ -478,32 +295,68 @@
 }
 
 #pragma mark - rotate
-//- (void)showFullScreen:(BOOL)show {
-//    if (show) {
-//        [_recorderView showFullScreen];
-//        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-//        [self.navigationController.navigationBar setHidden:YES];
-//        
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-//    } else {
-//        [_recorderView showMiniScreen];
-//        [self.navigationController.navigationBar setHidden:NO];
-//        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-//        
-//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-//    }
-//    
-//    [_filePickerView setHidden:show];
-//    [_fullScreenV setHidden:!show];
-//}
-//
-//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-//    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
-//        [self showFullScreen:NO];
-//    } else {
-//        if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
-//            [self showFullScreen:YES];
-//        }
-//    }
-//}
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
+        [self exitFullscreen];
+    } else {
+        if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
+            [self enterFullscreen];
+        }
+    }
+}
+
+- (void)enterFullscreen {
+    [self.videoV removeFromSuperview];
+    
+    self.videoV.frame = (CGRect){CGPointZero, SysDelegate.window.height, SysDelegate.window.width};
+    [SysDelegate.window addSubview:self.videoV];
+}
+
+- (void)exitFullscreen {
+    [self.videoV removeFromSuperview];
+    
+    self.videoV.frame = (CGRect){CGPointZero, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
+    [self.contentView addSubview:self.videoV];
+}
+
+#pragma mark - getter setter
+- (KenVideoV *)videoV {
+    if (_videoV == nil) {
+        _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 0, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
+        [_videoV showVideoWithDevice:self.deviceInfo];
+    }
+    return _videoV;
+}
+
+- (UIView *)downloadListV {
+    if (_downloadListV == nil) {
+        _downloadListV = [[UIView alloc] initWithFrame:(CGRect){0, self.contentView.height - 160, self.contentView.width, 160}];
+        _downloadListV.backgroundColor = [UIColor whiteColor];
+    }
+    return _downloadListV;
+}
+
+- (UIPickerView *)filePickerView {
+    if (_filePickerView == nil) {
+        _dateSelectedIndex = 0;
+        _hourSelectedIndex = 0;
+        _minuteSelectedIndex = 0;
+        
+        UIView *titleV = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY, self.contentView.width, 35}];
+        titleV.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:titleV];
+        
+        UILabel *titleL = [UILabel labelWithTxt:@"选择时间" frame:(CGRect){10, 0, titleV.size} font:[UIFont appFontSize14] color:[UIColor appBlackTextColor]];
+        titleL.textAlignment = NSTextAlignmentLeft;
+        [titleV addSubview:titleL];
+        
+        _filePickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, titleV.maxY, self.contentView.width, self.downloadListV.minY - titleV.maxY)];
+        _filePickerView.delegate = self;
+        _filePickerView.dataSource = self;
+        [_filePickerView setBackgroundColor:[UIColor appBackgroundColor]];
+
+        [_filePickerView reloadAllComponents];
+    }
+    return _filePickerView;
+}
 @end

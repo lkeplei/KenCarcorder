@@ -237,6 +237,24 @@
     }
 }
 
+- (void)deviceLoadHistory:(KenDeviceDM *)device url:(NSString *)url
+                    start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
+    if (device.isDDNS) {
+        NSString *host = [NSString stringWithFormat:@"http://%@:%zd/", device.currentIp, [device httpport]];
+        
+        [self asyncGet:[host stringByAppendingString:url] queryParams:nil startBlock:^{
+        } responsedBlock:^(NSString *responseData) {
+            SafeHandleBlock(success, YES, nil, responseData);
+        } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+        }];
+    } else {
+        NSString *responseData = [self p2pMessageSendUrl:[kConnectP2pHost stringByAppendingString:url] device:device];
+        if ([responseData isKindOfClass:[NSString class]]) {
+            SafeHandleBlock(success, YES, nil, responseData);
+        }
+    }
+}
+
 #pragma mark - wifi setting
 - (void)deviceGetWifiInfo:(KenDeviceDM *)device
                     start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed {
@@ -348,7 +366,10 @@
 
 - (NSString *)p2pMessageSend:(NSString *)param device:(KenDeviceDM *)device {
     NSString *url = [kConnectP2pHost stringByAppendingString:param];
-    
+    return [self p2pMessageSendUrl:url device:device];
+}
+
+- (NSString *)p2pMessageSendUrl:(NSString *)url device:(KenDeviceDM *)device {
     bool ret;
     char Buf[65536];
     int BufLen;

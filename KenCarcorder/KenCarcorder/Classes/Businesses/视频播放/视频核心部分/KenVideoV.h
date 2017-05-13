@@ -37,5 +37,7 @@
 - (void)recordVideo;
 //分享视频
 - (void)shareVedio;
+//播放
+- (void)playRecorder:(NSString *)filePath;
 
 @end

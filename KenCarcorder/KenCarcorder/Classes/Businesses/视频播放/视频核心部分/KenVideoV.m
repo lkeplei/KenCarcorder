@@ -165,6 +165,10 @@ int hSocketServer; //服务器连接
     [self.audio pauseRecord];
 }
 
+- (void)playRecorder:(NSString *)filePath {
+    
+}
+
 #pragma mark - 视频连接与数据回调
 - (void)startVidthread {
     if (!thNet_IsConnect(_deviceDM.connectHandle)) {

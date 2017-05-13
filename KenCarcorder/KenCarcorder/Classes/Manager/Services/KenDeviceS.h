@@ -80,6 +80,9 @@
 
 - (void)deviceValidatePwd:(KenDeviceDM *)device finish:(void(^)(BOOL))finish;
 
+- (void)deviceLoadHistory:(KenDeviceDM *)device url:(NSString *)url
+              start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
+
 #pragma mark - wifi setting
 - (void)deviceGetWifiInfo:(KenDeviceDM *)device
                     start:(RequestStartBlock)start success:(ResponsedSuccessBlock)success failed:(RequestFailureBlock)failed;
