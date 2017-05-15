@@ -15,4 +15,5 @@ target 'KenCarcorder' do
 
     pod 'SDWebImage'
 
+    pod 'IQKeyboardManager'
 end

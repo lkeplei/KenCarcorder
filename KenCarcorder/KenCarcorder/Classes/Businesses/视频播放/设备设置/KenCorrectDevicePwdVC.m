@@ -9,7 +9,7 @@
 #import "KenCorrectDevicePwdVC.h"
 #import "KenDeviceDM.h"
 
-@interface KenCorrectDevicePwdVC ()<UIAlertViewDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface KenCorrectDevicePwdVC ()<UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) KenDeviceDM *deviceInfo;
 @property (nonatomic, strong) UITextField *pwdTextField;
@@ -47,11 +47,6 @@
     confirmBtn.layer.cornerRadius = 6;
     confirmBtn.frame = (CGRect){showBtn.originX, CGRectGetMaxY(showBtn.frame) + 20, showBtn.size};
     [self.view addSubview:confirmBtn];
-    
-    //tap gesture
-    UITapGestureRecognizer *tapTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    tapTouch.delegate = self;
-    [self.view addGestureRecognizer:tapTouch];
 }
 
 - (UITextField *)addTextFiled:(NSString *)content offY:(CGFloat)offY {
@@ -109,23 +104,6 @@
 
 #pragma mark - textField
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-}
-
-- (void)hideKeyboard {
-    [_pwdTextField resignFirstResponder];
-}
-
-#pragma mark - UIGestureRecognizerDelegate
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if ([touch.view isKindOfClass:[UIControl class]] ||
-        [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
-        return NO;
-    }
     return YES;
 }
 

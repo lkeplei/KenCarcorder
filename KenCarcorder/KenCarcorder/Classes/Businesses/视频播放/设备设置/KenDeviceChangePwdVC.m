@@ -9,7 +9,7 @@
 #import "KenDeviceChangePwdVC.h"
 #import "KenDeviceDM.h"
 
-@interface KenDeviceChangePwdVC ()<UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface KenDeviceChangePwdVC ()
 
 @property (nonatomic, strong) KenDeviceDM *deviceInfo;
 @property (nonatomic, strong) UITextField *oldTextField;
@@ -44,11 +44,6 @@
     confirmBtn.layer.cornerRadius = 6;
     confirmBtn.frame = CGRectMake(MainScreenWidth * 0.05, CGRectGetMaxY(_confirmTextField.frame) + 35, MainScreenWidth * 0.9, 40);
     [self.view addSubview:confirmBtn];
-    
-    //tap gesture
-    UITapGestureRecognizer *tapTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    tapTouch.delegate = self;
-    [self.view addGestureRecognizer:tapTouch];
 }
 
 - (UITextField *)addTextFiled:(NSString *)content offY:(CGFloat)offY {
@@ -59,7 +54,6 @@
     textField.secureTextEntry = YES;
     textField.clearsOnBeginEditing = NO;
     textField.textAlignment = NSTextAlignmentLeft;
-    textField.delegate = self;
     [textField setBackgroundColor:[UIColor whiteColor]];
     
     textField.leftView = [[UIView alloc] initWithFrame:(CGRect){0, 0, 15, textField.height}];
@@ -109,27 +103,4 @@
     }];
 }
 
-#pragma mark - textField
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-}
-
-- (void)hideKeyboard {
-    [_oldTextField resignFirstResponder];
-    [_pwdTextField resignFirstResponder];
-    [_confirmTextField resignFirstResponder];
-}
-
-#pragma mark - UIGestureRecognizerDelegate
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if ([touch.view isKindOfClass:[UIControl class]] ||
-        [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
-        return NO;
-    }
-    return YES;
-}
 @end

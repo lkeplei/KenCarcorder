@@ -8,7 +8,7 @@
 
 #import "KenGroupManagerVC.h"
 
-@interface KenGroupManagerVC ()<UIGestureRecognizerDelegate>
+@interface KenGroupManagerVC ()
 
 @property (nonatomic, strong) NSArray *groupArray;
 @property (nonatomic, strong) UIView *groupBg;
@@ -39,12 +39,7 @@
                                          imagesec:nil target:self action:@selector(finishBtnClicked:)];
     finishBtn.center = CGPointMake(self.view.centerX, CGRectGetMaxY(_groupBg.frame) + 30);
     [self.contentView addSubview:finishBtn];
-    
-    //tap gesture
-    UITapGestureRecognizer *tapTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    tapTouch.delegate = self;
-    [self.contentView addGestureRecognizer:tapTouch];
-    
+
     [self loadGroups];
 }
 

@@ -9,7 +9,7 @@
 #import "KenLoginVC.h"
 #import "KenLoginDM.h"
 
-@interface KenLoginVC ()<UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface KenLoginVC ()
 
 @property (nonatomic, strong) UITextField *accountTextField;
 @property (nonatomic, strong) UITextField *pwdTextField;
@@ -84,12 +84,7 @@
     [self initForgetPwd];
     
     [self showCheckView:NO];
-    
-    //tap gesture
-    UITapGestureRecognizer *tapTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    tapTouch.delegate = self;
-    [self.contentView addGestureRecognizer:tapTouch];
-    
+
     //测试先自动登录
     [self loginRequest];
 }
@@ -169,46 +164,6 @@
     }
 }
 
-#pragma mark - textField
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (textField == _accountTextField) {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.contentView.frame = CGRectMake(0.f, -60, self.contentView.width, self.contentView.height);
-        }];
-    } else if (textField == _pwdTextField) {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.contentView.frame = CGRectMake(0.f, -110, self.contentView.width, self.contentView.height);
-        }];
-    } else if (textField == _checkTextField) {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.contentView.frame = CGRectMake(0.f, -170, self.contentView.width, self.contentView.height);
-        }];
-    }
-}
-
-- (void)hideKeyboard {
-    [_accountTextField resignFirstResponder];
-    [_pwdTextField resignFirstResponder];
-    [_checkTextField resignFirstResponder];
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        self.contentView.frame = CGRectMake(0.f, 0, self.view.width, self.view.height);
-    }];
-}
-
-#pragma mark - UIGestureRecognizerDelegate
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if ([touch.view isKindOfClass:[UIControl class]] ||
-        [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
-        return NO;
-    }
-    return YES;
-}
-
 #pragma mark - private method
 - (UITextField *)addTextFiled:(BOOL)secure content:(NSString *)content text:(NSString *)text parent:(UIView *)parent width:(CGFloat)width{
     UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(56, 4, width, parent.height / 2 - 8)];
@@ -221,7 +176,6 @@
     textField.secureTextEntry = secure;
     textField.clearsOnBeginEditing = NO;
     textField.textAlignment = NSTextAlignmentLeft;
-    textField.delegate = self;
     [parent addSubview:textField];
     
     return textField;
