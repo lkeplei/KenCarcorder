@@ -10,4 +10,6 @@
 
 @interface KenForgetPwdVC : KenBaseVC
 
+- (instancetype)initWithTitle:(NSString *)title;
+
 @end

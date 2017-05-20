@@ -31,9 +31,11 @@
     _groupArray = @[@"分组一", @"分组二", @"分组三", @"分组四"];
     
     //button
-    UIButton *finishBtn = [UIButton buttonWithImg:@"确认修改" zoomIn:NO image:[UIImage imageNamed:@"login_btn_bg"]
-                                         imagesec:nil target:self action:@selector(finishBtnClicked:)];
-    finishBtn.center = CGPointMake(self.view.centerX, CGRectGetMaxY(_groupBg.frame) + 80);
+    UIButton *finishBtn = [UIButton buttonWithImg:@"确认修改" zoomIn:NO image:nil imagesec:nil target:self action:@selector(finishBtnClicked:)];
+    finishBtn.backgroundColor = [UIColor appMainColor];
+    finishBtn.layer.cornerRadius = 4;
+    finishBtn.frame = (CGRect){0, 0, self.contentView.width - 100, 44};
+    finishBtn.center = CGPointMake(self.view.centerX, CGRectGetMaxY(_groupBg.frame) + 100);
     [self.contentView addSubview:finishBtn];
 
     [self loadGroups];
@@ -97,7 +99,7 @@
 
 #pragma mark - private method
 - (void)setGroups:(NSArray *)groups {
-    float height = 44;
+    float height = 35;
     for (int i = 0; i < [_groupArray count]; i++) {
         UILabel *label = [UILabel labelWithTxt:[_groupArray objectAtIndex:i] frame:(CGRect){0, (height + 10) * i + 10, 70, height}
                                           font:[UIFont appFontSize16] color:[UIColor blackColor]];
@@ -114,7 +116,7 @@
         textField.textColor = [UIColor appDarkGrayTextColor];
         
         textField.layer.borderColor = [UIColor appSepLineColor].CGColor;
-        textField.layer.borderWidth = 0.5;
+        textField.layer.borderWidth = 1;
         textField.layer.cornerRadius = 4;
         
         textField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 15, 0)];

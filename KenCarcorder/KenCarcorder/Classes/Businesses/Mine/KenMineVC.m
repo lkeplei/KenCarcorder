@@ -7,6 +7,7 @@
 //
 
 #import "KenMineVC.h"
+#import "KenForgetPwdVC.h"
 
 @interface KenMineVC ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -110,7 +111,8 @@
         [_informationTable reloadData];
     } else {
         if (indexPath.section == 0 && indexPath.row == 1) {
-            [self pushViewControllerString:@"KenForgetPwdVC" animated:YES];
+            KenForgetPwdVC *pwdVC = [[KenForgetPwdVC alloc] initWithTitle:@"修改密码"];
+            [self pushViewController:pwdVC animated:YES];
         } else if (indexPath.section == 1 && indexPath.row == 0) {
             [self pushViewControllerString:@"KenGroupManagerVC" animated:YES];
         } else if (indexPath.section == 1 && indexPath.row == 1) {

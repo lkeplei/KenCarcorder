@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UITextField *pwdTextField;
 @property (nonatomic, strong) UITextField *pwdConfirmTextField;
 
+@property (nonatomic, strong) NSString *pwdTitle;
+
 @property (nonatomic, strong) UIButton *getCheckCodeBtn;
 @property (nonatomic, strong) NSTimer *checkTimer;
 @property (nonatomic, assign) NSInteger waitingTime;
@@ -22,28 +24,24 @@
 @end
 
 @implementation KenForgetPwdVC
+- (instancetype)initWithTitle:(NSString *)title {
+    self = [super init];
+    if (self) {
+        _pwdTitle = title;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setNavTitle:@"重置密码"];
-    
-    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwd_bg"]];
-    bgV.frame = (CGRect){0, 0, self.contentView.size};
-    [self.contentView addSubview:bgV];
+    [self setNavTitle:self.pwdTitle];
     
     [self initOne];
     [self initTwo];
 }
 
 #pragma mark - event
-- (void)hideKeyboard {
-    [_phoneTextField resignFirstResponder];
-    [_verCodeTextField resignFirstResponder];
-    [_pwdTextField resignFirstResponder];
-    [_pwdConfirmTextField resignFirstResponder];
-}
-
 - (void)getCodeBtnClicked:(UIButton *)button {
     if ([_phoneTextField.text length] <= 0){
         [self showAlert:@"" content:@"手机号不能为空"];
@@ -123,28 +121,22 @@
 
 #pragma mark - private method
 - (void)initOne {
-    UIImageView *inputBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwd_input_bg"]];
+    UIView *inputBg = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, 100}];
+    inputBg.backgroundColor = [UIColor whiteColor];
     [inputBg setUserInteractionEnabled:YES];
-    inputBg.width = self.contentView.width;
     [self.contentView addSubview:inputBg];
-    
-    UILabel *phone = [UILabel labelWithTxt:@"手机号" frame:(CGRect){0, 0, kKenOffsetX(160), inputBg.height / 2}
-                                      font:[UIFont appFontSize15] color:[UIColor appWhiteTextColor]];
-    [inputBg addSubview:phone];
     
     KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
     _phoneTextField = [self addTextFiled:NO content:@"请输入您的手机号码"
                                     text:[NSString isEmpty:userInfo.userName] ? nil : userInfo.userName
-                                    size:(CGSize){inputBg.width - kKenOffsetX(180) * 2, 30}];
-    _phoneTextField.centerY = phone.centerY;
+                                    frame:(CGRect){0, 0, self.contentView.width, 50}];
     [inputBg addSubview:_phoneTextField];
     
-    UILabel *verCode = [UILabel labelWithTxt:@"验证码" frame:phone.frame font:[UIFont appFontSize15] color:[UIColor appWhiteTextColor]];
-    verCode.originY = phone.maxY;
-    [inputBg addSubview:verCode];
-    
-    _verCodeTextField = [self addTextFiled:NO content:@"请输入验证码" text:nil size:(CGSize){inputBg.width - kKenOffsetX(180) * 2, 40}];
-    _verCodeTextField.centerY = verCode.centerY;
+    UIView *line = [[UIView alloc] initWithFrame:(CGRect){10, 50, inputBg.width, 0.5}];
+    line.backgroundColor = [UIColor appSepLineColor];
+    [inputBg addSubview:line];
+
+    _verCodeTextField = [self addTextFiled:NO content:@"请输入验证码" text:nil frame:(CGRect){0, _phoneTextField.maxY, _phoneTextField.size}];
     [inputBg addSubview:_verCodeTextField];
     
     //验证码
@@ -152,55 +144,36 @@
                                       imagesec:[UIImage imageNamed:@"login_send_code_sec"]
                                         target:self action:@selector(getCodeBtnClicked:)];
     [_getCheckCodeBtn.titleLabel setFont:[UIFont appFontSize11]];
-    _getCheckCodeBtn.center = CGPointMake(inputBg.width - _getCheckCodeBtn.width / 2 - 10, inputBg.height * 0.75);
+    _getCheckCodeBtn.center = CGPointMake(self.contentView.width - _getCheckCodeBtn.width / 2 - 10, 75);
     [inputBg addSubview:_getCheckCodeBtn];
 }
 
 - (void)initTwo {
-    UIImageView *inputBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwd_confirm_bg"]];
+    UIView *inputBg = [[UIView alloc] initWithFrame:(CGRect){0, 110, self.contentView.width, 100}];
+    inputBg.backgroundColor = [UIColor whiteColor];
     [inputBg setUserInteractionEnabled:YES];
-    inputBg.width = self.contentView.width;
-    inputBg.originY = inputBg.height + kKenOffset;
     [self.contentView addSubview:inputBg];
-    
-    UILabel *phone = [UILabel labelWithTxt:@"密    码" frame:(CGRect){15, 0, kKenOffsetX(160), inputBg.height / 2}
-                                      font:[UIFont appFontSize15] color:[UIColor appWhiteTextColor]];
-    phone.textAlignment = NSTextAlignmentLeft;
-    [inputBg addSubview:phone];
-    
-    _pwdTextField = [self addTextFiled:YES content:@"输入密码" text:nil
-                                  size:(CGSize){inputBg.width - kKenOffsetX(210) * 2, 30}];
-    _pwdTextField.originX = kKenOffsetX(210);
-    _pwdTextField.centerY = phone.centerY;
+
+    _pwdTextField = [self addTextFiled:YES content:@"输入密码" text:nil frame:(CGRect){0, 0, self.contentView.width, 50}];
     [inputBg addSubview:_pwdTextField];
+
+    UIView *line = [[UIView alloc] initWithFrame:(CGRect){10, 50, inputBg.width, 0.5}];
+    line.backgroundColor = [UIColor appSepLineColor];
+    [inputBg addSubview:line];
     
-    UILabel *verCode = [UILabel labelWithTxt:@"确认密码" frame:phone.frame font:[UIFont appFontSize15] color:[UIColor appWhiteTextColor]];
-    verCode.originY = phone.maxY;
-    verCode.textAlignment = NSTextAlignmentLeft;
-    [inputBg addSubview:verCode];
-    
-    _pwdConfirmTextField = [self addTextFiled:YES content:@"再次输入密码" text:nil size:(CGSize){inputBg.width - kKenOffsetX(210) * 2, 40}];
-    _pwdConfirmTextField.centerY = verCode.centerY;
-    _pwdConfirmTextField.originX = kKenOffsetX(210);
+    _pwdConfirmTextField = [self addTextFiled:YES content:@"再次输入密码" text:nil frame:(CGRect){0, _phoneTextField.maxY, _phoneTextField.size}];
     [inputBg addSubview:_pwdConfirmTextField];
     
-    //验证码
-    UILabel *confirmLabel = [UILabel labelWithTxt:@"提交" frame:(CGRect){15, inputBg.maxY + kKenOffset, self.contentView.width - 30, 44}
-                                             font:[UIFont appFontSize17] color:[UIColor colorWithHexString:@"1969DB"]];
-    confirmLabel.backgroundColor = [UIColor whiteColor];
-    confirmLabel.layer.cornerRadius = 6;
-    [confirmLabel.layer setMasksToBounds:YES];
-    [self.contentView addSubview:confirmLabel];
-    
-    @weakify(self)
-    [confirmLabel clicked:^(UIView * _Nonnull view) {
-        @strongify(self)
-        [self resetPwd];
-    }];
+    //button
+    UIButton *finishBtn = [UIButton buttonWithImg:@"提交" zoomIn:NO image:nil imagesec:nil target:self action:@selector(resetPwd)];
+    finishBtn.backgroundColor = [UIColor appMainColor];
+    finishBtn.layer.cornerRadius = 4;
+    finishBtn.frame = (CGRect){50, inputBg.maxY + 60, self.contentView.width - 100, 44};
+    [self.contentView addSubview:finishBtn];
 }
 
-- (UITextField *)addTextFiled:(BOOL)secure content:(NSString *)content text:(NSString *)text size:(CGSize)size {
-    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(kKenOffsetX(180), 0, size.width, size.height / 2)];
+- (UITextField *)addTextFiled:(BOOL)secure content:(NSString *)content text:(NSString *)text frame:(CGRect)frame {
+    UITextField *textField = [[UITextField alloc]initWithFrame:frame];
     textField.placeholder = content;
     if ([NSString isNotEmpty:text]) {
         textField.text = text;
@@ -210,9 +183,21 @@
     textField.secureTextEntry = secure;
     textField.clearsOnBeginEditing = NO;
     textField.textAlignment = NSTextAlignmentLeft;
-    textField.textColor = [UIColor appWhiteTextColor];
+    textField.textColor = [UIColor appBlackTextColor];
+    
+    textField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 15, 0)];
+    //设置显示模式为永远显示(默认不显示)
+    textField.leftViewMode = UITextFieldViewModeAlways;
     
     return textField;
+}
+
+#pragma mark - getter setter
+- (NSString *)navTitle {
+    if (_pwdTitle == nil) {
+        _pwdTitle = @"重置密码";
+    }
+    return _pwdTitle;
 }
 
 @end
