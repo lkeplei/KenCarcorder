@@ -101,10 +101,6 @@
         make.top.equalTo(inputV.mas_bottom).offset(kKenOffsetY(30));
         make.centerX.equalTo(self.mas_centerX);
     }];
-    
-    //tap gesture
-    UITapGestureRecognizer *tapTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    [self addGestureRecognizer:tapTouch];
 }
 
 - (UIView *)resetInputV {

@@ -13,7 +13,7 @@
 #import "KenUserInfoDM.h"
 #import "KenActionSheet.h"
 
-@interface KenAddDeviceVC ()<UITextFieldDelegate, UIGestureRecognizerDelegate, QRReaderDelegate>
+@interface KenAddDeviceVC ()<UITextFieldDelegate, QRReaderDelegate>
 
 @property (nonatomic, assign) NSUInteger groupId;
 @property (nonatomic, strong) KenDeviceDM *deviceInfo;
@@ -78,11 +78,6 @@
     
     finishBtn.layer.masksToBounds = YES;
     finishBtn.layer.cornerRadius = 6;
-    
-    //tap gesture
-    UITapGestureRecognizer *tapTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    tapTouch.delegate = self;
-    [self.contentView addGestureRecognizer:tapTouch];
 }
 
 #pragma mark - event
@@ -109,49 +104,12 @@
     [self pushViewController:qrCodeVC animated:YES];
 }
 
-#pragma mark - textField
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (textField == _sequenceNumberTextField) {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.contentView.frame = CGRectMake(0.f, -60, self.view.width, self.view.height);
-        }];
-    } else if (textField == _uidTextField) {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.contentView.frame = CGRectMake(0.f, -120, self.view.width, self.view.height);
-        }];
-    } else if (textField == _devicePwdTextField) {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.contentView.frame = CGRectMake(0.f, -160, self.view.width, self.view.height);
-        }];
-    }
-}
-
-- (void)hideKeyboard {
-    [_devicePwdTextField resignFirstResponder];
-    [_sequenceNumberTextField resignFirstResponder];
-    [_uidTextField resignFirstResponder];
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        self.contentView.frame = CGRectMake(0.f, 0, self.view.width, self.view.height);
-    }];
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if ([touch.view isKindOfClass:[UIControl class]] ||
-        [NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
-        return NO;
-    }
-    return YES;
-}
-
 #pragma mark - button
 - (void)finishBtnClicked:(UIButton *)button {
     if (_deviceInfo == nil && !([[_sequenceNumberTextField text] length] > 0 && [[_devicePwdTextField text] length] > 0)) {
         [self showToastWithMsg:@"请输入正确的设备信息"];
         return;
     }
-    
-    [self hideKeyboard];
     
     [KenActionSheet showActionSheetViewWithTitle:nil cancelButtonTitle:nil otherButtonTitles:[KenUserInfoDM getInstance].deviceGroups
                                 selectSheetBlock:^(KenActionSheet *actionSheetV, NSInteger index) {

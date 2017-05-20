@@ -8,7 +8,7 @@
 
 #import "KenRegisterVC.h"
 
-@interface KenRegisterVC ()<UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface KenRegisterVC ()
 
 @property (nonatomic, strong) UITextField *phoneTextField;
 @property (nonatomic, strong) UITextField *verCodeTextField;
@@ -34,11 +34,6 @@
     
     [self initOne];
     [self initTwo];
-    
-    //tap gesture
-    UITapGestureRecognizer *tapTouch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    tapTouch.delegate = self;
-    [self.contentView addGestureRecognizer:tapTouch];
 }
 
 #pragma mark - event
@@ -213,7 +208,6 @@
     textField.secureTextEntry = secure;
     textField.clearsOnBeginEditing = NO;
     textField.textAlignment = NSTextAlignmentLeft;
-    textField.delegate = self;
     textField.textColor = [UIColor appWhiteTextColor];
     
     return textField;

@@ -51,7 +51,7 @@
 
 #pragma mark - getter setter 
 - (void)setSelectedIndex:(NSInteger)selectedIndex {
-    if (selectedIndex != _selectedIndex) {
+    if (selectedIndex != _selectedIndex && selectedIndex < _itemArray.count) {
         if (_selectedIndex >= 0) {
             ((KenSegmentItemV *)[_itemArray objectAtIndex:_selectedIndex]).status = kKenSegmentItemNormal;
         }
