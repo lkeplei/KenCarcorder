@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UITextField *pwdTextField;
 @property (nonatomic, strong) UITextField *checkTextField;
 @property (nonatomic, strong) UIImageView *rememberImg;
-@property (nonatomic, strong) UIImageView *checkView;
+@property (nonatomic, strong) UIView *checkView;
 @property (nonatomic, strong) UIView *inputV;
 @property (nonatomic, strong) UIView *rememberV;
 @property (nonatomic, strong) UIButton *loginBtn;
@@ -56,23 +56,10 @@
     [self.contentView addSubview:icon];
     
     _inputV = [self setInputV];
-    _inputV.originY = icon.maxY + kKenOffsetY(50);
+    _inputV.originY = icon.maxY + kKenOffsetY(24);
     
     //check
-    _checkView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_input_bg"]];
-    [_checkView setUserInteractionEnabled:YES];
-    _checkView.frame = (CGRect){_inputV.originX, _inputV.maxY, _inputV.width, _inputV.height / 2};
-    [self.contentView addSubview:_checkView];
-    
-    _checkTextField = [self addTextFiled:NO content:@"请输入验证码" text:nil parent:_checkView width:_checkView.width - 110];
-    _checkTextField.height = _checkView.height - 8;
-    
-    _getCheckCodeBtn = [UIButton buttonWithImg:@"获取验证码" zoomIn:NO image:[UIImage imageNamed:@"login_send_code"]
-                                      imagesec:[UIImage imageNamed:@"login_send_code_sec"]
-                                        target:self action:@selector(getCodeBtnClicked:)];
-    [_getCheckCodeBtn.titleLabel setFont:[UIFont appFontSize11]];
-    _getCheckCodeBtn.center = CGPointMake(_checkView.width - _getCheckCodeBtn.width / 2 - 10, _checkView.height / 2);
-    [_checkView addSubview:_getCheckCodeBtn];
+    [self.contentView addSubview:self.checkView];
     
     ////
     [self initRememberWithOffsetY:_checkView.maxY];
@@ -167,7 +154,7 @@
 
 #pragma mark - private method
 - (UITextField *)addTextFiled:(BOOL)secure content:(NSString *)content text:(NSString *)text parent:(UIView *)parent width:(CGFloat)width {
-    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 4, width, parent.height / 2 - 8)];
+    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 2, width, parent.height / 2 - 4)];
     textField.placeholder = content;
     if ([NSString isNotEmpty:text]) {
         textField.text = text;
@@ -177,7 +164,8 @@
     textField.secureTextEntry = secure;
     textField.clearsOnBeginEditing = NO;
     textField.textAlignment = NSTextAlignmentLeft;
-    textField.textColor = [UIColor appWhiteTextColor];
+    textField.textColor = [UIColor appGrayTextColor];
+    [textField setValue:[UIColor colorWithHexString:@"#626262"] forKeyPath:@"_placeholderLabel.textColor"];
     [parent addSubview:textField];
     
     return textField;
@@ -204,7 +192,7 @@
 }
 
 - (UIView *)setInputV {
-    UIView *inputBg = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, 120}];
+    UIView *inputBg = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, 110}];
     [inputBg setUserInteractionEnabled:YES];
     [self.contentView addSubview:inputBg];
 
@@ -247,7 +235,7 @@
     [_rememberV addSubview:_rememberImg];
     
     UILabel *label = [UILabel labelWithTxt:@"记住密码" frame:(CGRect){_rememberImg.maxX + kKenOffset, 0, _rememberV.size}
-                                      font:[UIFont appFontSize14] color:[UIColor appGrayTextColor]];
+                                      font:[UIFont appFontSize14] color:[UIColor colorWithHexString:@"#626262"]];
     label.textAlignment = NSTextAlignmentLeft;
     [_rememberV addSubview:label];
 
@@ -258,7 +246,8 @@
     }];
     
     _forgetPwdL = [UILabel labelWithTxt:@"忘记密码？" frame:(CGRect){_rememberV.maxX, _rememberV.originY, _rememberV.size} font:[UIFont appFontSize14]
-                                  color:[UIColor whiteColor]];
+                                  color:[UIColor colorWithHexString:@"#626262"]];
+    _forgetPwdL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_forgetPwdL];
     @weakify(self)
     [_forgetPwdL clicked:^(UIView * _Nonnull view) {
@@ -268,6 +257,32 @@
 }
 
 #pragma mark - getter setter 
+- (UIView *)checkView {
+    if (_checkView == nil) {
+        _checkView = [[UIView alloc] initWithFrame:(CGRect){_inputV.originX, _inputV.maxY, _inputV.width, _inputV.height / 2}];
+        [_checkView setUserInteractionEnabled:YES];
+        [self.contentView addSubview:_checkView];
+        
+        UIImageView *account = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_code"]];
+        account.center = CGPointMake(50, _checkView.height / 2);
+        [_checkView addSubview:account];
+        
+        _checkTextField = [self addTextFiled:NO content:@"请输入验证码" text:nil parent:_checkView width:_checkView.width - 110];
+        _checkTextField.height = _checkView.height - 4;
+        
+        _getCheckCodeBtn = [UIButton buttonWithImg:@"获取验证码" zoomIn:NO image:[UIImage imageNamed:@"login_send_code"]
+                                          imagesec:[UIImage imageNamed:@"login_send_code_sec"]
+                                            target:self action:@selector(getCodeBtnClicked:)];
+        [_getCheckCodeBtn.titleLabel setFont:[UIFont appFontSize11]];
+        _getCheckCodeBtn.center = CGPointMake(_checkView.width - _getCheckCodeBtn.width / 2 - 10, _checkView.height / 2 - 6);
+        [_checkView addSubview:_getCheckCodeBtn];
+        
+        UIView *line = [[UIView alloc] initWithFrame:(CGRect){10, _checkView.height - 10, self.contentView.width - 20, 0.5}];
+        line.backgroundColor = [UIColor colorWithHexString:@"#626262"];
+        [_checkView addSubview:line];
+    }
+    return _checkView;
+}
 - (UIButton *)loginBtn {
     if (_loginBtn == nil) {
         _loginBtn = [UIButton buttonWithImg:@"登录" zoomIn:NO image:nil imagesec:nil target:self action:@selector(loginRequest)];

@@ -32,11 +32,7 @@
     UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recorder_bg"]];
     bgV.size = self.contentView.size;
     [self.contentView addSubview:bgV];
-    
-    UIImageView *topV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"select_top"]];
-    topV.size = CGSizeMake(self.contentView.width, (self.contentView.width / topV.width) * topV.height);
-    [self.contentView addSubview:topV];
-    
+
     //
     UIImageView *item1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"select_item1"]];
     [self.contentView addSubview:item1];
@@ -84,7 +80,7 @@
     
     //autolayout
     [item1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topV.mas_bottom).offset(34);
+        make.top.equalTo(self.contentView.mas_top).offset(130);
         make.centerX.equalTo(self.contentView.mas_centerX);
     }];
     

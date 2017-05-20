@@ -43,8 +43,9 @@
     item1.center = CGPointMake(item1.width / 2 + 5, item1V.height / 2);
     [item1V addSubview:item1];
     
-    UILabel *label1 = [UILabel labelWithTxt:@"远程连接行车记录仪" frame:(CGRect){item1.maxX + 5, 0, item1V.width - 60, item1V.height}
+    UILabel *label1 = [UILabel labelWithTxt:@"远程连接行车记录仪" frame:(CGRect){item1.maxX + 25, 0, item1V.width - 60, item1V.height}
                                        font:[UIFont appFontSize17] color:[UIColor appBlueTextColor]];
+    label1.textAlignment = NSTextAlignmentLeft;
     [item1V addSubview:label1];
     
     [item1V clicked:^(UIView * _Nonnull view) {
@@ -64,8 +65,9 @@
     item2.center = CGPointMake(item1.width / 2 + 5, item1V.height / 2);
     [item2V addSubview:item2];
     
-    UILabel *label2 = [UILabel labelWithTxt:@"直接连接行车记录仪" frame:(CGRect){item2.maxX + 5, 0, item2V.width - 60, item2V.height}
+    UILabel *label2 = [UILabel labelWithTxt:@"直接连接行车记录仪" frame:(CGRect){item2.maxX + 25, 0, item2V.width - 60, item2V.height}
                                        font:[UIFont appFontSize17] color:[UIColor appOrangeTextColor]];
+    label2.textAlignment = NSTextAlignmentLeft;
     [item2V addSubview:label2];
     
     @weakify(self)
