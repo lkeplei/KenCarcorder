@@ -19,6 +19,9 @@
 + (UIColor *)appLightGrayTextColor;                         //app浅灰字色
 + (UIColor *)appWhiteTextColor;                             //app白色字色
 
++ (UIColor *)appBlueTextColor;
++ (UIColor *)appOrangeTextColor;
+
 + (UIColor *)appBackgroundColor;                            //app背景色
 + (UIColor *)appSepLineColor;                               //app分隔线色
 

@@ -22,10 +22,6 @@
     
     [self setNavTitle:@"分组管理"];
     
-    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"group_bg"]];
-    bgV.size = self.contentView.size;
-    [self.contentView addSubview:bgV];
-    
     float height = 44;
     _groupBg = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, height * 4}];
     [_groupBg setBackgroundColor:[UIColor clearColor]];
@@ -37,7 +33,7 @@
     //button
     UIButton *finishBtn = [UIButton buttonWithImg:@"确认修改" zoomIn:NO image:[UIImage imageNamed:@"login_btn_bg"]
                                          imagesec:nil target:self action:@selector(finishBtnClicked:)];
-    finishBtn.center = CGPointMake(self.view.centerX, CGRectGetMaxY(_groupBg.frame) + 30);
+    finishBtn.center = CGPointMake(self.view.centerX, CGRectGetMaxY(_groupBg.frame) + 80);
     [self.contentView addSubview:finishBtn];
     
     //tap gesture
@@ -108,30 +104,29 @@
 - (void)setGroups:(NSArray *)groups {
     float height = 44;
     for (int i = 0; i < [_groupArray count]; i++) {
-        UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"group_input_bg"]];
-        bg.frame = (CGRect){0, height * i, _groupBg.width, height};
-        [_groupBg addSubview:bg];
-        
-        UILabel *label = [UILabel labelWithTxt:[_groupArray objectAtIndex:i] frame:(CGRect){0, height * i, 70, height}
+        UILabel *label = [UILabel labelWithTxt:[_groupArray objectAtIndex:i] frame:(CGRect){0, (height + 10) * i + 10, 70, height}
                                           font:[UIFont appFontSize16] color:[UIColor blackColor]];
-        [label setTextColor:[UIColor colorWithHexString:@"#FFDD00"]];
+        [label setTextColor:[UIColor appBlackTextColor]];
         [_groupBg addSubview:label];
         
-        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame) + 14, height * i,
-                                                                              _groupBg.width - CGRectGetMaxX(label.frame) - 20, height)];
+        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame) + 4, label.originY,
+                                                                              _groupBg.width - CGRectGetMaxX(label.frame) - 30, height)];
         textField.tag = 1000 + i;
         textField.text = [groups objectAtIndex:i];
-        textField.font = [UIFont appFontSize16];
+        textField.font = [UIFont appFontSize15];
         textField.clearButtonMode = UITextFieldViewModeAlways;
         textField.textAlignment = NSTextAlignmentLeft;
-        textField.textColor = [UIColor appWhiteTextColor];
-        [_groupBg addSubview:textField];
+        textField.textColor = [UIColor appDarkGrayTextColor];
         
-        if (i < _groupArray.count - 1) {
-            UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"app_sep_line"]];
-            line.frame = (CGRect){10, height, _groupBg.width, line.height};
-            [bg addSubview:line];
-        }
+        textField.layer.borderColor = [UIColor appSepLineColor].CGColor;
+        textField.layer.borderWidth = 0.5;
+        textField.layer.cornerRadius = 4;
+        
+        textField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 15, 0)];
+        //设置显示模式为永远显示(默认不显示)
+        textField.leftViewMode = UITextFieldViewModeAlways;
+        
+        [_groupBg addSubview:textField];
     }
 }
 

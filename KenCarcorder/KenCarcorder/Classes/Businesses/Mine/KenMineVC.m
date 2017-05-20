@@ -33,9 +33,8 @@
     _informationTable = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.contentView.size} style:UITableViewStyleGrouped];
     _informationTable.delegate = self;
     _informationTable.dataSource = self;
-    _informationTable.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mine_bg"]];
-    _informationTable.backgroundColor = [UIColor clearColor];
-    _informationTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _informationTable.backgroundColor = [UIColor appBackgroundColor];
+    _informationTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.contentView addSubview:_informationTable];
 }
 
@@ -56,6 +55,17 @@
     return _imageArray.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0.1;
+    }
+    return 10;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.1;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *bankCellIdentifier = @"mineCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bankCellIdentifier];
@@ -66,7 +76,11 @@
         if (!(indexPath.section == 0 && indexPath.row == 0))
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
-        cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
+        if (indexPath.row > 0) {
+            UIView *line = [[UIView alloc] initWithFrame:(CGRect){10, 0, self.contentView.width, 0.5}];
+            line.backgroundColor = [UIColor appSepLineColor];
+            [cell.contentView addSubview:line];
+        }
     }
     
     [cell.imageView setImage:[UIImage imageNamed:_imageArray[indexPath.section][indexPath.row]]];
@@ -83,7 +97,7 @@
         totalSize = totalSize / base;
         contentText = [contentText stringByAppendingFormat:@" (%.1f%@)", totalSize, str];
     }
-    cell.textLabel.textColor = [UIColor appWhiteTextColor];
+    cell.textLabel.textColor = [UIColor appBlackTextColor];
     [cell.textLabel setText:contentText];
     
     return cell;

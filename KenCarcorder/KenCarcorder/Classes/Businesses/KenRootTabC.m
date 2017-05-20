@@ -62,9 +62,9 @@
     //
     //    }];
     
-    [self setTabbarItemTitleColor:[UIColor appWhiteTextColor] selColor:[UIColor colorWithHexString:@"#FFC95B"]];
+    [self setTabbarItemTitleColor:[UIColor appLightGrayTextColor] selColor:[UIColor appMainColor]];
     
-    [self setTabBarBackgroundImage:[UIImage imageNamed:@"tab_bg"]];
+//    [self setTabBarBackgroundImage:[UIImage imageNamed:@"tab_bg"]];
     
     self.tabBar.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
     self.tabBar.layer.shadowOffset = CGSizeMake(0, 5);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用

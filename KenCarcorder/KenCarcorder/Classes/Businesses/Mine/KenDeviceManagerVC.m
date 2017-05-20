@@ -26,7 +26,6 @@
     _informationTable = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.contentView.size} style:UITableViewStylePlain];
     _informationTable.delegate = self;
     _informationTable.dataSource = self;
-    _informationTable.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"device_bg"]];
     _informationTable.backgroundColor = [UIColor clearColor];
     _informationTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.contentView addSubview:_informationTable];
@@ -69,18 +68,17 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
         cell.textLabel.textColor = [UIColor appWhiteTextColor];
+        
+        UIView *line = [[UIView alloc] initWithFrame:(CGRect){10, cell.height, MainScreenWidth, 0.5}];
+        line.backgroundColor = [UIColor appSepLineColor];
+        [cell.contentView addSubview:line];
     }
     
     [cell.imageView setImage:[UIImage imageNamed:@"device_item"]];
 
     KenMobileItemDM *info = [_terminalArray objectAtIndex:indexPath.row]; //设备信息
     [cell.textLabel setText:[NSString stringWithFormat:@"%@(%@)", info.brand, info.model]];
-    
-    if (indexPath.row < _terminalArray.count - 1) {
-        UIView *line = [[UIView alloc] initWithFrame:(CGRect){cell.imageView.maxX, cell.height, MainScreenWidth, 0.5}];
-        line.backgroundColor = [UIColor appSepLineColor];
-        [cell.contentView addSubview:line];
-    }
+    cell.textLabel.textColor = [UIColor appDarkGrayTextColor];
 
     return cell;
 }

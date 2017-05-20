@@ -29,7 +29,7 @@
     // Do any additional setup after loading the view.
     [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"] selector:@selector(popViewController)];
     
-    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tab_recorder_bg"]];
+    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recorder_bg"]];
     bgV.size = self.contentView.size;
     [self.contentView addSubview:bgV];
     

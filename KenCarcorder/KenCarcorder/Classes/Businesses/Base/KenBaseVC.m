@@ -56,7 +56,7 @@
 		
 		//带导航栏的视图，默认显示白色，其他的默认透明
 		if (_screenType == kKenViewScreenNormal) {
-			self.navBarColor = [UIColor colorWithHexString:@"#0075D9"];
+			self.navBarColor = [UIColor colorWithHexString:@"#000000"];
 		} else {
 			self.navBarColor = [UIColor clearColor];
 		}

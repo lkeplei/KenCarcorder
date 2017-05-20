@@ -60,7 +60,7 @@
 
 #pragma mark - 统一颜色
 + (UIColor *)appBlackTextColor {
-    return [UIColor colorWithHexString:@"#4E4E53"];
+    return [UIColor colorWithHexString:@"#464646"];
 }
 
 + (UIColor *)appDarkGrayTextColor {
@@ -72,7 +72,15 @@
 }
 
 + (UIColor *)appLightGrayTextColor {
-    return [UIColor colorWithHexString:@"#DADADA"];
+    return [UIColor colorWithHexString:@"#DCDCDC"];
+}
+
++ (UIColor *)appBlueTextColor {
+    return [UIColor colorWithHexString:@"#00B8B9"];
+}
+
++ (UIColor *)appOrangeTextColor {
+    return [UIColor colorWithHexString:@"#F16749"];
 }
 
 + (UIColor *)appWhiteTextColor {

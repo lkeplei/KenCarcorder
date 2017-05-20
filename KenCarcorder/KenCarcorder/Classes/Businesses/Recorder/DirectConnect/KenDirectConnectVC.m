@@ -31,7 +31,7 @@
     // Do any additional setup after loading the view.
     [self setNavTitle:@"直连行车记录仪"];
     
-    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tab_recorder_bg"]];
+    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recorder_bg"]];
     bgV.size = self.contentView.size;
     [self.contentView addSubview:bgV];
     

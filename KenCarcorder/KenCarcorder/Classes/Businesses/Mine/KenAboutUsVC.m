@@ -25,8 +25,7 @@
     _informationTable = [[UITableView alloc] initWithFrame:(CGRect){0,0,self.contentView.size} style:UITableViewStylePlain];
     _informationTable.delegate = self;
     _informationTable.dataSource = self;
-    _informationTable.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"about_bg"]];
-    _informationTable.backgroundColor = [UIColor clearColor];
+    _informationTable.backgroundColor = [UIColor colorWithHexString:@"#343642"];
     _informationTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _informationTable.tableHeaderView = [self getTableHeadView];
     _informationTable.scrollEnabled = NO;
@@ -56,7 +55,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bankCellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
+        cell.backgroundColor = [UIColor colorWithHexString:@"#2F303B"];
         cell.textLabel.textColor = [UIColor appWhiteTextColor];
     }
     
@@ -72,7 +71,7 @@
     }
     
     if (indexPath.row != 2) {
-        UIView *line = [[UIView alloc] initWithFrame:(CGRect){cell.imageView.maxX, cell.height, MainScreenWidth, 0.5}];
+        UIView *line = [[UIView alloc] initWithFrame:(CGRect){10, cell.height, MainScreenWidth, 0.5}];
         line.backgroundColor = [UIColor appSepLineColor];
         [cell.contentView addSubview:line];
     }
