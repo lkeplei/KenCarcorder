@@ -193,7 +193,7 @@
 }
 
 #pragma mark - getter setter
-- (NSString *)navTitle {
+- (NSString *)pwdTitle {
     if (_pwdTitle == nil) {
         _pwdTitle = @"重置密码";
     }

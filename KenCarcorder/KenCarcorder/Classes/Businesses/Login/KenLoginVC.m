@@ -18,8 +18,9 @@
 @property (nonatomic, strong) UIImageView *checkView;
 @property (nonatomic, strong) UIView *inputV;
 @property (nonatomic, strong) UIView *rememberV;
-@property (nonatomic, strong) UIImageView *loginV;
-@property (nonatomic, strong) UIImageView *registV;
+@property (nonatomic, strong) UIButton *loginBtn;
+@property (nonatomic, strong) UIButton *registBtn;
+@property (nonatomic, strong) UILabel *forgetPwdL;
 
 @property (nonatomic, strong) UIButton *getCheckCodeBtn;
 @property (nonatomic, strong) NSTimer *checkTimer;
@@ -48,17 +49,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.contentView.backgroundColor = [UIColor colorWithHexString:@"#343642"];
     
-    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_bg"]];
-    bgV.frame = (CGRect){0, 0, self.contentView.size};
-    [self.contentView addSubview:bgV];
-    
-    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_icon"]];
-    icon.center = CGPointMake(self.contentView.width / 2, icon.height / 2 + kKenOffsetY(170));
+    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"about_icon"]];
+    icon.center = CGPointMake(self.contentView.width / 2, icon.height / 2 + kKenOffsetY(140));
     [self.contentView addSubview:icon];
     
     _inputV = [self setInputV];
-    _inputV.originY = icon.maxY + kKenOffsetY(76);
+    _inputV.originY = icon.maxY + kKenOffsetY(50);
     
     //check
     _checkView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_input_bg"]];
@@ -79,17 +77,20 @@
     ////
     [self initRememberWithOffsetY:_checkView.maxY];
     
-    [self initBtnWithOffsetY:_checkView.maxY + kKenOffsetY(88)];
-    
-    [self initForgetPwd];
+    self.loginBtn.originY = _checkView.maxY + kKenOffsetY(100);
+    self.registBtn.originY = self.loginBtn.maxY + 10;
     
     [self showCheckView:NO];
 
     //测试先自动登录
-    [self loginRequest];
+//    [self loginRequest];
 }
 
 #pragma mark - event
+- (void)registBtnClicked {
+    [self pushViewControllerString:@"KenRegisterVC" animated:YES];
+}
+
 - (void)loginRequest {
     if ([_accountTextField.text length] <= 0) {
         [self showAlert:@"" content:@"请输入用户名/手机号" type:kToastUnkown];
@@ -165,8 +166,8 @@
 }
 
 #pragma mark - private method
-- (UITextField *)addTextFiled:(BOOL)secure content:(NSString *)content text:(NSString *)text parent:(UIView *)parent width:(CGFloat)width{
-    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(56, 4, width, parent.height / 2 - 8)];
+- (UITextField *)addTextFiled:(BOOL)secure content:(NSString *)content text:(NSString *)text parent:(UIView *)parent width:(CGFloat)width {
+    UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 4, width, parent.height / 2 - 8)];
     textField.placeholder = content;
     if ([NSString isNotEmpty:text]) {
         textField.text = text;
@@ -176,6 +177,7 @@
     textField.secureTextEntry = secure;
     textField.clearsOnBeginEditing = NO;
     textField.textAlignment = NSTextAlignmentLeft;
+    textField.textColor = [UIColor appWhiteTextColor];
     [parent addSubview:textField];
     
     return textField;
@@ -191,43 +193,51 @@
     
     if (show) {
         _rememberV.originY = _checkView.maxY;
-        _loginV.originY = _checkView.maxY + kKenOffsetY(88);
+        _forgetPwdL.originY = _checkView.maxY;
+        _loginBtn.originY = _checkView.maxY + kKenOffsetY(88);
     } else {
         _rememberV.originY = _inputV.maxY;
-        _loginV.originY = _inputV.maxY + kKenOffsetY(88);
+        _forgetPwdL.originY = _inputV.maxY;
+        _loginBtn.originY = _inputV.maxY + kKenOffsetY(88);
     }
-    _registV.originY = _loginV.maxY + kKenOffset;
+    _registBtn.originY = _loginBtn.maxY + kKenOffset;
 }
 
 - (UIView *)setInputV {
-    UIImageView *inputBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_input_bg"]];
-    inputBg.centerX = self.contentView.width / 2;
+    UIView *inputBg = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, 120}];
     [inputBg setUserInteractionEnabled:YES];
     [self.contentView addSubview:inputBg];
 
     //account
     UIImageView *account = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_user"]];
-    account.center = CGPointMake(28, inputBg.height / 4);
+    account.center = CGPointMake(50, inputBg.height / 4);
     [inputBg addSubview:account];
     
+    UIView *line = [[UIView alloc] initWithFrame:(CGRect){10, inputBg.height / 2 - 10, self.contentView.width - 20, 0.5}];
+    line.backgroundColor = [UIColor colorWithHexString:@"#626262"];
+    [inputBg addSubview:line];
+    
     KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
-    _accountTextField = [self addTextFiled:NO content:@"请输入用户名" text:userInfo.userName parent:inputBg width:inputBg.width - 110];
+    _accountTextField = [self addTextFiled:NO content:@"请输入用户名或手机号" text:userInfo.userName parent:inputBg width:inputBg.width - 110];
     _accountTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     //password
     UIImageView *pwd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_pwd"]];
-    pwd.center = CGPointMake(28, inputBg.height * 0.75 - 4);
+    pwd.center = CGPointMake(50, inputBg.height * 0.75 - 4);
     [inputBg addSubview:pwd];
     
     _pwdTextField = [self addTextFiled:YES content:@"请输入密码" text:userInfo.userPwd parent:inputBg width:inputBg.width - 110];
     _pwdTextField.originY = inputBg.height / 2;
     
+    UIView *line1 = [[UIView alloc] initWithFrame:(CGRect){10, inputBg.height - 10, self.contentView.width - 20, 0.5}];
+    line1.backgroundColor = [UIColor colorWithHexString:@"#626262"];
+    [inputBg addSubview:line1];
+    
     return inputBg;
 }
 
 - (void)initRememberWithOffsetY:(CGFloat)offsetY {
-    UIImage *img = [UIImage imageNamed:@"login_register_btn_bg"];
-    _rememberV = [[UIView alloc] initWithFrame:(CGRect){(self.contentView.width - img.size.width) / 2, offsetY - kKenOffset, img.size}];
+    _rememberV = [[UIView alloc] initWithFrame:(CGRect){self.loginBtn.originX, offsetY - kKenOffset, self.loginBtn.width / 2, self.loginBtn.height}];
     _rememberV.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_rememberV];
  
@@ -237,7 +247,7 @@
     [_rememberV addSubview:_rememberImg];
     
     UILabel *label = [UILabel labelWithTxt:@"记住密码" frame:(CGRect){_rememberImg.maxX + kKenOffset, 0, _rememberV.size}
-                                      font:[UIFont appFontSize14] color:[UIColor whiteColor]];
+                                      font:[UIFont appFontSize14] color:[UIColor appGrayTextColor]];
     label.textAlignment = NSTextAlignmentLeft;
     [_rememberV addSubview:label];
 
@@ -246,51 +256,38 @@
         [_rememberImg setImage:[UIImage imageNamed:user.rememberPwd ? @"login_remember_yes" : @"login_remember_no"]];
         [user setInstance];
     }];
-}
-
-- (void)initBtnWithOffsetY:(CGFloat)offsetY {
-    _loginV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_btn_bg"]];
-    _loginV.center = CGPointMake(self.contentView.width / 2, _loginV.height / 2 + offsetY);
-    [_loginV setUserInteractionEnabled:YES];
-    [self.contentView addSubview:_loginV];
     
-    UILabel *loginLabel = [UILabel labelWithTxt:@"登录" frame:(CGRect){0, 0, _loginV.size} font:[UIFont appFontSize17]
-                                          color:[UIColor whiteColor]];
-    [_loginV addSubview:loginLabel];
+    _forgetPwdL = [UILabel labelWithTxt:@"忘记密码？" frame:(CGRect){_rememberV.maxX, _rememberV.originY, _rememberV.size} font:[UIFont appFontSize14]
+                                  color:[UIColor whiteColor]];
+    [self.contentView addSubview:_forgetPwdL];
     @weakify(self)
-    [loginLabel clicked:^(UIView * _Nonnull view) {
-        @strongify(self)
-        [self loginRequest];
-    }];
-    
-    _registV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_register_btn_bg"]];
-    _registV.center = CGPointMake(self.contentView.width / 2, _registV.height / 2 + CGRectGetMaxY(_loginV.frame) + kKenOffset);
-    [_registV setUserInteractionEnabled:YES];
-    [self.contentView addSubview:_registV];
-    
-    UILabel *registerLabel = [UILabel labelWithTxt:@"注册" frame:(CGRect){0, 0, _registV.size} font:[UIFont appFontSize17]
-                                          color:[UIColor whiteColor]];
-    [_registV addSubview:registerLabel];
-    [registerLabel clicked:^(UIView * _Nonnull view) {
-        @strongify(self)
-        [self pushViewControllerString:@"KenRegisterVC" animated:YES];
-    }];
-}
-
-- (void)initForgetPwd {
-    UIImageView *forgetBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_forget_bg"]];
-    forgetBg.frame = (CGRect){0, self.contentView.height - forgetBg.height, self.contentView.width, forgetBg.height};
-    [forgetBg setUserInteractionEnabled:YES];
-    [self.contentView addSubview:forgetBg];
-    
-    UILabel *label = [UILabel labelWithTxt:@"忘记密码？" frame:(CGRect){0, 0, forgetBg.size} font:[UIFont appFontSize14]
-                                          color:[UIColor whiteColor]];
-    [forgetBg addSubview:label];
-    @weakify(self)
-    [label clicked:^(UIView * _Nonnull view) {
+    [_forgetPwdL clicked:^(UIView * _Nonnull view) {
         @strongify(self)
         [self pushViewControllerString:@"KenForgetPwdVC" animated:YES];
     }];
+}
+
+#pragma mark - getter setter 
+- (UIButton *)loginBtn {
+    if (_loginBtn == nil) {
+        _loginBtn = [UIButton buttonWithImg:@"登录" zoomIn:NO image:nil imagesec:nil target:self action:@selector(loginRequest)];
+        _loginBtn.backgroundColor = [UIColor colorWithHexString:@"#454752"];
+        _loginBtn.layer.cornerRadius = 4;
+        _loginBtn.frame = (CGRect){40, 0, self.contentView.width - 80, 40};
+        [self.contentView addSubview:_loginBtn];
+    }
+    return _loginBtn;
+}
+
+- (UIButton *)registBtn {
+    if (_registBtn == nil) {
+        _registBtn = [UIButton buttonWithImg:@"注册" zoomIn:NO image:nil imagesec:nil target:self action:@selector(registBtnClicked)];
+        _registBtn.backgroundColor = [UIColor colorWithHexString:@"#454752"];
+        _registBtn.layer.cornerRadius = 4;
+        _registBtn.frame = (CGRect){40, 0, _loginBtn.size};
+        [self.contentView addSubview:_registBtn];
+    }
+    return _registBtn;
 }
 
 @end
