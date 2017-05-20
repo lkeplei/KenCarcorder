@@ -83,7 +83,7 @@
     [self showCheckView:NO];
 
     //测试先自动登录
-//    [self loginRequest];
+    [self loginRequest];
 }
 
 #pragma mark - event

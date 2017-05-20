@@ -14,6 +14,7 @@
 #import "MJRefresh.h"
 #import "KenAlertView.h"
 #import "KenAlarmRecordVC.h"
+#import "KenSegmentV.h"
 
 #define alarmTabBtnHeight           kKenOffsetY(78)
 
@@ -35,8 +36,7 @@
 @property (nonatomic, strong) UIButton *selectAllBtn;
 
 @property (nonatomic, copy) NSString *selectSN;
-
-@property (nonatomic, strong) UIView *groupV;
+@property (nonatomic, strong) KenSegmentV *segmentView;
 
 @end
 
@@ -60,7 +60,7 @@
     [super viewDidLoad];
     
     [self setNavTitle:@"报警信息"];
-    self.contentView.backgroundColor = [UIColor colorWithHexString:@"#051A28"];
+    self.contentView.backgroundColor = [UIColor appBackgroundColor];
     
     //右上角按钮
     UIButton *button1 = [UIButton buttonWithImg:nil zoomIn:NO image:[UIImage imageNamed:@"alarm_edit"]
@@ -74,7 +74,7 @@
     self.navigationItem.rightBarButtonItems = @[item1, item2];
 
     //视图
-    [self.contentView addSubview:self.groupV];
+    [self.contentView addSubview:self.segmentView];
     [self.contentView addSubview:self.alarmTable];
 }
 
@@ -162,8 +162,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bankCellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor clearColor];
-        cell.contentView.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.contentView.backgroundColor = [UIColor whiteColor];
         cell.contentView.width = MainScreenWidth;
     }
     
@@ -232,24 +232,6 @@
         selectV.tag = 9999;
         [SysDelegate.window addSubview:selectV];
     }
-}
-
-- (void)tabClicked:(UIButton *)button {
-    if (_selectTab == button.tag - 1000 || _editStatus) return;
-    
-    _selectNumbers = button.tag - 1000;
-    _startId = 0;
-    _selectSN = nil;
-    
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    for (UIButton *btn in _tabBtnArray){
-        if (btn != button) {
-            [btn setTitleColor:[UIColor colorWithHexString:@"#94C6E8"] forState:UIControlStateNormal];
-        }
-    }
-    
-    [self loadAlarmData];
 }
 
 - (void)deleteConfirm {
@@ -388,7 +370,7 @@
     [_selectAllBtn setSelected:NO];
     
     self.contentView.height = MainScreenHeight - 64 - kAppTabbarHeight;
-    _alarmTable.frame = CGRectMake(0, self.groupV.maxY, self.contentView.width, self.contentView.height - self.groupV.height);
+    _alarmTable.frame = CGRectMake(0, self.segmentView.maxY, self.contentView.width, self.contentView.height - self.segmentView.height);
     [_alarmTable reloadData];
 }
 
@@ -414,60 +396,54 @@
     float originx = CGRectGetMaxX(imageView.frame) + 6;
     NSString *content = [NSString stringWithFormat:@"设备名称:%@", [info getDeviceName]];
     UILabel *deviceName = [UILabel labelWithTxt:content frame:(CGRect){originx, 10, MainScreenWidth - originx - 30, height}
-                                           font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#64E0F2"]];
+                                           font:[UIFont appFontSize12] color:[UIColor appGrayTextColor]];
     deviceName.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:deviceName];
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:content];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor yellowColor] range:NSMakeRange(5, content.length - 5)];
-    deviceName.attributedText = attributedString;
+//    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:content];
+//    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor appGrayTextColor] range:NSMakeRange(5, content.length - 5)];
+//    deviceName.attributedText = attributedString;
     
     /////////////
     content = [NSString stringWithFormat:@"设备ID号:%@", [info sn]];
     UILabel *deviceID = [UILabel labelWithTxt:content
                                         frame:(CGRect){originx, CGRectGetMaxY(deviceName.frame), deviceName.width, height}
-                                         font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#64E0F2"]];
+                                         font:[UIFont appFontSize12] color:[UIColor appGrayTextColor]];
     deviceID.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:deviceID];
     
-    attributedString = [[NSMutableAttributedString alloc] initWithString:content];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor yellowColor] range:NSMakeRange(5, content.length - 5)];
-    deviceID.attributedText = attributedString;
+//    attributedString = [[NSMutableAttributedString alloc] initWithString:content];
+//    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor appGrayTextColor] range:NSMakeRange(5, content.length - 5)];
+//    deviceID.attributedText = attributedString;
     
     //////////////
     content = [NSString stringWithFormat:@"报警时间:%@", [info getAlarmTimeString]];
     UILabel *time = [UILabel labelWithTxt:content frame:(CGRect){originx, CGRectGetMaxY(deviceID.frame), deviceName.width, height}
-                                     font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#64E0F2"]];
+                                     font:[UIFont appFontSize12] color:[UIColor appGrayTextColor]];
     time.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:time];
     
-    attributedString = [[NSMutableAttributedString alloc] initWithString:content];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor yellowColor] range:NSMakeRange(5, content.length - 5)];
-    time.attributedText = attributedString;
+//    attributedString = [[NSMutableAttributedString alloc] initWithString:content];
+//    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor appGrayTextColor] range:NSMakeRange(5, content.length - 5)];
+//    time.attributedText = attributedString;
     
     ///////////////
-    NSString* name = @"alarm_person";
-    if (info.almType == kKenAlarmVoice) {
-        name = @"alarm_voice";
-    }
-    UIImageView *typeImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:name]];
-    typeImg.originX = time.originX + [content widthForFont:[UIFont appFontSize12]] + 10;
+    UIView *typeImg = [[UIView alloc] initWithFrame:(CGRect){0, 0, 32, 14}];
+    typeImg.originX = time.originX + [content widthForFont:[UIFont appFontSize12]] + 6;
     typeImg.centerY = time.centerY;
+    typeImg.layer.cornerRadius = 6;
+    typeImg.layer.borderColor = [UIColor appMainColor].CGColor;
+    typeImg.layer.masksToBounds = YES;
+    typeImg.layer.borderWidth = 0.5;
     [cell.contentView addSubview:typeImg];
     
     UILabel *label = [UILabel labelWithTxt:[info getAlarmTypeString] frame:(CGRect){0, 0, typeImg.size}
-                                      font:[UIFont appFontSize11] color:[UIColor whiteColor]];
+                                      font:[UIFont appFontSize10] color:[UIColor appMainColor]];
     [typeImg addSubview:label];
     
     //line
-    if (indexPath.row == 0) {
-        UIView *line = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, MainScreenWidth, 0.5}];
-        [line setBackgroundColor:[UIColor colorWithHexString:@"#074F7A"]];
-        [cell.contentView addSubview:line];
-    }
-    
     UIView *line = [[UIView alloc] initWithFrame:(CGRect){0, cellHeight - 0.5, MainScreenWidth, 0.5}];
-    [line setBackgroundColor:[UIColor colorWithHexString:@"#074F7A"]];
+    [line setBackgroundColor:[UIColor appSepLineColor]];
     [cell.contentView addSubview:line];
 }
 
@@ -479,21 +455,9 @@
                                               font:[UIFont appFontSize16] color:[UIColor redColor]];
             [imageView addSubview:label];
         } else {
-            NSString *jpgPath = [NSString stringWithFormat:@"%@/%@", [[KenCarcorder shareCarcorder] getAlarmFolder], [info getImageName]];
-            if ([KenCarcorder fileExistsAtPath:jpgPath]) {
-                [imageView setImage:[UIImage imageNamed:jpgPath]];
-            } else {
-                __weak UIImageView *weakImgV = imageView;
-                [imageView setImageWithURL:[NSURL URLWithString:[info getAlarmImg]]
-                          placeholderImage:[UIImage imageNamed:@"alarm_default_bg"]
-                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                     if (image) {
-                                         [image writeFileWithPath:jpgPath]; //将新缩略图存储到本地
-                                     } else {
-                                         [weakImgV setImage:nil];
-                                     }
-                                 }];
-            }
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[info getAlarmImg]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                
+            }];
         }
     } else {
         UILabel *label = [UILabel labelWithTxt:@"不在线" frame:(CGRect){CGPointZero, imageView.size}
@@ -503,37 +467,29 @@
 }
 
 #pragma mark - getter setter
-- (UIView *)groupV {
-    if (_groupV == nil) {
-        _groupV = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, kKenOffsetY(78)}];
-        _groupV.backgroundColor = [UIColor colorWithHexString:@"#084AAB"];
+- (KenSegmentV *)segmentView {
+    if (_segmentView == nil) {
+        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM getInstance] deviceGroups] frame:(CGRect){0, 0, self.contentView.width, 35}];
         
-        NSArray *group = [KenUserInfoDM sharedInstance].deviceGroups;
-        float width = self.contentView.width / [group count];
-        for (NSInteger i = 0; i < [group count]; i++) {
-            NSString *name = [group objectAtIndex:i];
-            UIButton *button = [UIButton buttonWithImg:name zoomIn:NO image:nil imagesec:nil
-                                                target:self action:@selector(tabClicked:)];
-            button.tag = 1000 + i;
-            button.frame = (CGRect){width * i, 0, width, _groupV.height};
-            [button setTitleColor:[UIColor colorWithHexString:@"#94C6E8"] forState:UIControlStateNormal];
+        [self loadAlarmData];
+        
+        @weakify(self)
+        _segmentView.segmentSelectChanged = ^(NSInteger index) {
+            @strongify(self)
+            _selectNumbers = index;
+            _startId = 0;
+            _selectSN = nil;
             
-            [_groupV addSubview:button];
+            [self loadAlarmData];
             
-            [_tabBtnArray addObject:button];
-            
-            if (i == 0) {
-                [self tabClicked:button];
-            }
-        }
+        };
     }
-    return _groupV;
+    return _segmentView;
 }
 
 - (UITableView *)alarmTable {
     if (_alarmTable == nil) {
-        _alarmTable = [[UITableView alloc] initWithFrame:(CGRect){0, self.groupV.maxY, self.contentView.width,
-            self.contentView.height - self.groupV.height}
+        _alarmTable = [[UITableView alloc] initWithFrame:(CGRect){0, self.segmentView.maxY + 10, self.contentView.width, self.contentView.height - self.segmentView.height}
                                                    style:UITableViewStylePlain];
         _alarmTable.delegate = self;
         _alarmTable.dataSource = self;
@@ -551,13 +507,9 @@
 
 - (UIImageView *)bgImgView {
     if (_bgImgView == nil) {
-        _bgImgView = [[UIImageView alloc] initWithFrame:(CGRect){0,0,self.contentView.size}];
-        _bgImgView.backgroundColor = [UIColor clearColor];
+        _bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_bg"]];
+        _bgImgView.center = CGPointMake(self.contentView.width / 2, self.contentView.height / 2);
         [self.contentView addSubview:_bgImgView];
-        
-        UILabel *label = [UILabel labelWithTxt:@"没有报警信息！！" frame:(CGRect){0,0,_bgImgView.size}
-                                          font:[UIFont appFontSize22] color:[UIColor whiteColor]];
-        [_bgImgView addSubview:label];
     }
     return _bgImgView;
 }
