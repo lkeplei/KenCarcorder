@@ -29,7 +29,8 @@
 @property (nonatomic, strong) UIView *downloadListV;
 @property (nonatomic, strong) UIView *funtionNav;
 
-@property (nonatomic, strong) NSString *historyFileName;
+@property (nonatomic, strong) NSString *historyFileName;        //当前文件名
+@property (nonatomic, assign) BOOL fileChange;                  //文件是否切换
 
 @end
 
@@ -69,7 +70,7 @@
     
     _isFinished = YES;
     SysDelegate.allowRotation = NO;
-//    thNet_RemoteFileStop(_recorderView.deviceInfo.connectHandle);
+    [_videoV stopRecorder];
 }
 
 #pragma mark - data
@@ -224,7 +225,7 @@
         NSString *minute = [[[timeDic objectForKey:@"minute"] objectAtIndex:_minuteSelectedIndex]
                             stringByReplacingOccurrencesOfString:@": " withString:@""];
         NSString *fileName = [NSString stringWithFormat:@"/sd/%@/%@_%@%@_0.av", day, day, [timeDic objectForKey:@"hour"], minute];
-        _historyFileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@""];
+        self.historyFileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@""];
     }
 }
 
@@ -338,7 +339,16 @@
             break;
         case 1: {
             //播放
-            [_videoV playRecorder:self.historyFileName];
+            if (_fileChange) {
+                _fileChange = NO;
+                [_videoV playRecorder:self.historyFileName];
+            } else {
+                if ([NSString isNotEmpty:self.historyFileName]) {
+                    [_videoV playRecorder:self.historyFileName];
+                } else {
+                    [self showToastWithMsg:@"请选择需要播放的文件"];
+                }
+            }
         }
             break;
         case 2: {
@@ -378,10 +388,14 @@
 }
 
 #pragma mark - getter setter
+- (void)setHistoryFileName:(NSString *)historyFileName {
+    _historyFileName = historyFileName;
+    _fileChange = YES;
+}
+
 - (KenVideoV *)videoV {
     if (_videoV == nil) {
-        _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 0, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
-        [_videoV showVideoWithDevice:self.deviceInfo];
+        _videoV = [[KenVideoV alloc] initHistoryWithDevice:_deviceInfo frame:(CGRect){0, 0, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
     }
     return _videoV;
 }

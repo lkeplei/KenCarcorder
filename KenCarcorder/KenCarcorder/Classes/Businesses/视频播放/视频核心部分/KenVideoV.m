@@ -12,6 +12,18 @@
 #import "KenDeviceShareDM.h"
 #import "KenZoomScrollView.h"
 
+typedef NS_ENUM(NSUInteger, YDRecorderStatusType) {         //录像指令状态
+    kYDRecorderStatusNone = 0,                              //未知
+    kYDRecorderStatusPlay = 1,                              //播放
+    kYDRecorderStatusPause = 2,                              //暂停
+    kYDRecorderStatusStop = 3,                              //停止
+    kYDRecorderStatusFastBackward = 4,                              //进退
+    kYDRecorderStatusFastForward = 5,                              //快进
+    kYDRecorderStatusStepBackward = 6,                              //
+    kYDRecorderStatusStepForward = 7,                              //未知
+    kYDRecorderStatusDragPos = 8,                              //未知
+};
+
 //#define kHardDecode                 //是否硬解码
 
 @interface KenVideoV ()<VideoFrameDelegate>
@@ -29,6 +41,10 @@
 @property (nonatomic, strong) UILabel *recorderTimeLab;
 @property (nonatomic, assign) NSUInteger timeLength;        //录像时长
 
+@property (nonatomic, assign) BOOL isRecorder;              //是否为播放录像状态
+@property (nonatomic, assign) BOOL isRecorderPlaying;       //是否正在播放录像
+@property (nonatomic, strong) NSString *recorderFileName;   //录像名
+
 @end
 
 @implementation KenVideoV
@@ -43,6 +59,21 @@ int hSocketServer; //服务器连接
     self = [super initWithFrame:frame];
     if (self) {
         retVideoSelf = self;
+        _isRecorderPlaying = NO;
+        _isRecorder = NO;
+        self.backgroundColor = [UIColor blackColor];
+    }
+    return self;
+}
+
+- (instancetype)initHistoryWithDevice:(KenDeviceDM *)device frame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        retVideoSelf = self;
+        _isRecorderPlaying = NO;
+        _isRecorder = YES;
+        _deviceDM = device;
+        _playAudio = YES;
         self.backgroundColor = [UIColor blackColor];
     }
     return self;
@@ -167,32 +198,115 @@ int hSocketServer; //服务器连接
 
 #pragma mark - 回放相关
 - (void)stopRecorder {
+    _isRecorderPlaying = NO;
     
+    if (thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0)) {
+        [self reStopRecorder];
+    } else {
+        sleep(1);
+        [self stopRecorder];
+    }
+}
+
+- (BOOL)reStopRecorder {
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        if (!thNet_RemoteFileStop(_deviceDM.connectHandle)) {
+            sleep(1);
+            return [self reStopRecorder];
+        } else {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (void)pauseRecorder {
+    _isRecorderPlaying = NO;
     
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPause, 1, 0);
+    }
+}
+
+- (void)resumeRecorder {
+    _isRecorderPlaying = YES;
+    
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 1, 0);
+    }
 }
 
 - (void)playRecorder:(NSString *)filePath {
     if ([NSString isNotEmpty:filePath]) {
-        
+        if (thNet_IsConnect(_deviceDM.connectHandle) && self.video) {
+            if (_isRecorderPlaying) {
+                if ([filePath isEqualToString:_recorderFileName]) {
+                    [self pauseRecorder];
+                } else {
+                    [self stopRecorder];
+                    
+                    [self playRecorder:filePath];
+                }
+            } else {
+                if ([filePath isEqualToString:_recorderFileName]) {
+                    [self resumeRecorder];
+                } else {
+                    _recorderFileName = filePath;
+                    _isRecorderPlaying = YES;
+                    [self rePlayRecorder];
+                    
+                    [self makeToastActivity];
+                }
+            }
+        } else {
+            _recorderFileName = filePath;
+            [Async background:^{
+                [self startVidthread];
+            }];
+        }
     } else {
         DebugLog("文件名不能为空");
     }
 }
 
 - (void)recorderSpeed {
-    
+//    if (_isFastForward) {
+//        _isFastForward = NO;
+//        _vedioPlaySpeed = 1;
+//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
+//        usleep(800 * 1000);
+//    }
+//    
+//    self.vedioPlaySpeed = _vedioPlaySpeed >= 32 ? 1 : _vedioPlaySpeed * 2;
+//    if (_vedioPlaySpeed == 1) {
+//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
+//    } else {
+//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusFastForward, (int)_vedioPlaySpeed, 0);
+//    }
 }
 
 - (void)recorderRewind {
-    
+//    if (!_isFastForward) {
+//        _isFastForward = YES;
+//        _vedioPlaySpeed = 1;
+//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
+//        usleep(800 * 1000);
+//    }
+//    
+//    self.vedioPlaySpeed = _vedioPlaySpeed >= 32 ? 1 : _vedioPlaySpeed * 2;
+//    if (_vedioPlaySpeed == 1) {
+//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
+//    } else {
+//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusFastBackward, (int)_vedioPlaySpeed, 0);
+//    }
 }
 
 - (void)downloadRecorder {
     
 }
+
+
 
 #pragma mark - 视频连接与数据回调
 - (void)startVidthread {
@@ -408,7 +522,11 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
         [self.audio initRecordAudio];
     }
     
-    [self rePlay];
+    if (_isRecorder) {
+        [self rePlayRecorder];
+    } else {
+        [self rePlay];
+    }
     
     [self.audio pauseRecord];
 }
@@ -558,6 +676,19 @@ bool RecvBuf1(int hSocket, char* Buf, int BufLen) {
     }
     
     return time;
+}
+
+#pragma mark - 视频控制相关
+- (void)rePlayRecorder {
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        if (!thNet_RemoteFilePlay(_deviceDM.connectHandle, (char *)[_recorderFileName cStringUsingEncoding:NSASCIIStringEncoding])) {
+            [Async mainAfter:1 block:^{
+                [self rePlayRecorder];
+            }];
+        } else {
+            _isRecorderPlaying = YES;
+        }
+    }
 }
 
 #pragma mark - getter setter 

@@ -1220,15 +1220,15 @@ bool thNet_Stop(int64_t NetHandle)
 
     } else {
 #ifdef IsUsedP2P
-//        TNewCmdPkt Pkt;
-//        memset(&Pkt, 0, sizeof(TNewCmdPkt));
-//        Pkt.VerifyCode = Head_CmdPkt;
-//        Pkt.MsgID = IOTYPE_USER_IPCAM_STOP;
-//        Pkt.Result = 0;
-//        Pkt.PktSize = 0;
-//        int ret = avSendIOCtrl(Play->p2p_avIndex, IOTYPE_USER_IPCAM_STOP, (char*)&Pkt, 8 + Pkt.PktSize);
-//        
-//        printf("before stop send ret = %d", ret);
+        TNewCmdPkt Pkt;
+        memset(&Pkt, 0, sizeof(TNewCmdPkt));
+        Pkt.VerifyCode = Head_CmdPkt;
+        Pkt.MsgID = IOTYPE_USER_IPCAM_STOP;
+        Pkt.Result = 0;
+        Pkt.PktSize = 0;
+        int ret = avSendIOCtrl(Play->p2p_avIndex, IOTYPE_USER_IPCAM_STOP, (char*)&Pkt, 8 + Pkt.PktSize);
+        
+        printf("before stop send ret = %d", ret);
 #endif
     }
     return thNet_Play(NetHandle, 0, 0, 0);

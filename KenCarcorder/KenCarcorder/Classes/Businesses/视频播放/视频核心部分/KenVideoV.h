@@ -23,6 +23,9 @@
 @property (nonatomic, strong) KenVideoFrameExtractor *video;
 @property (nonatomic, strong) KenAudio *audio;
 
+//初始化，特定给回放用
+- (instancetype)initHistoryWithDevice:(KenDeviceDM *)device frame:(CGRect)frame;
+
 //开始视频
 - (void)showVideoWithDevice:(KenDeviceDM *)device;
 //结束视频
