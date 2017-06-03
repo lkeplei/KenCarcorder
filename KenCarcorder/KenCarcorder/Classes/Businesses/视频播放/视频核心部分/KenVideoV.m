@@ -44,6 +44,8 @@ typedef NS_ENUM(NSUInteger, YDRecorderStatusType) {         //录像指令状态
 @property (nonatomic, assign) BOOL isRecorder;              //是否为播放录像状态
 @property (nonatomic, assign) BOOL isRecorderPlaying;       //是否正在播放录像
 @property (nonatomic, strong) NSString *recorderFileName;   //录像名
+@property (nonatomic, assign) NSUInteger vedioPlaySpeed;    //回看视频速度
+@property (nonatomic, assign) BOOL isFastForward;           //是否为快进状态，YES为快进状态，NO为快退状态，都只在速度不为1的时候才有效
 
 @end
 
@@ -61,6 +63,7 @@ int hSocketServer; //服务器连接
         retVideoSelf = self;
         _isRecorderPlaying = NO;
         _isRecorder = NO;
+        self.vedioPlaySpeed = 1;
         self.backgroundColor = [UIColor blackColor];
     }
     return self;
@@ -74,6 +77,7 @@ int hSocketServer; //服务器连接
         _isRecorder = YES;
         _deviceDM = device;
         _playAudio = YES;
+        _vedioPlaySpeed = 1;
         self.backgroundColor = [UIColor blackColor];
     }
     return self;
@@ -221,6 +225,17 @@ int hSocketServer; //服务器连接
     return NO;
 }
 
+- (NSUInteger)recoverRecorder {
+    _isRecorderPlaying = YES;
+    
+    if (thNet_IsConnect(_deviceDM.connectHandle)) {
+        self.vedioPlaySpeed = 1;
+        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
+    }
+    
+    return self.vedioPlaySpeed;
+}
+
 - (void)pauseRecorder {
     _isRecorderPlaying = NO;
     
@@ -270,43 +285,43 @@ int hSocketServer; //服务器连接
     }
 }
 
-- (void)recorderSpeed {
-//    if (_isFastForward) {
-//        _isFastForward = NO;
-//        _vedioPlaySpeed = 1;
-//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
-//        usleep(800 * 1000);
-//    }
-//    
-//    self.vedioPlaySpeed = _vedioPlaySpeed >= 32 ? 1 : _vedioPlaySpeed * 2;
-//    if (_vedioPlaySpeed == 1) {
-//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
-//    } else {
-//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusFastForward, (int)_vedioPlaySpeed, 0);
-//    }
+- (NSUInteger)recorderSpeed {
+    if (_isFastForward) {
+        _isFastForward = NO;
+        self.vedioPlaySpeed = 1;
+    } else {
+        self.vedioPlaySpeed = _vedioPlaySpeed >= 32 ? 1 : _vedioPlaySpeed * 2;
+    }
+    
+    if (_vedioPlaySpeed == 1) {
+        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
+    } else {
+        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusFastForward, (int)_vedioPlaySpeed, 0);
+    }
+    
+    return _vedioPlaySpeed;
 }
 
-- (void)recorderRewind {
-//    if (!_isFastForward) {
-//        _isFastForward = YES;
-//        _vedioPlaySpeed = 1;
-//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
-//        usleep(800 * 1000);
-//    }
-//    
-//    self.vedioPlaySpeed = _vedioPlaySpeed >= 32 ? 1 : _vedioPlaySpeed * 2;
-//    if (_vedioPlaySpeed == 1) {
-//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
-//    } else {
-//        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusFastBackward, (int)_vedioPlaySpeed, 0);
-//    }
+- (NSUInteger)recorderRewind {
+    if (!_isFastForward) {
+        _isFastForward = YES;
+        self.vedioPlaySpeed = 1;
+    } else {
+        self.vedioPlaySpeed = _vedioPlaySpeed >= 32 ? 1 : _vedioPlaySpeed * 2;
+    }
+    
+    if (_vedioPlaySpeed == 1) {
+        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusPlay, 0, 0);
+    } else {
+        thNet_RemoteFilePlayControl(_deviceDM.connectHandle, kYDRecorderStatusFastBackward, (int)_vedioPlaySpeed, 0);
+    }
+    
+    return _vedioPlaySpeed;
 }
 
 - (void)downloadRecorder {
     
 }
-
-
 
 #pragma mark - 视频连接与数据回调
 - (void)startVidthread {

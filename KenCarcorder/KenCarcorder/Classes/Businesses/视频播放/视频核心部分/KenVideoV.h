@@ -46,12 +46,14 @@
 - (void)stopRecorder;
 //暂停正在播放的历史文件
 - (void)pauseRecorder;
+//恢复播放
+- (NSUInteger)recoverRecorder;
 //播放历史文件
 - (void)playRecorder:(NSString *)filePath;
 //快进
-- (void)recorderSpeed;
+- (NSUInteger)recorderSpeed;
 //快退
-- (void)recorderRewind;
+- (NSUInteger)recorderRewind;
 //下载正在播放的文件，如果当前没有播放历史文件，则不下载
 - (void)downloadRecorder;
 

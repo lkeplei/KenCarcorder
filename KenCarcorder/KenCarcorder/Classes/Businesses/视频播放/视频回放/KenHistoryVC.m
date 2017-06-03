@@ -31,6 +31,9 @@
 
 @property (nonatomic, strong) NSString *historyFileName;        //当前文件名
 @property (nonatomic, assign) BOOL fileChange;                  //文件是否切换
+@property (nonatomic, strong) UILabel *speedLabel;              //速度标签
+@property (nonatomic, strong) UILabel *vedioSpeedLabel;         //视频播放速度标签
+@property (nonatomic, strong) UIButton *recoverBtn;             //恢复按钮
 
 @end
 
@@ -63,6 +66,15 @@
     [self loadHistoryData];
     
     SysDelegate.allowRotation = YES;
+    
+    @weakify(self)
+    [[KenGCDTimerManager sharedInstance] scheduledTimerWithName:@"miniVideoTime" timeInterval:1 queue:nil repeats:YES
+                                                   actionOption:kKenGCDTimerAbandon action:^{
+       @strongify(self)
+       [Async main:^{
+           self.speedLabel.text = self.videoV.speed;
+       }];
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -334,7 +346,7 @@
     switch (tag) {
         case 0: {
             //快退
-            [self.videoV recorderRewind];
+            [self setPlaySpeed:[self.videoV recorderRewind]];
         }
             break;
         case 1: {
@@ -353,7 +365,7 @@
             break;
         case 2: {
             //快进
-            [self.videoV recorderSpeed];
+            [self setPlaySpeed:[self.videoV recorderSpeed]];
         }
             break;
         case 100: {
@@ -383,14 +395,33 @@
         default:
             break;
     }
+}
+
+- (void)recoverBtnClicked {
+    [self setPlaySpeed:[self.videoV recoverRecorder]];
+}
+
+#pragma mark - private method
+- (void)setPlaySpeed:(NSUInteger)speed {
+    self.recoverBtn.hidden = speed == 1 ? YES : NO;
+    self.vedioSpeedLabel.hidden = speed == 1 ? YES : NO;
     
-    DebugLog("tag = %zd", tag);
+    self.vedioSpeedLabel.text = [NSString stringWithFormat:@"X %zd", speed];
 }
 
 #pragma mark - getter setter
 - (void)setHistoryFileName:(NSString *)historyFileName {
     _historyFileName = historyFileName;
     _fileChange = YES;
+}
+
+- (UILabel *)vedioSpeedLabel {
+    if (_vedioSpeedLabel == nil) {
+        _vedioSpeedLabel = [UILabel labelWithTxt:@"" frame:(CGRect){self.contentView.width - 60, 10, 60, 30}
+                                            font:[UIFont appFontSize16] color:[UIColor appWhiteTextColor]];
+        [self.contentView addSubview:_vedioSpeedLabel];
+    }
+    return _vedioSpeedLabel;
 }
 
 - (KenVideoV *)videoV {
@@ -437,12 +468,13 @@
         _funtionNav = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY - kKenOffsetY(86), self.contentView.width, kKenOffsetY(86)}];
         _funtionNav.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
         
+        //左边功能按钮
         NSArray *btnArr = @[@"history_rewind", @"history_play", @"history_speed"];
         CGFloat offsetX = 0;
         for (NSUInteger i = 0; i < btnArr.count; i++) {
             UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]
                                               imagesec:nil target:self action:@selector(navBtnClicked:)];
-            CGFloat width = button.width + kKenOffsetX(25);
+            CGFloat width = button.width + kKenOffsetX(20);
             button.frame = (CGRect){offsetX, 0, width, _funtionNav.height};
             offsetX += width;
             
@@ -451,12 +483,31 @@
             [_funtionNav addSubview:button];
         }
         
+        //速度标签
+        _speedLabel = [UILabel labelWithTxt:@"" frame:(CGRect){offsetX, 0, 70, _funtionNav.height}
+                                       font:[UIFont appFontSize12] color:[UIColor appWhiteTextColor]];
+        _speedLabel.numberOfLines = 0;
+        [_funtionNav addSubview:_speedLabel];
+        
+        //恢复按钮
+        _recoverBtn = [UIButton buttonWithImg:@"恢复" zoomIn:NO image:nil imagesec:nil
+                                       target:self action:@selector(recoverBtnClicked)];
+        _recoverBtn.frame = CGRectMake(_speedLabel.maxX, 6, 40, _funtionNav.height - 12);
+        _recoverBtn.hidden = YES;
+        _recoverBtn.layer.cornerRadius = 4;
+        _recoverBtn.layer.masksToBounds = YES;
+        _recoverBtn.layer.borderWidth = 1;
+        _recoverBtn.layer.borderColor = [[UIColor colorWithHexString:@"#79CDFA"] CGColor];
+        [_recoverBtn setTitleColor:[UIColor colorWithHexString:@"#79CDFA"] forState:UIControlStateNormal];
+        [_funtionNav addSubview:_recoverBtn];
+        
+        //右边功能按钮
         btnArr = @[@"history_full", @"history_video", @"history_photo", @"history_download"];
         offsetX = _videoV.width;
         for (NSUInteger i = 0; i < btnArr.count; i++) {
             UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]
                                               imagesec:nil target:self action:@selector(navBtnClicked:)];
-            CGFloat width = button.width + kKenOffsetX(50);
+            CGFloat width = button.width + kKenOffsetX(40);
             button.frame = (CGRect){offsetX - width, 0, width, _funtionNav.height};
             offsetX = button.originX;
             
