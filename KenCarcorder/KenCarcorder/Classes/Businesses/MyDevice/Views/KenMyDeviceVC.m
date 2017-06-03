@@ -18,6 +18,7 @@
 @property (nonatomic, strong) KenSegmentV *segmentView;
 @property (nonatomic, strong) UICollectionView *collectV;
 @property (nonatomic, strong) NSMutableArray *tempArray;
+@property (nonatomic, strong) UIImageView *bgImgView;
 
 @end
 
@@ -33,6 +34,8 @@
     [self.contentView addSubview:self.segmentView];
     [self.contentView addSubview:self.collectV];
     self.currentGroup = 0;
+    
+    [self pushViewControllerString:@"KenLoginVC" animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -96,9 +99,12 @@
     }
     
     if ([self.tempArray count] > 0) {
+        self.bgImgView.hidden = YES;
+        self.collectV.hidden = NO;
         [self.collectV reloadData];
     } else {
-        [self showToastWithMsg:@"拿不到到设备 列表，怎么搞！！！！！！"];
+        self.bgImgView.hidden = NO;
+        self.collectV.hidden = YES;
     }
 }
 
@@ -140,4 +146,14 @@
     }
     return _collectV;
 }
+
+- (UIImageView *)bgImgView {
+    if (_bgImgView == nil) {
+        _bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_bg"]];
+        _bgImgView.center = CGPointMake(self.contentView.width / 2, self.contentView.height / 2);
+        [self.contentView addSubview:_bgImgView];
+    }
+    return _bgImgView;
+}
+
 @end

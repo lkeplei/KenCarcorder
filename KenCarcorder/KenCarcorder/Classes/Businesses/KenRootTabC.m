@@ -11,7 +11,6 @@
 //#import "KenHomeVC.h"
 #import "KenMyDeviceVC.h"
 #import "KenMineVC.h"
-#import "KenALarmVC.h"
 #import "KenRecorderVC.h"
 #import "KenPlayVC.h"
 
@@ -44,11 +43,11 @@
                                                         image:[UIImage imageNamed:@"tab_play_normal"]
                                                 selectedImage:[UIImage imageNamed:@"tab_play_hl"]];
     
-    KenALarmVC *alarmVC = [[KenALarmVC alloc] init];
-    KenNavigationC *naviAlarm = [[KenNavigationC alloc] initWithRootViewController:alarmVC];
-    alarmVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"报警"
-                                                       image:[UIImage imageNamed:@"tab_alarm_normal"]
-                                               selectedImage:[UIImage imageNamed:@"tab_alarm_hl"]];
+    _alarmVC = [[KenALarmVC alloc] init];
+    KenNavigationC *naviAlarm = [[KenNavigationC alloc] initWithRootViewController:_alarmVC];
+    _alarmVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"报警"
+                                                        image:[UIImage imageNamed:@"tab_alarm_normal"]
+                                                selectedImage:[UIImage imageNamed:@"tab_alarm_hl"]];
     
     KenMineVC *mineVC = [[KenMineVC alloc] init];
     KenNavigationC *naviMine = [[KenNavigationC alloc] initWithRootViewController:mineVC];

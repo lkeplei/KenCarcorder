@@ -143,9 +143,9 @@
 		[btn setImageEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 0)];        //图片向左靠
 		self.navigationItem.leftBarButtonItem = item;
 	} else {
+        [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];        //图片向右靠
 		self.navigationItem.rightBarButtonItem = item;
 	}
-	
 }
 
 - (void)setNavItemWithText:(NSString *)text selector:(SEL)sel left:(BOOL)left {

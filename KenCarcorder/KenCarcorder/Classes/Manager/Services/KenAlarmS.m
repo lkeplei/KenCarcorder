@@ -88,5 +88,14 @@
                   }];
 }
 
+- (void)alarmSetOnOff:(BOOL)on sn:(NSString *)sn
+                    success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed {
+    [self httpAsyncPost:[kAppServerHost stringByAppendingString:on ? @"camera/alarmOn.json" : @"camera/alarmOff.json"]
+            requestInfo:@{@"sn":sn}
+                  start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                      SafeHandleBlock(success, YES, nil, nil);
+                  }];
+}
+
 @end
 

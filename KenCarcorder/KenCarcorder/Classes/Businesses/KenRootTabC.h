@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "KenALarmVC.h"
+
 @interface KenRootTabC : UITabBarController
+
+@property (nonatomic, strong) KenALarmVC *alarmVC;
 
 - (KenBaseVC *)currentSelectedVC;
 

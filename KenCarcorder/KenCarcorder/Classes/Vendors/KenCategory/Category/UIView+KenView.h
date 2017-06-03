@@ -72,6 +72,7 @@ extern NSString * const CSToastPositionBottom;
 
 #pragma mark - ToastActivity
 - (void)makeToastActivity;
+- (void)makeSamllToastActivity;
 - (void)makeToastActivity:(id)position;
 - (void)hideToastActivity;
 

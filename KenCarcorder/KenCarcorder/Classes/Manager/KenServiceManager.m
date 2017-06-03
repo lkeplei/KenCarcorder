@@ -12,6 +12,7 @@
 #import "KenDeviceS.h"
 #import "KenAlarmS.h"
 #import "KenAlarmStatDM.h"
+#import "KenDeviceDM.h"
 
 @implementation KenServiceManager
 
@@ -46,10 +47,10 @@
             KenAlarmStatItemDM *stat = [statDM.list objectAtIndex:i];
             _alarmNumbers += stat.count;
             
-//            YDDeviceInfo *device = [[YDModel shareModel] getDeviceBySn:stat.deviceSn];
-//            if (device) {
-//                device.haveUnreadAlarm = YES;
-//            }
+            KenDeviceDM *device = [[KenUserInfoDM sharedInstance] deviceWithSN:stat.sn];
+            if (device) {
+                device.haveUnreadAlarm = YES;
+            }
         }
         
         [self updateAarmStat];

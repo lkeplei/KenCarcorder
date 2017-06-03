@@ -24,4 +24,7 @@
 - (void)alarmReadWithId:(NSArray *)alarmIdArr
                 success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
+- (void)alarmSetOnOff:(BOOL)on sn:(NSString *)sn
+              success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
+
 @end

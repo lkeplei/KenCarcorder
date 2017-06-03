@@ -431,10 +431,18 @@ NSString * const CSToastPositionBottom          = @"bottom";
 
 #pragma mark - ToastActivity
 - (void)makeToastActivity {
-    [self makeToastActivity:CSToastActivityDefaultPosition];
+    [self makeToastActivity:CSToastActivityDefaultPosition style:UIActivityIndicatorViewStyleWhiteLarge];
+}
+
+- (void)makeSamllToastActivity {
+    [self makeToastActivity:CSToastActivityDefaultPosition style:UIActivityIndicatorViewStyleWhite];
 }
 
 - (void)makeToastActivity:(id)position {
+    [self makeToastActivity:CSToastActivityDefaultPosition style:UIActivityIndicatorViewStyleWhiteLarge];
+}
+
+- (void)makeToastActivity:(id)position style:(UIActivityIndicatorViewStyle)style {
     // sanity
     UIView *existingActivityView = (UIView *)objc_getAssociatedObject(self, &CSToastActivityViewKey);
     if (existingActivityView != nil) return;
@@ -454,7 +462,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
         activityView.layer.shadowOffset = CSToastShadowOffset;
     }
 
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:style];
     activityIndicatorView.center = CGPointMake(activityView.bounds.size.width / 2, activityView.bounds.size.height / 2);
     [activityView addSubview:activityIndicatorView];
     [activityIndicatorView startAnimating];

@@ -472,7 +472,7 @@
     if (_videoNav == nil) {
         _videoNav = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY - kKenOffsetY(86),
                                                             self.contentView.width, kKenOffsetY(86)}];
-        _videoNav.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+        _videoNav.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
         
         UIButton *speaker = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_speaker"]
                                            imagesec:nil target:self action:@selector(speaker:)];

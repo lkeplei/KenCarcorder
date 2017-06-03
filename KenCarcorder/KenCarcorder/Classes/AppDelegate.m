@@ -27,7 +27,7 @@
     
     _allowRotation = NO;
     //获取警告数
-//    [[KenServiceManager sharedServiceManager] getAarmStat];
+    [[KenServiceManager sharedServiceManager] getAarmStat];
     
     return YES;
 }
