@@ -165,7 +165,32 @@ int hSocketServer; //服务器连接
     [self.audio pauseRecord];
 }
 
+#pragma mark - 回放相关
+- (void)stopRecorder {
+    
+}
+
+- (void)pauseRecorder {
+    
+}
+
 - (void)playRecorder:(NSString *)filePath {
+    if ([NSString isNotEmpty:filePath]) {
+        
+    } else {
+        DebugLog("文件名不能为空");
+    }
+}
+
+- (void)recorderSpeed {
+    
+}
+
+- (void)recorderRewind {
+    
+}
+
+- (void)downloadRecorder {
     
 }
 

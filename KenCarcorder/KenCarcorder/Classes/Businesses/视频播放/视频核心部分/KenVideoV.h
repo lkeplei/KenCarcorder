@@ -37,7 +37,19 @@
 - (void)recordVideo;
 //分享视频
 - (void)shareVedio;
-//播放
+
+#pragma mark - 回放相关
+//停止回放
+- (void)stopRecorder;
+//暂停正在播放的历史文件
+- (void)pauseRecorder;
+//播放历史文件
 - (void)playRecorder:(NSString *)filePath;
+//快进
+- (void)recorderSpeed;
+//快退
+- (void)recorderRewind;
+//下载正在播放的文件，如果当前没有播放历史文件，则不下载
+- (void)downloadRecorder;
 
 @end

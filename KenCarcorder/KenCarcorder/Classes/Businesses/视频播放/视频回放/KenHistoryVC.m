@@ -27,6 +27,9 @@
 @property (nonatomic, strong) KenDeviceDM *deviceInfo;
 @property (nonatomic, strong) UIPickerView *filePickerView;
 @property (nonatomic, strong) UIView *downloadListV;
+@property (nonatomic, strong) UIView *funtionNav;
+
+@property (nonatomic, strong) NSString *historyFileName;
 
 @end
 
@@ -48,6 +51,7 @@
     [self setNavTitle:@"历史回看"];
     
     [self.contentView addSubview:self.videoV];
+    [self.contentView addSubview:self.funtionNav];
     [self.contentView addSubview:self.downloadListV];
     [self.contentView addSubview:self.filePickerView];
 }
@@ -220,7 +224,7 @@
         NSString *minute = [[[timeDic objectForKey:@"minute"] objectAtIndex:_minuteSelectedIndex]
                             stringByReplacingOccurrencesOfString:@": " withString:@""];
         NSString *fileName = [NSString stringWithFormat:@"/sd/%@/%@_%@%@_0.av", day, day, [timeDic objectForKey:@"hour"], minute];
-        [_videoV playRecorder:[fileName stringByReplacingOccurrencesOfString:@" " withString:@""]];
+        _historyFileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@""];
     }
 }
 
@@ -307,6 +311,7 @@
 
 - (void)enterFullscreen {
     [self.videoV removeFromSuperview];
+    [self.funtionNav removeFromSuperview];
     
     self.videoV.frame = (CGRect){CGPointZero, SysDelegate.window.height, SysDelegate.window.width};
     [SysDelegate.window addSubview:self.videoV];
@@ -314,9 +319,62 @@
 
 - (void)exitFullscreen {
     [self.videoV removeFromSuperview];
+    [self.funtionNav removeFromSuperview];
     
     self.videoV.frame = (CGRect){CGPointZero, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
     [self.contentView addSubview:self.videoV];
+    [self.contentView addSubview:self.funtionNav];
+}
+
+#pragma mark - event
+- (void)navBtnClicked:(UIButton *)button {
+    NSInteger tag = button.tag - 1100;
+    
+    switch (tag) {
+        case 0: {
+            //快退
+            [self.videoV recorderRewind];
+        }
+            break;
+        case 1: {
+            //播放
+            [_videoV playRecorder:self.historyFileName];
+        }
+            break;
+        case 2: {
+            //快进
+            [self.videoV recorderSpeed];
+        }
+            break;
+        case 100: {
+            //全屏
+            [KenCarcorder setOrientation:UIInterfaceOrientationPortrait];
+        }
+            break;
+        case 101: {
+            //录像
+            [self.videoV recordVideo];
+        }
+            break;
+        case 102: {
+            //拍照
+            if(thNet_IsConnect(self.deviceInfo.connectHandle)) {
+                [_videoV capture];
+                [self showToastWithMsg:@"抓拍成功"];
+                [[KenCarcorder shareCarcorder] playVoiceByType:kKenVoiceCapture];
+            }
+        }
+            break;
+        case 103: {
+            //下载
+            [self.videoV downloadRecorder];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    DebugLog("tag = %zd", tag);
 }
 
 #pragma mark - getter setter
@@ -359,4 +417,41 @@
     }
     return _filePickerView;
 }
+
+- (UIView *)funtionNav {
+    if (_funtionNav == nil) {
+        _funtionNav = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY - kKenOffsetY(86), self.contentView.width, kKenOffsetY(86)}];
+        _funtionNav.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+        
+        NSArray *btnArr = @[@"history_rewind", @"history_play", @"history_speed"];
+        CGFloat offsetX = 0;
+        for (NSUInteger i = 0; i < btnArr.count; i++) {
+            UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]
+                                              imagesec:nil target:self action:@selector(navBtnClicked:)];
+            CGFloat width = button.width + kKenOffsetX(25);
+            button.frame = (CGRect){offsetX, 0, width, _funtionNav.height};
+            offsetX += width;
+            
+            button.tag = 1100 + i;
+            
+            [_funtionNav addSubview:button];
+        }
+        
+        btnArr = @[@"history_full", @"history_video", @"history_photo", @"history_download"];
+        offsetX = _videoV.width;
+        for (NSUInteger i = 0; i < btnArr.count; i++) {
+            UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]
+                                              imagesec:nil target:self action:@selector(navBtnClicked:)];
+            CGFloat width = button.width + kKenOffsetX(50);
+            button.frame = (CGRect){offsetX - width, 0, width, _funtionNav.height};
+            offsetX = button.originX;
+            
+            button.tag = 1200 + i;
+            
+            [_funtionNav addSubview:button];
+        }
+    }
+    return _funtionNav;
+}
+
 @end
