@@ -8,7 +8,8 @@
 
 #import "KenRootTabC.h"
 #import "KenNavigationC.h"
-#import "KenHomeVC.h"
+//#import "KenHomeVC.h"
+#import "KenMyDeviceVC.h"
 #import "KenMineVC.h"
 #import "KenALarmVC.h"
 #import "KenRecorderVC.h"
@@ -24,7 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    KenHomeVC *homeVC = [[KenHomeVC alloc] init];
+//    KenHomeVC *homeVC = [[KenHomeVC alloc] init];
+    KenMyDeviceVC *homeVC = [[KenMyDeviceVC alloc] init];
     KenNavigationC *naviHome = [[KenNavigationC alloc] initWithRootViewController:homeVC];
     homeVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页"
                                                       image:[UIImage imageNamed:@"tab_home_normal"]

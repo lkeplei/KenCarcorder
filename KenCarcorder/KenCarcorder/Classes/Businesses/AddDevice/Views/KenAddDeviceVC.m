@@ -256,24 +256,22 @@
         [line setBackgroundColor:[UIColor appSepLineColor]];
         [_topView addSubview:line];
         
-        UIButton *searchBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"add_device_search.png"]
-                                             imagesec:[UIImage imageNamed:@"add_device_search_sec.png"]
+        UIButton *searchBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"add_device_search.png"] imagesec:nil
                                                target:self action:@selector(searchClicked)];
         searchBtn.center = CGPointMake(_topView.width / 4, _topView.height / 2 - 10);
         [_topView addSubview:searchBtn];
         
         UILabel *searchLab = [UILabel labelWithTxt:@"搜一搜" frame:(CGRect){0, CGRectGetMaxY(searchBtn.frame) + 10, _topView.width / 2, 20}
-                                               font:[UIFont appFontSize12] color:[UIColor appBlackTextColor]];
+                                               font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#F05F22"]];
         [_topView addSubview:searchLab];
         
-        UIButton *shaoBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"add_device_shao.png"]
-                                           imagesec:[UIImage imageNamed:@"add_device_shao_sec.png"]
+        UIButton *shaoBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"add_device_shao.png"] imagesec:nil
                                              target:self action:@selector(qrcodeClicked)];
         shaoBtn.center = CGPointMake(_topView.width * 0.75, searchBtn.centerY);
         [_topView addSubview:shaoBtn];
         
         UILabel *shaoLab = [UILabel labelWithTxt:@"扫一扫" frame:(CGRect){_topView.width / 2, searchLab.originY, _topView.width / 2, 20}
-                                             font:[UIFont appFontSize12] color:[UIColor appBlackTextColor]];
+                                             font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#00A2E3"]];
         [_topView addSubview:shaoLab];
     }
     return _topView;
