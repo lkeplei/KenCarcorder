@@ -12,17 +12,17 @@
 #import "KenDeviceSettingVC.h"
 #import "KenHistoryVC.h"
 
-@interface KenMiniVideoVC ()<UITableViewDataSource, UITableViewDelegate>
+@interface KenMiniVideoVC ()
 
 @property (nonatomic, assign) BOOL upDownScanning;          //是否正在上下扫描
 @property (nonatomic, assign) BOOL leftRightScanning;       //是否正在左右扫描
 
 @property (nonatomic, strong) KenVideoV *videoV;
-@property (nonatomic, strong) UITableView *functionTableV;
-@property (nonatomic, strong) NSArray *functionList;
 @property (nonatomic, strong) UIView *functionV;
 @property (nonatomic, strong) UIView *videoNav;
-@property (nonatomic, strong) UIView *speakV;
+@property (nonatomic, strong) UIButton *speakBtn;
+@property (nonatomic, strong) UIView *historyV;
+@property (nonatomic, strong) UIView *settingV;
 @property (nonatomic, strong) UILabel *speedLabebl;         //速度标签
 
 @end
@@ -32,11 +32,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.screenType = kKenViewScreenFull;
-    
-        _functionList = @[@{@"title":@"回看", @"img":@"video_history"},
-                          @{@"title":@"设置", @"img":@"video_setting"}];
-        
         _upDownScanning = YES;
         _leftRightScanning = YES;
     }
@@ -45,14 +40,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_mini_bg"]];
-    bgV.size = self.contentView.size;
-    [self.contentView addSubview:bgV];
-    
+
     [self.contentView addSubview:self.videoV];
     [self.contentView addSubview:self.videoNav];
-    [self.contentView addSubview:self.functionTableV];
+    [self.contentView addSubview:self.functionV];
+    [self.contentView addSubview:self.historyV];
+    [self.contentView addSubview:self.settingV];
+    [self.contentView addSubview:self.speakBtn];
     
     [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"] selector:@selector(back)];
 }
@@ -82,46 +76,46 @@
     SysDelegate.allowRotation = NO;
 }
 
-#pragma mark - Table delegate
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _functionList.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *bankCellIdentifier = @"videoCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bankCellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bankCellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
-        cell.textLabel.textColor = [UIColor appWhiteTextColor];
-    }
-    
-    NSDictionary *function = [_functionList objectAtIndex:indexPath.row];
-    [cell.imageView setImage:[UIImage imageNamed:[function objectForKey:@"img"]]];
-    [cell.textLabel setText:[function objectForKey:@"title"]];
-    
-    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    if (indexPath.row != 0) {
-        UIView *line = [[UIView alloc] initWithFrame:(CGRect){kKenOffsetX(30), 0, self.contentView.width, 0.5}];
-        line.backgroundColor = [UIColor colorWithHexString:@"#73BFE2"];
-        [cell.contentView addSubview:line];
-    }
-    
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (indexPath.row == 0) {
-        [self pushViewController:[[KenHistoryVC alloc] initWithDevice:self.device] animated:YES];
-    } else if (indexPath.row == 1) {
-        [self pushViewController:[[KenDeviceSettingVC alloc] initWithDevice:self.device] animated:YES];
-    }
-    
-    [self.videoV stopVideo];
-}
+//#pragma mark - Table delegate
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    return _functionList.count;
+//}
+//
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    static NSString *bankCellIdentifier = @"videoCell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bankCellIdentifier];
+//    if (cell == nil) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bankCellIdentifier];
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
+//        cell.textLabel.textColor = [UIColor appWhiteTextColor];
+//    }
+//    
+//    NSDictionary *function = [_functionList objectAtIndex:indexPath.row];
+//    [cell.imageView setImage:[UIImage imageNamed:[function objectForKey:@"img"]]];
+//    [cell.textLabel setText:[function objectForKey:@"title"]];
+//    
+//    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//    if (indexPath.row != 0) {
+//        UIView *line = [[UIView alloc] initWithFrame:(CGRect){kKenOffsetX(30), 0, self.contentView.width, 0.5}];
+//        line.backgroundColor = [UIColor colorWithHexString:@"#73BFE2"];
+//        [cell.contentView addSubview:line];
+//    }
+//    
+//    return cell;
+//}
+//
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    
+//    if (indexPath.row == 0) {
+//        [self pushViewController:[[KenHistoryVC alloc] initWithDevice:self.device] animated:YES];
+//    } else if (indexPath.row == 1) {
+//        [self pushViewController:[[KenDeviceSettingVC alloc] initWithDevice:self.device] animated:YES];
+//    }
+//    
+//    [self.videoV stopVideo];
+//}
 
 #pragma mark - rotate
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -145,7 +139,7 @@
 - (void)exitFullscreen {
     [self.videoV removeFromSuperview];
     
-    self.videoV.frame = (CGRect){0, 64, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
+    self.videoV.frame = (CGRect){0, 0, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
     [self.contentView addSubview:self.videoV];
     [self.contentView addSubview:self.videoNav];
 }
@@ -344,108 +338,107 @@
     funtionBgV.center = CGPointMake(self.functionV.width / 2, self.functionV.height / 2);
     [funtionBgV setUserInteractionEnabled:YES];
     [self.functionV addSubview:funtionBgV];
-    
-    CGFloat offset = kKenOffsetY(36);
+
     @weakify(self)
-    UIButton *upBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_fun_up"]
-                                     imagesec:nil target:self action:@selector(functionUp)];
-    upBtn.size = CGSizeMake(upBtn.width * 3, upBtn.height * 4);
-    upBtn.center = CGPointMake(funtionBgV.width / 2, offset);
-    [funtionBgV addSubview:upBtn];
-    [upBtn longPressed:^(UIView * _Nonnull view) {
+    UIView *upV = [[UIView alloc] initWithFrame:(CGRect){(funtionBgV.width - 60) / 2, 0, 60, 42}];
+    upV.backgroundColor = [UIColor clearColor];
+    [funtionBgV addSubview:upV];
+    [upV clicked:^(UIView * _Nonnull view) {
+        @strongify(self)
+        [self functionUp];
+    }];
+    
+    [upV longPressed:^(UIView * _Nonnull view) {
         @strongify(self)
         [self functionLongUp];
     }];
     
-    UIButton *downBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_fun_down"]
-                                     imagesec:nil target:self action:@selector(functionDown)];
-    downBtn.size = CGSizeMake(downBtn.width * 3, downBtn.height * 4);
-    downBtn.center = CGPointMake(upBtn.centerX, funtionBgV.height - offset);
-    [funtionBgV addSubview:downBtn];
-    [downBtn longPressed:^(UIView * _Nonnull view) {
+    UIView *downV = [[UIView alloc] initWithFrame:(CGRect){upV.originX, funtionBgV.height - upV.height, upV.size}];
+    downV.backgroundColor = [UIColor clearColor];
+    [funtionBgV addSubview:downV];
+    [downV clicked:^(UIView * _Nonnull view) {
+        @strongify(self)
+        [self functionDown];
+    }];
+    
+    [downV longPressed:^(UIView * _Nonnull view) {
         @strongify(self)
         [self functionLongDown];
     }];
     
-    UIButton *leftBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_fun_left"]
-                                     imagesec:nil target:self action:@selector(functionLeft)];
-    leftBtn.size = CGSizeMake(leftBtn.width * 4, leftBtn.height * 3);
-    leftBtn.center = CGPointMake(offset, funtionBgV.height / 2);
-    [funtionBgV addSubview:leftBtn];
-    [leftBtn longPressed:^(UIView * _Nonnull view) {
+    UIView *leftV = [[UIView alloc] initWithFrame:(CGRect){0, (funtionBgV.height - 42) / 2, 42, 60}];
+    leftV.backgroundColor = [UIColor clearColor];
+    [funtionBgV addSubview:leftV];
+    [leftV clicked:^(UIView * _Nonnull view) {
+        @strongify(self)
+        [self functionLeft];
+    }];
+    
+    [leftV longPressed:^(UIView * _Nonnull view) {
         @strongify(self)
         [self functionLongLeft];
     }];
     
-    UIButton *rightBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_fun_right"]
-                                     imagesec:nil target:self action:@selector(functionRight)];
-    rightBtn.size = CGSizeMake(rightBtn.width * 4, rightBtn.height * 3);
-    rightBtn.center = CGPointMake(funtionBgV.width - offset, leftBtn.centerY);
-    [funtionBgV addSubview:rightBtn];
-    [rightBtn longPressed:^(UIView * _Nonnull view) {
+    UIView *rightV = [[UIView alloc] initWithFrame:(CGRect){funtionBgV.width - leftV.width, leftV.originY, leftV.size}];
+    rightV.backgroundColor = [UIColor clearColor];
+    [funtionBgV addSubview:rightV];
+    [rightV clicked:^(UIView * _Nonnull view) {
+        @strongify(self)
+        [self functionRight];
+    }];
+    
+    [rightV longPressed:^(UIView * _Nonnull view) {
         @strongify(self)
         [self functionLongRight];
     }];
 }
 
+- (UIView *)scanV:(UIImage *)image text:(NSString *)text frame:(CGRect)frame {
+    UIView *scanV = [[UIView alloc] initWithFrame:frame];
+    scanV.backgroundColor = [UIColor clearColor];
+    scanV.layer.cornerRadius = scanV.height / 2;
+    scanV.layer.borderWidth = 1;
+    scanV.layer.masksToBounds = YES;
+    scanV.layer.borderColor = [UIColor appLightGrayTextColor].CGColor;
+    [self.functionV addSubview:scanV];
+    
+    UIImageView *iCon = [[UIImageView alloc] initWithImage:image];
+    iCon.center = CGPointMake(18, scanV.height / 2);
+    [scanV addSubview:iCon];
+    
+    UILabel *label = [UILabel labelWithTxt:text frame:(CGRect){iCon.maxX, 0, scanV.width - iCon.maxX, scanV.height}
+                                      font:[UIFont appFontSize12] color:[UIColor appGrayTextColor]];
+    [scanV addSubview:label];
+    
+    return scanV;
+}
+
 - (void)initScanFunctionV {
     @weakify(self)
-    //
-    UIImage *scanUpDown = [UIImage imageNamed:@"video_scan_up_down"];
-    CGFloat offsetY = (self.functionV.height - scanUpDown.size.height * 2) / 3;
-    CGFloat offsetX = kKenOffsetX(30);
-    //////// scan up down
-    UIImageView *scanUpDownV = [[UIImageView alloc] initWithImage:scanUpDown];
-    scanUpDownV.origin = CGPointMake(offsetX, offsetY);
-    [self.functionV addSubview:scanUpDownV];
-    
-    UILabel *label = [UILabel labelWithTxt:@"上下扫描" frame:(CGRect){kKenOffsetX(80), 0, scanUpDownV.size}
-                                      font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#C8D5D9"]];
-    label.textAlignment = NSTextAlignmentLeft;
-    [scanUpDownV addSubview:label];
-    
-    [scanUpDownV clicked:^(UIView * _Nonnull view) {
+    CGFloat width = kKenOffsetX(200);
+    CGSize size = CGSizeMake(width, 36);
+    UIView *scanUpDonwV = [self scanV:[UIImage imageNamed:@"video_scan_up_down"] text:@"上下扫描" frame:(CGRect){10, 20, size}];
+    [scanUpDonwV clicked:^(UIView * _Nonnull view) {
         @strongify(self)
         [self scanUpdown];
     }];
-    //////// scan left right
-    UIImageView *scanLeftRightV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_scan_left_right"]];
-    scanLeftRightV.origin = CGPointMake(scanUpDownV.originX, scanUpDownV.maxY + offsetY);
-    [self.functionV addSubview:scanLeftRightV];
     
-    UILabel *LRLabel = [UILabel labelWithTxt:@"左右扫描" frame:(CGRect){kKenOffsetX(80), 0, scanUpDownV.size}
-                                        font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#C8D5D9"]];
-    LRLabel.textAlignment = NSTextAlignmentLeft;
-    [scanLeftRightV addSubview:LRLabel];
-    
+    UIView *scanLeftRightV = [self scanV:[UIImage imageNamed:@"video_scan_left_right"] text:@"左右扫描"
+                                   frame:(CGRect){scanUpDonwV.originX, self.functionV.height - 20 - size.height, size}];
     [scanLeftRightV clicked:^(UIView * _Nonnull view) {
         @strongify(self)
         [self scanLeftRight];
     }];
-    //////// turn up down
-    UIImageView *turnUpDownV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_turn_up_down"]];
-    turnUpDownV.origin = CGPointMake(self.functionV.width - offsetX - scanUpDownV.width, scanUpDownV.originY);
-    [self.functionV addSubview:turnUpDownV];
     
-    UILabel *turnUDLabel = [UILabel labelWithTxt:@"上下翻转" frame:(CGRect){kKenOffsetX(80), 0, scanUpDownV.size}
-                                            font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#C8D5D9"]];
-    turnUDLabel.textAlignment = NSTextAlignmentLeft;
-    [turnUpDownV addSubview:turnUDLabel];
-    
+    UIView *turnUpDownV = [self scanV:[UIImage imageNamed:@"video_turn_up_down"] text:@"上下翻转"
+                                frame:(CGRect){self.functionV.width - 10 - size.width, scanUpDonwV.originY, size}];
     [turnUpDownV clicked:^(UIView * _Nonnull view) {
         @strongify(self)
         [self turnUpDown];
     }];
-    //////// turn left right
-    UIImageView *turnLeftRightV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_turn_left_right"]];
-    turnLeftRightV.origin = CGPointMake(turnUpDownV.originX, scanLeftRightV.originY);
-    [self.functionV addSubview:turnLeftRightV];
     
-    UILabel *turnLRLabel = [UILabel labelWithTxt:@"左右翻转" frame:(CGRect){kKenOffsetX(80), 0, scanUpDownV.size}
-                                            font:[UIFont appFontSize12] color:[UIColor colorWithHexString:@"#C8D5D9"]];
-    turnLRLabel.textAlignment = NSTextAlignmentLeft;
-    [turnLeftRightV addSubview:turnLRLabel];
-    
+    UIView *turnLeftRightV = [self scanV:[UIImage imageNamed:@"video_turn_left_right"] text:@"左右翻转"
+                                   frame:(CGRect){turnUpDownV.originX, scanLeftRightV.originY, size}];
     [turnLeftRightV clicked:^(UIView * _Nonnull view) {
         @strongify(self)
         [self turnLeftRight];
@@ -463,7 +456,7 @@
 
 - (KenVideoV *)videoV {
     if (_videoV == nil) {
-        _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 64, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
+        _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 0, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
     }
     return _videoV;
 }
@@ -484,7 +477,7 @@
         _speedLabebl.numberOfLines = 0;
         [_videoNav addSubview:_speedLabebl];
         
-        NSArray *btnArr = @[@"video_full", @"video_record", @"video_capture", @"video_share"];
+        NSArray *btnArr = @[@"history_full", @"history_video", @"history_photo", @"video_share"];
         CGFloat offsetX = _videoV.width;
         for (NSUInteger i = 0; i < btnArr.count; i++) {
             UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]
@@ -504,8 +497,8 @@
 - (UIView *)functionV {
     if (_functionV == nil) {
         UIImage *funBg = [UIImage imageNamed:@"video_fun_bg"];
-        _functionV = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, funBg.size.height + kKenOffsetY(60)}];
-        _functionV.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
+        _functionV = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY, self.contentView.width, funBg.size.height + kKenOffsetY(60)}];
+        _functionV.backgroundColor = [UIColor whiteColor];
         
         [self initTurnFunctionV];
         [self initScanFunctionV];
@@ -513,41 +506,68 @@
     return _functionV;
 }
 
-- (UIView *)speakV {
-    if (_speakV == nil) {
-        UIImage *bg = [UIImage imageNamed:@"video_speak_bg"];
-        _speakV = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, bg.size.height + kKenOffsetY(120)}];
-        _speakV.backgroundColor = [UIColor clearColor];
+- (UIView *)historyV {
+    if (_historyV == nil) {
+        _historyV = [[UIView alloc] initWithFrame:(CGRect){20, self.functionV.maxY + 25, 90, 36}];
+        _historyV.backgroundColor = [UIColor whiteColor];
+        _historyV.layer.cornerRadius = 4;
+        _historyV.layer.masksToBounds = YES;
         
-        UIButton *speakBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_speak_bg"]
-                                            imagesec:nil target:self action:@selector(speakStart)];
-        [speakBtn addTarget:self action:@selector(speakEnd) forControlEvents:UIControlEventTouchDown];
-        speakBtn.center = CGPointMake(_speakV.centerX, _speakV.height / 2);
-        [_speakV addSubview:speakBtn];
+        UIImageView *iCon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_history"]];
+        iCon.center = CGPointMake(10 + iCon.width / 2, _historyV.height / 2);
+        [_historyV addSubview:iCon];
         
-        UIImageView *speak = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_speak"]];
-        speak.center = CGPointMake(speakBtn.width / 2, speakBtn.height / 2);
-        [speakBtn addSubview:speak];
+        UILabel *label = [UILabel labelWithTxt:@"回看" frame:(CGRect){iCon.maxX, 0, _historyV.width - iCon.maxX, _historyV.height}
+                                          font:[UIFont appFontSize14] color:[UIColor appMainColor]];
+        [_historyV addSubview:label];
+        
+        @weakify(self)
+        [_historyV clicked:^(UIView * _Nonnull view) {
+            @strongify(self)
+            [self pushViewController:[[KenHistoryVC alloc] initWithDevice:self.device] animated:YES];
+            [self.videoV stopVideo];
+        }];
     }
-    return _speakV;
+    return _historyV;
 }
 
-- (UITableView *)functionTableV {
-    if (_functionTableV == nil) {
-        _functionTableV = [[UITableView alloc] initWithFrame:(CGRect){0, self.videoV.maxY, self.contentView.width,
-                                                                    self.contentView.height - self.videoV.maxY}
-                                                       style:UITableViewStyleGrouped];
-        _functionTableV.delegate = self;
-        _functionTableV.dataSource = self;
-        _functionTableV.backgroundColor = [UIColor clearColor];
-        _functionTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _functionTableV.tableFooterView = self.speakV;
+- (UIView *)settingV {
+    if (_settingV == nil) {
+        _settingV = [[UIView alloc] initWithFrame:(CGRect){self.contentView.width - self.historyV.originX - self.historyV.width, self.historyV.originY, self.historyV.size}];
+        _settingV.backgroundColor = [UIColor whiteColor];
+        _settingV.layer.cornerRadius = 4;
+        _settingV.layer.masksToBounds = YES;
         
-        UIView *headV = [[UIView alloc] initWithFrame:(CGRect){0, 0, self.functionV.width, self.functionV.height + kKenOffsetY(26)}];
-        headV.backgroundColor = [UIColor clearColor];
-        [headV addSubview:_functionV];
-        _functionTableV.tableHeaderView = headV;
+        UIImageView *iCon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_setting"]];
+        iCon.center = CGPointMake(10 + iCon.width / 2, _settingV.height / 2);
+        [_settingV addSubview:iCon];
+        
+        UILabel *label = [UILabel labelWithTxt:@"设置" frame:(CGRect){iCon.maxX, 0, _settingV.width - iCon.maxX, _settingV.height}
+                                          font:[UIFont appFontSize14] color:[UIColor appMainColor]];
+        [_settingV addSubview:label];
+        
+        @weakify(self)
+        [_settingV clicked:^(UIView * _Nonnull view) {
+            @strongify(self)
+            [self pushViewController:[[KenDeviceSettingVC alloc] initWithDevice:self.device] animated:YES];
+            [self.videoV stopVideo];
+        }];
     }
-    return _functionTableV;
+    return _settingV;
 }
+
+- (UIButton *)speakBtn {
+    if (_speakBtn == nil) {
+        _speakBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_speak"]
+                                   imagesec:nil target:self action:@selector(speakStart)];
+        _speakBtn.frame = (CGRect){(self.contentView.width - 90) / 2, self.contentView.height - 90 - 20, 90, 90};
+        [_speakBtn addTarget:self action:@selector(speakEnd) forControlEvents:UIControlEventTouchDown];
+        
+        _speakBtn.backgroundColor = [UIColor whiteColor];
+        _speakBtn.layer.cornerRadius = _speakBtn.width / 2;
+        _speakBtn.layer.masksToBounds = YES;
+    }
+    return _speakBtn;
+}
+
 @end
