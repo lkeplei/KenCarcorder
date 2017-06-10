@@ -36,14 +36,14 @@
     
     UIButton *showBtn = [UIButton buttonWithImg:@"显示密码" zoomIn:NO image:nil imagesec:nil target:self
                                          action:@selector(showBtnClicked)];
-    [showBtn setBackgroundColor:[UIColor colorWithHexString:@"#419FFF"]];
+    [showBtn setBackgroundColor:[UIColor appMainColor]];
     showBtn.layer.cornerRadius = 6;
     showBtn.frame = CGRectMake(MainScreenWidth * 0.05, CGRectGetMaxY(_pwdTextField.frame) + 35, MainScreenWidth  * 0.9, 40);
     [self.view addSubview:showBtn];
     
     UIButton *confirmBtn = [UIButton buttonWithImg:@"确认修改" zoomIn:NO image:nil imagesec:nil target:self
                                             action:@selector(confirmBtnClicked)];
-    [confirmBtn setBackgroundColor:[UIColor colorWithHexString:@"#419FFF"]];
+    [confirmBtn setBackgroundColor:[UIColor appMainColor]];
     confirmBtn.layer.cornerRadius = 6;
     confirmBtn.frame = (CGRect){showBtn.originX, CGRectGetMaxY(showBtn.frame) + 20, showBtn.size};
     [self.view addSubview:confirmBtn];

@@ -35,7 +35,6 @@
 @property (nonatomic, assign) BOOL ledOpen;           //指示灯
 @property (nonatomic, assign) BOOL ircutOpen;         //夜光灯
 @property (nonatomic, assign) BOOL alarmOpen;         //警报声
-@property (nonatomic, assign) BOOL voiceSetting;
 @property (nonatomic, assign) BOOL disableTopSection;          //直连设备时顶部功能是否可用
 
 //time select
@@ -63,7 +62,6 @@
         _ledOpen = NO;
         _ircutOpen = NO;
         _alarmOpen = NO;
-        _voiceSetting = NO;
         _deviceStatusInfo = nil;
         
         _startHour = @"0";
@@ -102,7 +100,6 @@
     [super viewDidAppear:animated];
     
     [self getCurrentDeviceInfo];
-    [self getAlarmSet];
 }
 
 - (void)getCurrentDeviceInfo {
@@ -238,7 +235,7 @@
     UIView *footV = [[UIView alloc] initWithFrame:(CGRect){0,0,self.view.width, 190}];
     
     UIButton *reboot = [UIButton buttonWithImg:@"设备重启" zoomIn:NO image:nil imagesec:nil target:self action:@selector(rebootDevice)];
-    [reboot setBackgroundColor:[UIColor colorWithHexString:@"#00DEC9"]];
+    [reboot setBackgroundColor:[UIColor appMainColor]];
     reboot.frame = CGRectMake(50, 20, footV.width - 100, 44);
     
     reboot.layer.cornerRadius = 4.f;
@@ -252,7 +249,7 @@
     [footV addSubview:button];
     
     UIButton *setting = [UIButton buttonWithImg:@"设置时间" zoomIn:NO image:nil imagesec:nil target:self action:@selector(setTime)];
-    [setting setBackgroundColor:[UIColor colorWithHexString:@"#00DEC9"]];
+    [setting setBackgroundColor:[UIColor appMainColor]];
     setting.frame = (CGRect){reboot.originX, CGRectGetMaxY(button.frame) + 10, reboot.size};
     
     setting.layer.cornerRadius = 4.f;
@@ -300,56 +297,59 @@
         if (indexPath.section == 3) {
             float width = cell.contentView.width / 2;
             if (_dayRecord == nil) {
-                _dayRecord = [UIButton buttonWithImg:@"全天录像" zoomIn:YES image:[UIImage imageNamed:@"setting_radio_unselect"]
-                                            imagesec:[UIImage imageNamed:@"setting_radio_select"] target:self action:@selector(dayRecordBtn)];
-                _dayRecord.imageEdgeInsets = UIEdgeInsetsMake(0, -20, 0, 0);//上top，左left，下bottom，右right
-                _dayRecord.frame = CGRectMake(0, 0, width, cell.contentView.height);
-                [_dayRecord setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+                _dayRecord = [UIButton buttonWithImg:@"全天录像" zoomIn:YES image:nil imagesec:nil target:self action:@selector(dayRecordBtn)];
+                _dayRecord.frame = CGRectMake(22, 4, width - 44, cell.contentView.height - 8);
+                [_dayRecord setTitleColor:[UIColor appMainColor] forState:UIControlStateNormal];
+                [_dayRecord setTitleColor:[UIColor appWhiteTextColor] forState:UIControlStateSelected];
+                [_dayRecord setTitleColor:[UIColor appWhiteTextColor] forState:UIControlStateHighlighted];
+                [_dayRecord setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor] size:_dayRecord.size] forState:UIControlStateNormal];
+                [_dayRecord setBackgroundImage:[UIImage imageWithColor:[UIColor appMainColor] size:_dayRecord.size] forState:UIControlStateHighlighted];
+                [_dayRecord setBackgroundImage:[UIImage imageWithColor:[UIColor appMainColor] size:_dayRecord.size] forState:UIControlStateSelected];
                 _dayRecord.titleLabel.font = [UIFont appFontSize16];
+                _dayRecord.layer.cornerRadius = 4;
+                _dayRecord.layer.masksToBounds = YES;
                 
-                _alarmRecord = [UIButton buttonWithImg:@"报警时录像" zoomIn:YES image:[UIImage imageNamed:@"setting_radio_select"]
-                                              imagesec:[UIImage imageNamed:@"setting_radio_select"] target:self action:@selector(alarmRecordBtn)];
-                _alarmRecord.imageEdgeInsets = UIEdgeInsetsMake(0, -20, 0, 0);//上top，左left，下bottom，右right
-                _alarmRecord.frame = CGRectMake(width, 0, width, _dayRecord.height);
-                [_alarmRecord setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+                _alarmRecord = [UIButton buttonWithImg:@"报警时录像" zoomIn:YES image:nil imagesec:nil target:self action:@selector(alarmRecordBtn)];
+                _alarmRecord.frame = (CGRect){width + _dayRecord.originX, _dayRecord.originY, _dayRecord.size};
+                [_alarmRecord setTitleColor:[UIColor appMainColor] forState:UIControlStateNormal];
+                [_alarmRecord setTitleColor:[UIColor appWhiteTextColor] forState:UIControlStateSelected];
+                [_alarmRecord setTitleColor:[UIColor appWhiteTextColor] forState:UIControlStateHighlighted];
+                [_alarmRecord setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor] size:_dayRecord.size] forState:UIControlStateNormal];
+                [_alarmRecord setBackgroundImage:[UIImage imageWithColor:[UIColor appMainColor] size:_dayRecord.size] forState:UIControlStateHighlighted];
+                [_alarmRecord setBackgroundImage:[UIImage imageWithColor:[UIColor appMainColor] size:_dayRecord.size] forState:UIControlStateSelected];
                 _alarmRecord.titleLabel.font = [UIFont appFontSize16];
+                _alarmRecord.layer.cornerRadius = 4;
+                _alarmRecord.layer.masksToBounds = YES;
             }
             [cell.contentView addSubview:_dayRecord];
-            [_dayRecord setImage:[UIImage imageNamed:_recordType == 1 ? @"setting_radio_select" : @"setting_radio_unselect"]
-                        forState:UIControlStateNormal];
+            [_dayRecord setSelected:_recordType == 1];
             
             [cell.contentView addSubview:_alarmRecord];
-            [_alarmRecord setImage:[UIImage imageNamed:_recordType == 3 ? @"setting_radio_select" : @"setting_radio_unselect"]
-                          forState:UIControlStateNormal];
+            [_alarmRecord setSelected:_recordType == 3];
             
             cell.accessoryView = nil;
         } else if (indexPath.section == 4 || indexPath.section == 5) {
             [cell.imageView setImage:nil];
             [cell.textLabel setText:[[_dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
             
-            UISwitch *switchMov = [[UISwitch alloc] initWithFrame:CGRectMake(0,0,0,0)];
+            UIImageView *imgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"setting_open"]];
             if (indexPath.section == 4) {
                 if (indexPath.row == 0) {
-                    [switchMov setOn:_moveOpen];
-                    [switchMov addTarget:self action:@selector(switchMove:) forControlEvents:UIControlEventValueChanged];
+                    [imgV setImage:[UIImage imageNamed:_moveOpen ? @"setting_open" : @"setting_close"]];
                 } else {
-                    [switchMov setOn:_audioOpen];
-                    [switchMov addTarget:self action:@selector(switchAudio:) forControlEvents:UIControlEventValueChanged];
+                    [imgV setImage:[UIImage imageNamed:_audioOpen ? @"setting_open" : @"setting_close"]];
                 }
             } else if (indexPath.section == 5) {
                 if (indexPath.row == 0) {
-                    [switchMov setOn:_ledOpen];
-                    [switchMov addTarget:self action:@selector(switchLed:) forControlEvents:UIControlEventValueChanged];
+                    [imgV setImage:[UIImage imageNamed:_ledOpen ? @"setting_open" : @"setting_close"]];
                 } else if (indexPath.row == 1) {
-                    [switchMov setOn:_ircutOpen];
-                    [switchMov addTarget:self action:@selector(switchIrcut:) forControlEvents:UIControlEventValueChanged];
+                    [imgV setImage:[UIImage imageNamed:_ircutOpen ? @"setting_open" : @"setting_close"]];
                 } else if (indexPath.row == 2) {
-                    [switchMov setOn:_alarmOpen];
-                    [switchMov addTarget:self action:@selector(switchAlram:) forControlEvents:UIControlEventValueChanged];
+                    [imgV setImage:[UIImage imageNamed:_alarmOpen ? @"setting_open" : @"setting_close"]];
                 }
             }
             
-            cell.accessoryView = switchMov;
+            cell.accessoryView = imgV;
         }
     }
     
@@ -414,6 +414,26 @@
             }
         }
             break;
+        case 4:
+        case 5: {
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if (indexPath.section == 4) {
+                if (indexPath.row == 0) {
+                    [self switchMove:(UIImageView *)cell.accessoryView];
+                } else {
+                    [self switchAudio:(UIImageView *)cell.accessoryView];
+                }
+            } else if (indexPath.section == 5) {
+                if (indexPath.row == 0) {
+                    [self switchLed:(UIImageView *)cell.accessoryView];
+                } else if (indexPath.row == 1) {
+                    [self switchIrcut:(UIImageView *)cell.accessoryView];
+                } else if (indexPath.row == 2) {
+                    [self switchAlram:(UIImageView *)cell.accessoryView];
+                }
+            }
+        }
+            break;
         default:
             break;
     }
@@ -428,162 +448,120 @@
 }
 
 #pragma mark - switch
-- (void)switchLed:(UISwitch *)switchObject {
+- (void)switchLed:(UIImageView *)imageV {
     @weakify(self)
-    [[KenServiceManager sharedServiceManager] deviceSetLed:self.deviceInfo isOn:[switchObject isOn] start:^{
+    [[KenServiceManager sharedServiceManager] deviceSetLed:self.deviceInfo isOn:!self.ledOpen start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
         @strongify(self)
         if (successful) {
+            self.ledOpen = !self.ledOpen;
+            [imageV setImage:[UIImage imageNamed:self.ledOpen ? @"setting_open" : @"setting_close"]];
             [self showToastWithMsg:@"设置成功"];
         } else {
             [self showToastWithMsg:@"设置失败"];
-            [switchObject setOn:![switchObject isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         @strongify(self)
         [self showToastWithMsg:@"设置失败"];
-        [switchObject setOn:![switchObject isOn]];
     }];
 }
 
-- (void)switchIrcut:(UISwitch *)switchObject {
+- (void)switchIrcut:(UIImageView *)imageV {
     @weakify(self)
-    [[KenServiceManager sharedServiceManager] deviceSetIrcut:self.deviceInfo isOn:[switchObject isOn] start:^{
+    [[KenServiceManager sharedServiceManager] deviceSetIrcut:self.deviceInfo isOn:!self.ircutOpen start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
         @strongify(self)
         if (successful) {
+            self.ircutOpen = !self.ircutOpen;
+            [imageV setImage:[UIImage imageNamed:self.ircutOpen ? @"setting_open" : @"setting_close"]];
             [self showToastWithMsg:@"设置成功"];
         } else {
             [self showToastWithMsg:@"设置失败"];
-            [switchObject setOn:![switchObject isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         @strongify(self)
         [self showToastWithMsg:@"设置失败"];
-        [switchObject setOn:![switchObject isOn]];
     }];
 }
 
-- (void)switchAlram:(UISwitch *)switchObject {
+- (void)switchAlram:(UIImageView *)imageV {
     @weakify(self)
-    [[KenServiceManager sharedServiceManager] deviceSetAlarm:self.deviceInfo isOn:[switchObject isOn] start:^{
+    [[KenServiceManager sharedServiceManager] deviceSetAlarm:self.deviceInfo isOn:!self.alarmOpen start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
         @strongify(self)
         if (successful) {
+            self.alarmOpen = !self.alarmOpen;
+            [imageV setImage:[UIImage imageNamed:self.alarmOpen ? @"setting_open" : @"setting_close"]];
             [self showToastWithMsg:@"设置成功"];
         } else {
             [self showToastWithMsg:@"设置失败"];
-            [switchObject setOn:![switchObject isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         @strongify(self)
         [self showToastWithMsg:@"设置失败"];
-        [switchObject setOn:![switchObject isOn]];
     }];
 }
 
-- (void)switchMove:(UISwitch *)switchMov {
-    if ([switchMov isOn]) {
+- (void)switchMove:(UIImageView *)imageV {
+    if (!_moveOpen) {
         @weakify(self)
         [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"请选择您所需要的灵敏度" buttonTitles:@[@"低", @"高"]
                           buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
                               @strongify(self)
-            [self setDeviceMove:switchMov sensitive:index == 0 ? 35 : 5];
+            [self setDeviceMove:imageV sensitive:index == 0 ? 35 : 5];
         }];
     } else {
-        [self setDeviceMove:switchMov sensitive:_moveSensitive];
+        [self setDeviceMove:imageV sensitive:_moveSensitive];
     }
 }
 
-- (void)setDeviceMove:(UISwitch *)switchMove sensitive:(NSInteger)sensitive {
+- (void)setDeviceMove:(UIImageView *)imageV sensitive:(NSInteger)sensitive {
     @weakify(self)
-    [[KenServiceManager sharedServiceManager] deviceSetMove:self.deviceInfo isOn:[switchMove isOn] sensitive:sensitive start:^{
+    [[KenServiceManager sharedServiceManager] deviceSetMove:self.deviceInfo isOn:!self.moveOpen sensitive:sensitive start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
         @strongify(self)
         if (successful) {
+            self.moveOpen = !self.moveOpen;
+            [imageV setImage:[UIImage imageNamed:self.moveOpen ? @"setting_open" : @"setting_close"]];
             [self showToastWithMsg:@"设置成功"];
         } else {
             [self showToastWithMsg:@"设置失败"];
-            [switchMove setOn:![switchMove isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         @strongify(self)
         [self showToastWithMsg:@"设置失败"];
-        [switchMove setOn:![switchMove isOn]];
     }];
 }
 
-- (void)switchAudio:(UISwitch *)switchAud {
-    if ([switchAud isOn]) {
+- (void)switchAudio:(UIImageView *)imageV {
+    if (!_audioOpen) {
         @weakify(self)
         [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"请选择您所需要的灵敏度" buttonTitles:@[@"低", @"高"]
                           buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
                               @strongify(self)
-                              [self setDeviceAudio:switchAud sensitive:index == 0 ? 50 : 20];
+                              [self setDeviceAudio:imageV sensitive:index == 0 ? 50 : 20];
                           }];
     } else {
-        [self setDeviceAudio:switchAud sensitive:_audioSensitive];
+        [self setDeviceAudio:imageV sensitive:_audioSensitive];
     }
 }
 
-- (void)setDeviceAudio:(UISwitch *)switchAudio sensitive:(NSInteger)sensitive {
+- (void)setDeviceAudio:(UIImageView *)imageV sensitive:(NSInteger)sensitive {
     @weakify(self)
-    [[KenServiceManager sharedServiceManager] deviceSetAudio:self.deviceInfo isOn:[switchAudio isOn] sensitive:sensitive start:^{
+    [[KenServiceManager sharedServiceManager] deviceSetAudio:self.deviceInfo isOn:!self.audioOpen sensitive:sensitive start:^{
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
         @strongify(self)
         if (successful) {
+            self.audioOpen = !self.audioOpen;
+            [imageV setImage:[UIImage imageNamed:self.audioOpen ? @"setting_open" : @"setting_close"]];
             [self showToastWithMsg:@"设置成功"];
         } else {
             [self showToastWithMsg:@"设置失败"];
-            [switchAudio setOn:![switchAudio isOn]];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         @strongify(self)
         [self showToastWithMsg:@"设置失败"];
-        [switchAudio setOn:![switchAudio isOn]];
     }];
-}
-
-- (void)switchVoice:(UISwitch *)switchVoice {
-    _voiceSetting = [switchVoice isOn];
-    
-    NSMutableArray *alarm =  [[NSMutableArray alloc] init] ;
-    NSDictionary *content = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNumber numberWithBool:_voiceSetting], @"vib",
-                             [NSNumber numberWithBool:NO], @"cap",
-                             nil];
-    [alarm addObject:content];
-    
-    NSArray *storeFilePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doucumentsDirectiory = [storeFilePath objectAtIndex:0];
-    
-    NSString *appPath=[doucumentsDirectiory stringByAppendingPathComponent:@"alarm.plist"];
-    BOOL fileExists = [alarm writeToFile:appPath atomically:YES];
-    
-    if(fileExists) {
-        DebugLog("successfully written");
-    } else {
-        DebugLog("failed to write");
-    }
-}
-
-- (NSMutableArray*)ReadAlmFromPlist {
-    NSArray *storeFilePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doucumentsDirectiory = [storeFilePath objectAtIndex:0];
-    NSString *appPath = [doucumentsDirectiory stringByAppendingPathComponent:@"alarm.plist"];
-    NSMutableArray *coolArray = [NSMutableArray arrayWithContentsOfFile:appPath];
-    return coolArray;
-}
-
-- (void)getAlarmSet {
-    NSMutableArray *alarm;
-    alarm =  [[NSMutableArray alloc] initWithArray:[self ReadAlmFromPlist] copyItems:YES];
-    if ([alarm count] == 0) {
-        _voiceSetting = NO;
-    } else {
-        NSDictionary *Content = [alarm objectAtIndex:0];
-        _voiceSetting = [[Content objectForKey:@"vib"] boolValue];
-    }
 }
 
 #pragma mark - button
@@ -663,10 +641,8 @@
 
 - (void)resetRecodStatus:(NSInteger)type {
     _recordType = type;
-    [_dayRecord setImage:[UIImage imageNamed:_recordType == 1 ? @"setting_radio_select" : @"setting_radio_unselect"]
-                forState:UIControlStateNormal];
-    [_alarmRecord setImage:[UIImage imageNamed:_recordType == 3 ? @"setting_radio_select" : @"setting_radio_unselect"]
-                  forState:UIControlStateNormal];
+    [_dayRecord setSelected:_recordType == 1];
+    [_alarmRecord setSelected:_recordType == 3];
 }
 
 - (void)alarmRecordBtn {
@@ -818,7 +794,7 @@
         [_settingTable setBackgroundColor:[UIColor appBackgroundColor]];
         _settingTable.tableFooterView = [self getFootView];
         _settingTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        [_settingTable setSeparatorColor:[UIColor colorWithHexString:@"#00DEC9"]];
+        [_settingTable setSeparatorColor:[UIColor appMainColor]];
     }
     return _settingTable;
 }

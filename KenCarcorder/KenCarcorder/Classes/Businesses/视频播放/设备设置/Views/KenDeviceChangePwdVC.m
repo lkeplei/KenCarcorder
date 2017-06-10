@@ -40,7 +40,7 @@
     
     UIButton *confirmBtn = [UIButton buttonWithImg:@"确认修改" zoomIn:NO image:nil imagesec:nil target:self
                                             action:@selector(confirmBtnClicked)];
-    [confirmBtn setBackgroundColor:[UIColor colorWithHexString:@"#419FFF"]];
+    [confirmBtn setBackgroundColor:[UIColor appMainColor]];
     confirmBtn.layer.cornerRadius = 6;
     confirmBtn.frame = CGRectMake(MainScreenWidth * 0.05, CGRectGetMaxY(_confirmTextField.frame) + 35, MainScreenWidth * 0.9, 40);
     [self.view addSubview:confirmBtn];

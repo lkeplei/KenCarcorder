@@ -33,10 +33,10 @@
     // Do any additional setup after loading the view.
     [self setNavTitle:@"分组切换"];
     
-    UITableView *table = [[UITableView alloc] initWithFrame:(CGRect){0, 0, self.contentView.size} style:UITableViewStylePlain];
+    UITableView *table = [[UITableView alloc] initWithFrame:(CGRect){0, 0, self.contentView.size} style:UITableViewStyleGrouped];
     table.delegate = self;
     table.dataSource = self;
-    [table setBackgroundColor:[UIColor whiteColor]];
+    [table setBackgroundColor:[UIColor appBackgroundColor]];
     table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [table setScrollEnabled:NO];
     [self.contentView addSubview:table];
@@ -78,17 +78,21 @@
     return [_groupArray count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.1;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *bankCellIdentifier = @"videoCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bankCellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bankCellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell setBackgroundColor:[UIColor clearColor]];
+        [cell setBackgroundColor:[UIColor whiteColor]];
     }
     
     if (_currentSlectedIndex == indexPath.row) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"setting_selected"]];
     } else {
         [cell setAccessoryType:UITableViewCellAccessoryNone];
     }

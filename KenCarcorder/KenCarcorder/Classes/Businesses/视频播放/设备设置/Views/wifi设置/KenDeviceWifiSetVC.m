@@ -40,7 +40,7 @@
     // Do any additional setup after loading the view.
     [self setNavTitle:@"WIFI设置"];
     
-    _sectionArray = @[@"无线局域网", @"正在获取网络"];
+    _sectionArray = @[@"", @"正在获取网络"];
 
     [self.contentView addSubview:self.wifiTable];
     
@@ -186,7 +186,7 @@
             [self setWifiListNode:arrayNode];
         }
         
-        _sectionArray = @[@"无线局域网", @"当前可用网络"];
+        _sectionArray = @[@"", @"当前可用网络"];
         [_wifiTable reloadData];
     }
     
@@ -203,10 +203,11 @@
     }];
 }
 
-- (void)switchWifi:(UISwitch *)wifi {
-    [_wifiSte setWifi_Active:[wifi isOn]];
+- (void)switchWifi:(UIImageView *)imageV {
+    _wifiSte.wifi_Active = !_wifiSte.wifi_Active;
+    imageV.image = [UIImage imageNamed:_wifiSte.wifi_Active ? @"setting_open" : @"setting_close"];
     
-    if ([wifi isOn]) {
+    if (_wifiSte.wifi_Active) {
         [self getWifiNode];
     } else {
         [KenAlertView showAlertViewWithTitle:nil contentView:nil message:@"是否确认关闭wifi连接" buttonTitles:@[@"取消", @"确认"] buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
@@ -216,7 +217,8 @@
                 [self setWifiListNode:nil];
                 [_wifiTable reloadData];
             } else if (index  == 0) {
-                [wifi setOn:YES];
+                _wifiSte.wifi_Active = !_wifiSte.wifi_Active;
+                imageV.image = [UIImage imageNamed:_wifiSte.wifi_Active ? @"setting_open" : @"setting_close"];
             }
         }];
     }
@@ -232,6 +234,9 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0.1;
+    }
     return 25;
 }
 
@@ -261,11 +266,7 @@
     if(0 == indexPath.section) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"无线局域网";
-            
-            UISwitch *switchWifi = [[UISwitch alloc] initWithFrame:CGRectMake(0,0,0,0)];
-            [switchWifi addTarget:self action:@selector(switchWifi:) forControlEvents:UIControlEventValueChanged];
-            [switchWifi setOn:[_wifiSte wifi_Active]];
-            cell.accessoryView = switchWifi;
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_wifiSte.wifi_Active ? @"setting_open" : @"setting_close"]];
         } else if (indexPath.row == 1) {
             cell.textLabel.text = [_wifiSte wifi_SSID_STA];
         }
@@ -275,7 +276,7 @@
         cell.textLabel.text = [node wifiName];
         
         if ([[node wifiName] isEqualToString:[_wifiSte wifi_SSID_STA]]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"setting_selected"]];
         } else {
             NSString *request = [[NSString alloc] initWithFormat:@"%@：%@", @"信号强度", [node signal]];
             CGFloat width = [request widthForFont:[UIFont appFontSize14]];
@@ -294,6 +295,9 @@
     if ([indexPath section] == 1) {
         KenWifiPwdInputVC *inputVC = [[KenWifiPwdInputVC alloc] initWithDevice:_deviceInfo wifiNode:[_wifiListNode objectAtIndex:indexPath.row]];
         [self pushViewController:inputVC animated:YES];
+    } else if (indexPath.section == 0 && indexPath.row == 0) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [self switchWifi:(UIImageView *)cell.accessoryView];
     }
 }
 

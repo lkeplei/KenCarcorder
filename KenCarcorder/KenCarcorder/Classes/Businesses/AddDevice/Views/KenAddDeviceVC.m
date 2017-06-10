@@ -73,7 +73,7 @@
     //finish
     UIButton *finishBtn = [UIButton buttonWithImg:@"确定" zoomIn:NO image:nil imagesec:nil target:self action:@selector(finishBtnClicked:)];
     finishBtn.frame = CGRectMake(20, pwdV.maxY + 40, self.contentView.width - 40, 44);
-    finishBtn.backgroundColor = [UIColor colorWithHexString:@"#00DEC9"];
+    finishBtn.backgroundColor = [UIColor appMainColor];
     [self.contentView addSubview:finishBtn];
     
     finishBtn.layer.masksToBounds = YES;

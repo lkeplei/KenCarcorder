@@ -52,11 +52,25 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    NSString *content = [_infoArray objectAtIndex:indexPath.row];
-    if (indexPath.row < [_contentArray count]) {
-        content = [content stringByAppendingString:[_contentArray objectAtIndex:indexPath.row]];
+    UILabel *titleL = [cell.contentView viewWithTag:1001];
+    if (titleL == nil) {
+        titleL = [UILabel labelWithTxt:[_infoArray objectAtIndex:indexPath.row] frame:(CGRect){10, 0, cell.contentView.size} font:[UIFont appFontSize16] color:[UIColor appBlackTextColor]];
+        titleL.tag = 1001;
+        titleL.textAlignment = NSTextAlignmentLeft;
+        [cell.contentView addSubview:titleL];
+    } else {
+        titleL.text = [_infoArray objectAtIndex:indexPath.row];
     }
-    [cell.textLabel setText:content];
+    
+    UILabel *valueL = [cell.contentView viewWithTag:1002];
+    if (valueL == nil) {
+        valueL = [UILabel labelWithTxt:[_contentArray objectAtIndex:indexPath.row] frame:(CGRect){-10,0,cell.contentView.size} font:[UIFont appFontSize15] color:[UIColor appGrayTextColor]];
+        valueL.tag = 1002;
+        valueL.textAlignment = NSTextAlignmentRight;
+        [cell.contentView addSubview:valueL];
+    } else {
+        valueL.text = [_contentArray objectAtIndex:indexPath.row];
+    }
     
     return cell;
 }
