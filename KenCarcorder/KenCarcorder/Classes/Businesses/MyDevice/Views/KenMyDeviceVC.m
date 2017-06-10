@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UICollectionView *collectV;
 @property (nonatomic, strong) NSMutableArray *tempArray;
 @property (nonatomic, strong) UIImageView *bgImgView;
+@property (nonatomic, strong) UIWebView *webV;
 
 @end
 
@@ -31,6 +32,7 @@
     [self setNavTitle:@"我的设备"];
     [self setRightNavItemWithImg:[UIImage imageNamed:@"home_add"] selector:@selector(addDevice)];
     
+    [self.contentView addSubview:self.webV];
     [self.contentView addSubview:self.segmentView];
     [self.contentView addSubview:self.collectV];
     self.currentGroup = 0;
@@ -42,6 +44,7 @@
     [super viewWillAppear:animated];
     
     self.currentGroup = _currentGroup;
+    [self.webV reload];
 }
 
 #pragma mark - event
@@ -114,9 +117,20 @@
     [self changeToGroup:_currentGroup];
 }
 
+- (UIWebView *)webV {
+    if (_webV == nil) {
+        _webV = [[UIWebView alloc] initWithFrame:(CGRect){0, 0, self.contentView.width, 0.56 * MainScreenWidth}];
+        
+        NSURL *url = [NSURL URLWithString:@"http://139.224.65.108/hls/vomont/562_1_0.m3u8"];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [_webV loadRequest:request];
+    }
+    return _webV;
+}
+
 - (KenSegmentV *)segmentView {
     if (_segmentView == nil) {
-        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM getInstance] deviceGroups] frame:(CGRect){0, 0, self.contentView.width, 35}];
+        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM getInstance] deviceGroups] frame:(CGRect){0, self.webV.maxY, self.contentView.width, 35}];
         
         @weakify(self)
         _segmentView.segmentSelectChanged = ^(NSInteger index) {

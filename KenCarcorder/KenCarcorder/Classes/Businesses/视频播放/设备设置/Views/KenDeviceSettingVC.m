@@ -81,7 +81,7 @@
                        @[@{@"image":[UIImage imageNamed:@"setting_info"], @"title":@"设备信息"}],
                        @[@{@"image":[UIImage imageNamed:@"setting_wifi"], @"title":@"无线局域网"},
                          @{@"image":[UIImage imageNamed:@"setting_clear_sd"], @"title":@"格式化SD卡"},
-                         @{@"image":[UIImage imageNamed:@"setting_info"], @"title":@"报警时段"}],
+                         @{@"image":[UIImage imageNamed:@"setting_alarm_time"], @"title":@"报警时段"}],
                        @[@[@"全天录像", @"报警录像"]],
                        @[@"移动侦测报警", @"声音侦测报警"],
                        @[@"指示灯", @"夜光灯", @"警报声"]];
@@ -238,24 +238,24 @@
     UIView *footV = [[UIView alloc] initWithFrame:(CGRect){0,0,self.view.width, 190}];
     
     UIButton *reboot = [UIButton buttonWithImg:@"设备重启" zoomIn:NO image:nil imagesec:nil target:self action:@selector(rebootDevice)];
-    [reboot setBackgroundColor:[UIColor colorWithHexString:@"#419FFF"]];
-    reboot.frame = CGRectMake(15, 20, footV.width - 30, 44);
+    [reboot setBackgroundColor:[UIColor colorWithHexString:@"#00DEC9"]];
+    reboot.frame = CGRectMake(50, 20, footV.width - 100, 44);
     
-    reboot.layer.cornerRadius = 8.f;
+    reboot.layer.cornerRadius = 4.f;
     [footV addSubview:reboot];
     
     UIButton *button = [UIButton buttonWithImg:@"删除设备" zoomIn:NO image:nil imagesec:nil target:self action:@selector(deleteDevice)];
-    [button setBackgroundColor:[UIColor colorWithHexString:@"#FA673E"]];
-    button.frame = CGRectMake(15, CGRectGetMaxY(reboot.frame) + 10, footV.width - 30, 44);
+    [button setBackgroundColor:[UIColor colorWithHexString:@"#F16749"]];
+    button.frame = (CGRect){reboot.originX, CGRectGetMaxY(reboot.frame) + 10, reboot.size};
     
-    button.layer.cornerRadius = 8.f;
+    button.layer.cornerRadius = 4.f;
     [footV addSubview:button];
     
     UIButton *setting = [UIButton buttonWithImg:@"设置时间" zoomIn:NO image:nil imagesec:nil target:self action:@selector(setTime)];
-    [setting setBackgroundColor:[UIColor colorWithHexString:@"#419FFF"]];
-    setting.frame = CGRectMake(15, CGRectGetMaxY(button.frame) + 10, footV.width - 30, 44);
+    [setting setBackgroundColor:[UIColor colorWithHexString:@"#00DEC9"]];
+    setting.frame = (CGRect){reboot.originX, CGRectGetMaxY(button.frame) + 10, reboot.size};
     
-    setting.layer.cornerRadius = 8.f;
+    setting.layer.cornerRadius = 4.f;
     [footV addSubview:setting];
     
     return footV;
@@ -280,12 +280,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bankCellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        if (indexPath.section <= 2)
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    
-    cell.accessoryView = nil;
     
     if (indexPath.section <= 2) {
         if (indexPath.section == 0 && _disableTopSection) {
@@ -299,7 +294,7 @@
             cell.accessoryView = [UILabel labelWithTxt:_timeString frame:(CGRect){_settingTable.width - 180, 0, 120, cell.height}
                                                   font:[UIFont appFontSize16] color:[UIColor colorWithHexString:@"#999999"]];
         } else {
-            cell.accessoryView = nil;
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alarm_arrow"]];
         }
     } else {
         if (indexPath.section == 3) {
@@ -823,6 +818,7 @@
         [_settingTable setBackgroundColor:[UIColor appBackgroundColor]];
         _settingTable.tableFooterView = [self getFootView];
         _settingTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        [_settingTable setSeparatorColor:[UIColor colorWithHexString:@"#00DEC9"]];
     }
     return _settingTable;
 }
