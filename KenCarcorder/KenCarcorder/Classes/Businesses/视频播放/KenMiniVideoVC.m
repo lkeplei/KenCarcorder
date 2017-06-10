@@ -76,47 +76,6 @@
     SysDelegate.allowRotation = NO;
 }
 
-//#pragma mark - Table delegate
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return _functionList.count;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    static NSString *bankCellIdentifier = @"videoCell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:bankCellIdentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:bankCellIdentifier];
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.1];
-//        cell.textLabel.textColor = [UIColor appWhiteTextColor];
-//    }
-//    
-//    NSDictionary *function = [_functionList objectAtIndex:indexPath.row];
-//    [cell.imageView setImage:[UIImage imageNamed:[function objectForKey:@"img"]]];
-//    [cell.textLabel setText:[function objectForKey:@"title"]];
-//    
-//    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-//    if (indexPath.row != 0) {
-//        UIView *line = [[UIView alloc] initWithFrame:(CGRect){kKenOffsetX(30), 0, self.contentView.width, 0.5}];
-//        line.backgroundColor = [UIColor colorWithHexString:@"#73BFE2"];
-//        [cell.contentView addSubview:line];
-//    }
-//    
-//    return cell;
-//}
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    
-//    if (indexPath.row == 0) {
-//        [self pushViewController:[[KenHistoryVC alloc] initWithDevice:self.device] animated:YES];
-//    } else if (indexPath.row == 1) {
-//        [self pushViewController:[[KenDeviceSettingVC alloc] initWithDevice:self.device] animated:YES];
-//    }
-//    
-//    [self.videoV stopVideo];
-//}
-
 #pragma mark - rotate
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {

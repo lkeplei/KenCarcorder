@@ -8,8 +8,10 @@
 
 #import "KenBaseVC.h"
 
+@class KenAlarmItemDM;
+
 @interface KenAlarmRecordVC : KenBaseVC
 
-- (instancetype)initWithDevice:(KenDeviceDM *)device;
+- (instancetype)initWithDevice:(KenDeviceDM *)device info:(KenAlarmItemDM *)info;
 
 @end

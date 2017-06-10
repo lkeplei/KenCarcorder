@@ -200,8 +200,7 @@
                 }];
             }
             
-            KenAlarmRecordVC *recordVC = [[KenAlarmRecordVC alloc] initWithDevice:device];
-            [self pushViewController:recordVC animated:YES];
+            [self pushViewController:[[KenAlarmRecordVC alloc] initWithDevice:device info:info] animated:YES];
         }
     }
 }
