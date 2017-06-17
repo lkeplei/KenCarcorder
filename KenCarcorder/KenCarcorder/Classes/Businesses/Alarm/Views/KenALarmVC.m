@@ -506,7 +506,7 @@
 
 - (UIImageView *)bgImgView {
     if (_bgImgView == nil) {
-        _bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_bg"]];
+        _bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"app_default_bg"]];
         _bgImgView.center = CGPointMake(self.contentView.width / 2, self.contentView.height / 2);
         [self.contentView addSubview:_bgImgView];
     }

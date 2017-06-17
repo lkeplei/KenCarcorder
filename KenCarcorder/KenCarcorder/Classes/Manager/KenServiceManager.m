@@ -11,6 +11,7 @@
 #import "KenAccountS.h"
 #import "KenDeviceS.h"
 #import "KenAlarmS.h"
+#import "KenPlayS.h"
 #import "KenAlarmStatDM.h"
 #import "KenDeviceDM.h"
 
@@ -29,6 +30,7 @@
 - (NSArray *)servicesArray {
     return @[[[KenAccountS alloc] init],
              [[KenDeviceS alloc] init],
+             [[KenPlayS alloc] init],
              [[KenAlarmS alloc] init]];
 }
 

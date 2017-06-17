@@ -170,4 +170,10 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 - (void)alarmSetOnOff:(BOOL)on sn:(NSString *)sn
               success:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
 
+#pragma mark - play
+- (void)playBanner:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
+
+- (void)playBannerDevice:(NSInteger)bannerId
+                   start:(RequestStartBlock)start successBlock:(ResponsedSuccessBlock)success failedBlock:(RequestFailureBlock)failed;
+
 @end

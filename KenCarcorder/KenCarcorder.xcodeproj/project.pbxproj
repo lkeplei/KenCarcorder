@@ -25,6 +25,14 @@
 		7AA690CD1EEB8700001F2D83 /* Setting.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AA690CC1EEB8700001F2D83 /* Setting.xcassets */; };
 		7ABBA9A51EA1D75B000F3FFD /* KenZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */; };
 		7ABBA9B11EA1E33D000F3FFD /* KenHistoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABBA9AF1EA1E33D000F3FFD /* KenHistoryVC.m */; };
+		7ADEE7B51EF4D3F100F5C5A8 /* KenPlayS.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADEE7B41EF4D3F100F5C5A8 /* KenPlayS.m */; };
+		7ADEE7BA1EF4D49200F5C5A8 /* KenPlayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADEE7B91EF4D49200F5C5A8 /* KenPlayVC.m */; };
+		7ADEE7BD1EF4D4B400F5C5A8 /* KenPlayBannerDM.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADEE7BC1EF4D4B400F5C5A8 /* KenPlayBannerDM.m */; };
+		7ADEE7C01EF4D89700F5C5A8 /* KenPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADEE7BF1EF4D89700F5C5A8 /* KenPageControl.m */; };
+		7ADEE7C31EF4DBAA00F5C5A8 /* KenPlayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADEE7C21EF4DBAA00F5C5A8 /* KenPlayCell.m */; };
+		7ADEE7C61EF5203A00F5C5A8 /* Play.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ADEE7C51EF5203A00F5C5A8 /* Play.xcassets */; };
+		7ADEE7C91EF52CCF00F5C5A8 /* KenPlayDeviceDM.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADEE7C81EF52CCF00F5C5A8 /* KenPlayDeviceDM.m */; };
+		7ADEE7CC1EF5365900F5C5A8 /* KenPlayItemVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADEE7CB1EF5365900F5C5A8 /* KenPlayItemVC.m */; };
 		7AE883801EE260B400BA30E3 /* KenDeviceCellV.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE8837D1EE260B400BA30E3 /* KenDeviceCellV.m */; };
 		7AE883811EE260B400BA30E3 /* KenMyDeviceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE8837F1EE260B400BA30E3 /* KenMyDeviceVC.m */; };
 		7AE883831EE260D300BA30E3 /* MyDevice.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AE883821EE260D300BA30E3 /* MyDevice.xcassets */; };
@@ -135,7 +143,6 @@
 		E6105B831E7D162500CAE297 /* libcvoiceRecognize_simulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6105B821E7D162500CAE297 /* libcvoiceRecognize_simulator.a */; };
 		E6105B861E7D1EBB00CAE297 /* KenAlarmS.m in Sources */ = {isa = PBXBuildFile; fileRef = E6105B851E7D1EBB00CAE297 /* KenAlarmS.m */; };
 		E6105B8D1E7D27B700CAE297 /* KenAlarmDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E6105B8C1E7D27B700CAE297 /* KenAlarmDM.m */; };
-		E61FAA911E57F6A300F67E61 /* KenPlayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA901E57F6A300F67E61 /* KenPlayVC.m */; };
 		E61FAAA01E58193C00F67E61 /* KenCarcorder.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAA9F1E58193C00F67E61 /* KenCarcorder.m */; };
 		E61FAAA51E58278E00F67E61 /* KenDeviceS.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAA41E58278E00F67E61 /* KenDeviceS.m */; };
 		E61FAAAC1E5843EE00F67E61 /* KenMobileListDM.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FAAAB1E5843EE00F67E61 /* KenMobileListDM.m */; };
@@ -196,6 +203,21 @@
 		7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenZoomScrollView.m; sourceTree = "<group>"; };
 		7ABBA9AE1EA1E33D000F3FFD /* KenHistoryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenHistoryVC.h; sourceTree = "<group>"; };
 		7ABBA9AF1EA1E33D000F3FFD /* KenHistoryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenHistoryVC.m; sourceTree = "<group>"; };
+		7ADEE7B31EF4D3F100F5C5A8 /* KenPlayS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayS.h; sourceTree = "<group>"; };
+		7ADEE7B41EF4D3F100F5C5A8 /* KenPlayS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPlayS.m; sourceTree = "<group>"; };
+		7ADEE7B81EF4D49200F5C5A8 /* KenPlayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayVC.h; sourceTree = "<group>"; };
+		7ADEE7B91EF4D49200F5C5A8 /* KenPlayVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPlayVC.m; sourceTree = "<group>"; };
+		7ADEE7BB1EF4D4B400F5C5A8 /* KenPlayBannerDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayBannerDM.h; sourceTree = "<group>"; };
+		7ADEE7BC1EF4D4B400F5C5A8 /* KenPlayBannerDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPlayBannerDM.m; sourceTree = "<group>"; };
+		7ADEE7BE1EF4D89700F5C5A8 /* KenPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPageControl.h; sourceTree = "<group>"; };
+		7ADEE7BF1EF4D89700F5C5A8 /* KenPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPageControl.m; sourceTree = "<group>"; };
+		7ADEE7C11EF4DBAA00F5C5A8 /* KenPlayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayCell.h; sourceTree = "<group>"; };
+		7ADEE7C21EF4DBAA00F5C5A8 /* KenPlayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPlayCell.m; sourceTree = "<group>"; };
+		7ADEE7C51EF5203A00F5C5A8 /* Play.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Play.xcassets; sourceTree = "<group>"; };
+		7ADEE7C71EF52CCF00F5C5A8 /* KenPlayDeviceDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayDeviceDM.h; sourceTree = "<group>"; };
+		7ADEE7C81EF52CCF00F5C5A8 /* KenPlayDeviceDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPlayDeviceDM.m; sourceTree = "<group>"; };
+		7ADEE7CA1EF5365900F5C5A8 /* KenPlayItemVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayItemVC.h; sourceTree = "<group>"; };
+		7ADEE7CB1EF5365900F5C5A8 /* KenPlayItemVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPlayItemVC.m; sourceTree = "<group>"; };
 		7AE8837C1EE260B400BA30E3 /* KenDeviceCellV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceCellV.h; sourceTree = "<group>"; };
 		7AE8837D1EE260B400BA30E3 /* KenDeviceCellV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenDeviceCellV.m; sourceTree = "<group>"; };
 		7AE8837E1EE260B400BA30E3 /* KenMyDeviceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenMyDeviceVC.h; sourceTree = "<group>"; };
@@ -405,8 +427,6 @@
 		E6105B851E7D1EBB00CAE297 /* KenAlarmS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlarmS.m; sourceTree = "<group>"; };
 		E6105B8B1E7D27B700CAE297 /* KenAlarmDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenAlarmDM.h; sourceTree = "<group>"; };
 		E6105B8C1E7D27B700CAE297 /* KenAlarmDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenAlarmDM.m; sourceTree = "<group>"; };
-		E61FAA8F1E57F6A300F67E61 /* KenPlayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenPlayVC.h; sourceTree = "<group>"; };
-		E61FAA901E57F6A300F67E61 /* KenPlayVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenPlayVC.m; sourceTree = "<group>"; };
 		E61FAA9E1E58193C00F67E61 /* KenCarcorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenCarcorder.h; sourceTree = "<group>"; };
 		E61FAA9F1E58193C00F67E61 /* KenCarcorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenCarcorder.m; sourceTree = "<group>"; };
 		E61FAAA31E58278E00F67E61 /* KenDeviceS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenDeviceS.h; sourceTree = "<group>"; };
@@ -695,6 +715,38 @@
 			path = "视频回放";
 			sourceTree = "<group>";
 		};
+		7ADEE7B61EF4D49200F5C5A8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7ADEE7BB1EF4D4B400F5C5A8 /* KenPlayBannerDM.h */,
+				7ADEE7BC1EF4D4B400F5C5A8 /* KenPlayBannerDM.m */,
+				7ADEE7C71EF52CCF00F5C5A8 /* KenPlayDeviceDM.h */,
+				7ADEE7C81EF52CCF00F5C5A8 /* KenPlayDeviceDM.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7ADEE7B71EF4D49200F5C5A8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7ADEE7B81EF4D49200F5C5A8 /* KenPlayVC.h */,
+				7ADEE7B91EF4D49200F5C5A8 /* KenPlayVC.m */,
+				7ADEE7C11EF4DBAA00F5C5A8 /* KenPlayCell.h */,
+				7ADEE7C21EF4DBAA00F5C5A8 /* KenPlayCell.m */,
+				7ADEE7CA1EF5365900F5C5A8 /* KenPlayItemVC.h */,
+				7ADEE7CB1EF5365900F5C5A8 /* KenPlayItemVC.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7ADEE7C41EF5202F00F5C5A8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7ADEE7C51EF5203A00F5C5A8 /* Play.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		7AE8837A1EE260B400BA30E3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -961,6 +1013,8 @@
 				E61FAAA41E58278E00F67E61 /* KenDeviceS.m */,
 				E6105B841E7D1EBB00CAE297 /* KenAlarmS.h */,
 				E6105B851E7D1EBB00CAE297 /* KenAlarmS.m */,
+				7ADEE7B31EF4D3F100F5C5A8 /* KenPlayS.h */,
+				7ADEE7B41EF4D3F100F5C5A8 /* KenPlayS.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1217,6 +1271,8 @@
 		BE7EFD851E320FDC00E1E579 /* UIControls */ = {
 			isa = PBXGroup;
 			children = (
+				7ADEE7BE1EF4D89700F5C5A8 /* KenPageControl.h */,
+				7ADEE7BF1EF4D89700F5C5A8 /* KenPageControl.m */,
 				7ABBA9A31EA1D75B000F3FFD /* KenZoomScrollView.h */,
 				7ABBA9A41EA1D75B000F3FFD /* KenZoomScrollView.m */,
 				BE7EFD8C1E32126000E1E579 /* KenAlertView.h */,
@@ -1334,8 +1390,9 @@
 		E61FAA8E1E57F69A00F67E61 /* Play */ = {
 			isa = PBXGroup;
 			children = (
-				E61FAA8F1E57F6A300F67E61 /* KenPlayVC.h */,
-				E61FAA901E57F6A300F67E61 /* KenPlayVC.m */,
+				7ADEE7C41EF5202F00F5C5A8 /* Resources */,
+				7ADEE7B61EF4D49200F5C5A8 /* Model */,
+				7ADEE7B71EF4D49200F5C5A8 /* Views */,
 			);
 			path = Play;
 			sourceTree = "<group>";
@@ -1666,6 +1723,7 @@
 				BE7EFD801E32098F00E1E579 /* Assets.xcassets in Resources */,
 				7A3193491EC6A758005B6E26 /* AddDevice.xcassets in Resources */,
 				7AE883B01EE2640000BA30E3 /* Login.xcassets in Resources */,
+				7ADEE7C61EF5203A00F5C5A8 /* Play.xcassets in Resources */,
 				7AE883961EE262D100BA30E3 /* Video.xcassets in Resources */,
 				7AE883931EE2621E00BA30E3 /* Mine.xcassets in Resources */,
 				7AE883A31EE2635E00BA30E3 /* Alarm.xcassets in Resources */,
@@ -1743,19 +1801,21 @@
 				E6E4C1151E74069000FD0735 /* skt.c in Sources */,
 				BE7EFD6B1E32098F00E1E579 /* KenFileManager.m in Sources */,
 				BE7EFD711E32098F00E1E579 /* NSObject+JsonModel.m in Sources */,
-				E61FAA911E57F6A300F67E61 /* KenPlayVC.m in Sources */,
 				E6E4C1081E74069000FD0735 /* avi.c in Sources */,
 				BE7EFD561E32098F00E1E579 /* KKGestureLockView.m in Sources */,
 				7AE883D11EE2647B00BA30E3 /* KenWifiSetStep3VC.m in Sources */,
 				BE7EFD5D1E32098F00E1E579 /* NSMutableString+KenString.m in Sources */,
 				BE7EFD501E32098F00E1E579 /* KenGCDTimerManager.m in Sources */,
 				7AA690C71EEB86E4001F2D83 /* KenDeviceChangePwdVC.m in Sources */,
+				7ADEE7BD1EF4D4B400F5C5A8 /* KenPlayBannerDM.m in Sources */,
 				BE7EFD7A1E32098F00E1E579 /* KenModule.m in Sources */,
 				7AA690CA1EEB86E4001F2D83 /* KenDeviceWifiSetVC.m in Sources */,
 				7AE883CF1EE2647B00BA30E3 /* KenRadarV.m in Sources */,
+				7ADEE7C91EF52CCF00F5C5A8 /* KenPlayDeviceDM.m in Sources */,
 				BE7EFD681E32098F00E1E579 /* UIView+KenView.m in Sources */,
 				E61FAAAC1E5843EE00F67E61 /* KenMobileListDM.m in Sources */,
 				7AE883CE1EE2647B00BA30E3 /* KenFirstStepVC.m in Sources */,
+				7ADEE7BA1EF4D49200F5C5A8 /* KenPlayVC.m in Sources */,
 				7AA690C51EEB86E4001F2D83 /* KenDeviceChangeGroupVC.m in Sources */,
 				BE7EFD601E32098F00E1E579 /* NSString+KenString.m in Sources */,
 				BE7EFD5E1E32098F00E1E579 /* NSObject+Extension.m in Sources */,
@@ -1767,6 +1827,7 @@
 				7AE883901EE2621100BA30E3 /* KenGroupManagerVC.m in Sources */,
 				BE7EFD701E32098F00E1E579 /* NSObject+KenInvoker.m in Sources */,
 				7A3193541EC6C47F005B6E26 /* KenQRCodeVC.m in Sources */,
+				7ADEE7B51EF4D3F100F5C5A8 /* KenPlayS.m in Sources */,
 				7AE883801EE260B400BA30E3 /* KenDeviceCellV.m in Sources */,
 				BEAD74FA1E480CA3009ADD65 /* KenHomeVC.m in Sources */,
 				BE7EFCA61E2F086500E1E579 /* main.m in Sources */,
@@ -1797,10 +1858,13 @@
 				BE7EFD6C1E32098F00E1E579 /* KenHtmlLabel.m in Sources */,
 				E6E4C0771E73BFE100FD0735 /* KenDeviceDM.m in Sources */,
 				BE7EFD4C1E32098F00E1E579 /* KenBaseVC.m in Sources */,
+				7ADEE7C01EF4D89700F5C5A8 /* KenPageControl.m in Sources */,
 				E6E4C1131E74069000FD0735 /* Photos.m in Sources */,
 				BE7EFD691E32098F00E1E579 /* UIViewController+KenVC.m in Sources */,
 				E6E4C1161E74069000FD0735 /* thplatform.c in Sources */,
 				BE7EFD7C1E32098F00E1E579 /* KenTabBar.m in Sources */,
+				7ADEE7CC1EF5365900F5C5A8 /* KenPlayItemVC.m in Sources */,
+				7ADEE7C31EF4DBAA00F5C5A8 /* KenPlayCell.m in Sources */,
 				BE7EFD791E32098F00E1E579 /* XPSuperJson.m in Sources */,
 				BE7EFD7D1E32098F00E1E579 /* KenTabBarItem.m in Sources */,
 				7AE883AC1EE263F700BA30E3 /* KenForgetPwdVC.m in Sources */,

@@ -63,7 +63,6 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     KenDeviceCellV *cell = (KenDeviceCellV *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor];
     
     [cell updateWithDevice:_tempArray[indexPath.row]];
     
@@ -151,7 +150,7 @@
 //        layout.minimumLineSpacing = 25; // 水平方向的间距
 //        layout.sectionInset = UIEdgeInsetsMake(0.f, 0, 9.f, 0);
         
-        _collectV = [[UICollectionView alloc] initWithFrame:(CGRect){0, self.segmentView.maxY + 10, self.contentView.width, self.contentView.height - self.segmentView.maxY} collectionViewLayout:layout];
+        _collectV = [[UICollectionView alloc] initWithFrame:(CGRect){0, self.segmentView.maxY + 10, self.contentView.width, self.contentView.height - self.segmentView.maxY - 10} collectionViewLayout:layout];
         _collectV.backgroundColor = [UIColor whiteColor];
         _collectV.dataSource = self;
         _collectV.delegate = self;
@@ -163,7 +162,7 @@
 
 - (UIImageView *)bgImgView {
     if (_bgImgView == nil) {
-        _bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_bg"]];
+        _bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"app_default_bg"]];
         _bgImgView.center = CGPointMake(self.contentView.width / 2, self.contentView.height / 2);
         [self.contentView addSubview:_bgImgView];
     }
