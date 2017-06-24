@@ -26,8 +26,8 @@
 + (NSDictionary *)setDefaultValueMap {
     return @{@"name":@"",
              @"serverHost":@"",
-             @"userName":@"",
-             @"password":@"",
+             @"userName":@"admin",
+             @"password":@"admin",
              @"topDiscuss":@"",
              @"imageUrl":@""};
 }

@@ -18,6 +18,8 @@
 
 @interface KenPlayVC ()<UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
 
+@property (nonatomic, assign) BOOL needReloadData;
+
 @property (nonatomic, strong) UIView *bannerView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) KenPageControl *pageControl;
@@ -38,6 +40,7 @@
     self = [super init];
     if (self) {
         _currentBannerItemId = -1;
+        _needReloadData = NO;
     }
     return self;
 }
@@ -51,6 +54,15 @@
     
     [self.contentView addSubview:self.bannerView];
     [self.contentView addSubview:self.collectV];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (_needReloadData) {
+        [self getBannerItemDevice];
+        _needReloadData = NO;
+    }
 }
 
 #pragma mark - data
@@ -115,6 +127,8 @@
 
 #pragma mark -- UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    _needReloadData = YES;
+    
     KenPlayItemVC *itemVC = [[KenPlayItemVC alloc] initWithDevice:[self.playDeviceDM.list objectAtIndex:indexPath.row]];
     [self pushViewController:itemVC animated:YES];
 }

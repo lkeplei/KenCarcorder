@@ -22,11 +22,10 @@
 @property (nonatomic, assign) NSInteger category;                   // 分类id
 @property (nonatomic, assign) NSInteger seqNumber;
 @property (nonatomic, assign) NSInteger serverPort;                 // 设备port
-@property (nonatomic, assign) CGFloat pageView;                     // 点击量
-@property (nonatomic, assign) CGFloat followCount;                  // 关注数
-@property (nonatomic, assign) CGFloat collectCount;                 // 收藏数
-@property (nonatomic, assign) CGFloat praiseCount;                  // 点赞数
-@property (nonatomic, assign) CGFloat discussCount;                 // 评论数
+@property (nonatomic, assign) NSUInteger pageView;                  // 点击量
+@property (nonatomic, assign) NSUInteger collectCount;              // 收藏数
+@property (nonatomic, assign) NSUInteger praiseCount;               // 点赞数
+@property (nonatomic, assign) NSUInteger discussCount;              // 评论数
 @property (nonatomic, assign) BOOL isMainStream;                    //是否为主码流，默认为否
 @property (nonatomic, strong) NSString *name;                       //设备名
 @property (nonatomic, strong) NSString *serverHost;                 // 设备地址
