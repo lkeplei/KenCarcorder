@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSMutableArray *discussArray;
 
 @property (nonatomic, strong) KenVideoV *videoV;
+@property (nonatomic, strong) UIView *videoNav;
+@property (nonatomic, strong) UILabel *speedLabebl;         //速度标签
 
 @end
 
@@ -46,9 +48,12 @@
     [self setNavTitle:self.deviceItemDM.name];
     
     [self.contentView addSubview:self.videoV];
+    [self.contentView addSubview:self.videoNav];
     [self.contentView addSubview:self.topV];
     [self.contentView addSubview:self.discussTableV];
     [self.contentView addSubview:self.discussV];
+    
+    [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"] selector:@selector(back)];
     
     //通知后台播放了
     [[KenServiceManager sharedServiceManager] playWithId:_deviceItemDM.itemId start:^{
@@ -59,7 +64,33 @@
     [self loadMoreDiscuss];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    @weakify(self)
+    [[KenGCDTimerManager sharedInstance] scheduledTimerWithName:@"playVideoTime" timeInterval:1 queue:nil repeats:YES
+                                                   actionOption:kKenGCDTimerAbandon action:^{
+                                                       @strongify(self)
+                                                       [Async main:^{
+                                                           self.speedLabebl.text = self.videoV.speed;
+                                                       }];
+                                                   }];
+    SysDelegate.allowRotation = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[KenGCDTimerManager sharedInstance] cancelTimerWithName:@"playVideoTime"];
+    SysDelegate.allowRotation = NO;
+}
+
 #pragma mark - event
+- (void)back {
+    [_videoV finishVideo];
+    [super popViewController];
+}
+
 - (void)sendDiscuss {
     if ([NSString isEmpty:_inputTextField.text]) {
         [self showToastWithMsg:@"请先输入评论"];
@@ -140,6 +171,48 @@
     [self loadMoreDiscuss];
 }
 
+- (void)navBtnClicked:(UIButton *)button {
+    NSUInteger type = button.tag - 1100;
+    if (type == 0) {
+        //全屏
+        [KenCarcorder setOrientation:UIInterfaceOrientationPortrait];
+    } else if (type == 1) {
+        [_videoV recordVideo];
+    } else if (type == 2) {
+        //拍照
+        [_videoV capture];
+        [self showToastWithMsg:@"抓拍成功"];
+        [[KenCarcorder shareCarcorder] playVoiceByType:kKenVoiceCapture];
+    }
+}
+
+#pragma mark - rotate
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
+        [self exitFullscreen];
+    } else {
+        if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
+            [self enterFullscreen];
+        }
+    }
+}
+
+- (void)enterFullscreen {
+    [self.videoV removeFromSuperview];
+    [self.videoNav removeFromSuperview];
+    
+    self.videoV.frame = (CGRect){CGPointZero, SysDelegate.window.height, SysDelegate.window.width};
+    [SysDelegate.window addSubview:self.videoV];
+}
+
+- (void)exitFullscreen {
+    [self.videoV removeFromSuperview];
+    
+    self.videoV.frame = (CGRect){0, 0, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
+    [self.contentView addSubview:self.videoV];
+    [self.contentView addSubview:self.videoNav];
+}
+
 #pragma mark - Table
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.discussArray.count;
@@ -180,9 +253,38 @@
         device.usr = _deviceItemDM.name;
         device.pwd = _deviceItemDM.password;
 
-        _videoV = [[KenVideoV alloc] initHistoryWithDevice:device frame:(CGRect){0, 0, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
+        _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 0, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
+        [_videoV showVideoWithDevice:device];
     }
     return _videoV;
+}
+
+- (UIView *)videoNav {
+    if (_videoNav == nil) {
+        _videoNav = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY - kKenOffsetY(86),
+            self.contentView.width, kKenOffsetY(86)}];
+        _videoNav.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+        
+        _speedLabebl = [UILabel labelWithTxt:@"" frame:(CGRect){20, 0, 80, _videoNav.height}
+                                        font:[UIFont appFontSize12] color:[UIColor appWhiteTextColor]];
+        _speedLabebl.numberOfLines = 0;
+        [_videoNav addSubview:_speedLabebl];
+        
+        NSArray *btnArr = @[@"history_full", @"history_video", @"history_photo"];
+        CGFloat offsetX = _videoV.width;
+        for (NSUInteger i = 0; i < btnArr.count; i++) {
+            UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]
+                                              imagesec:nil target:self action:@selector(navBtnClicked:)];
+            CGFloat width = button.width + kKenOffsetX(50);
+            button.frame = (CGRect){offsetX - width, 0, width, _videoNav.height};
+            offsetX = button.originX;
+            
+            button.tag = 1100 + i;
+            
+            [_videoNav addSubview:button];
+        }
+    }
+    return _videoNav;
 }
 
 - (UIView *)topV {
