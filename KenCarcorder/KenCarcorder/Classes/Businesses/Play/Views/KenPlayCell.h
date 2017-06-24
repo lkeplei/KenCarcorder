@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class KenPlayDeviceItemDM;
+
 @interface KenPlayCell : UICollectionViewCell
+
+- (void)updateWithDevice:(KenPlayDeviceItemDM *)device;
 
 @end

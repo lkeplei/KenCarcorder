@@ -71,12 +71,12 @@
 
 #pragma mark -- UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = (self.contentView.width - 60) / 2;
+    CGFloat width = (self.contentView.width - 48) / 2;
     return CGSizeMake(width, width * kAppImageHeiWid + 30);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(15, 20, 15, 20);
+    return UIEdgeInsetsMake(15, 15, 15, 15);
 }
 
 #pragma mark -- UICollectionViewDelegate

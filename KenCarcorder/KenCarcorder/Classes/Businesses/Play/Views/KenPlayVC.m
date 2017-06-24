@@ -98,20 +98,19 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     KenPlayCell *cell = (KenPlayCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectCell" forIndexPath:indexPath];
     
-//    [cell updateWithDevice:_tempArray[indexPath.row]];
-    cell.backgroundColor = [UIColor yellowColor];
+    [cell updateWithDevice:_playDeviceDM.list[indexPath.row]];
     
     return cell;
 }
 
 #pragma mark -- UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = (self.contentView.width - 60) / 2;
-    return CGSizeMake(width, width * kAppImageHeiWid + 30);
+    CGFloat width = (self.contentView.width - 32) / 2;
+    return CGSizeMake(width, width * kAppImageHeiWid + 20);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(15, 20, 15, 20);
+    return UIEdgeInsetsMake(15, 10, 15, 10);
 }
 
 #pragma mark -- UICollectionViewDelegate
@@ -243,15 +242,8 @@
 
 - (UICollectionView *)collectV {
     if (_collectV == nil) {
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        // 设置collectionView的滚动方向，需要注意的是如果使用了collectionview的headerview或者footerview的话， 如果设置了水平滚动方向的话，那么就只有宽度起作用了了
-        //        [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-        //        layout.itemSize = CGSizeMake((self.contentView.width - 50) / 2, 36);
-        //        layout.minimumInteritemSpacing = 15;// 垂直方向的间距
-        //        layout.minimumLineSpacing = 25; // 水平方向的间距
-        //        layout.sectionInset = UIEdgeInsetsMake(0.f, 0, 9.f, 0);
-        
-        _collectV = [[UICollectionView alloc] initWithFrame:(CGRect){0, self.bannerView.maxY + 10, self.contentView.width, self.contentView.height - self.bannerView.maxY - 10} collectionViewLayout:layout];
+        _collectV = [[UICollectionView alloc] initWithFrame:(CGRect){0, self.bannerView.maxY + 10, self.contentView.width, self.contentView.height - self.bannerView.maxY - 10}
+                                       collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
         _collectV.backgroundColor = [UIColor whiteColor];
         _collectV.dataSource = self;
         _collectV.delegate = self;
