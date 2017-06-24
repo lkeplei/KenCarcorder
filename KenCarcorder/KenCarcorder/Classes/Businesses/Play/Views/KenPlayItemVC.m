@@ -161,7 +161,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    KenPlayDiscussItemDM *discuss = [_discussArray objectAtIndex:indexPath.row];
+    if (discuss) {
+        _inputTextField.text = [NSString stringWithFormat:@"@%@ %@", discuss.userName, _inputTextField.text];
+        [_inputTextField becomeFirstResponder];
+    }
 }
 
 #pragma mark - getter setter
