@@ -83,9 +83,9 @@ static KenUserInfoDM *userInfo = nil;
 }
 
 - (void)removeDevice:(KenDeviceDM *)device {
-    for (KenDeviceDM *device in _deviceArray) {
-        if ([device.sn isEqualToString:device.sn]) {
-            [_deviceArray removeObject:device];
+    for (KenDeviceDM *item in _deviceArray) {
+        if ([item.sn isEqualToString:device.sn]) {
+            [_deviceArray removeObject:item];
             
             [self setInstance];
             [[KenServiceManager sharedServiceManager] getAarmStat];
