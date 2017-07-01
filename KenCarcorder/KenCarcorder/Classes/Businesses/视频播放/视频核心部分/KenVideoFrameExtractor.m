@@ -444,6 +444,7 @@ static int video_outbuf_size;
 - (void)convertFrameToRGB {
     if (pFrame->pict_type != AV_PICTURE_TYPE_NONE) {
         if (pFrame->width != _outputWidth || pFrame->height != _outputHeight) {
+            [self resetSetting:pFrame->width height:pFrame->height rate:_streamFrameRate];
             return;
         }
     }

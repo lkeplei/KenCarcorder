@@ -129,4 +129,15 @@ static KenUserInfoDM *userInfo = nil;
     }
 }
 
+- (void)changeNetStatus:(KenDeviceDM *)device {
+    for (KenDeviceDM *info in _deviceArray) {
+        if ([device.sn isEqualToString:info.sn]) {
+            info.netStat = device.netStat != kKenNetworkP2p ? kKenNetworkP2p : kKenNetworkDdns;
+            break;
+        }
+    }
+    
+    [self setInstance];
+}
+
 @end

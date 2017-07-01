@@ -267,6 +267,8 @@
         }
     } else if (type == 3) {
         [self shareVedio:YES];
+    } else if (type == 4) {
+        [self changeDeviceNetStatus];
     }
 }
 
@@ -291,6 +293,19 @@
 
 - (void)shareBtn {
     [self shareVedio:NO];
+}
+
+- (void)changeDeviceNetStatus {
+    @weakify(self)
+    [self presentConfirmViewInController:self confirmTitle:@"提示"
+                                 message:[NSString stringWithFormat:@"您当前连接方式已切换为（%@）,需要退出重新连接视频", [self.device isDDNS] ? @"ddns" : @"p2p"]
+                      confirmButtonTitle:@"确定" cancelButtonTitle:nil confirmHandler:^{
+                          @strongify(self)
+                          [self back];
+                          
+                          [[KenUserInfoDM sharedInstance] changeNetStatus:self.device];
+                      } cancelHandler:^{
+                      }];
 }
 
 #pragma mark - public method
@@ -455,7 +470,7 @@
         _speedLabebl.numberOfLines = 0;
         [_videoNav addSubview:_speedLabebl];
         
-        NSArray *btnArr = @[@"history_full", @"history_video", @"history_photo", @"video_share"];
+        NSArray *btnArr = @[@"history_full", @"history_video", @"history_photo", @"video_share", [_device isDDNS] ? @"video_net_ddns" : @"video_net_p2p"];
         CGFloat offsetX = _videoV.width;
         for (NSUInteger i = 0; i < btnArr.count; i++) {
             UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]

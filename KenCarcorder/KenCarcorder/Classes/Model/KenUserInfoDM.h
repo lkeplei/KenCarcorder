@@ -37,6 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)saveDevicePwd:(NSString *)password device:(KenDeviceDM *)device;
 
+
+/**
+ 改变某设备的网络
+
+ @param device 需要改变的设备
+ */
+- (void)changeNetStatus:(KenDeviceDM *)device;
+
 @end
 
 NS_ASSUME_NONNULL_END
