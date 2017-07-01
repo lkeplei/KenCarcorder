@@ -10,10 +10,6 @@
 #import "KenAlertView.h"
 #import "KenMiniVideoVC.h"
 
-@interface KenRecorderVC ()
-
-@end
-
 @implementation KenRecorderVC
 #pragma mark - life cycle
 - (void)viewDidLoad {
@@ -24,75 +20,48 @@
     [self initView];
 }
 
-#pragma mark - private mthod
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSString *ssid = [KenCarcorder getCurrentSSID];
+    if ([NSString isNotEmpty:ssid]) {
+        if ([ssid containsString:@"IPCAM_AP_8"] || [ssid containsString:@"七彩云"]) {
+            [self pushViewControllerString:@"KenDirectConnectVC" animated:NO];
+        } 
+    }
+}
+
+#pragma mark - event
+- (void)nextStep {
+    [self pushViewControllerString:@"KenExplain1VC" animated:YES];
+}
+
+#pragma mark - private method
 - (void)initView {
-    UIImageView *bgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recorder_bg"]];
-    bgV.size = self.contentView.size;
-    [self.contentView addSubview:bgV];
+    UIImageView *iCon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recorder_iCon"]];
+    iCon.center = CGPointMake(self.contentView.width / 2, self.contentView.height * 0.26);
+    [self.contentView addSubview:iCon];
     
-    //远程连接
-    UIView *item1V = [[UIView alloc] initWithFrame:(CGRect){20, 115, self.contentView.width - 40, 60}];
-    item1V.backgroundColor = [UIColor whiteColor];
-    item1V.layer.masksToBounds = YES;
-    item1V.layer.borderColor = [UIColor appBlueTextColor].CGColor;
-    item1V.layer.borderWidth = 1.5;
-    item1V.layer.cornerRadius = 30;
-    [self.contentView addSubview:item1V];
+    UILabel *label = [UILabel labelWithTxt:@"您还没有设置记录仪" frame:(CGRect){0, iCon.maxY + 10, self.contentView.width, 30}
+                                      font:[UIFont appFontSize16] color:[UIColor appGrayTextColor]];
+    [self.contentView addSubview:label];
     
-    UIImageView *item1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recorder_wifi"]];
-    item1.center = CGPointMake(item1.width / 2 + 5, item1V.height / 2);
-    [item1V addSubview:item1];
+    UILabel *label1 = [UILabel labelWithTxt:@"保持记录仪处于开机状态并在您的附件，您\n可以通过 \"下一步\" 进行设置"
+                                      frame:(CGRect){0, label.maxY + 10, self.contentView.width, 50}
+                                       font:[UIFont appFontSize14] color:[UIColor appGrayTextColor]];
+    label1.numberOfLines = 2;
+    [label1 setLineSpacing:7];
+    label1.textAlignment = NSTextAlignmentCenter;
+    [self.contentView addSubview:label1];
     
-    UILabel *label1 = [UILabel labelWithTxt:@"远程连接行车记录仪" frame:(CGRect){item1.maxX + 25, 0, item1V.width - 60, item1V.height}
-                                       font:[UIFont appFontSize17] color:[UIColor appBlueTextColor]];
-    label1.textAlignment = NSTextAlignmentLeft;
-    [item1V addSubview:label1];
-    
-    [item1V clicked:^(UIView * _Nonnull view) {
-        [self pushViewControllerString:@"KenSelectVC" animated:YES];
-    }];
-    
-    //直接连接
-    UIView *item2V = [[UIView alloc] initWithFrame:(CGRect){20, 195, self.contentView.width - 40, 60}];
-    item2V.backgroundColor = [UIColor whiteColor];
-    item2V.layer.masksToBounds = YES;
-    item2V.layer.borderColor = [UIColor appOrangeTextColor].CGColor;
-    item2V.layer.borderWidth = 1.5;
-    item2V.layer.cornerRadius = 30;
-    [self.contentView addSubview:item2V];
-    
-    UIImageView *item2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recorder_link"]];
-    item2.center = CGPointMake(item1.width / 2 + 5, item1V.height / 2);
-    [item2V addSubview:item2];
-    
-    UILabel *label2 = [UILabel labelWithTxt:@"直接连接行车记录仪" frame:(CGRect){item2.maxX + 25, 0, item2V.width - 60, item2V.height}
-                                       font:[UIFont appFontSize17] color:[UIColor appOrangeTextColor]];
-    label2.textAlignment = NSTextAlignmentLeft;
-    [item2V addSubview:label2];
-    
-    @weakify(self)
-    [item2V clicked:^(UIView * _Nonnull view) {
-        @strongify(self)
-        NSString *ssid = [KenCarcorder getCurrentSSID];
-        if ([NSString isNotEmpty:ssid]) {
-            if ([ssid containsString:@"IPCAM_AP_8"] || [ssid containsString:@"七彩云"]) {
-                KenMiniVideoVC *videoVC = [[KenMiniVideoVC alloc] init];
-                [self pushViewController:videoVC animated:YES];
-                [videoVC setDirectConnect];
-            } else {
-                [KenAlertView showAlertViewWithTitle:@"" contentView:nil message:@"连接之前需要先设置手机WIFI为行车记录仪网络"
-                                        buttonTitles:@[@"取消", @"确定"]
-                                  buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
-                                      if (index == 1) {
-                                          NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-                                          if([[UIApplication sharedApplication] canOpenURL:url]) {
-                                              [[UIApplication sharedApplication] openURL:url];
-                                          }
-                                      }
-                                  }];
-            }
-        }
-    }];
+    UIButton *nextBtn = [UIButton buttonWithImg:@"下一步" zoomIn:YES image:nil imagesec:nil target:self action:@selector(nextStep)];
+    nextBtn.frame = (CGRect){60, self.contentView.height - 100, self.contentView.width - 120, 44};
+    [nextBtn setTitleColor:[UIColor appMainColor] forState:UIControlStateNormal];
+    nextBtn.layer.masksToBounds = YES;
+    nextBtn.layer.cornerRadius = 4;
+    nextBtn.layer.borderColor = [UIColor appMainColor].CGColor;
+    nextBtn.layer.borderWidth = 0.5;
+    [self.contentView addSubview:nextBtn];
 }
 
 @end

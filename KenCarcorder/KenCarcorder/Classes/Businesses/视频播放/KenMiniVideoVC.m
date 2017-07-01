@@ -308,23 +308,6 @@
                       }];
 }
 
-#pragma mark - public method
-- (void)setDirectConnect {
-    NSString *ssid = [KenCarcorder getCurrentSSID];
-    
-    KenDeviceDM *device = [KenDeviceDM initWithJsonDictionary:@{}];
-    device.netStat = kKenNetworkDdns;
-    device.ddns = @"192.168.1.168";
-    device.name = ssid;
-    device.online = YES;
-    
-    NSInteger value = [[ssid substringFromIndex:[ssid length] - 3] integerValue];
-    device.dataport = 7000 + value;
-    device.httpport = 8000 + value;
-    
-    self.device = device;
-}
-
 #pragma mark - private method
 - (void)initTurnFunctionV {
     UIImageView *funtionBgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_fun_bg"]];
