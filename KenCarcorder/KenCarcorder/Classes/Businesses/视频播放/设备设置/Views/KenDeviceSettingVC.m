@@ -590,7 +590,7 @@
                                   if (successful) {
                                       [self showToastWithMsg:@"设备删除成功"];
                                       
-                                      KenUserInfoDM *userinfo = [KenUserInfoDM getInstance];
+                                      KenUserInfoDM *userinfo = [KenUserInfoDM sharedInstance];
                                       [userinfo removeDevice:self.deviceInfo];
                                       
                                       [self popToRootViewControllerAnimated:YES];

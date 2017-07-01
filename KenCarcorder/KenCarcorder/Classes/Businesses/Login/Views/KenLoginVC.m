@@ -35,13 +35,6 @@
     if (self) {
         self.screenType = kKenViewScreenFull;
         self.hideBackBtn = YES;
-        
-        KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
-        if (userInfo == nil) {
-            userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
-            userInfo.rememberPwd = YES;
-            [userInfo setInstance];
-        }
     }
     return self;
 }
@@ -205,7 +198,7 @@
     line.backgroundColor = [UIColor colorWithHexString:@"#626262"];
     [inputBg addSubview:line];
     
-    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
+    KenUserInfoDM *userInfo = [KenUserInfoDM sharedInstance];
     _accountTextField = [self addTextFiled:NO content:@"请输入用户名或手机号" text:userInfo.userName parent:inputBg width:inputBg.width - 110];
     _accountTextField.keyboardType = UIKeyboardTypeNumberPad;
     
@@ -229,7 +222,7 @@
     _rememberV.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:_rememberV];
  
-    KenUserInfoDM *user = [KenUserInfoDM getInstance];
+    KenUserInfoDM *user = [KenUserInfoDM sharedInstance];
     _rememberImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:user.rememberPwd ? @"login_remember_yes" : @"login_remember_no"]];
     _rememberImg.centerY = _rememberV.height / 2;
     [_rememberV addSubview:_rememberImg];

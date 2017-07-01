@@ -41,7 +41,7 @@
 }
 
 - (BOOL)handleCustomTransformFromDictionary:(NSDictionary *)jsonDict {
-    _deviceInfo = [[KenUserInfoDM getInstance] deviceWithSN:_sn];
+    _deviceInfo = [[KenUserInfoDM sharedInstance] deviceWithSN:_sn];
     
     return [super handleCustomTransformFromDictionary:jsonDict];
 }

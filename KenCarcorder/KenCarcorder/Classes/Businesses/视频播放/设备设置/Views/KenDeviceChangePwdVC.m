@@ -95,7 +95,7 @@
     } success:^(BOOL successful, NSString * _Nullable errMsg, id  _Nullable responseData) {
         [self hideActivity];
         
-        [[KenUserInfoDM getInstance] saveDevicePwd:[_pwdTextField text] device:_deviceInfo];
+        [[KenUserInfoDM sharedInstance] saveDevicePwd:[_pwdTextField text] device:_deviceInfo];
         [self popViewController];
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         [self hideActivity];

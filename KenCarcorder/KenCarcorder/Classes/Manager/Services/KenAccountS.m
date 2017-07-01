@@ -29,16 +29,15 @@
                                 @"mac":[UIDevice getMacAddress],
                                 @"action":@"regusr"};
     
-    __block KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
-    if (userInfo == nil) {
-        userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
-    }
+    __block KenUserInfoDM *userInfo = [KenUserInfoDM sharedInstance];
     userInfo.userName = name;
     userInfo.userPwd = pwd;
     [userInfo setInstance];
     
+    @weakify(userInfo)
     [self httpAsyncPost:[kAppServerHost stringByAppendingString:@"user/login.json"]
             requestInfo:request start:start successBlock:success failedBlock:failed responseBlock:^(NSDictionary *responseData) {
+                @strongify(userInfo)
                 KenLoginDM *loginDM = [KenLoginDM initWithJsonDictionary:responseData];
                 
                 [userInfo setDevices:loginDM.list];
@@ -80,10 +79,7 @@
                 if ([[responseData objectForKey:@"result"] intValue] != 0) {
                     SafeHandleBlock(success, NO, [responseData objectForKey:@"message"], nil);
                 } else {
-                    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
-                    if (userInfo == nil) {
-                        userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
-                    }
+                    KenUserInfoDM *userInfo = [KenUserInfoDM sharedInstance];
                     userInfo.userName = phone;
                     userInfo.userPwd = pwd;
                     [userInfo setInstance];
@@ -101,7 +97,7 @@
 //                if ([[responseData objectForKey:@"result"] intValue] != 0) {
 //                    SafeHandleBlock(success, NO, [responseData objectForKey:@"message"], nil);
 //                } else {
-//                    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
+//                    KenUserInfoDM *userInfo = [KenUserInfoDM sharedInstance];
 //                    if (userInfo == nil) {
 //                        userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
 //                    }

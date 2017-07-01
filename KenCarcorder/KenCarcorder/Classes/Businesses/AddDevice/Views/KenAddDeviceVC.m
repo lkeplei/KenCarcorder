@@ -111,7 +111,7 @@
         return;
     }
     
-    [KenActionSheet showActionSheetViewWithTitle:nil cancelButtonTitle:nil otherButtonTitles:[KenUserInfoDM getInstance].deviceGroups
+    [KenActionSheet showActionSheetViewWithTitle:nil cancelButtonTitle:nil otherButtonTitles:[KenUserInfoDM sharedInstance].deviceGroups
                                 selectSheetBlock:^(KenActionSheet *actionSheetV, NSInteger index) {
         if (index >= 0) {
             _groupId = index;
@@ -193,7 +193,7 @@
 
 - (void)addSuccess {
     if (_deviceInfo) {
-        [[KenUserInfoDM getInstance] addDevice:_deviceInfo];
+        [[KenUserInfoDM sharedInstance] addDevice:_deviceInfo];
     }
     
     [self showToastWithMsg:@"设备添加成功"];

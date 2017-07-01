@@ -19,6 +19,8 @@ static KenUserInfoDM *userInfo = nil;
         userInfo = [KenUserInfoDM getInstance];
         if (userInfo == nil) {
             userInfo = [KenUserInfoDM initWithJsonDictionary:@{}];
+            userInfo.rememberPwd = YES;
+            [userInfo setInstance];
         }
     });
     return userInfo;
@@ -50,7 +52,32 @@ static KenUserInfoDM *userInfo = nil;
 }
 
 - (void)setDevices:(NSArray *)array {
-    _deviceArray = [NSMutableArray arrayWithArray:array];
+    if ([UIApplication isEmpty:_deviceArray]) {
+        _deviceArray = [NSMutableArray array];
+    } else {
+        for (KenDeviceDM *info in _deviceArray) {
+            for (KenDeviceDM *device in array) {
+                if ([device.sn isEqualToString:info.sn]) {
+                    device.pwd = info.pwd;
+                    device.usr = info.usr;
+                    device.lanDataPort = info.lanDataPort;
+                    device.lanHttpPort = info.lanHttpPort;
+                    device.isSubStream = info.isSubStream;
+                    device.deviceLock = info.deviceLock;
+                    device.haveUnreadAlarm = info.haveUnreadAlarm;
+                    
+                    if (device.netStat == kKenNetworkUnkown) {
+                        device.netStat = info.netStat;
+                    }
+                    break;
+                }
+            }
+        }
+        
+        [_deviceArray removeAllObjects];
+    }
+    
+    [_deviceArray addObjectsFromArray:array];
     
     [self setInstance];
 }
@@ -61,7 +88,6 @@ static KenUserInfoDM *userInfo = nil;
             [_deviceArray removeObject:device];
             
             [self setInstance];
-            
             [[KenServiceManager sharedServiceManager] getAarmStat];
             
             return;
@@ -77,9 +103,8 @@ static KenUserInfoDM *userInfo = nil;
     }
     
     [_deviceArray addObject:device];
+    [self setInstance];
     
-    [self setInstance]
-    ;
     return YES;
 }
 
@@ -90,6 +115,7 @@ static KenUserInfoDM *userInfo = nil;
             if ([info.sn isEqualToString:device.sn]) {
                 selDevice = info;
                 [info setPwd:password];
+                [self setInstance];
                 break;
             }
         }

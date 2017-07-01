@@ -76,7 +76,7 @@
 #pragma mark - button
 - (void)confirmBtnClicked {
     if ([_pwdTextField.text length] > 0) {
-        [[KenUserInfoDM getInstance] saveDevicePwd:[_pwdTextField text] device:_deviceInfo];
+        [[KenUserInfoDM sharedInstance] saveDevicePwd:[_pwdTextField text] device:_deviceInfo];
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self showToastWithMsg:@"请输入更正密码"];
@@ -94,7 +94,7 @@
     if (buttonIndex == 1) {
         UITextField *pwdTextField = [alertView textFieldAtIndex:0];
         NSString *pwd = [pwdTextField text];
-        if ([pwd isEqualToString:[KenUserInfoDM getInstance].userPwd]) {
+        if ([pwd isEqualToString:[KenUserInfoDM sharedInstance].userPwd]) {
             [_pwdTextField setText:_deviceInfo.pwd];
         } else {
             [self showToastWithMsg:@"密码输入错误"];

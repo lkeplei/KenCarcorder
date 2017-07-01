@@ -94,7 +94,7 @@
         self.tempArray = [[NSMutableArray alloc] init];
     }
     
-    for (KenDeviceDM *device in [[KenUserInfoDM getInstance] deviceArray]) {
+    for (KenDeviceDM *device in [[KenUserInfoDM sharedInstance] deviceArray]) {
         if (device.groupNo == index) {
             [self.tempArray addObject:device];
         }
@@ -129,7 +129,7 @@
 
 - (KenSegmentV *)segmentView {
     if (_segmentView == nil) {
-        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM getInstance] deviceGroups] frame:(CGRect){0, self.webV.maxY, self.contentView.width, 35}];
+        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM sharedInstance] deviceGroups] frame:(CGRect){0, self.webV.maxY, self.contentView.width, 35}];
         
         @weakify(self)
         _segmentView.segmentSelectChanged = ^(NSInteger index) {

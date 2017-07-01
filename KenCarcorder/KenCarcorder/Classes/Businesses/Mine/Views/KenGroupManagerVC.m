@@ -48,7 +48,7 @@
     } successBlock:^(BOOL successful, NSString * _Nullable errMsg, NSArray * _Nullable responseData) {
         [self hideActivity];
         if (successful) {
-            KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
+            KenUserInfoDM *userInfo = [KenUserInfoDM sharedInstance];
             userInfo.deviceGroups = responseData;
             [userInfo setInstance];
             
@@ -56,7 +56,7 @@
         } else {
             [self showAlert:@"" content:errMsg];
             
-            [self setGroups:[KenUserInfoDM getInstance].deviceGroups];
+            [self setGroups:[KenUserInfoDM sharedInstance].deviceGroups];
         }
     } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
         [self hideActivity];

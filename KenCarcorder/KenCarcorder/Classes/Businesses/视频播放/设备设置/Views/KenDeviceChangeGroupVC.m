@@ -44,7 +44,7 @@
     
     _currentSlectedIndex = _deviceInfo.groupNo;
 
-    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
+    KenUserInfoDM *userInfo = [KenUserInfoDM sharedInstance];
     if (userInfo.deviceGroups.count > 0) {
         _groupArray = [NSArray arrayWithArray:userInfo.deviceGroups];
     } else {
@@ -59,7 +59,7 @@
     } successBlock:^(BOOL successful, NSString * _Nullable errMsg, NSArray * _Nullable responseData) {
         [self hideActivity];
         if (successful) {
-            KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
+            KenUserInfoDM *userInfo = [KenUserInfoDM sharedInstance];
             userInfo.deviceGroups = responseData;
             [userInfo setInstance];
             

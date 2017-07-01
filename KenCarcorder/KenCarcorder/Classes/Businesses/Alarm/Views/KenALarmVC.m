@@ -45,7 +45,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _startId = 0;
+        _startId = -1;
         _selectTab = -1;
         _editStatus = NO;
         _selectNumbers = 0;
@@ -84,7 +84,7 @@
     [[KenServiceManager sharedServiceManager] getAarmStat];
     
     //重新设置分组标题
-    NSArray *group = [KenUserInfoDM getInstance].deviceGroups;
+    NSArray *group = [KenUserInfoDM sharedInstance].deviceGroups;
     for (NSInteger i = 0; i < [_tabBtnArray count]; i++) {
         [_tabBtnArray[i] setTitle:[group objectAtIndex:i] forState:UIControlStateNormal];
     }
@@ -185,7 +185,7 @@
         [_alarmTable reloadData];
     } else {
         KenAlarmItemDM *info = [_alarmArray objectAtIndex:indexPath.row];
-        KenDeviceDM *device = [[KenUserInfoDM getInstance] deviceWithSN:info.sn];
+        KenDeviceDM *device = [[KenUserInfoDM sharedInstance] deviceWithSN:info.sn];
         if (device && device.online && !device.deviceLock) {
             if (![info readed]) {
                 [[KenServiceManager sharedServiceManager] alarmReadWithId:@[[NSString stringWithFormat:@"%zd", info.alarmId]]
@@ -468,9 +468,11 @@
 #pragma mark - getter setter
 - (KenSegmentV *)segmentView {
     if (_segmentView == nil) {
-        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM getInstance] deviceGroups] frame:(CGRect){0, 0, self.contentView.width, 35}];
+        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM sharedInstance] deviceGroups] frame:(CGRect){0, 0, self.contentView.width, 35}];
         
-        [self loadAlarmData];
+        if (_startId == -1) {
+            [self loadAlarmData];
+        }
         
         @weakify(self)
         _segmentView.segmentSelectChanged = ^(NSInteger index) {

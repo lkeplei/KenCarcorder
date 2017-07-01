@@ -57,7 +57,7 @@
             return;
         }
     }
-    for (KenDeviceDM *info in [[KenUserInfoDM getInstance] deviceArray]) {
+    for (KenDeviceDM *info in [[KenUserInfoDM sharedInstance] deviceArray]) {
         if ([[info sn] isEqualToString:[device sn]]) {
             return;
         }

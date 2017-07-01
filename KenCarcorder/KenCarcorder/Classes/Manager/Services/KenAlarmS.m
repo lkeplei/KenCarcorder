@@ -27,7 +27,7 @@
     
     if ([NSString isNotEmpty:sn]) {
         [request setObject:sn forKey:@"sn"];
-    } else if (groupNo >= 0 && groupNo < [[KenUserInfoDM getInstance].deviceGroups count]) {
+    } else if (groupNo >= 0 && groupNo < [[KenUserInfoDM sharedInstance].deviceGroups count]) {
         [request setObject:[NSNumber numberWithInteger:groupNo] forKey:@"groupNo"];
     }
     

@@ -117,7 +117,7 @@
     [inputBg setUserInteractionEnabled:YES];
     [self.contentView addSubview:inputBg];
     
-    KenUserInfoDM *userInfo = [KenUserInfoDM getInstance];
+    KenUserInfoDM *userInfo = [KenUserInfoDM sharedInstance];
     _phoneTextField = [self addTextFiled:NO content:@"请输入您的手机号码"
                                     text:[NSString isEmpty:userInfo.userName] ? nil : userInfo.userName
                                    frame:(CGRect){0, 0, self.contentView.width, 50}];

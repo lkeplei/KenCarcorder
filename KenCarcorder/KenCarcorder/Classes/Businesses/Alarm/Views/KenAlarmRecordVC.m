@@ -68,7 +68,9 @@
     [super viewWillDisappear:animated];
     
     SysDelegate.allowRotation = NO;
-    [_videoV stopRecorder];
+    [Async background:^{
+        [_videoV stopRecorder];
+    }];
 }
 
 #pragma mark - rotate
