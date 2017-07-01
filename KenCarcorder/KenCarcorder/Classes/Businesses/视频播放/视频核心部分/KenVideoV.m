@@ -351,13 +351,14 @@ int hSocketServer; //服务器连接
                 _deviceDM.connectHandle = handle;       //设置句柄和设备序列号
                 int status = 0;
                 while (status != 1 && connectTimes < 1) {
-                    //                    status = thNet_Connect_P2P(_deviceInfo.connectHandle, 0, uid, uidpsd, 10000, true);
+                    //status = thNet_Connect_P2P(_deviceDM.connectHandle, 0, uid, uidpsd, 10000, true);
                     status = ken_Connect_P2P(_deviceDM.connectHandle, 0, uid, uidpsd, 10000, true);
                     
                     ++connectTimes;
                     if (status == -20009) { //密码错误
-                        //                        [_deviceDM setDeviceLock:YES];
-                        //                        [self showvideo];
+                        [_deviceDM setDeviceLock:YES];
+                        [[KenUserInfoDM sharedInstance] setDeviceLock:_deviceDM];
+//                        [self showvideo];
                         return;
                     } else if(status == IOTC_ER_NOT_INITIALIZED) {
                         ken_InitializeP2p();
@@ -366,7 +367,8 @@ int hSocketServer; //服务器连接
                         avInitialize(254);
                         connectTimes = 0;
                     } else {
-                        //                        [_deviceDM setDeviceLock:NO];
+                        [_deviceDM setDeviceLock:NO];
+                        [[KenUserInfoDM sharedInstance] setDeviceLock:_deviceDM];
                     }
                 }
             }

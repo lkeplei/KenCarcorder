@@ -45,6 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)changeNetStatus:(KenDeviceDM *)device;
 
+- (void)setDeviceLock:(KenDeviceDM *)device;
+
 @end
 
 NS_ASSUME_NONNULL_END

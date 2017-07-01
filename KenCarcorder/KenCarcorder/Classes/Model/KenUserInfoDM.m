@@ -140,4 +140,15 @@ static KenUserInfoDM *userInfo = nil;
     [self setInstance];
 }
 
+- (void)setDeviceLock:(KenDeviceDM *)device {
+    for (KenDeviceDM *info in _deviceArray) {
+        if ([device.sn isEqualToString:info.sn]) {
+            info.deviceLock = device.deviceLock;
+            break;
+        }
+    }
+    
+    [self setInstance];
+}
+
 @end
