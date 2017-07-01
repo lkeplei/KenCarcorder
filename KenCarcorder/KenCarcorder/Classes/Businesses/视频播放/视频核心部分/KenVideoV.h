@@ -40,6 +40,10 @@
 - (void)recordVideo;
 //分享视频
 - (void)shareVedio;
+//结束分享
+- (void)stopShareVedio;
+//是否正在分享
+- (BOOL)isSharing;
 
 #pragma mark - 回放相关
 //停止回放

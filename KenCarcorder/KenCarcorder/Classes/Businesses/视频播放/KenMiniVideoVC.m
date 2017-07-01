@@ -20,6 +20,7 @@
 @property (nonatomic, strong) KenVideoV *videoV;
 @property (nonatomic, strong) UIView *functionV;
 @property (nonatomic, strong) UIView *videoNav;
+@property (nonatomic, strong) UIView *fullMaskV;
 @property (nonatomic, strong) UIButton *speakBtn;
 @property (nonatomic, strong) UIView *historyV;
 @property (nonatomic, strong) UIView *settingV;
@@ -93,10 +94,12 @@
     
     self.videoV.frame = (CGRect){CGPointZero, SysDelegate.window.height, SysDelegate.window.width};
     [SysDelegate.window addSubview:self.videoV];
+    [SysDelegate.window addSubview:self.fullMaskV];
 }
 
 - (void)exitFullscreen {
     [self.videoV removeFromSuperview];
+    [self.fullMaskV removeFromSuperview];
     
     self.videoV.frame = (CGRect){0, 0, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
     [self.contentView addSubview:self.videoV];
@@ -263,15 +266,31 @@
             [[KenCarcorder shareCarcorder] playVoiceByType:kKenVoiceCapture];
         }
     } else if (type == 3) {
-        @weakify(self)
-        [self presentConfirmViewInController:self confirmTitle:@"提示"
-                                     message:@"分享设备将可能会耗费您较多的数据流量，并请保护自己和他人的隐私。请确认是否继续?"
-                          confirmButtonTitle:@"分享" cancelButtonTitle:@"取消" confirmHandler:^{
-                              @strongify(self)
-                              [self.videoV shareVedio];
-                          } cancelHandler:^{
-                          }];
+        [self shareVedio:YES];
     }
+}
+
+- (void)shareVedio:(BOOL)ask {
+    @weakify(self)
+    if ([self.videoV isSharing]) {
+        [self.videoV stopShareVedio];
+    } else {
+        if (ask) {
+            [self presentConfirmViewInController:self confirmTitle:@"提示"
+                                         message:@"分享设备将可能会耗费您较多的数据流量，并请保护自己和他人的隐私。请确认是否继续?"
+                              confirmButtonTitle:@"分享" cancelButtonTitle:@"取消" confirmHandler:^{
+                                  @strongify(self)
+                                  [self.videoV shareVedio];
+                              } cancelHandler:^{
+                              }];
+        } else {
+            [self.videoV shareVedio];
+        }
+    }
+}
+
+- (void)shareBtn {
+    [self shareVedio:NO];
 }
 
 #pragma mark - public method
@@ -451,6 +470,29 @@
         }
     }
     return _videoNav;
+}
+
+- (UIView *)fullMaskV {
+    if (_fullMaskV == nil) {
+        UIImage *image = [UIImage imageNamed:@"full_photo"];
+        _fullMaskV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, image.size.width * 3, image.size.height)];
+        _fullMaskV.center = (CGPoint){SysDelegate.window.height / 2, SysDelegate.window.width - _fullMaskV.height / 2 - 10};
+        
+        UIButton *photo = [UIButton buttonWithImg:nil zoomIn:YES image:image imagesec:nil target:self action:@selector(navBtnClicked:)];
+        photo.center = (CGPoint){_fullMaskV.width / 2, _fullMaskV.height / 2};
+        photo.tag = 1100 + 2;
+        [_fullMaskV addSubview:photo];
+        
+        UIButton *share = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"full_share"] imagesec:nil target:self action:@selector(shareBtn)];
+        share.center = (CGPoint){share.width / 2, photo.centerY};
+        [_fullMaskV addSubview:share];
+        
+        UIButton *play = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"full_play"] imagesec:nil target:self action:@selector(navBtnClicked:)];
+        play.center = (CGPoint){_fullMaskV.width - play.width / 2, photo.centerY};
+        play.tag = 1100 + 1;
+        [_fullMaskV addSubview:play];
+    }
+    return _fullMaskV;
 }
 
 - (UIView *)functionV {

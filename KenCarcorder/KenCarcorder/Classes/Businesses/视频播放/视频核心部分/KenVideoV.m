@@ -559,6 +559,14 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
     }];
 }
 
+- (void)stopShareVedio {
+    hSocketOpen = false;
+}
+
+- (BOOL)isSharing {
+    return hSocketOpen;
+}
+
 //发送配置包
 - (void)sendCfgUnit:(NSString *)IPAddress upPort:(NSInteger)upPort {
     if ([NSString isEmpty:IPAddress]) {
