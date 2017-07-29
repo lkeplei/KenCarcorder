@@ -379,36 +379,58 @@ int hSocketServer; //服务器连接
     
     thNet_SetCallBack(_deviceDM.connectHandle, avConnectCallBack, alarmConnetCallBack, (void*)_deviceDM.connectHandle);
     
-    int Standard;
-    int VideoType;
-    int IsMirror;
-    int IsFlip;
-    int Width0;
-    int Height0;
-    int FrameRate0;
-    int BitRate0;
-    int Width1;
-    int Height1;
-    int FrameRate1;
-    int BitRate1;
+    int Standard, VideoType, IsMirror, IsFlip, Width0, Height0, FrameRate0, BitRate0, Width1, Height1, FrameRate1, BitRate1;
     
-    thNet_GetVideoCfg1(_deviceDM.connectHandle, &Standard, &VideoType, &IsMirror, &IsFlip,
-                       &Width0, &Height0, &FrameRate0, &BitRate0,
-                       &Width1, &Height1, &FrameRate1, &BitRate1);
+    thNet_GetVideoCfg1(_deviceDM.connectHandle, &Standard, &VideoType, &IsMirror, &IsFlip, &Width0, &Height0,
+                       &FrameRate0, &BitRate0, &Width1, &Height1, &FrameRate1, &BitRate1);
     
     _isMirror = IsMirror;
     _isFlip = IsFlip;
     
     if (thNet_IsConnect(_deviceDM.connectHandle)) {
         if ([_deviceDM isDDNS]) {
-//            _videoConnected = YES;
             [self connectFinish:Width0 highH:Height0 highRate:FrameRate0 lowW:Width1 lowH:Height1 lowRate:FrameRate1];
-            //调用connectFinish通知子类做相关的视频发送以及一些视频播放与解析的准备工作
         } else {
             if (ken_createThreadP2p(_deviceDM.connectHandle) == 0) {
-//                _videoConnected = YES;
+                {
+                    NSString *param = [NSString stringWithFormat:@"cfg.cgi?User=%@&Psd=%@&MsgID=28", _deviceDM.usr, _deviceDM.pwd];
+                    NSString *info = [self p2pMessageSendUrl:[kConnectP2pHost stringByAppendingString:param] device:_deviceDM];
+                    DebugLog("info = %@", info);
+                    
+                    NSArray *array = [info componentsSeparatedByString:@"\r\n"];
+                    
+                    NSString *deviceWidth0 = @"";
+                    NSString *deviceHeight0 = @"";
+                    NSString *deviceFrameRate0 = @"";
+                    
+                    for (int i = 0; i< [array count]; i++) {
+                        NSString * tmp = [array objectAtIndex:i];
+                        if ([tmp rangeOfString:@"VIDEO_Width0"].length > 0) {
+                            deviceWidth0 = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
+                        }
+                        if ([tmp rangeOfString:@"VIDEO_Height0"].length > 0) {
+                            deviceHeight0 = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
+                        }
+                        if ([tmp rangeOfString:@"VIDEO_FrameRate0"].length > 0) {
+                            deviceFrameRate0 = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
+                        }
+                    }
+                    
+                    deviceWidth0 = [deviceWidth0 stringByReplacingOccurrencesOfString:@";" withString:@""];
+                    deviceWidth0 = [deviceWidth0 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    
+                    deviceHeight0 = [deviceHeight0 stringByReplacingOccurrencesOfString:@";" withString:@""];
+                    deviceHeight0 = [deviceHeight0 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    
+                    deviceFrameRate0 = [deviceFrameRate0 stringByReplacingOccurrencesOfString:@";" withString:@""];
+                    deviceFrameRate0 = [deviceFrameRate0 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    
+                    Width0 = [deviceWidth0 intValue];
+                    Height0 = [deviceHeight0 intValue];
+                    FrameRate0 = [deviceFrameRate0 intValue];
+                }
+                
                 [self connectFinish:Width0 highH:Height0 highRate:FrameRate0 lowW:Width1 lowH:Height1 lowRate:FrameRate1];
-                //先创建线程接收p2p的转发回来的数据，ddns的这一步在thNet_Connect的时候就已经做掉了，线程如果创建成功就一样的调用connectFinish进行通知
             } else {
                 [KenAlertView showAlertViewWithTitle:@"提示" contentView:nil message:@"视频数据获取失败，请退出重试" buttonTitles:@[@"确定"]
                                   buttonClickedBlock:^(KenAlertView * _Nonnull alertView, NSInteger index) {
@@ -416,12 +438,25 @@ int hSocketServer; //服务器连接
                                   }];
             }
         }
-        
-//        //如果视频连接上了以后，获取一下设备的信息
-//        [self completeDeviceInfo];
+    }
+}
+
+- (NSString *)p2pMessageSendUrl:(NSString *)url device:(KenDeviceDM *)device {
+    bool ret;
+    char Buf[65536];
+    int BufLen;
+    
+    if(!thNet_IsConnect(device.connectHandle)) {
+        int64_t handle;
+        thNet_Init(&handle, 11);
+        ret = thNet_Connect_P2P(handle, 0, (char *)[device.uid UTF8String], (char *)[device.uidpsd UTF8String], 10000, YES);
+        device.connectHandle = handle;
+        if (!ret) return nil;
     }
     
-    //    [_deviceDM setDeviceIsConnecting:NO];
+    thNet_HttpGet(device.connectHandle, (char *)[url UTF8String], Buf, &BufLen);
+    
+    return [NSString stringWithFormat:@"%s" , Buf];
 }
 
 - (KenVideoV *)videoCallBack:(int64_t)handle {
