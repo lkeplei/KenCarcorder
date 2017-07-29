@@ -489,15 +489,13 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
         if (frame) {
 //            [_moviceGLView render:frame];
         } else {
-            [self performSelectorOnMainThread:@selector(updateFrame) withObject:nil waitUntilDone:YES];
+            [Async main:^{
+                [self updateFrameWithImage:[_video currentImage]];
+            }];
         }
     } else {
 //            [self showLoadingV];
     }
-}
-
-- (void)updateFrame {
-    [self updateFrameWithImage:[_video currentImage]];
 }
 
 - (void)updateFrameWithImage:(UIImage *)image {
