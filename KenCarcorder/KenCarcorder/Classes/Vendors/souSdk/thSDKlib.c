@@ -847,6 +847,7 @@ bool thNet_Connect(int64_t NetHandle, char* UserName, char* Password, char* SvrI
 }
 //-----------------------------------------------------------------------------
 #ifdef IsUsedP2P
+int64 currentFrame = 0;
 void th_RecvData_P2P(int64_t NetHandle)
 {
     FRAMEINFO_t frameInfo;
@@ -860,6 +861,12 @@ void th_RecvData_P2P(int64_t NetHandle)
     BufLen = 0;
     Play->RecvLen = 0;
 
+    /*
+    char* RecvBuffer = Play->RecvBuf;
+    int HEADPKTSIZE = sizeof(THeadPkt);
+    THeadPkt* PHead = (THeadPkt*)(RecvBuffer);
+     */
+    
     while(1) {
         if (Play->IsExit) break;
 //        if (Play->VideoChlMask == 0 && Play->AudioChlMask == 0 && Play->SubVideoChlMask == 0) {
@@ -908,6 +915,32 @@ void th_RecvData_P2P(int64_t NetHandle)
         PInfo = (TDataFrameInfo*)(Play->RecvBuf);
 
         if (PInfo->Head.VerifyCode == Head_VideoPkt) {
+            if (currentFrame == 0 || currentFrame >= 65535) {
+                //currentFrame = PInfo->Frame.FrameID;
+            }
+            
+            if (PInfo->Frame.FrameID - currentFrame > 3) {
+                if (!PInfo->Frame.IsIFrame)
+                    continue;
+            }
+            
+            currentFrame = PInfo->Frame.FrameID;
+            
+            /*
+            char* Buf = &RecvBuffer[sizeof(TDataFrameInfo)];
+            int BufLen = PHead->PktSize - 16;
+            
+            if (Play->IsNewStartPlay)
+                if (PInfo->Frame.IsIFrame) Play->IsNewStartPlay = false;
+            if (Play->IsNewStartPlay) break;//“—∞¸∫¨œ¬√ÊµƒPlay->avEvent
+            
+            Play->RealBitRate_av = Play->RealBitRate_av + PHead->PktSize + HEADPKTSIZE;
+            Play->RealFrameRate_av++;
+            
+            thNet_RecordWriteData(NetHandle, PInfo, Buf, BufLen);
+            if (Play->avEvent) Play->avEvent(PInfo, Buf, BufLen, Play->UserCustom);
+             */
+            
             thNet_RecordWriteData(NetHandle, PInfo, Play->RecvBuf+24, Play->RecvLen-24);
             if (Play->avEvent) Play->avEvent(PInfo, Play->RecvBuf+24, Play->RecvLen-24, Play->UserCustom);
             continue;

@@ -10,4 +10,6 @@
 
 @interface KenDirectConnectVC : KenBaseVC
 
+@property (nonatomic, strong) KenDeviceDM *device;
+
 @end

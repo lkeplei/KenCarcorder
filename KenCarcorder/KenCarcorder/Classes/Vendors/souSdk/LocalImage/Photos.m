@@ -184,22 +184,26 @@
 }
 
 - (void)savePhoto:(id)data {
-   NSAssert(data != nil, @"Unassigned NSArray for data.");
-   
-   UIImage *photo = (UIImage *)[data objectAtIndex:0];
-   NSString *name = (NSString *)[data objectAtIndex:1];
-    
-   BOOL addToPhotoAlbum = [(NSNumber *)[data objectAtIndex:2] boolValue];
-   
-   NSString *fileName = [NSString stringWithFormat:@"%@.jpg", name];
+    NSAssert(data != nil, @"Unassigned NSArray for data.");
 
-   [self savePhoto:photo asThumbnailNamed:fileName];
-   [self savePhoto:photo named:fileName];
+    if ([data count] <= 0) {
+        return;
+    }
 
-   if (addToPhotoAlbum) {
-      // Save the photo to the Photo.app Photo Library.
-      UIImageWriteToSavedPhotosAlbum(photo, nil, nil, nil);
-   }
+    UIImage *photo = (UIImage *)[data objectAtIndex:0];
+    NSString *name = (NSString *)[data objectAtIndex:1];
+
+    BOOL addToPhotoAlbum = [(NSNumber *)[data objectAtIndex:2] boolValue];
+
+    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", name];
+
+    [self savePhoto:photo asThumbnailNamed:fileName];
+    [self savePhoto:photo named:fileName];
+
+    if (addToPhotoAlbum) {
+        // Save the photo to the Photo.app Photo Library.
+        UIImageWriteToSavedPhotosAlbum(photo, nil, nil, nil);
+    }
 }
 
 - (void)savePhoto:(UIImage *)photo withName:(NSString *)name addToPhotoAlbum:(BOOL)addToPhotoAlbum{
