@@ -111,7 +111,7 @@
 
 - (UIView *)historyV {
     if (_historyV == nil) {
-        _historyV = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY, self.contentView.width, 90}];
+        _historyV = [[UIView alloc] initWithFrame:(CGRect){0, self.videoV.maxY, self.contentView.width, 0/*90*/}];
         _historyV.backgroundColor = [UIColor whiteColor];
     }
     return _historyV;

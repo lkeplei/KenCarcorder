@@ -123,11 +123,13 @@ int hSocketServer; //服务器连接
 }
 
 - (void)disconnectVideo {
-    thNet_RemoteFileStop(_deviceDM.connectHandle);
-    thNet_Stop(_deviceDM.connectHandle);
-    
-    thNet_DisConn(_deviceDM.connectHandle);
-    //    thNet_Free(&_videoConnectHandle);
+    [Async background:^{
+        thNet_RemoteFileStop(_deviceDM.connectHandle);
+        thNet_Stop(_deviceDM.connectHandle);
+        
+        thNet_DisConn(_deviceDM.connectHandle);
+        //    thNet_Free(&_videoConnectHandle);
+    }];
     
     _deviceDM.connectHandle = 0;
 }
