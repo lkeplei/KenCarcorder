@@ -384,9 +384,6 @@ int hSocketServer; //服务器连接
     thNet_GetVideoCfg1(_deviceDM.connectHandle, &Standard, &VideoType, &IsMirror, &IsFlip, &Width0, &Height0,
                        &FrameRate0, &BitRate0, &Width1, &Height1, &FrameRate1, &BitRate1);
     
-    _isMirror = IsMirror;
-    _isFlip = IsFlip;
-    
     if (thNet_IsConnect(_deviceDM.connectHandle)) {
         if ([_deviceDM isDDNS]) {
             [self connectFinish:Width0 highH:Height0 highRate:FrameRate0 lowW:Width1 lowH:Height1 lowRate:FrameRate1];
@@ -400,6 +397,8 @@ int hSocketServer; //服务器连接
                     NSString *deviceWidth0 = @"";
                     NSString *deviceHeight0 = @"";
                     NSString *deviceFrameRate0 = @"";
+                    NSString *deviceMirror = @"";
+                    NSString *deviceFlip = @"";
                     
                     for (int i = 0; i< [array count]; i++) {
                         NSString * tmp = [array objectAtIndex:i];
@@ -412,6 +411,12 @@ int hSocketServer; //服务器连接
                         if ([tmp rangeOfString:@"VIDEO_FrameRate0"].length > 0) {
                             deviceFrameRate0 = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
                         }
+                        if ([tmp rangeOfString:@"VIDEO_IsMirror"].length > 0) {
+                            deviceMirror = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
+                        }
+                        if ([tmp rangeOfString:@"VIDEO_IsFlip"].length > 0) {
+                            deviceFlip = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
+                        }
                     }
                     
                     deviceWidth0 = [deviceWidth0 stringByReplacingOccurrencesOfString:@";" withString:@""];
@@ -423,9 +428,17 @@ int hSocketServer; //服务器连接
                     deviceFrameRate0 = [deviceFrameRate0 stringByReplacingOccurrencesOfString:@";" withString:@""];
                     deviceFrameRate0 = [deviceFrameRate0 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
                     
+                    deviceMirror = [deviceMirror stringByReplacingOccurrencesOfString:@";" withString:@""];
+                    deviceMirror = [deviceMirror stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    
+                    deviceFlip = [deviceFlip stringByReplacingOccurrencesOfString:@";" withString:@""];
+                    deviceFlip = [deviceFlip stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    
                     Width0 = [deviceWidth0 intValue];
                     Height0 = [deviceHeight0 intValue];
                     FrameRate0 = [deviceFrameRate0 intValue];
+                    IsMirror = [deviceMirror intValue];
+                    IsFlip = [deviceFlip intValue];
                 }
                 
                 [self connectFinish:Width0 highH:Height0 highRate:FrameRate0 lowW:Width1 lowH:Height1 lowRate:FrameRate1];
@@ -437,6 +450,11 @@ int hSocketServer; //服务器连接
             }
         }
     }
+    
+    _isMirror = IsMirror;
+    _isFlip = IsFlip;
+    
+    SafeHandleBlock(self.deviceGetFinish);
 }
 
 - (NSString *)p2pMessageSendUrl:(NSString *)url device:(KenDeviceDM *)device {
@@ -762,7 +780,7 @@ bool RecvBuf1(int hSocket, char* Buf, int BufLen) {
         _recorderBgV = [[UIView alloc] initWithFrame:(CGRect){(self.width - 200) / 2, 0, 200, 40}];
         [self addSubview:_recorderBgV];
         
-        UIImageView *leftTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_rec_left_top"]]; //录像框
+        UIImageView *leftTop = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_rec"]]; //录像框
         leftTop.origin = CGPointMake((_recorderBgV.width - leftTop.width - 80) / 2, 10);
         [_recorderBgV addSubview:leftTop];
         

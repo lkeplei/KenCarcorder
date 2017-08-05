@@ -24,7 +24,12 @@
 @property (nonatomic, strong) UIButton *speakBtn;
 @property (nonatomic, strong) UIView *historyV;
 @property (nonatomic, strong) UIView *settingV;
+@property (nonatomic, strong) UILabel *statusL;
 @property (nonatomic, strong) UILabel *speedLabebl;         //速度标签
+@property (nonatomic, strong) UIButton *scanUDBtn;
+@property (nonatomic, strong) UIButton *scanLRBtn;
+@property (nonatomic, strong) UIButton *turnUDBtn;
+@property (nonatomic, strong) UIButton *turnLRBtn;
 
 @end
 
@@ -93,6 +98,7 @@
     [self.videoNav removeFromSuperview];
     
     self.videoV.frame = (CGRect){CGPointZero, SysDelegate.window.height, SysDelegate.window.width};
+    self.statusL.frame = (CGRect){self.videoV.width - 60, 5, 46, 20};
     [SysDelegate.window addSubview:self.videoV];
     [SysDelegate.window addSubview:self.fullMaskV];
 }
@@ -102,6 +108,7 @@
     [self.fullMaskV removeFromSuperview];
     
     self.videoV.frame = (CGRect){0, 0, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
+    self.statusL.frame = (CGRect){self.videoV.width - 60, 5, 46, 20};
     [self.contentView addSubview:self.videoV];
     [self.contentView addSubview:self.videoNav];
 }
@@ -113,11 +120,11 @@
 }
 
 - (void)speakStart {
-
+    [self.videoV speakStart];
 }
 
 - (void)speakEnd {
-
+    [self.videoV speakEnd];
 }
 
 - (void)scanUpdown {
@@ -129,6 +136,10 @@
             if (successful) {
                 self.upDownScanning = NO;
                 self.leftRightScanning = NO;
+                [Async main:^{
+                    [self.scanLRBtn setImage:[UIImage imageNamed:@"video_scan_left_right"] forState:UIControlStateNormal];
+                    [self.scanUDBtn setImage:[UIImage imageNamed:@"video_scan_up_down"] forState:UIControlStateNormal];
+                }];
             }
         } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         }];
@@ -138,6 +149,9 @@
             @strongify(self)
             if (successful) {
                 self.upDownScanning = !self.upDownScanning;
+                [Async main:^{
+                    [self.scanUDBtn setImage:[UIImage imageNamed:self.upDownScanning ? @"video_scan_up_down_hl" : @"video_scan_up_down"] forState:UIControlStateNormal];
+                }];
             }
         } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         }];
@@ -153,6 +167,10 @@
             if (successful) {
                 self.upDownScanning = NO;
                 self.leftRightScanning = NO;
+                [Async main:^{
+                    [self.scanLRBtn setImage:[UIImage imageNamed:@"video_scan_left_right"] forState:UIControlStateNormal];
+                    [self.scanUDBtn setImage:[UIImage imageNamed:@"video_scan_up_down"] forState:UIControlStateNormal];
+                }];
             }
         } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         }];
@@ -162,6 +180,9 @@
             @strongify(self)
             if (successful) {
                 self.leftRightScanning = !self.leftRightScanning;
+                [Async main:^{
+                    [self.scanLRBtn setImage:[UIImage imageNamed:self.leftRightScanning ? @"video_scan_left_right_hl" : @"video_scan_left_right"] forState:UIControlStateNormal];
+                }];
             }
         } failed:^(NSInteger status, NSString * _Nullable errMsg) {
         }];
@@ -175,6 +196,9 @@
         @strongify(self)
         if (successful) {
             self.videoV.isFlip = !self.videoV.isFlip;
+            [Async main:^{
+               [self.turnUDBtn setImage:[UIImage imageNamed:self.videoV.isFlip ? @"video_turn_up_down_hl" : @"video_turn_up_down"] forState:UIControlStateNormal];
+            }];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
     }];
@@ -187,6 +211,9 @@
         @strongify(self)
         if (successful) {
             self.videoV.isMirror = !self.videoV.isMirror;
+            [Async main:^{
+                [self.turnLRBtn setImage:[UIImage imageNamed:self.videoV.isMirror ? @"video_turn_left_right_hl" : @"video_turn_left_right"] forState:UIControlStateNormal];
+            }];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
     }];
@@ -276,16 +303,19 @@
     @weakify(self)
     if ([self.videoV isSharing]) {
         [self.videoV stopShareVedio];
+        self.statusL.hidden = YES;
     } else {
         if (ask) {
             [self presentConfirmViewInController:self confirmTitle:@"提示"
                                          message:@"分享设备将可能会耗费您较多的数据流量，并请保护自己和他人的隐私。请确认是否继续?"
                               confirmButtonTitle:@"分享" cancelButtonTitle:@"取消" confirmHandler:^{
                                   @strongify(self)
+                                  self.statusL.hidden = NO;
                                   [self.videoV shareVedio];
                               } cancelHandler:^{
                               }];
         } else {
+            self.statusL.hidden = NO;
             [self.videoV shareVedio];
         }
     }
@@ -369,56 +399,29 @@
     }];
 }
 
-- (UIView *)scanV:(UIImage *)image text:(NSString *)text frame:(CGRect)frame {
-    UIView *scanV = [[UIView alloc] initWithFrame:frame];
-    scanV.backgroundColor = [UIColor clearColor];
-    scanV.layer.cornerRadius = scanV.height / 2;
-    scanV.layer.borderWidth = 1;
-    scanV.layer.masksToBounds = YES;
-    scanV.layer.borderColor = [UIColor appLightGrayTextColor].CGColor;
-    [self.functionV addSubview:scanV];
-    
-    UIImageView *iCon = [[UIImageView alloc] initWithImage:image];
-    iCon.center = CGPointMake(18, scanV.height / 2);
-    [scanV addSubview:iCon];
-    
-    UILabel *label = [UILabel labelWithTxt:text frame:(CGRect){iCon.maxX, 0, scanV.width - iCon.maxX, scanV.height}
-                                      font:[UIFont appFontSize12] color:[UIColor appGrayTextColor]];
-    [scanV addSubview:label];
-    
-    return scanV;
-}
-
 - (void)initScanFunctionV {
-    @weakify(self)
     CGFloat width = kKenOffsetX(200);
     CGSize size = CGSizeMake(width, 36);
-    UIView *scanUpDonwV = [self scanV:[UIImage imageNamed:@"video_scan_up_down"] text:@"上下扫描" frame:(CGRect){10, 20, size}];
-    [scanUpDonwV clicked:^(UIView * _Nonnull view) {
-        @strongify(self)
-        [self scanUpdown];
-    }];
     
-    UIView *scanLeftRightV = [self scanV:[UIImage imageNamed:@"video_scan_left_right"] text:@"左右扫描"
-                                   frame:(CGRect){scanUpDonwV.originX, self.functionV.height - 20 - size.height, size}];
-    [scanLeftRightV clicked:^(UIView * _Nonnull view) {
-        @strongify(self)
-        [self scanLeftRight];
-    }];
+    _scanUDBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_scan_up_down"]
+                                imagesec:nil target:self action:@selector(scanUpdown)];
+    _scanUDBtn.frame = (CGRect){10, 20, size};
+    [self.functionV addSubview:_scanUDBtn];
     
-    UIView *turnUpDownV = [self scanV:[UIImage imageNamed:@"video_turn_up_down"] text:@"上下翻转"
-                                frame:(CGRect){self.functionV.width - 10 - size.width, scanUpDonwV.originY, size}];
-    [turnUpDownV clicked:^(UIView * _Nonnull view) {
-        @strongify(self)
-        [self turnUpDown];
-    }];
+    _scanLRBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_scan_left_right"]
+                                imagesec:nil target:self action:@selector(scanLeftRight)];
+    _scanLRBtn.frame = (CGRect){_scanUDBtn.originX, self.functionV.height - 20 - size.height, size};
+    [self.functionV addSubview:_scanLRBtn];
     
-    UIView *turnLeftRightV = [self scanV:[UIImage imageNamed:@"video_turn_left_right"] text:@"左右翻转"
-                                   frame:(CGRect){turnUpDownV.originX, scanLeftRightV.originY, size}];
-    [turnLeftRightV clicked:^(UIView * _Nonnull view) {
-        @strongify(self)
-        [self turnLeftRight];
-    }];
+    _turnUDBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_turn_up_down"]
+                                         imagesec:nil target:self action:@selector(turnUpDown)];
+    _turnUDBtn.frame = (CGRect){self.functionV.width - 10 - size.width, _scanUDBtn.originY, size};
+    [self.functionV addSubview:_turnUDBtn];
+    
+    _turnLRBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_turn_left_right"]
+                                         imagesec:nil target:self action:@selector(turnLeftRight)];
+    _turnLRBtn.frame = (CGRect){_turnUDBtn.originX, _scanLRBtn.originY, size};
+    [self.functionV addSubview:_turnLRBtn];
 }
 
 #pragma mark - getter setter
@@ -433,6 +436,15 @@
 - (KenVideoV *)videoV {
     if (_videoV == nil) {
         _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 0, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
+        
+        @weakify(self)
+        _videoV.deviceGetFinish = ^() {
+            @strongify(self)
+            [Async main:^{
+                [self.turnLRBtn setImage:[UIImage imageNamed:self.videoV.isMirror ? @"video_turn_left_right_hl" : @"video_turn_left_right"] forState:UIControlStateNormal];
+                [self.turnUDBtn setImage:[UIImage imageNamed:self.videoV.isFlip ? @"video_turn_up_down_hl" : @"video_turn_up_down"] forState:UIControlStateNormal];
+            }];
+        };
     }
     return _videoV;
 }
@@ -557,9 +569,10 @@
 
 - (UIButton *)speakBtn {
     if (_speakBtn == nil) {
+        UIImage *hlImage = [UIImage imageNamed:@"video_speaking"];
         _speakBtn = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"video_speak"]
-                                   imagesec:nil target:self action:@selector(speakStart)];
-        _speakBtn.frame = (CGRect){(self.contentView.width - 90) / 2, self.contentView.height - 90 - 20, 90, 90};
+                                   imagesec:hlImage target:self action:@selector(speakStart)];
+        _speakBtn.frame = (CGRect){(self.contentView.width - hlImage.size.width) / 2, self.contentView.height - hlImage.size.height - 20, hlImage.size};
         [_speakBtn addTarget:self action:@selector(speakEnd) forControlEvents:UIControlEventTouchDown];
         
         _speakBtn.backgroundColor = [UIColor whiteColor];
@@ -567,6 +580,20 @@
         _speakBtn.layer.masksToBounds = YES;
     }
     return _speakBtn;
+}
+
+- (UILabel *)statusL {
+    if (_statusL == nil) {
+        _statusL = [UILabel labelWithTxt:@"直播中" frame:(CGRect){self.videoV.width - 60, 5, 46, 20}
+                                    font:[UIFont appFontSize12] color:[UIColor whiteColor]];
+        _statusL.layer.borderColor = [UIColor whiteColor].CGColor;
+        _statusL.layer.masksToBounds = YES;
+        _statusL.layer.borderWidth = 0.5;
+        _statusL.layer.cornerRadius = 4;
+        _statusL.hidden = YES;
+        [self.videoV addSubview:_statusL];
+    }
+    return _statusL;
 }
 
 @end

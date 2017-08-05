@@ -23,6 +23,8 @@
 @property (nonatomic, strong) KenVideoFrameExtractor *video;
 @property (nonatomic, strong) KenAudio *audio;
 
+@property (nonatomic, copy) void(^deviceGetFinish)();
+
 //初始化，特定给回放用
 - (instancetype)initHistoryWithDevice:(KenDeviceDM *)device frame:(CGRect)frame;
 
@@ -44,6 +46,10 @@
 - (void)stopShareVedio;
 //是否正在分享
 - (BOOL)isSharing;
+//开启对讲
+- (void)speakStart;
+//关闭对讲
+- (void)speakEnd;
 
 #pragma mark - 回放相关
 //停止回放
