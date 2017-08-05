@@ -398,11 +398,7 @@
                                            font:[UIFont appFontSize12] color:[UIColor appGrayTextColor]];
     deviceName.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:deviceName];
-    
-//    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:content];
-//    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor appGrayTextColor] range:NSMakeRange(5, content.length - 5)];
-//    deviceName.attributedText = attributedString;
-    
+
     /////////////
     content = [NSString stringWithFormat:@"设备ID号:%@", [info sn]];
     UILabel *deviceID = [UILabel labelWithTxt:content
@@ -410,22 +406,14 @@
                                          font:[UIFont appFontSize12] color:[UIColor appGrayTextColor]];
     deviceID.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:deviceID];
-    
-//    attributedString = [[NSMutableAttributedString alloc] initWithString:content];
-//    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor appGrayTextColor] range:NSMakeRange(5, content.length - 5)];
-//    deviceID.attributedText = attributedString;
-    
+
     //////////////
     content = [NSString stringWithFormat:@"报警时间:%@", [info getAlarmTimeString]];
     UILabel *time = [UILabel labelWithTxt:content frame:(CGRect){originx, CGRectGetMaxY(deviceID.frame), deviceName.width, height}
                                      font:[UIFont appFontSize12] color:[UIColor appGrayTextColor]];
     time.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:time];
-    
-//    attributedString = [[NSMutableAttributedString alloc] initWithString:content];
-//    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor appGrayTextColor] range:NSMakeRange(5, content.length - 5)];
-//    time.attributedText = attributedString;
-    
+
     ///////////////
     UIView *typeImg = [[UIView alloc] initWithFrame:(CGRect){0, 0, 32, 14}];
     typeImg.originX = time.originX + [content widthForFont:[UIFont appFontSize12]] + 6;
@@ -448,19 +436,24 @@
 
 - (void)setCellImage:(UIImageView *)imageView alarm:(KenAlarmItemDM *)info {
     KenDeviceDM *deviceInfo = info.deviceInfo;
+    [imageView hideToastActivity];
+    
     if ([deviceInfo online]) {
         if (deviceInfo.deviceLock) {
-            UILabel *label = [UILabel labelWithTxt:@"图像已加密" frame:(CGRect){CGPointZero, imageView.size}
+            UILabel *label = [UILabel labelWithTxt:@"已加密" frame:(CGRect){CGPointZero, imageView.size}
                                               font:[UIFont appFontSize16] color:[UIColor redColor]];
             [imageView addSubview:label];
         } else {
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[info getAlarmImg]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                
-            }];
+            [imageView makeSamllToastActivity];
+            
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[info getAlarmImg]]
+                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                     [imageView hideToastActivity];
+                                }];
         }
     } else {
         UILabel *label = [UILabel labelWithTxt:@"不在线" frame:(CGRect){CGPointZero, imageView.size}
-                                          font:[UIFont appFontSize22] color:[UIColor whiteColor]];
+                                          font:[UIFont appFontSize16] color:[UIColor whiteColor]];
         [imageView addSubview:label];
     }
 }

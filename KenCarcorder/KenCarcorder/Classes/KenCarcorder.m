@@ -35,10 +35,10 @@ static KenCarcorder *_sharedUtility = nil;
 
 - (void)initData {
     //创建缓存目录
-    [KenCarcorder createFolderAtPath:[self getAlarmFolder]];
-    [KenCarcorder createFolderAtPath:[self getHomeSnapFolder]];
-    [KenCarcorder createFolderAtPath:[self getMarketFolder]];
-    [KenCarcorder createFolderAtPath:[self getRecorderFolder]];
+    [KenCarcorder createFolderAtPath:[KenCarcorder getAlarmFolder]];
+    [KenCarcorder createFolderAtPath:[KenCarcorder getHomeSnapFolder]];
+    [KenCarcorder createFolderAtPath:[KenCarcorder getMarketFolder]];
+    [KenCarcorder createFolderAtPath:[KenCarcorder getRecorderFolder]];
 }
 
 #pragma mark - static method
@@ -102,24 +102,55 @@ static KenCarcorder *_sharedUtility = nil;
     return NO;
 }
 
++ (BOOL)writeImage:(UIImage*)image toFileAtPath:(NSString*)aPath {
+    if ((image == nil) || (aPath == nil) || ([aPath isEqualToString:@""]))
+        return NO;
+    
+    @try {
+        
+        NSData *imageData = nil;
+        NSString *ext = [aPath pathExtension];
+        if ([ext isEqualToString:@"png"]) {
+            imageData = UIImagePNGRepresentation(image);
+        } else {
+            imageData = UIImageJPEGRepresentation(image, 0);
+        }
+        
+        if ((imageData == nil) || ([imageData length] <= 0))
+            return NO;
+        
+        if ([self fileExistsAtPath:aPath]) {
+            [self deleteFileWithPath:aPath];
+        }
+        
+        [imageData writeToFile:aPath atomically:NO];
+        
+        return YES;
+    } @catch (NSException *e) {
+        DebugLog("create thumbnail exception.");
+    }
+    
+    return NO;
+}
+
 #pragma mark - 文件目录
-- (NSString *)getAlarmFolder {
++ (NSString *)getAlarmFolder {
     return [NSString stringWithFormat:@"%@/Documents/Alarm", NSHomeDirectory()];
 }
 
-- (NSString *)getHomeSnapFolder {
++ (NSString *)getHomeSnapFolder {
     return [NSString stringWithFormat:@"%@/Documents/Home", NSHomeDirectory()];
 }
 
-- (NSString *)getMarketFolder {
++ (NSString *)getMarketFolder {
     return [NSString stringWithFormat:@"%@/Documents/Market", NSHomeDirectory()];
 }
 
-- (NSString *)getRecorderFolder {
++ (NSString *)getRecorderFolder {
     return [NSString stringWithFormat:@"%@/Documents/Recorder", NSHomeDirectory()];
 }
 
-- (void)deleteCachFolder {
++ (void)deleteCachFolder {
     [KenCarcorder deleteFileWithPath:[NSString stringWithFormat:@"%@/Documents/images/",NSHomeDirectory()]];
     [KenCarcorder deleteFileWithPath:[NSString stringWithFormat:@"%@/Documents/thumbnails/",NSHomeDirectory()]];
     [KenCarcorder deleteFileWithPath:[self getAlarmFolder]];
@@ -128,7 +159,7 @@ static KenCarcorder *_sharedUtility = nil;
     [KenCarcorder deleteFileWithPath:[self getHomeSnapFolder]];
 }
 
-- (long long)getCachFolderSize {
++ (long long)getCachFolderSize {
     long long size = [KenCarcorder getFolderSize:[NSString stringWithFormat:@"%@/Documents/images/",NSHomeDirectory()]];
     size += [KenCarcorder getFolderSize:[NSString stringWithFormat:@"%@/Documents/thumbnails/",NSHomeDirectory()]];
     size += [KenCarcorder getFolderSize: [self getAlarmFolder]];

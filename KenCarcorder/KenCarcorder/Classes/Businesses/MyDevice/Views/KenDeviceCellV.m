@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) KenDeviceDM *device;
 @property (nonatomic, strong) UILabel *nameLabel;
-//@property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) UILabel *statusLabel;
 @property (nonatomic, strong) UILabel *alarmLabel;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIImageView *alarmView;
@@ -25,14 +25,34 @@
 
 - (void)updateWithDevice:(KenDeviceDM *)device {
     _device = device;
+    [self.imageView hideToastActivity];
     
-    NSString *url = [@"http://" stringByAppendingFormat:@"%@:%zd/cfg.cgi?User=%@&Psd=%@&MsgID=20&chl=1", device.currentIp, _device.httpport, device.usr, device.pwd];
-    [self.imageView makeSamllToastActivity];
-    @weakify(self)
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:url] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        @strongify(self)
-        [self.imageView hideToastActivity];
-    }];
+    if (device.online) {
+        if (device.deviceLock) {
+            self.statusLabel.text = @"已加密";
+            self.imageView.image = nil;
+        } else {
+            self.statusLabel.text = @"";
+            
+            if ([device isDDNS]) {
+                NSString *url = [@"http://" stringByAppendingFormat:@"%@:%zd/cfg.cgi?User=%@&Psd=%@&MsgID=20&chl=1", device.currentIp, _device.httpport, device.usr, device.pwd];
+                [self.imageView makeSamllToastActivity];
+                @weakify(self)
+                [self.imageView sd_setImageWithURL:[NSURL URLWithString:url] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                    @strongify(self)
+                    [self.imageView hideToastActivity];
+                }];
+            } else {
+                NSString *jpgPath = [NSString stringWithFormat:@"%@/%@.jpg", [KenCarcorder getHomeSnapFolder], _device.sn];
+                if ([KenCarcorder fileExistsAtPath:jpgPath]) {
+                    [self.imageView setImage:[UIImage imageWithContentsOfFile:jpgPath]];
+                }
+            }
+        }
+    } else {
+        self.statusLabel.text = @"不在线";
+        self.imageView.image = nil;
+    }
     
     self.nameLabel.text = device.name;
     self.alarmView.image = [UIImage imageNamed:device.haveUnreadAlarm ? @"home_alarm_more" : @"home_alarm"];
@@ -83,14 +103,14 @@
     return _alarmLabel;
 }
 
-//- (UILabel *)statusLabel {
-//    if (_statusLabel == nil) {
-//        _statusLabel = [UILabel labelWithTxt:@"" frame:(CGRect){0, 4, self.width, self.height - 55}
-//                                        font:[UIFont appFontSize16] color:[UIColor appWhiteTextColor]];
-//        [self addSubview:_statusLabel];
-//    }
-//    return _statusLabel;
-//}
+- (UILabel *)statusLabel {
+    if (_statusLabel == nil) {
+        _statusLabel = [UILabel labelWithTxt:@"" frame:(CGRect){0, -6, self.imageView.size}
+                                        font:[UIFont appFontSize14] color:[UIColor appWhiteTextColor]];
+        [self.imageView addSubview:_statusLabel];
+    }
+    return _statusLabel;
+}
 
 - (UILabel *)nameLabel {
     if (_nameLabel == nil) {

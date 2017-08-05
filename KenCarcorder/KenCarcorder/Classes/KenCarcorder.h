@@ -17,12 +17,12 @@ typedef NS_ENUM(NSUInteger, KenVoiceType) {
 + (KenCarcorder *)shareCarcorder;
 
 #pragma mark - 文件目录
-- (NSString *)getAlarmFolder;
-- (NSString *)getHomeSnapFolder;
-- (NSString *)getMarketFolder;
-- (NSString *)getRecorderFolder;
-- (void)deleteCachFolder;
-- (long long)getCachFolderSize;
++ (NSString *)getAlarmFolder;
++ (NSString *)getHomeSnapFolder;
++ (NSString *)getMarketFolder;
++ (NSString *)getRecorderFolder;
++ (void)deleteCachFolder;
++ (long long)getCachFolderSize;
 
 #pragma mark - 文件管理相关
 + (unsigned long long)getFileSize:(NSString*)filePath;
@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, KenVoiceType) {
 + (BOOL)deleteFileWithPath:(NSString*)path;
 + (BOOL)fileExistsAtPath:(NSString*)path;
 + (BOOL)createFolderAtPath:(NSString *)path;
+
++ (BOOL)writeImage:(UIImage*)image toFileAtPath:(NSString*)aPath;
 
 /**
  *  @author Ken.Liu

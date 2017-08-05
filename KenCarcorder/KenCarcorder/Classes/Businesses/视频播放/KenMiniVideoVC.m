@@ -115,6 +115,14 @@
 
 #pragma mark - event
 - (void)back {
+    //页面退出时保存最新的截图
+    if (thNet_IsConnect(_device.connectHandle) && ![_device isDDNS]) {
+        if ([UIApplication isNotEmpty:_videoV.lastImage]) {
+            NSString *jpgPath = [NSString stringWithFormat:@"%@/%@.jpg", [KenCarcorder getHomeSnapFolder], _device.sn];
+            [KenCarcorder writeImage:_videoV.lastImage toFileAtPath:jpgPath];
+        }
+    }
+    
     [_videoV finishVideo];
     [super popViewController];
 }

@@ -89,7 +89,7 @@
     NSString *contentText = _contentArray[indexPath.section][indexPath.row];
     if (indexPath.section == 1 && indexPath.row == 2) {
         NSString *str = @"M";
-        float totalSize = [[KenCarcorder shareCarcorder] getCachFolderSize];
+        float totalSize = [KenCarcorder getCachFolderSize];
         float base = 1024 * 1024;
         if (totalSize < base) {
             str = @"K";
@@ -106,7 +106,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1 && indexPath.row == 2) {
-        [[KenCarcorder shareCarcorder] deleteCachFolder];
+        [KenCarcorder deleteCachFolder];
         
         [_informationTable reloadData];
     } else {

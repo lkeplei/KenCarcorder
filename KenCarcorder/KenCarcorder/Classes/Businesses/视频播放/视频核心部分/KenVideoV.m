@@ -162,7 +162,7 @@ int hSocketServer; //服务器连接
             
             [[KenGCDTimerManager sharedInstance] cancelTimerWithName:@"videoRecord"];
         } else {
-            NSString *filePath = [[[KenCarcorder shareCarcorder] getRecorderFolder] stringByAppendingFormat:@"/1.mp4"];
+            NSString *filePath = [[KenCarcorder getRecorderFolder] stringByAppendingFormat:@"/1.mp4"];
             [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
             
             _video.filename = filePath;
@@ -553,6 +553,7 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 
 - (void)updateFrameWithImage:(UIImage *)image {
     if (image) {
+        _lastImage = image;
         if (_screenImageV == nil) {
             //初始图像层
             _screenImageV = [[UIImageView alloc] initWithFrame:(CGRect){0, 0, self.size}];

@@ -22,6 +22,7 @@
 
 @property (nonatomic, strong) KenVideoFrameExtractor *video;
 @property (nonatomic, strong) KenAudio *audio;
+@property (nonatomic, strong) UIImage *lastImage;
 
 @property (nonatomic, copy) void(^deviceGetFinish)();
 
