@@ -35,7 +35,7 @@
     
     NSString *ssid = [KenCarcorder getCurrentSSID];
     if ([NSString isNotEmpty:ssid] &&
-        ([ssid containsString:@"IPCAM_AP_8"] || [ssid containsString:@"七彩云"] || 1)) {
+        ([ssid containsString:@"IPCAM_AP_8"] || [ssid containsString:@"七彩云"])) {
         [self jumpDirectConnectVC:ssid];
     } else {
         [self initView];

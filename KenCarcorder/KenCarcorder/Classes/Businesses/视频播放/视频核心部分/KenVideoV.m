@@ -393,12 +393,10 @@ int hSocketServer; //服务器连接
         } else {
             if (ken_createThreadP2p(_deviceDM.connectHandle) == 0) {
                 {
-                    NSString *param = [NSString stringWithFormat:@"cfg.cgi?User=%@&Psd=%@&MsgID=28", _deviceDM.usr, _deviceDM.pwd];
-                    NSString *info = [self p2pMessageSendUrl:[kConnectP2pHost stringByAppendingString:param] device:_deviceDM];
-                    DebugLog("info = %@", info);
+                    NSString *param = [NSString stringWithFormat:@"cfg.cgi?User=%@&Psd=%@&MsgID=28", self.deviceDM.usr, self.deviceDM.pwd];
+                    NSString *info = [self p2pMessageSendUrl:[kConnectP2pHost stringByAppendingString:param] device:self.deviceDM];
                     
                     NSArray *array = [info componentsSeparatedByString:@"\r\n"];
-                    
                     NSString *deviceWidth0 = @"";
                     NSString *deviceHeight0 = @"";
                     NSString *deviceFrameRate0 = @"";

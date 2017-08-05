@@ -17,7 +17,9 @@
 
 @property (nonatomic, strong) KenVideoV *videoV;
 @property (nonatomic, strong) UIView *functionV;
+@property (nonatomic, strong) UIView *fullMaskV;
 @property (nonatomic, strong) UIView *historyV;
+@property (nonatomic, strong) UILabel *statusL;
 
 @end
 
@@ -31,6 +33,48 @@
     [self.contentView addSubview:self.functionV];
     
     [self setLeftNavItemWithImg:[UIImage imageNamed:@"app_back"] selector:@selector(back)];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    SysDelegate.allowRotation = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    SysDelegate.allowRotation = NO;
+}
+
+#pragma mark - rotate
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
+        [self exitFullscreen];
+    } else {
+        if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
+            [self enterFullscreen];
+        }
+    }
+}
+
+- (void)enterFullscreen {
+    [self.videoV removeFromSuperview];
+    [self.fullMaskV removeFromSuperview];
+    
+    self.videoV.frame = (CGRect){CGPointZero, SysDelegate.window.height, SysDelegate.window.width};
+    self.statusL.frame = (CGRect){self.videoV.width - 60, 5, 46, 20};
+    [SysDelegate.window addSubview:self.videoV];
+    [SysDelegate.window addSubview:self.fullMaskV];
+}
+
+- (void)exitFullscreen {
+    [self.videoV removeFromSuperview];
+    [self.fullMaskV removeFromSuperview] ;
+    
+    self.videoV.frame = (CGRect){0, 0, MainScreenHeight, ceilf(MainScreenHeight * kAppImageHeiWid)};
+    self.statusL.frame = (CGRect){self.videoV.width - 60, 5, 46, 20};
+    [self.contentView addSubview:self.videoV];
 }
 
 #pragma mark - event
@@ -84,6 +128,7 @@
 - (void)shareVedio:(BOOL)ask {
     @weakify(self)
     if ([self.videoV isSharing]) {
+        self.statusL.hidden = YES;
         [self.videoV stopShareVedio];
     } else {
         if (ask) {
@@ -91,10 +136,12 @@
                                          message:@"分享设备将可能会耗费您较多的数据流量，并请保护自己和他人的隐私。请确认是否继续?"
                               confirmButtonTitle:@"分享" cancelButtonTitle:@"取消" confirmHandler:^{
                                   @strongify(self)
+                                  self.statusL.hidden = NO;
                                   [self.videoV shareVedio];
                               } cancelHandler:^{
                               }];
         } else {
+            self.statusL.hidden = NO;
             [self.videoV shareVedio];
         }
     }
@@ -144,6 +191,41 @@
         _videoV = [[KenVideoV alloc] initWithFrame:(CGRect){0, 0, MainScreenWidth, ceilf(MainScreenWidth * kAppImageHeiWid)}];
     }
     return _videoV;
+}
+
+- (UIView *)fullMaskV {
+    if (_fullMaskV == nil) {
+        UIImage *image = [UIImage imageNamed:@"full_photo"];
+        _fullMaskV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, image.size.width * 3, image.size.height)];
+        _fullMaskV.center = (CGPoint){SysDelegate.window.height / 2, SysDelegate.window.width - _fullMaskV.height / 2 - 10};
+        
+        UIButton *photo = [UIButton buttonWithImg:nil zoomIn:YES image:image imagesec:nil target:self action:@selector(eventPhoto)];
+        photo.center = (CGPoint){_fullMaskV.width / 2, _fullMaskV.height / 2};
+        [_fullMaskV addSubview:photo];
+        
+        UIButton *share = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"full_share"] imagesec:nil target:self action:@selector(eventShare)];
+        share.center = (CGPoint){share.width / 2, photo.centerY};
+        [_fullMaskV addSubview:share];
+        
+        UIButton *play = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:@"full_play"] imagesec:nil target:self action:@selector(eventVideo)];
+        play.center = (CGPoint){_fullMaskV.width - play.width / 2, photo.centerY};
+        [_fullMaskV addSubview:play];
+    }
+    return _fullMaskV;
+}
+
+- (UILabel *)statusL {
+    if (_statusL == nil) {
+        _statusL = [UILabel labelWithTxt:@"直播中" frame:(CGRect){self.videoV.width - 60, 5, 46, 20}
+                                    font:[UIFont appFontSize12] color:[UIColor whiteColor]];
+        _statusL.layer.borderColor = [UIColor whiteColor].CGColor;
+        _statusL.layer.masksToBounds = YES;
+        _statusL.layer.borderWidth = 0.5;
+        _statusL.layer.cornerRadius = 4;
+        _statusL.hidden = YES;
+        [self.videoV addSubview:_statusL];
+    }
+    return _statusL;
 }
 
 @end
