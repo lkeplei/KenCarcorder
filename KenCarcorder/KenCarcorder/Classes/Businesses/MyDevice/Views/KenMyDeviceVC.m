@@ -71,12 +71,12 @@
 
 #pragma mark -- UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = (self.contentView.width - 48) / 2;
+    CGFloat width = (self.contentView.width - 32) / 2;
     return CGSizeMake(width, width * kAppImageHeiWid + 30);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(15, 15, 15, 15);
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 #pragma mark -- UICollectionViewDelegate
@@ -129,7 +129,7 @@
 
 - (KenSegmentV *)segmentView {
     if (_segmentView == nil) {
-        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM sharedInstance] deviceGroups] frame:(CGRect){0, self.webV.maxY, self.contentView.width, 35}];
+        _segmentView = [[KenSegmentV alloc] initWithItem:[[KenUserInfoDM sharedInstance] deviceGroups] frame:(CGRect){0, self.webV.maxY - 35, self.contentView.width, 35}];
         
         @weakify(self)
         _segmentView.segmentSelectChanged = ^(NSInteger index) {

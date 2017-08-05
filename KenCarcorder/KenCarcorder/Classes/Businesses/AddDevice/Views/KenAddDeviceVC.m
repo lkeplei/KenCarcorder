@@ -172,20 +172,32 @@
                              @"ddns":[sn stringByAppendingString:@".7cyun.net"],
                              @"dataport":[NSNumber numberWithInteger:value + 7000],
                              @"httpport":[NSNumber numberWithInteger:value + 8000]};
-    
-    _deviceInfo = [KenDeviceDM initWithJsonDictionary:params];
-    
+    @weakify(self)
+    @weakify(params)
     [[KenServiceManager sharedServiceManager] deviceSaveInfo:params start:^{
+        @strongify(self)
         [self showActivity];
     } success:^(BOOL successful, NSString * _Nullable errMsg, KenDeviceDM *device) {
+        @strongify(self)
+        @strongify(params)
+        
         [self hideActivity];
         if (successful) {
             if (device) {
-                _deviceInfo = device;
+                if (self.deviceInfo == nil) {
+                    device.pwd = [NSString isEmpty:[_devicePwdTextField text]] ? @"admin" : [_devicePwdTextField text];
+                }
+                self.deviceInfo = device;
+            } else {
+                self.deviceInfo = [KenDeviceDM initWithJsonDictionary:params];
             }
+            
+            self.deviceInfo.groupNo = _groupId;
             [self addSuccess];
         }
     } failed:^(NSInteger status, NSString * _Nullable errMsg) {
+        @strongify(self)
+        
         [self hideActivity];
         [self showToastWithMsg:@"设备添加失败"];
     }];
@@ -194,6 +206,7 @@
 - (void)addSuccess {
     if (_deviceInfo) {
         [[KenUserInfoDM sharedInstance] addDevice:_deviceInfo];
+        _deviceInfo = nil;
     }
     
     [self showToastWithMsg:@"设备添加成功"];
