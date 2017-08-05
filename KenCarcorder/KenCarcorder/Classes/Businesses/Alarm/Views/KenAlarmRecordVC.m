@@ -235,7 +235,7 @@
         [_funtionNav addSubview:_recoverBtn];
         
         //右边功能按钮
-        btnArr = @[@"history_full", @"history_video", @"history_photo", @"history_download"];
+        btnArr = @[@"history_full", @"history_video", @"history_photo"/*, @"history_download"*/];
         offsetX = _videoV.width;
         for (NSUInteger i = 0; i < btnArr.count; i++) {
             UIButton *button = [UIButton buttonWithImg:nil zoomIn:YES image:[UIImage imageNamed:btnArr[i]]

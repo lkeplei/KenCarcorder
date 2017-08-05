@@ -26,11 +26,11 @@
 - (void)updateWithDevice:(KenDeviceDM *)device {
     _device = device;
     [self.imageView hideToastActivity];
+    self.imageView.image = nil;
     
     if (device.online) {
         if (device.deviceLock) {
             self.statusLabel.text = @"已加密";
-            self.imageView.image = nil;
         } else {
             self.statusLabel.text = @"";
             
@@ -51,7 +51,6 @@
         }
     } else {
         self.statusLabel.text = @"不在线";
-        self.imageView.image = nil;
     }
     
     self.nameLabel.text = device.name;
