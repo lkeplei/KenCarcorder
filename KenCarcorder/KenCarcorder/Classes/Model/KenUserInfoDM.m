@@ -80,6 +80,23 @@ static KenUserInfoDM *userInfo = nil;
     [_deviceArray addObjectsFromArray:array];
     
     [self setInstance];
+    
+    [self checkDevicePwd:0];
+}
+
+- (void)checkDevicePwd:(NSUInteger)index {
+    if (index < _deviceArray.count) {
+        @weakify(self)
+        [[KenServiceManager sharedServiceManager] deviceValidatePwd:[self.deviceArray objectAtIndex:index] finish:^(BOOL lock) {
+            @strongify(self)
+            KenDeviceDM *device = [self.deviceArray objectAtIndex:index];
+            device.deviceLock = lock;
+            
+            [self checkDevicePwd:index + 1];
+        }];
+    } else {
+        [self setInstance];
+    }
 }
 
 - (void)removeDevice:(KenDeviceDM *)device {

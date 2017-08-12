@@ -24,6 +24,10 @@ typedef NS_ENUM(NSUInteger, YDRecorderStatusType) {         //录像指令状态
     kYDRecorderStatusDragPos = 8,                              //未知
 };
 
+#define kP2pConnectKey          @"key_p2p_connet"
+#define kConnectDeviceKey       @"key_device_connet"
+#define kP2pConnectTime         5
+
 //#define kHardDecode                 //是否硬解码
 
 @interface KenVideoV ()<VideoFrameDelegate>
@@ -112,6 +116,8 @@ int hSocketServer; //服务器连接
     if (self.audio) {
         [self.audio cleanAudio];
     }
+    
+    [[KenGCDTimerManager sharedInstance] cancelTimerWithName:kConnectDeviceKey];
 }
 
 - (void)finishRecorder {
@@ -132,6 +138,9 @@ int hSocketServer; //服务器连接
     }];
     
     _deviceDM.connectHandle = 0;
+    
+    //如果是p2p的话，断开加一个计时，多长时间内，不可再连接p2p
+    [[KenGCDTimerManager sharedInstance] scheduledGlobalTimerWithName:kP2pConnectKey totalTime:kP2pConnectTime frequency:1 queue:nil action:nil];
 }
 
 - (void)stopVideo {
@@ -327,7 +336,22 @@ int hSocketServer; //服务器连接
 
 #pragma mark - 视频连接与数据回调
 - (void)startVidthread {
+    //如果设备正在连接中，或者p2p的计时未到，则启动计时等待时机
+    if (_deviceDM.isConnecting ||
+        (![_deviceDM isDDNS] && [[KenGCDTimerManager sharedInstance] isExistTimer:kP2pConnectKey])) {
+        @weakify(self)
+        [[KenGCDTimerManager sharedInstance] scheduledTimerWithName:kConnectDeviceKey timeInterval:1 queue:nil repeats:NO
+                                                       actionOption:kKenGCDTimerAbandon action:^{
+            @strongify(self)
+            [self startVidthread];
+        }];
+        
+        return;
+    }
+    
     if (!thNet_IsConnect(_deviceDM.connectHandle)) {
+        _deviceDM.isConnecting = YES;
+        
         int connectTimes = 0;
         int64_t handle = 0;
         if ([_deviceDM isDDNS]) //DDNS方式
@@ -453,6 +477,8 @@ int hSocketServer; //服务器连接
     
     _isMirror = IsMirror;
     _isFlip = IsFlip;
+    
+    _deviceDM.isConnecting = NO;
     
     SafeHandleBlock(self.deviceGetFinish);
 }

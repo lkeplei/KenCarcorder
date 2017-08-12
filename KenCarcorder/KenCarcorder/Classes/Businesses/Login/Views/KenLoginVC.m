@@ -61,9 +61,6 @@
     self.registBtn.originY = self.loginBtn.maxY + 10;
     
     [self showCheckView:NO];
-
-    //测试先自动登录
-    [self loginRequest];
 }
 
 #pragma mark - event

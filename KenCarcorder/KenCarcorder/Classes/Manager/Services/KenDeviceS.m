@@ -226,6 +226,7 @@
                 SafeHandleBlock(finish, NO);
             }
         } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
+            SafeHandleBlock(finish, NO);
         }];
     } else {
         NSString *responseData = [self p2pMessageSend:param device:device];

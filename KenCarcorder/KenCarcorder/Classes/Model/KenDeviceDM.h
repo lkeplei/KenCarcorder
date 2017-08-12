@@ -49,6 +49,8 @@ typedef NS_ENUM(NSUInteger, KenNetworkStatusType) {  //网络连接方式
 
 @property (nonatomic, assign) BOOL haveUnreadAlarm;                 //是否有未读报警
 
+@property (nonatomic, assign) BOOL isConnecting;                    //设备是否正在连接中
+
 //获取当前ip
 - (NSString *)currentIp;
     
