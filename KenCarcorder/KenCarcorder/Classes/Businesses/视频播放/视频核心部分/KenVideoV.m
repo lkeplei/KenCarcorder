@@ -151,10 +151,22 @@ int hSocketServer; //服务器连接
 
 - (void)rePlay {
     if (thNet_IsConnect(_deviceDM.connectHandle)) {
-        if (!thNet_Play(_deviceDM.connectHandle, 1, 1, 0)) {
-            [Async mainAfter:1 block:^{
-                [self rePlay];
-            }];
+        if ([self.deviceDM.devModel isEqualToString:@"CCYT400A"] ||
+            [self.deviceDM.devModel isEqualToString:@"CCYT500A"] ||
+            [self.deviceDM.devModel isEqualToString:@"CCYT600A"]) {
+            
+            if (!thNet_Play(_deviceDM.connectHandle, 0, 1, 1)) {
+//            if (!thNet_Play(_deviceDM.connectHandle, 1, 1, 0)) {
+                [Async mainAfter:1 block:^{
+                    [self rePlay];
+                }];
+            }
+        } else {
+            if (!thNet_Play(_deviceDM.connectHandle, 1, 1, 0)) {
+                [Async mainAfter:1 block:^{
+                    [self rePlay];
+                }];
+            }
         }
     }
 }
@@ -517,7 +529,6 @@ void avConnectCallBack(TDataFrameInfo* PInfo, char* Buf, int Len, void* UserCust
         if (handle != [baseV.deviceDM connectHandle]) return;
         
         if (PInfo->Head.VerifyCode == Head_VideoPkt) {
-            //8.0以上系统走硬解码
 #ifdef kHardDecode
             [baseV.h264Decoder decodeFrame:(uint8_t *)Buf withSize:Len]; //硬解码
             if (baseV.video.isRecording || baseV.video._cap) {
@@ -599,7 +610,15 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 
 #pragma mark - 自定义部分
 - (void)connectFinish:(int)highW highH:(int)highH highRate:(int)highRate lowW:(int)lowW lowH:(int)lowH lowRate:(int)lowRate {
-    self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];
+    if ([self.deviceDM.devModel isEqualToString:@"CCYT400A"] ||
+        [self.deviceDM.devModel isEqualToString:@"CCYT500A"] ||
+        [self.deviceDM.devModel isEqualToString:@"CCYT600A"]) {
+        self.video = [[KenVideoFrameExtractor alloc] initCnx:lowW hei:lowH rate:lowRate * 4 / 5];
+//        self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];
+    } else {
+        self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];
+    }
+
     if (self.video) {
         self.video.delegate = self;
 //        [self.moviceGLView set_decoder:self.video];
