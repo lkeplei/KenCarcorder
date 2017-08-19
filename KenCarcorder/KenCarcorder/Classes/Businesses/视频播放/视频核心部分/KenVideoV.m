@@ -156,7 +156,6 @@ int hSocketServer; //服务器连接
             [self.deviceDM.devModel isEqualToString:@"CCYT600A"]) {
             
             if (!thNet_Play(_deviceDM.connectHandle, 0, 1, 1)) {
-//            if (!thNet_Play(_deviceDM.connectHandle, 1, 1, 0)) {
                 [Async mainAfter:1 block:^{
                     [self rePlay];
                 }];
@@ -614,7 +613,6 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
         [self.deviceDM.devModel isEqualToString:@"CCYT500A"] ||
         [self.deviceDM.devModel isEqualToString:@"CCYT600A"]) {
         self.video = [[KenVideoFrameExtractor alloc] initCnx:lowW hei:lowH rate:lowRate * 4 / 5];
-//        self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];
     } else {
         self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];
     }
