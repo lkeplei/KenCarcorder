@@ -123,7 +123,17 @@
         }
     }
     
-    [_videoV finishVideo];
+    //p2p 且已连通只需要断开视频，否则要完整断开；ddns 完整断开
+    if ([_device isDDNS]) {
+        if (thNet_IsConnect(self.device.connectHandle)) {
+            [self.videoV stopVideo];
+        } else {
+            [self.videoV finishVideo];
+        }
+    } else {
+        [self.videoV finishVideo];
+    }
+
     [super popViewController];
 }
 

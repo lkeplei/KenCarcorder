@@ -153,7 +153,8 @@ int hSocketServer; //服务器连接
     if (thNet_IsConnect(_deviceDM.connectHandle)) {
         if ([self.deviceDM.devModel isEqualToString:@"CCYT400A"] ||
             [self.deviceDM.devModel isEqualToString:@"CCYT500A"] ||
-            [self.deviceDM.devModel isEqualToString:@"CCYT600A"]) {
+            [self.deviceDM.devModel isEqualToString:@"CCYT600A"] ||
+            self.deviceDM.isSubStream) {
             
             if (!thNet_Play(_deviceDM.connectHandle, 0, 1, 1)) {
                 [Async mainAfter:1 block:^{
@@ -421,6 +422,8 @@ int hSocketServer; //服务器连接
     
     if (thNet_IsConnect(_deviceDM.connectHandle)) {
         if ([_deviceDM isDDNS]) {
+            self.deviceDM.isSubStream = Width0 >= 1080 ? YES : NO;
+            
             [self connectFinish:Width0 highH:Height0 highRate:FrameRate0 lowW:Width1 lowH:Height1 lowRate:FrameRate1];
         } else {
             if (ken_createThreadP2p(_deviceDM.connectHandle) == 0) {
@@ -499,6 +502,8 @@ int hSocketServer; //服务器连接
                     IsMirror = [deviceMirror intValue];
                     IsFlip = [deviceFlip intValue];
                 }
+                
+                self.deviceDM.isSubStream = Width0 >= 1080 ? YES : NO;
                 
                 [self connectFinish:Width0 highH:Height0 highRate:FrameRate0 lowW:Width1 lowH:Height1 lowRate:FrameRate1];
             } else {
@@ -635,7 +640,8 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 - (void)connectFinish:(int)highW highH:(int)highH highRate:(int)highRate lowW:(int)lowW lowH:(int)lowH lowRate:(int)lowRate {
     if ([self.deviceDM.devModel isEqualToString:@"CCYT400A"] ||
         [self.deviceDM.devModel isEqualToString:@"CCYT500A"] ||
-        [self.deviceDM.devModel isEqualToString:@"CCYT600A"]) {
+        [self.deviceDM.devModel isEqualToString:@"CCYT600A"] ||
+        self.deviceDM.isSubStream) {
         self.video = [[KenVideoFrameExtractor alloc] initCnx:lowW hei:lowH rate:lowRate * 4 / 5];
     } else {
         self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];
