@@ -433,6 +433,9 @@ int hSocketServer; //服务器连接
                     NSString *deviceWidth0 = @"";
                     NSString *deviceHeight0 = @"";
                     NSString *deviceFrameRate0 = @"";
+                    NSString *deviceWidth1 = @"";
+                    NSString *deviceHeight1 = @"";
+                    NSString *deviceFrameRate1 = @"";
                     NSString *deviceMirror = @"";
                     NSString *deviceFlip = @"";
                     
@@ -446,6 +449,15 @@ int hSocketServer; //服务器连接
                         }
                         if ([tmp rangeOfString:@"VIDEO_FrameRate0"].length > 0) {
                             deviceFrameRate0 = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
+                        }
+                        if ([tmp rangeOfString:@"VIDEO_Width1"].length > 0) {
+                            deviceWidth1 = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
+                        }
+                        if ([tmp rangeOfString:@"VIDEO_Height1"].length > 0) {
+                            deviceHeight1 = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
+                        }
+                        if ([tmp rangeOfString:@"VIDEO_FrameRate1"].length > 0) {
+                            deviceFrameRate1 = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
                         }
                         if ([tmp rangeOfString:@"VIDEO_IsMirror"].length > 0) {
                             deviceMirror = [[[array objectAtIndex:i] componentsSeparatedByString:@"="] objectAtIndex:1];
@@ -464,6 +476,15 @@ int hSocketServer; //服务器连接
                     deviceFrameRate0 = [deviceFrameRate0 stringByReplacingOccurrencesOfString:@";" withString:@""];
                     deviceFrameRate0 = [deviceFrameRate0 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
                     
+                    deviceWidth1 = [deviceWidth1 stringByReplacingOccurrencesOfString:@";" withString:@""];
+                    deviceWidth1 = [deviceWidth1 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    
+                    deviceHeight1 = [deviceHeight1 stringByReplacingOccurrencesOfString:@";" withString:@""];
+                    deviceHeight1 = [deviceHeight1 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    
+                    deviceFrameRate1 = [deviceFrameRate1 stringByReplacingOccurrencesOfString:@";" withString:@""];
+                    deviceFrameRate1 = [deviceFrameRate1 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                    
                     deviceMirror = [deviceMirror stringByReplacingOccurrencesOfString:@";" withString:@""];
                     deviceMirror = [deviceMirror stringByReplacingOccurrencesOfString:@"\"" withString:@""];
                     
@@ -473,6 +494,9 @@ int hSocketServer; //服务器连接
                     Width0 = [deviceWidth0 intValue];
                     Height0 = [deviceHeight0 intValue];
                     FrameRate0 = [deviceFrameRate0 intValue];
+                    Width1 = [deviceWidth1 intValue];
+                    Height1 = [deviceHeight1 intValue];
+                    FrameRate1 = [deviceFrameRate1 intValue];
                     IsMirror = [deviceMirror intValue];
                     IsFlip = [deviceFlip intValue];
                 }
