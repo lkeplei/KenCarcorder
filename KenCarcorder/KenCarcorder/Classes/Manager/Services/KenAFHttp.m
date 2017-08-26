@@ -13,6 +13,9 @@
 
 @interface KenAFHttp ()
 
+@property (nonatomic, assign) AFNetworkReachabilityStatus reachStatus;
+@property (nonatomic, strong) AFNetworkReachabilityManager *reachManager;
+
 @property (nonatomic, weak) AFHTTPSessionManager *httpSessionManager;
 @property (nonatomic, strong) AFHTTPRequestSerializer *httpRequestSerializer;
 @property (nonatomic, strong) AFJSONRequestSerializer *jsonRequestSerializer;
@@ -294,6 +297,43 @@
             _progressBlock(progress.fractionCompleted);
         }
     }
+}
+
+- (BOOL)isWifiNet {
+    return self.reachStatus == AFNetworkReachabilityStatusReachableViaWiFi ? YES : NO;
+}
+
+#pragma mark - private method
+- (void)judgeNet {
+    self.reachManager = [AFNetworkReachabilityManager manager];
+    
+    @weakify(self)
+    [self.reachManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        @strongify(self)
+        
+        self.reachStatus = status;
+        switch (status) {
+            case AFNetworkReachabilityStatusNotReachable: {
+                DebugLog("网络不可用");
+            }
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi: {
+                DebugLog("Wifi已开启");
+            }
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN: {
+                DebugLog("你现在使用的流量");
+            }
+                break;
+            case AFNetworkReachabilityStatusUnknown: {
+                DebugLog("你现在使用的未知网络");
+            }
+                break;
+            default:
+                break;
+        }
+    }];
+    [self.reachManager startMonitoring];
 }
 
 #pragma mark - getter setter

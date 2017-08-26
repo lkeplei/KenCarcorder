@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, KenNetworkStatusType) {  //网络连接方式
 @interface KenDeviceDM : KenDataModel
 
 //后台数据带来部分
+@property (nonatomic, assign) BOOL subChannel;                      //是否为次码流
 @property (nonatomic, assign) BOOL alarmOnoff;                      //报警是否开启
 @property (nonatomic, assign) BOOL online;                          //设备是否在线
 @property (nonatomic, assign) BOOL position;                        //

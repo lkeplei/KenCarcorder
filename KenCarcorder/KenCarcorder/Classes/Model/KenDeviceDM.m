@@ -46,17 +46,17 @@
 - (BOOL)isLocal {
     BOOL res = NO;
     
-//    if ([[YDController shareController] isNetStatusWifi] && [_devWanIp isEqualToString:SysDelegate.phoneWanIp]) {
-//        NSArray *devLan = [_lanIp componentsSeparatedByString:@"."];
-//        if (devLan && [devLan count] == 4) {
-//            NSArray *localLan = [SysDelegate.phoneLanIp componentsSeparatedByString:@"."];
-//            if (devLan && [devLan count] == 4) {
-//                if ([[devLan objectAtIndex:2] isEqualToString:[localLan objectAtIndex:2]]) {
-//                    res = YES;
-//                }
-//            }
-//        }
-//    }
+    if ([[KenServiceManager sharedServiceManager] isWifiNet] && [_devWanIp isEqualToString:[[KenServiceManager sharedServiceManager] phoneWanIp]]) {
+        NSArray *devLan = [_lanIp componentsSeparatedByString:@"."];
+        if (devLan && [devLan count] == 4) {
+            NSArray *localLan = [[[KenServiceManager sharedServiceManager] phoneLanIp] componentsSeparatedByString:@"."];
+            if (devLan && [devLan count] == 4) {
+                if ([[devLan objectAtIndex:2] isEqualToString:[localLan objectAtIndex:2]]) {
+                    res = YES;
+                }
+            }
+        }
+    }
     
     return res;
 }

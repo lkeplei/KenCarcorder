@@ -151,11 +151,7 @@ int hSocketServer; //服务器连接
 
 - (void)rePlay {
     if (thNet_IsConnect(_deviceDM.connectHandle)) {
-        if ([self.deviceDM.devModel isEqualToString:@"CCYT400A"] ||
-            [self.deviceDM.devModel isEqualToString:@"CCYT500A"] ||
-            [self.deviceDM.devModel isEqualToString:@"CCYT600A"] ||
-            self.deviceDM.isSubStream) {
-            
+        if (self.deviceDM.subChannel || self.deviceDM.isSubStream) {
             if (!thNet_Play(_deviceDM.connectHandle, 0, 1, 1)) {
                 [Async mainAfter:1 block:^{
                     [self rePlay];
@@ -638,10 +634,7 @@ void alarmConnetCallBack(int AlmType, int AlmTime, int AlmChl, void* UserCustom)
 
 #pragma mark - 自定义部分
 - (void)connectFinish:(int)highW highH:(int)highH highRate:(int)highRate lowW:(int)lowW lowH:(int)lowH lowRate:(int)lowRate {
-    if ([self.deviceDM.devModel isEqualToString:@"CCYT400A"] ||
-        [self.deviceDM.devModel isEqualToString:@"CCYT500A"] ||
-        [self.deviceDM.devModel isEqualToString:@"CCYT600A"] ||
-        self.deviceDM.isSubStream) {
+    if (self.deviceDM.subChannel || self.deviceDM.isSubStream) {
         self.video = [[KenVideoFrameExtractor alloc] initCnx:lowW hei:lowH rate:lowRate * 4 / 5];
     } else {
         self.video = [[KenVideoFrameExtractor alloc] initCnx:highW hei:highH rate:highRate * 4 / 5];

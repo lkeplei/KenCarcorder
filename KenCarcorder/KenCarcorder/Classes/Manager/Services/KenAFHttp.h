@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KenAFHttp : NSObject
 
+- (BOOL)isWifiNet;
+
 + (nonnull instancetype)sharedAFHttp;
 
 - (void)asyncGet:(nonnull NSString *)url queryParams:(nullable NSDictionary<NSString *, NSString *> *)params

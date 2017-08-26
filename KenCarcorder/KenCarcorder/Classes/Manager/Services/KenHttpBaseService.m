@@ -11,6 +11,10 @@
 
 @implementation KenHttpBaseService
 
+- (BOOL)isWifiNet {
+    return [[KenAFHttp sharedAFHttp] isWifiNet];
+}
+
 - (void)asyncGet:(NSString *)url queryParams:(nullable NSDictionary<NSString *, NSString *> *)params
       startBlock:(RequestStartBlock)start responsedBlock:(ResponsedBlock)responsed failedBlock:(RequestFailureBlock)failed
 {

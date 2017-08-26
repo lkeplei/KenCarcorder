@@ -15,6 +15,11 @@
 #import "KenAlarmStatDM.h"
 #import "KenDeviceDM.h"
 
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <ifaddrs.h>
+#import <dlfcn.h>
+
 @implementation KenServiceManager
 
 + (KenServiceManager *)sharedServiceManager {
@@ -83,6 +88,37 @@
     } failedBlock:^(NSInteger status, NSString * _Nullable errMsg) {
         
     }];
+}
+
+- (NSString *)phoneLanIp {
+    if (_phoneLanIp == nil) {
+        _phoneLanIp = [self localIPAddress];
+    }
+    return _phoneLanIp;
+}
+
+- (BOOL)isWifiNet {
+    return [((KenHttpBaseService *)[self.servicesArray objectAtIndex:0]) isWifiNet];
+}
+
+#pragma mark - 获取局域网ip
+- (NSString *)localIPAddress {
+    char baseHostName[256]; // Thanks, Gunnar Larisch
+    int success = gethostname(baseHostName, 255);
+    if (success != 0) return nil;
+    baseHostName[255] = '/0';
+    
+    NSString *hostName = @"";
+#if TARGET_IPHONE_SIMULATOR
+    hostName = [NSString stringWithFormat:@"%s", baseHostName];
+#else
+    hostName = [NSString stringWithFormat:@"%s.local", baseHostName];
+#endif
+    
+    struct hostent *host = gethostbyname([hostName UTF8String]);
+    if (!host) {herror("resolv"); return nil;}
+    struct in_addr **list = (struct in_addr **)host->h_addr_list;
+    return [NSString stringWithCString:inet_ntoa(*list[0]) encoding:NSUTF8StringEncoding];
 }
 
 #pragma mark - 消息转发

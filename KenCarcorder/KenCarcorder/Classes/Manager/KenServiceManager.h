@@ -21,7 +21,8 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 @interface KenServiceManager : NSObject
 
 @property (nonatomic, assign) NSUInteger alarmNumbers;              //报警总条数
-@property (nonatomic, assign) NSString *phoneWanIp;
+@property (nonatomic, strong) NSString *phoneWanIp;
+@property (nonatomic, strong) NSString *phoneLanIp;
 
 + (KenServiceManager *)sharedServiceManager;
 
@@ -34,6 +35,8 @@ typedef void (^RequestFailureBlock)(NSInteger status, NSString * _Nullable errMs
 - (void)getAarmStat;
 - (void)updateAarmStat;
 - (void)getWanIp;
+
+- (BOOL)isWifiNet;
 
 #pragma mark - account
 - (void)accountLogout;

@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KenHttpBaseService : NSObject
 
+- (BOOL)isWifiNet;
+
 /**
  *  异步http请求    get
  *
